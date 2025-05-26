@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Casestudy;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class WebSiteController extends Controller
 {
-    
+
     public function showStaticPages($slug)
 {
     $component = 'Website/' . ucfirst($slug);
@@ -17,11 +18,16 @@ class WebSiteController extends Controller
         abort(404);
     }
 
+    $casestaties = Casestudy::where('status', 'published')
+        ->orderBy('priority', 'desc')
+        ->get();
+
     return Inertia::render($component, [
+        'casestudies' => $casestaties,
         'metaTitle' => ucfirst($slug) . ' | TDF Agency',
         'metaDescription' => 'Learn more about our ' . ucfirst($slug) . ' at TDF Agency.',
     ]);
 }
 
-    
+
 }

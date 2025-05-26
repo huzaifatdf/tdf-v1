@@ -6,8 +6,10 @@ import { ChevronDown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Casestudiesmain() {
+export default function Casestudiesmain(props) {
   const introRef = useRef(null);
+  const {casestudies} = props;
+  console.log(casestudies);
 
   useEffect(() => {
     const intro = introRef.current;
@@ -49,7 +51,7 @@ export default function Casestudiesmain() {
         </div>
       </section>
       <FiltersWithSearch />
-      <SmoothExperienceSection />
+      <SmoothExperienceSection data={casestudies} />
     </WebsiteLayout>
   );
 }
@@ -57,132 +59,28 @@ export default function Casestudiesmain() {
 
 
 // fixed hight section //
-function SmoothExperienceSection() {
-  const [activeSection, setActiveSection] = useState('text-to-text');
+function SmoothExperienceSection({ data }) {
+  const [activeSection, setActiveSection] = useState(data && data.length > 0 ? String(1).padStart(2, '0') : null);
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
-
-  const sections = [
-    {
-      id: '01',
-      title: 'Idemitsu Lubricant Oil Pakistan',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+const [sections,setSections] = useState( data
+  ? data.map((item, index) => ({
+    id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
+      title: item.title ,
+      //set description to 10 words max
+      subtitle: item.description.length > 10 ? item.description.split(' ').slice(0, 10).join(' ') + '...' : item.description,
       logo: '/images/logo.svg',
       mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
+      features: Array.isArray(item.services) ? item.services : [],
       stats: {
         models: '25+',
         performance: '99.9%',
-        latency: '<100ms'
-      }
-    },
-    {
-      id: '02',
-      title: 'Habib Metropolitan Bank',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '15+',
-        performance: '99.8%',
-        latency: '<2s'
-      }
-    },
-    {
-      id: '03',
-      title: 'Dr. Ziauddin Hospital',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '8+',
-        performance: '99.5%',
-        latency: '<5s'
-      }
-    },
-    {
-      id: '04',
-      title: 'Bluebird Paints',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '05',
-      title: 'Authentik Track and Trace Solution',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '06',
-      title: 'DataCheck Pakistan',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '07',
-      title: 'Askari Bank',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      logo: '/images/logo.svg',
-      mainImage: '/images/case4.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    }
-  ];
+        latency: '<100ms',
+      },
+    }))
+  : []);
+
+
 
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
