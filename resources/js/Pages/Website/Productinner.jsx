@@ -69,6 +69,7 @@ export default function Productinner() {
         <BenefitsContactForm />
         <DetailedOverview />
         <WhatProblem />
+        <EdumanDemoSection />
         </WebsiteLayout>
   );
 }
@@ -169,10 +170,10 @@ function BenefitsContactForm() {
             <button
               type="button"
               onClick={handleSubmit}
-              className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer"
+              className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"
             >
               Submit
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform fc-purple duration-300" />
+              <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
             </button>
           </div>
         </div>
@@ -219,12 +220,11 @@ function WhatProblem() {
   const sections = [
     {
       id: '01',
-      title: 'Designing a Smooth Experience',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      title: 'For Teachers',
+      subtitle: 'Academic Scheduling',
+      description: 'The Problem: Timetables often clash, teachers get overloaded, or free periods aren’t used well.',
       features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
+        'EDUMAN’s Solution: Smart, automated scheduling ensures teachers get well-balanced workloads with no conflicts.',
       ],
       stats: {
         models: '25+',
@@ -234,12 +234,11 @@ function WhatProblem() {
     },
     {
       id: '02',
-      title: 'The Website',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      title: 'For Parents',
+      subtitle: 'Paperwork & Tracking',
+      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
       features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
+        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
       ],
       stats: {
         models: '15+',
@@ -249,32 +248,16 @@ function WhatProblem() {
     },
     {
       id: '03',
-      title: 'The Mobile App',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      title: 'For School Admins & Management',
+      subtitle: 'Paperwork & Tracking',
+      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
       features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
+        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
       ],
       stats: {
         models: '8+',
         performance: '99.5%',
         latency: '<5s'
-      }
-    },
-    {
-      id: '04',
-      title: 'Multimodal Models',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
       }
     }
   ];
@@ -372,7 +355,7 @@ function WhatProblem() {
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                      <h3 className={`text-[22px] font-bold mb-2 transition-all duration-500 ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -416,43 +399,47 @@ function WhatProblem() {
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
             {sections.map((section, index) => (
-              <div
-                key={section.id}
-                ref={el => sectionsRefs.current[section.id] = el}
-                className="min-h-screen flex items-center"
-              >
-                <div className="max-w-xl">
-                  <div className="animate-fadeIn">
-                    {/* Title */}
-                    {/* <h2 className="text-[36px] font-bold text-white mb-3">
-                      {section.title}
-                    </h2> */}
+                <div
+                    key={section.id}
+                    ref={el => sectionsRefs.current[section.id] = el}
+                    className="min-h-screen flex items-center"
+                >
+                    <div className="max-w-xl">
+                    <div className="animate-fadeIn">
+                        {/* Title */}
+                        {/* <h2 className="text-[36px] font-bold text-white mb-3">
+                        {section.title}
+                        </h2> */}
 
-                    {/* Subtitle */}
-                    <p className="text-[22px] fc-primary mb-8 leading-relaxed">
-                      {section.subtitle}
-                    </p>
+                        {/* Subtitle */}
+                        <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                        {section.subtitle}
+                        </p>
 
-                    {/* Features */}
-                    <div className="space-y-4 mb-10">
-                      {section.features.map((feature, featureIndex) => (
-                        <div
-                          key={featureIndex}
-                          className="flex items-start"
-                        >
-                          {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
-                          <span className="fc-primary text-[18px] leading-relaxed">
-                            {feature}
-                          </span>
+                        <p className="text-[18px] fc-primary mb-8 leading-relaxed">
+                        {section.description}
+                        </p>
+
+                        {/* Features */}
+                        <div className="space-y-4 mb-10">
+                        {section.features.map((feature, featureIndex) => (
+                            <div
+                            key={featureIndex}
+                            className="flex items-start"
+                            >
+                            {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
+                            <span className="fc-primary text-[18px] leading-relaxed">
+                                {feature}
+                            </span>
+                            </div>
+                        ))}
                         </div>
-                      ))}
                     </div>
-                  </div>
+                    <hr className="border-white mb-8"/>
                 </div>
               </div>
             ))}
           </div>
-          <hr className="border-white mb-8"/>
         </div>
       </section>
       {/* Custom CSS for animations */}
@@ -475,3 +462,38 @@ function WhatProblem() {
     </>
   );
 }
+
+
+// Ready TO See Demo//
+const EdumanDemoSection = () => {
+  return (
+    <section className="bg-[#00141d] text-white py-16 px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-10">
+      {/* Left Content */}
+      <div className="flex-1">
+        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+          Ready to See It in Action?
+        </h2>
+        <p className="text-[18px] text-gray-400 leading-relaxed">
+          Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
+          <span className="text-lime-400 font-medium">Book a Demo</span> today!
+        </p>
+        <div className="mt-6">
+          <a href="#" className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">
+            See Our Work
+            <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Right Image */}
+      <div className="flex-1">
+        <img
+          src="/images/productinner2.png"
+          alt="Eduman Demo Devices"
+          className="w-full"
+        />
+      </div>
+    </section>
+  );
+};
+

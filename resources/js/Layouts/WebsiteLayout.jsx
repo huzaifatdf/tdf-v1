@@ -70,7 +70,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 <div className="container-fluid">
                 {/* Top Line */}
                 <div className="flex justify-between items-center border-b border-gray-700 pb-6">
-                    <p className="text-[22px] fc-primary mb-0">Let’s Create What Actually Resonates...</p>
+                    <p className="text-[22px] fc-primary mb-0">Stay Ahead. Stay Relevant...</p>
                     <div className="flex items-center cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
                     <h2 className="text-[80px] font-[400] fc-primary mr-6">let's talk</h2>
                     <div className={`w-20 h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>

@@ -637,27 +637,37 @@ function TestimonialsSection() {
 
 // Client Section //
 const clientsRow1 = [
-  "idemitsu", "pentaexpress", "bluebird", "abl", "ziauddin", "blinq", "askaribank"
+  "ibm", "pg", "bok", "bankak", "time", "authentik", "rbs", "christou", "saeed", "metro", "rayan", "payfast"
 ];
 const clientsRow2 = [
-  "bok", "nift", "pmic", "datacheck", "sunrise", "blowplast", "radi"
+  "sosafe", "sunrise", "ziauddin", "bok2", "nift", "radiant", "alliend", "idem", "askari", "blinkq", "bluebird", "zafra"
 ];
 
 const imageMap = {
-  idemitsu: "logo.svg",
-  pentaexpress: "logo.svg",
-  bluebird: "logo.svg",
-  abl: "logo.svg",
-  ziauddin: "logo.svg",
-  blinq: "logo.svg",
-  askaribank: "logo.svg",
-  bok: "logo.svg",
-  nift: "logo.svg",
-  pmic: "logo.svg",
-  datacheck: "logo.svg",
-  sunrise: "logo.svg",
-  blowplast: "logo.svg",
-  radi: "logo.svg",
+  ibm: "ibm.png",
+  pg: "pg.png",
+  bok: "bok.png",
+  bankak: "bankak.png",
+  time: "time.png",
+  authentik: "authentik.png",
+  christou: "christou.png",
+  saeed: "saeed.png",
+  metro: "metro.png",
+  rayan: "rayan.png",
+  payfast: "payfast.png",
+  rbs: "rbs.png",
+  sosafe: "sosafe.png",
+  sunrise: "sunrise.png",
+  ziauddin: "ziauddin.png",
+  bok2: "bok2.png",
+  nift: "nift.png",
+  radiant: "radiant.png",
+  alliend: "alliend.png",
+  idem: "idem.png",
+  askari: "askari.png",
+  blinkq: "blinkq.png",
+  bluebird: "bluebird.png",
+  zafra: "zafra.png",
 };
 
 function ClientSlider() {
@@ -674,7 +684,7 @@ function ClientSlider() {
                     key={index}
                     src={`/images/${imageMap[client]}`}
                     alt={client}
-                    className="mx-6 h-12 object-contain grayscale hover:grayscale-0 transition duration-300"
+                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
                 />
                 ))}
             </Marquee>
@@ -686,7 +696,7 @@ function ClientSlider() {
                     key={index}
                     src={`/images/${imageMap[client]}`}
                     alt={client}
-                    className="mx-6 h-12 object-contain grayscale hover:grayscale-0 transition duration-300"
+                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
                 />
                 ))}
             </Marquee>
