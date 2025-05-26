@@ -242,3 +242,20 @@ body {
 .rotate-hover:hover img {
   transform: scale(1.1);
 }
+
+
+// Custom scoller Bar //
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #00141b !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #D9D9D940;
+    border-radius: 40px;
+    min-height: 20px;
+}

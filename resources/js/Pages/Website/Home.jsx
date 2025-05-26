@@ -849,7 +849,6 @@ export default function Home() {
                 <Section />
                 <VideoZoomSection />
                 <SmartToolsSlider />
-
                 <ClientSlider />
                 <ServiceSlider />
                 <TestimonialsSection />

@@ -4,11 +4,11 @@
   text-shadow: none;
 }
 
-::selection {
-  background: $theme-secondary;
-  color: $theme-white;
-  text-shadow: none;
-}
+// ::selection {
+//   background: $theme-secondary;
+//   color: $theme-white;
+//   text-shadow: none;
+// }
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -21,11 +21,11 @@
   }
 }
 
-::-webkit-scrollbar-track-piece {
-  background-color: $theme-white;
-  -webkit-border-radius: 0px;
-  border-left: 1px solid rgba($theme-primary, 0.1);
-}
+// ::-webkit-scrollbar-track-piece {
+//   background-color: $theme-white;
+//   -webkit-border-radius: 0px;
+//   border-left: 1px solid rgba($theme-primary, 0.1);
+// }
 
 ::-webkit-scrollbar-thumb:vertical {
   -webkit-border-radius: 0px;

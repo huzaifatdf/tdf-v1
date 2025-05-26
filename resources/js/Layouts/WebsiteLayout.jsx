@@ -21,7 +21,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg bg-transparent position-absolute top-0 start-0 w-100 shadow-none" style={{ zIndex: 3 }}>
                 <div className="container-fluid">
-                    <a className="navbar-brand d-flex align-items-center fw-bold" href="/">
+                    <a className="navbar-brand d-flex align-items-center fw-bold" href="/home">
                         <img
                             src="/images/logo.svg"
                             alt="Logo"

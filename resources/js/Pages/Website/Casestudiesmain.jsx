@@ -143,23 +143,15 @@ const [sections,setSections] = useState( data
   return (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen">
-        {/* Main Content Area */}
-        <div className="flex">
-          {/* Left Side - Fixed Navigation */}
+        <div className="flex sec-padding">
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
             <div className="max-w-lg">
-              {/* <div className="mb-12">
-                <h1 className="text-[42px] font-bold text-white mb-4">
-                  AI Model Suite
-                </h1>
-                <p className="text-[18px] text-gray-400 leading-relaxed">
-                  Explore our comprehensive collection of AI models designed for different use cases and applications.
-                </p>
-              </div> */}
 
-              <nav className="space-y-8">
+              <nav className="space-y-8 pl-6 h-[750px] overflow-y-auto custom-scrollbar"
+                style={{ direction: 'rtl' }}
+                >
                 {sections.map((section, index) => (
-                  <div key={section.id} className="relative group">
+                  <div key={section.id} className="relative group" style={{ direction: 'ltr' }}>
                     <button
                       onClick={() => handleSectionClick(section.id)}
                       className={`text-left w-full transition-all duration-500 ${
@@ -175,7 +167,7 @@ const [sections,setSections] = useState( data
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                      <h3 className={`text-[22px] mb-2 transition-all duration-500  ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
