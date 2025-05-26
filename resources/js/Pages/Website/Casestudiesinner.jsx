@@ -5,8 +5,10 @@ import WebsiteLayout from "@/Layouts/WebsiteLayout";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Casestudiesinner() {
+export default function Casestudiesinner(props) {
   const introRef = useRef(null);
+  const {casestudy} = props;
+  console.log(casestudy);
 
   useEffect(() => {
     const intro = introRef.current;
@@ -33,17 +35,15 @@ export default function Casestudiesinner() {
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
                     <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
-                        Habib Metropolitan Bank – From<br className="hidden md:block" />Wireframes to Amazing Results
+                        {casestudy.title} – <br className="hidden md:block" />{casestudy.subtitle || ''}
                     </h1>
                 </div>
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
                     <p className="text-[18px] fc-primary leading-relaxed mb-6">
-                        When Habib Metropolitan Bank (HabibMetro), one of Pakistan's leading trade finance institutions, approached us, they were looking to refresh and modernize the brand’s digital look and feel.
+                         <div dangerouslySetInnerHTML={{ __html: casestudy.description || '' }} />
                     </p>
-                    <p className="text-[18px] fc-primary leading-relaxed">
-                        Despite having a solid base with a presence in over 200 cities and a legacy rooted in the globally recognized Habib Bank AG Zurich, their online look just wasn’t doing justice to who they are. Their website was outdated. Their mobile app lacked consistency, and the overall user experience wasn’t flowing right.
-                    </p>
+
                     </div>
                 </div>
                 </div>
@@ -58,7 +58,7 @@ export default function Casestudiesinner() {
         </div>
       </section>
 
-      <Capabilities />
+      <Capabilities data={casestudy}/>
       <Beginning />
       <SmoothExperienceSection />
       <Components />
@@ -156,39 +156,20 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
   );
 };
 
-function Capabilities() {
-  const projects = [
-    {
-      title: "Website Redesign",
-      description: "A complete transformation of HabibMetro's digital banking experience, featuring intuitive interfaces and enhanced security measures.",
-      link: "www.habibmetro.com",
-      image: "/images/case2.png"
-    },
-    {
-      title: "Website Redevelopment",
-      description: "A revolutionary mobile banking application that puts the power of banking in customers' hands with advanced features and seamless UX.",
-      link: "www.habibmetro.com",
-      image: "/images/case3.png"
-    },
-    {
-      title: "Mobile App UX/UI",
-      description: "A sophisticated platform designed specifically for corporate clients, offering advanced treasury and trade finance capabilities.",
-      link: "www.habibmetro.com",
-      image: "/images/case2.png"
-    },
-    {
-      title: "Internet Banking UX/UI",
-      description: "A streamlined account opening process that reduces onboarding time from days to minutes through intelligent automation.",
-      link: "www.habibmetro.com",
-      image: "/images/case3.png"
-    },
-    {
-      title: "Internet Banking UX/UI 2",
-      description: "A comprehensive payment solution that enables seamless transactions across multiple channels and platforms.",
-      link: "www.habibmetro.com",
-      image: "/images/case2.png"
-    }
-  ];
+function Capabilities(props) {
+  const { data } = props;
+  const projects =
+   data
+  ? data.services.map((item, index) => ({
+    id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
+      title: item["title"] ,
+      //set description to 10 words max
+      description:data.description || '',
+         link: data.website || '',
+        image:item["image"] || '/images/case2.png', // Default image if not provided
+    }))
+  : [];
+
 
   return (
     <div className="relative">

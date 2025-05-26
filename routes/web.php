@@ -29,3 +29,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
+Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
+    ->name('casestudy.show');
+

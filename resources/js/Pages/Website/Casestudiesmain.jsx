@@ -245,7 +245,7 @@ const [sections,setSections] = useState( data
 
                     {/* Subtitle */}
                     <p className="text-[22px] fc-primary mb-8 leading-relaxed">
-                      {section.subtitle}
+                 <div dangerouslySetInnerHTML={{ __html: section.subtitle }} />
                     </p>
 
                     {/* Features */}
@@ -257,7 +257,7 @@ const [sections,setSections] = useState( data
                         >
                           {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
                           <span className="fc-primary text-[18px] leading-relaxed">
-                            {feature}
+                            {feature["title"]}
                           </span>
                         </div>
                       ))}
