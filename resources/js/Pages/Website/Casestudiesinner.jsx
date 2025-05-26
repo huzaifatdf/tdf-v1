@@ -61,7 +61,7 @@ export default function Casestudiesinner(props) {
       <Capabilities data={casestudy}/>
       <Beginning />
       <SmoothExperienceSection />
-      <Components />
+      <Components data={casestudy.techstack}/>
     </WebsiteLayout>
   );
 }
@@ -553,26 +553,20 @@ function SmoothExperienceSection() {
 
 
 // Table Section //
-function Components() {
+function Components(props) {
+    const { data } = props;
   return (
     <div className="container-fluid">
       <div className="sec-padding pt-0">
         <div className="grid grid-cols-2 ">
 
-          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Content Management System</div>
-          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Customized WordPress</div>
+          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Component</div>
+          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Technology</div>
 
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Frontend</div>
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">HTML5, CSS3, JavaScript</div>
-
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Backend</div>
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">PHP (WordPress Core Customization)</div>
-
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Design & Prototyping</div>
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Figma, Adobe XD</div>
-
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Languages Supported</div>
-          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">English, Urdu</div>
+         {data && data.map((item, index) => (
+   <>       <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">{item["component"]}</div>
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">{item["technology"]}</div>
+</>))}
         </div>
       </div>
     </div>

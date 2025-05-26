@@ -19,12 +19,22 @@ class Casestudy extends Model
         'status',
         'priority',
         'post_image',
+        'techstack',
+        'component',
+        'experience',
+        'goals',
+        'other',
     ];
     protected $casts = [
         'services' => 'array',
         'status' => 'string',
         'priority' => 'integer',
         'post_image' => 'string',
+        'techstack' => 'array',
+        'component' => 'string',
+        'experience' => 'array',
+        'goals' => 'string',
+        'other' => 'string',
     ];
     protected $table = 'casestudies';
 }
