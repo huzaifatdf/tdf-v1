@@ -1,0 +1,601 @@
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import WebsiteLayout from "@/Layouts/WebsiteLayout";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Casestudiesinner() {
+  const introRef = useRef(null);
+
+  useEffect(() => {
+    const intro = introRef.current;
+
+    gsap.from(intro, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: intro,
+        start: "top 80%",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, []);
+
+  return (
+    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+      <section ref={introRef} className="min-h-[100vh] flex items-center bg-dark-950 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-50" />
+        <div className="container-fluid relative z-10 mt-[100px]">
+            <div className="">
+                <div className="flex flex-col md:flex-row gap-12 items-start">
+                <div className="md:w-1/2">
+                    <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
+                        Habib Metropolitan Bank – From<br className="hidden md:block" />Wireframes to Amazing Results
+                    </h1>
+                </div>
+                <div className="md:w-1/2">
+                    <div className="prose prose-lg prose-invert">
+                    <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                        When Habib Metropolitan Bank (HabibMetro), one of Pakistan's leading trade finance institutions, approached us, they were looking to refresh and modernize the brand’s digital look and feel.
+                    </p>
+                    <p className="text-[18px] fc-primary leading-relaxed">
+                        Despite having a solid base with a presence in over 200 cities and a legacy rooted in the globally recognized Habib Bank AG Zurich, their online look just wasn’t doing justice to who they are. Their website was outdated. Their mobile app lacked consistency, and the overall user experience wasn’t flowing right.
+                    </p>
+                    </div>
+                </div>
+                </div>
+                <img
+                    src="/images/case.png"
+                    alt="HabibMetro Bank Project Overview"
+                    className="w-full h-[50vh] object-cover mt-5 mb-5"
+                />
+                <p className="text-[32px] font-bold fc-secondary leading-tight">Services Provided</p>
+                <hr className="border-white mb-8"/>
+            </div>
+        </div>
+      </section>
+
+      <Capabilities />
+      <Beginning />
+      <SmoothExperienceSection />
+      <Components />
+    </WebsiteLayout>
+  );
+}
+
+const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => {
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const content = contentRef.current;
+
+    if (isLast) {
+      // For the last section, use different ScrollTrigger settings
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom top",
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            // Fade out the content as we scroll past
+            gsap.set(content, { opacity: 1 - self.progress });
+          }
+        }
+      });
+
+      tl.from(content, {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+      });
+    } else {
+      // Regular sections
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=100%",
+          pin: true,
+          pinSpacing: false,
+          scrub: 1,
+        }
+      });
+
+      tl.from(content, {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, [isLast]);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative h-screen bg-dark-950 text-white flex items-center"
+      style={{ zIndex: 100 - index }}
+    >
+      <div className="absolute inset-0 opacity-50" />
+      <div className="container-fluid relative z-10">
+        <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
+            <div className="md:col-span-5 flex flex-col justify-between h-full">
+                <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
+                <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
+                >
+                {link}
+                </a>
+            </div>
+            <div className="md:col-span-7 relative group">
+                <div className="absolute inset-0 transform transition-transform duration-500 " />
+                <img
+                src={image}
+                alt={title}
+                className="w-full transform transition-all duration-500"
+                />
+            </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+function Capabilities() {
+  const projects = [
+    {
+      title: "Website Redesign",
+      description: "A complete transformation of HabibMetro's digital banking experience, featuring intuitive interfaces and enhanced security measures.",
+      link: "www.habibmetro.com",
+      image: "/images/case2.png"
+    },
+    {
+      title: "Website Redevelopment",
+      description: "A revolutionary mobile banking application that puts the power of banking in customers' hands with advanced features and seamless UX.",
+      link: "www.habibmetro.com",
+      image: "/images/case3.png"
+    },
+    {
+      title: "Mobile App UX/UI",
+      description: "A sophisticated platform designed specifically for corporate clients, offering advanced treasury and trade finance capabilities.",
+      link: "www.habibmetro.com",
+      image: "/images/case2.png"
+    },
+    {
+      title: "Internet Banking UX/UI",
+      description: "A streamlined account opening process that reduces onboarding time from days to minutes through intelligent automation.",
+      link: "www.habibmetro.com",
+      image: "/images/case3.png"
+    },
+    {
+      title: "Internet Banking UX/UI 2",
+      description: "A comprehensive payment solution that enables seamless transactions across multiple channels and platforms.",
+      link: "www.habibmetro.com",
+      image: "/images/case2.png"
+    }
+  ];
+
+  return (
+    <div className="relative">
+      {projects.map((project, index) => (
+        <WebsiteShowcase
+          key={index}
+          title={project.title}
+          description={project.description}
+          link={project.link}
+          image={project.image}
+          index={index}
+          isLast={index === projects.length - 1}
+        />
+      ))}
+    </div>
+  );
+}
+
+function Beginning() {
+ const sectionRef = useRef(null);
+
+  useEffect(() => {
+    // Simple fade-in animation (assuming gsap is available elsewhere)
+    const section = sectionRef.current;
+    if (section) {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(50px)';
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(section);
+
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className=""
+    >
+
+    <div className="container-fluid">
+
+        <hr className="border-white mb-8"/>
+        <div className="sec-padding">
+        <div className="grid lg:grid-cols-2 gap-12 align-items-center">
+          {/* Left side - Image */}
+          <div className="relative">
+            <div className="overflow-hidden shadow-2xl">
+              <img
+                src="/images/begi.png"
+                alt="Team collaboration in modern office"
+                className="w-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Right side - Content */}
+          <div className="lg:pl-8">
+            <h2 className="text-[30px] fc-secondary font-bold mb-3">
+              The Beginning - Understanding the Need
+            </h2>
+
+            <div className="mb-8">
+              <p className="fc-primary text-lg leading-relaxed mb-6">
+                Right from the start, HabitMetro wasn't just after a new look — they wanted a comprehensive upgrade of their digital presence.
+              </p>
+
+              <h3 className="text-[22px] fc-primary font-bold mb-2">
+                Their goals were:
+              </h3>
+
+              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
+              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
+              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
+            </div>
+
+            <div>
+              <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
+                Our Approach
+              </h3>
+
+              <p className="fc-primary text-lg leading-relaxed mb-2">
+                We started by setting the groundwork. Our team created a comprehensive digital strategy, which included:
+              </p>
+
+              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
+              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
+              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
+            </div>
+          </div>
+        </div>
+
+            {/* Bottom text */}
+            <div className="fc-primary text-lg leading-relaxed mt-7">
+              We took a very cooperative approach. Whether customers were using a desktop computer to examine financial products or a mobile device to check account details, every layout, interaction, and interface was designed with the end user in mind.
+            </div>
+      </div>
+      <hr className="border-white mb-8"/>
+    </div>
+    </section>
+  );
+}
+
+
+
+// fixed hight section //
+function SmoothExperienceSection() {
+  const [activeSection, setActiveSection] = useState('text-to-text');
+  const sectionRef = useRef(null);
+  const sectionsRefs = useRef({});
+
+  const sections = [
+    {
+      id: '01',
+      title: 'Designing a Smooth Experience',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '25+',
+        performance: '99.9%',
+        latency: '<100ms'
+      }
+    },
+    {
+      id: '02',
+      title: 'The Website',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '15+',
+        performance: '99.8%',
+        latency: '<2s'
+      }
+    },
+    {
+      id: '03',
+      title: 'The Mobile App',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '8+',
+        performance: '99.5%',
+        latency: '<5s'
+      }
+    },
+    {
+      id: '04',
+      title: 'Multimodal Models',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '12+',
+        performance: '99.7%',
+        latency: '<200ms'
+      }
+    }
+  ];
+
+  // Scroll observer to update active section based on scroll position
+  useEffect(() => {
+    const observers = [];
+
+    sections.forEach((section) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(section.id);
+          }
+        },
+        {
+          threshold: 0.6,
+          rootMargin: '-20% 0px -20% 0px'
+        }
+      );
+
+      const element = sectionsRefs.current[section.id];
+      if (element) {
+        observer.observe(element);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [sections]);
+
+  // GSAP entrance animation
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    gsap.from(section, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, []);
+
+  const handleSectionClick = (sectionId) => {
+    const element = sectionsRefs.current[sectionId];
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+  const currentSection = sections.find(s => s.id === activeSection);
+
+  return (
+    <>
+      <section ref={sectionRef} className="container-fluid min-h-screen">
+        {/* Main Content Area */}
+        <div className="flex">
+          {/* Left Side - Fixed Navigation */}
+          <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
+            <div className="max-w-lg">
+              {/* <div className="mb-12">
+                <h1 className="text-[42px] font-bold text-white mb-4">
+                  AI Model Suite
+                </h1>
+                <p className="text-[18px] text-gray-400 leading-relaxed">
+                  Explore our comprehensive collection of AI models designed for different use cases and applications.
+                </p>
+              </div> */}
+
+              <nav className="space-y-8">
+                {sections.map((section, index) => (
+                  <div key={section.id} className="relative group">
+                    <button
+                      onClick={() => handleSectionClick(section.id)}
+                      className={`text-left w-full transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'opacity-100'
+                          : 'hover:opacity-70'
+                      }`}
+                    >
+                      <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'fc-secondary'
+                          : 'fc-white'
+                      }`}>
+                        {section.id}
+                      </h5>
+                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'fc-secondary'
+                          : 'fc-white'
+                      }`}>
+                        {section.title}
+                      </h3>
+                      {/* <p className={`text-[14px] leading-relaxed transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'text-gray-300'
+                          : 'text-gray-500'
+                      }`}>
+                        {section.subtitle}
+                      </p> */}
+                    </button>
+
+                    {/* Active indicator */}
+                    {activeSection === section.id && (
+                      <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
+
+                    )}
+                  </div>
+                ))}
+              </nav>
+
+              {/* Progress indicator */}
+              {/* <div className="mt-12 flex items-center space-x-2">
+                {sections.map((section, index) => (
+                  <div
+                    key={section.id}
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      sections.findIndex(s => s.id === activeSection) >= index
+                        ? 'bg-blue-500 w-8'
+                        : 'bg-gray-700 w-4'
+                    }`}
+                  />
+                ))}
+              </div> */}
+            </div>
+          </div>
+
+          {/* Right Side - Scrollable Content */}
+          <div className="w-1/2">
+            {sections.map((section, index) => (
+              <div
+                key={section.id}
+                ref={el => sectionsRefs.current[section.id] = el}
+                className="min-h-screen flex items-center"
+              >
+                <div className="max-w-xl">
+                  <div className="animate-fadeIn">
+                    {/* Title */}
+                    {/* <h2 className="text-[36px] font-bold text-white mb-3">
+                      {section.title}
+                    </h2> */}
+
+                    {/* Subtitle */}
+                    <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                      {section.subtitle}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-4 mb-10">
+                      {section.features.map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-start"
+                        >
+                          {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
+                          <span className="fc-primary text-[18px] leading-relaxed">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <hr className="border-white mb-8"/>
+        </div>
+      </section>
+      {/* Custom CSS for animations */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}</style>
+    </>
+  );
+}
+
+
+// Table Section //
+function Components() {
+  return (
+    <div className="container-fluid">
+      <div className="sec-padding pt-0">
+        <div className="grid grid-cols-2 ">
+
+          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Content Management System</div>
+          <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Customized WordPress</div>
+
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Frontend</div>
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">HTML5, CSS3, JavaScript</div>
+
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Backend</div>
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">PHP (WordPress Core Customization)</div>
+
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Design & Prototyping</div>
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Figma, Adobe XD</div>
+
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">Languages Supported</div>
+          <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">English, Urdu</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+

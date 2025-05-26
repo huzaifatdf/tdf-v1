@@ -1,0 +1,33 @@
+.box {
+    &.hero-section {
+        height: 100vh;
+        overflow: hidden;
+        video {
+            object-fit: cover;
+        }
+        .hero-content {
+            height: 100%;
+            z-index: 2;
+            padding: 2rem;
+            mix-blend-mode: difference;
+            top: 30%;
+            h1 {
+                font-size: 3rem;
+                font-weight: 600;
+                margin: 0;
+            }
+            h2 {
+                font-size: 4.5rem;
+                font-weight: 800;
+                margin: 0;
+                line-height: 1;
+            }
+        }
+    }
+
+    &.inside-page-banner {
+        // height: 100vh;
+        margin-top: 60px;
+    }
+}
+

@@ -1,0 +1,477 @@
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight } from 'lucide-react';
+import WebsiteLayout from "@/Layouts/WebsiteLayout";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Productinner() {
+  const introRef = useRef(null);
+
+  useEffect(() => {
+    const intro = introRef.current;
+
+    gsap.from(intro, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: intro,
+        start: "top 80%",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, []);
+
+  return (
+    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+          <section ref={introRef} className="min-h-[100vh] flex items-center bg-dark-950 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-50" />
+            <div className="container-fluid relative z-10 mt-[100px]">
+                <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
+                    <div className="md:w-1/2">
+                        <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
+                            Eduman<br className="hidden md:block" />A Saas-Based School Management System
+                        </h1>
+                        <img
+                            src="/images/productinner.png"
+                            alt="HabibMetro Bank Project Overview"
+                            className="w-full h-[50vh] object-cover mt-5 mb-5"
+                        />
+                    </div>
+                    <div className="md:w-1/2">
+                        <div className="prose prose-lg prose-invert">
+                        <p className="text-[22px] fc-primary leading-relaxed">
+                            Quick Highlights
+                        </p>
+                        <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                            100% Cloud-Based: No servers or installations required.
+                            Mobile App: Easy to use on smartphones and tablets.
+                            Modular & Customizable: Choose the features that work best for you.
+                            Multilingual Support: Available in English, Arabic, Urdu, and more.
+                            Easy Management of Fees, Exams, and Attendance: Everything in one place.
+                            Trusted Worldwide: 200+ institutions and more than 1.4 million students globally.
+                        </p>
+                        <p className="text-[22px] fc-primary leading-relaxed">
+                            Curious how it works for your school?
+                        </p>
+                        <p className="text-[18px] fc-primary leading-relaxed">
+                            Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </section>
+
+        <BenefitsContactForm />
+        <DetailedOverview />
+        <WhatProblem />
+        </WebsiteLayout>
+  );
+}
+
+
+
+// Form //
+function BenefitsContactForm() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    company: '',
+    email: '',
+    mobileNumber: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Handle form submission here
+  };
+
+  return (
+    <div className="bg-[#04040466] py-16">
+      <div className="container-fluid">
+        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+          Uncover the Benefits Now!
+        </h2>
+
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Full Name */}
+            <div className="relative">
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="Full Name"
+                className="w-full bg-transparent border-b-2 border-gray-600 py-2 px-0 text-white transition-colors duration-300"
+                style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+                required
+              />
+            </div>
+
+            {/* Company */}
+            <div className="relative">
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleInputChange}
+                placeholder="Company"
+                className="w-full bg-transparent border-b-2 border-gray-600 py-2 px-0 text-white transition-colors duration-300"
+                style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+                required
+              />
+            </div>
+
+            {/* Email */}
+            <div className="relative">
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+                className="w-full bg-transparent border-b-2 border-gray-600 py-2 px-0 text-white transition-colors duration-300"
+                style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+                required
+              />
+            </div>
+
+            {/* Mobile Number */}
+            <div className="relative">
+              <input
+                type="tel"
+                name="mobileNumber"
+                value={formData.mobileNumber}
+                onChange={handleInputChange}
+                placeholder="Mobile Number"
+                className="w-full bg-transparent border-b-2 border-gray-600 py-2 px-0 text-white transition-colors duration-300"
+                style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex justify-end mt-12">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer"
+            >
+              Submit
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform fc-purple duration-300" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// Detailed Overview //
+function DetailedOverview() {
+  return (
+    <div className="container-fluid ">
+      <div className="py-16">
+        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+          Detailed Overview
+        </h2>
+
+        <div className="space-y-6 text-gray-300 leading-relaxed">
+            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                Managing a school is not easy. Behind the scenes, a lot is going on, including managing teacher schedules, tracking fee collections, and keeping an eye on student performance. 
+            </p>
+            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                EDUMAN, a cloud-based, SaaS (Software as a Service) School Management and Learning Management System (LMS), is developed to make all of this simpler. 
+            </p>
+            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                As a strategic partner, The Design Firm (TDF) helps bring EDUMAN to educational institutions that want to simplify operations and improve the learning experience.
+            </p>
+        </div>
+      </div>
+
+        <hr className="border-white mb-8"/>
+    </div>
+  );
+}
+
+
+// What PRoblem //
+function WhatProblem() {
+  const [activeSection, setActiveSection] = useState('text-to-text');
+  const sectionRef = useRef(null);
+  const sectionsRefs = useRef({});
+
+  const sections = [
+    {
+      id: '01',
+      title: 'Designing a Smooth Experience',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '25+',
+        performance: '99.9%',
+        latency: '<100ms'
+      }
+    },
+    {
+      id: '02',
+      title: 'The Website',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '15+',
+        performance: '99.8%',
+        latency: '<2s'
+      }
+    },
+    {
+      id: '03',
+      title: 'The Mobile App',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '8+',
+        performance: '99.5%',
+        latency: '<5s'
+      }
+    },
+    {
+      id: '04',
+      title: 'Multimodal Models',
+      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
+      features: [
+        'Clarity over clutter',
+        'Consistency across web and mobile',
+        'Accessibility in both English and Urdu'
+      ],
+      stats: {
+        models: '12+',
+        performance: '99.7%',
+        latency: '<200ms'
+      }
+    }
+  ];
+
+  // Scroll observer to update active section based on scroll position
+  useEffect(() => {
+    const observers = [];
+
+    sections.forEach((section) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(section.id);
+          }
+        },
+        {
+          threshold: 0.6,
+          rootMargin: '-20% 0px -20% 0px'
+        }
+      );
+
+      const element = sectionsRefs.current[section.id];
+      if (element) {
+        observer.observe(element);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [sections]);
+
+  // GSAP entrance animation
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    gsap.from(section, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, []);
+
+  const handleSectionClick = (sectionId) => {
+    const element = sectionsRefs.current[sectionId];
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+  const currentSection = sections.find(s => s.id === activeSection);
+
+  return (
+    <>
+      <section ref={sectionRef} className="container-fluid min-h-screen">
+        {/* Main Content Area */}
+        <div className="flex">
+          {/* Left Side - Fixed Navigation */}
+          <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
+            <div className="max-w-lg">
+              <div className="mb-12">
+                <h1 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+                  What Problems Does EDUMAN Solve?
+                </h1>
+                <p className="text-[18px] text-gray-400 leading-relaxed">
+                  EDUMAN was built around real-world challenges faced by school administrators, teachers, and parents. It’s not just about technology, but about solving everyday problems in education.
+                </p>
+              </div>
+
+              <nav className="space-y-8">
+                {sections.map((section, index) => (
+                  <div key={section.id} className="relative group">
+                    <button
+                      onClick={() => handleSectionClick(section.id)}
+                      className={`text-left w-full transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'opacity-100'
+                          : 'hover:opacity-70'
+                      }`}
+                    >
+                      <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'fc-secondary'
+                          : 'fc-white'
+                      }`}>
+                        {section.id}
+                      </h5>
+                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'fc-secondary'
+                          : 'fc-white'
+                      }`}>
+                        {section.title}
+                      </h3>
+                      {/* <p className={`text-[14px] leading-relaxed transition-all duration-500 ${
+                        activeSection === section.id
+                          ? 'text-gray-300'
+                          : 'text-gray-500'
+                      }`}>
+                        {section.subtitle}
+                      </p> */}
+                    </button>
+
+                    {/* Active indicator */}
+                    {activeSection === section.id && (
+                      <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
+
+                    )}
+                  </div>
+                ))}
+              </nav>
+
+              {/* Progress indicator */}
+              {/* <div className="mt-12 flex items-center space-x-2">
+                {sections.map((section, index) => (
+                  <div
+                    key={section.id}
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      sections.findIndex(s => s.id === activeSection) >= index
+                        ? 'bg-blue-500 w-8'
+                        : 'bg-gray-700 w-4'
+                    }`}
+                  />
+                ))}
+              </div> */}
+            </div>
+          </div>
+
+          {/* Right Side - Scrollable Content */}
+          <div className="w-1/2">
+            {sections.map((section, index) => (
+              <div
+                key={section.id}
+                ref={el => sectionsRefs.current[section.id] = el}
+                className="min-h-screen flex items-center"
+              >
+                <div className="max-w-xl">
+                  <div className="animate-fadeIn">
+                    {/* Title */}
+                    {/* <h2 className="text-[36px] font-bold text-white mb-3">
+                      {section.title}
+                    </h2> */}
+
+                    {/* Subtitle */}
+                    <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                      {section.subtitle}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-4 mb-10">
+                      {section.features.map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-start"
+                        >
+                          {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
+                          <span className="fc-primary text-[18px] leading-relaxed">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <hr className="border-white mb-8"/>
+        </div>
+      </section>
+      {/* Custom CSS for animations */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}</style>
+    </>
+  );
+}
