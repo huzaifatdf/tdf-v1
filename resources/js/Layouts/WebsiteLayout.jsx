@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
 
+
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
