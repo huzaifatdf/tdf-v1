@@ -3,6 +3,8 @@ import { Head } from '@inertiajs/react';
 import ParticlesBackground from "@/components/ParticlesBackground";
 import CustomCursor from "@/components/CustomCursor";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
     const [menuOpen, setMenuOpen] = useState(false);
