@@ -341,7 +341,7 @@ function FiltersWithSearch() {
                     <ChevronDown size={16} />
                 </div>
                 {openDropdown === "industries" && (
-                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg">
+                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg p-0">
                     {filterItems(industries).map((industry) => (
                         <li
                         key={industry}
@@ -364,7 +364,7 @@ function FiltersWithSearch() {
                     <ChevronDown size={16} />
                 </div>
                 {openDropdown === "services" && (
-                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg">
+                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg p-0">
                     {filterItems(services).map((service) => (
                         <li
                         key={service}
@@ -387,7 +387,7 @@ function FiltersWithSearch() {
                     <ChevronDown size={16} />
                 </div>
                 {openDropdown === "names" && (
-                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg">
+                    <ul className="absolute z-20 mt-2 w-40 max-h-48 overflow-auto rounded bg-gray-800 text-white shadow-lg p-0">
                     {filterItems(names).map((name) => (
                         <li
                         key={name}

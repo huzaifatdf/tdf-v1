@@ -32,15 +32,15 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
                     {/* Burger Icon */}
                     <svg
-                        className="burger"
+                        className={`burger ${menuOpen ? 'open' : ''}`}
                         viewBox="0 0 100 80"
                         fill="#000"
                         onClick={toggleMenu}
                         style={{ cursor: 'pointer' }}
-                    >
-                        <rect fill='#fff' width="130" height="15"></rect>
-                        <rect fill='#fff' y="30" width="130" height="15"></rect>
-                        <rect fill='#fff' y="60" width="130" height="15"></rect>
+                        >
+                        <rect className="bar bar1" width="130" height="15" />
+                        <rect className="bar bar2" y="30" width="130" height="15" />
+                        <rect className="bar bar3" y="60" width="130" height="15" />
                     </svg>
 
                     {/* Side Menu */}
@@ -69,17 +69,39 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
             <footer className="text-white pt-8">
                 <div className="container-fluid">
                 {/* Top Line */}
-                <div className="flex justify-between items-center border-b border-gray-700 pb-6">
-                    <p className="text-[22px] fc-primary mb-0">Stay Ahead. Stay Relevant...</p>
-                    <div className="flex items-center cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-                    <h2 className="text-[80px] font-[400] fc-primary mr-6">let's talk</h2>
-                    <div className={`w-20 h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-12 text-black">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-700 pb-6 gap-4">
+                    {/* Left Text */}
+                    <p className="text-[18px] md:text-[22px] fc-primary mb-0">
+                        Stay Ahead. Stay Relevant...
+                    </p>
+
+                    {/* Right 'Let's Talk' with Icon */}
+                    <div
+                        className="flex items-center cursor-pointer"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        <h2 className="text-[40px] md:text-[80px] font-[400] fc-primary mr-4 md:mr-6 leading-none">
+                        let's talk
+                        </h2>
+                        <div
+                        className={`w-14 h-14 md:w-20 md:h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${
+                            isExpanded ? 'rotate-180' : ''
+                        }`}
+                        >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-8 h-8 md:w-10 md:h-12 text-black"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
-                    </div>
+                        </div>
                     </div>
                 </div>
+
 
                 {/* Expandable Box */}
                 {isExpanded && (
@@ -106,7 +128,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         </div>
                     </div>
 
-                    <form className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white">
+                    <form className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
                         <input
                             type="text"
                             placeholder="Full Name"
@@ -115,24 +137,19 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         <input
                             type="email"
                             placeholder="Email"
-                            className="w-full md:w-[48%] "
+                            className="w-full md:w-[45%] "
                         />
                         <input
                             type="tel"
                             placeholder="Phone"
-                            className="w-full md:w-[48%]"
+                            className="w-full md:w-[45%]"
                         />
                         <textarea
                             placeholder="Message"
                             rows="4"
                             className="w-full"
                         ></textarea>
-                        <button
-                            type="submit"
-                            className="bg-[#9ce602] text-black py-2 px-6 rounded font-semibold hover:bg-lime-400 transition-colors w-fit mt-2"
-                        >
-                            Send Message
-                        </button>
+                        <button type="button" class="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer">Submit<span class="fc-purple group-hover:translate-x-1 transition-transform">→</span></button>
                     </form>
 
                     </div>
@@ -141,12 +158,12 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 {/* Footer Links and Social */}
                 <div className="flex flex-col md:flex-row justify-between items-center pt-6 pb-6">
                     <div className="flex items-center space-x-4 mb-4 md:mb-0">
-                    <a className="navbar-brand d-flex align-items-center fw-bold" href="/">
+                        <a className="navbar-brand d-flex align-items-center fw-bold" href="/">
                             <img
                                 src="/images/footerlogo.svg"
                                 alt="Logo"
                                 width="150"
-                                className="me-2"
+                                className=""
                             />
                         </a>
                     </div>

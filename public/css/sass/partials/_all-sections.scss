@@ -2,8 +2,8 @@
 .side-menu {
     display: none;
     position: absolute;
-    top: 70px;
-    right: 100px;
+    top: 80px;
+    right: 40px;
     width: 270px;
     background: #00354eeb;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,9 +30,29 @@
     color: white;
 }
 .burger {
-    width: 50px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
+
+.burger .bar {
+  fill: #fff;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Open state (X icon) */
+.burger.open .bar1 {
+    transform: rotate(45deg) translate(20px, 20px);
+}
+
+.burger.open .bar2 {
+  opacity: 0;
+}
+
+.burger.open .bar3 {
+    transform: rotate(-45deg) translate(20px, -20px);
+}
+
 // Burger Menu //
 
 
@@ -258,4 +278,36 @@ body {
     background: #D9D9D940;
     border-radius: 40px;
     min-height: 20px;
+}
+
+
+// Responsive Start Here //
+@media(max-width: 600px) {
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .navbar {
+        padding: 0.5rem 0.5rem;
+    }
+    .box.hero-section .hero-content h1 {
+        font-size: 25px;
+    }
+    .box.hero-section .hero-content h2 {
+        font-size: 40px;
+    }
+    .box.hero-section .hero-content {
+        padding: 1rem;
+    }
+    .md\:w-7\/12.w-full.flex.flex-col.justify-between.pt-4.pl-4.pb-0 {
+        padding-left: 0 !important;
+    }
+    .circle-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    .circle-avatar.small {
+        width: 30px;
+        height: 30px;
+    }
 }

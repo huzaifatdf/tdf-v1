@@ -434,7 +434,7 @@ const SmartToolsSlider = () => {
             </div>
           </SwiperSlide>
         ))}
-        <div className="swiper-pagination-custom flex flex-col gap-2 mt-4 pr-2 md:pr-10"></div>
+        <div className="swiper-pagination-custom absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10" />
       </Swiper>
       </div>
       <hr className="border-white mb-8" />
@@ -770,7 +770,7 @@ function Section() {
                     <Parallax translateY={[0, 0]} opacity={[1, 0]} scale={[0.5, 1]}>
                     <div className="text-center">
                         <h1 className="text-[40px] mb-5 fc-primary">Look at this dot</h1>
-                        <p className="text-[22px]  mb-0 fc-primary">it's like a planet in the vast universe <br /> At a distance, it seems like nothing <span className='font-weight-bold'><br />But zoom in </span></p>
+                        <p className="text-[30px]  mb-0 fc-primary">it's like a planet in the vast universe <br /> At a distance, it seems like nothing <span className='font-weight-bold'><br />But zoom in </span></p>
                     </div>
                     </Parallax>
                 </div>
@@ -779,7 +779,7 @@ function Section() {
                 <div className="sticky top-0 h-screen flex justify-center items-center z-20">
                     <Parallax translateY={[0, 0]} opacity={[0, 1]} scale={[0.5, 1]}>
                     <div className="text-center">
-                        <p className="text-[22px] mb-0 fc-primary">and you'll find life, movement, possibilities…</p>
+                        <p className="text-[30px] mb-0 fc-primary">and you'll find life, movement, possibilities…</p>
                     </div>
                     </Parallax>
                 </div>
@@ -788,7 +788,7 @@ function Section() {
                 <div className="sticky top-0 h-screen flex justify-center items-center z-10">
                     <Parallax translateY={[0, 0]} opacity={[0, 1]} scale={[0.5, 1]}>
                     <div className="text-center">
-                        <p className="text-[22px] mb-0 fc-primary">Just like the universe, the digital world is infinite<br />Multiple ideas with untapped potential floating around</p>
+                        <p className="text-[30px] mb-0 fc-primary">Just like the universe, the digital world is infinite<br />Multiple ideas with untapped potential floating around</p>
                     </div>
                     </Parallax>
                 </div>
