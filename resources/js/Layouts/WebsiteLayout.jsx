@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
+import ParticlesBackground from "@/components/ParticlesBackground";
+import CustomCursor from "@/components/CustomCursor";
 
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
@@ -18,6 +20,10 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="stylesheet" href="/css/sass/style.css" />
             </Head>
+
+              {/* Global Components */}
+            <ParticlesBackground />
+            {/* <CustomCursor /> */}
 
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg bg-transparent position-absolute top-0 start-0 w-100 shadow-none" style={{ zIndex: 3 }}>

@@ -11,167 +11,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import Particles from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import { loadSlim } from "tsparticles-slim";
 import Marquee from "react-fast-marquee";
 
 gsap.registerPlugin(ScrollTrigger);
 
 
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(true);
-
-    useEffect(() => {
-    // Hide the default cursor for the entire document and all elements
-    const style = document.createElement('style');
-    style.innerHTML = `
-      * {
-        cursor: none !important;
-      }
-      *:hover {
-        cursor: none !important;
-      }
-      *:active {
-        cursor: none !important;
-      }
-      *:focus {
-        cursor: none !important;
-      }
-      html, body {
-        cursor: none !important;
-      }
-      a, button, input, textarea, select {
-        cursor: none !important;
-      }
-      a:hover, button:hover, input:hover, textarea:hover, select:hover {
-        cursor: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Also set cursor style directly on html and body
-    document.documentElement.style.cursor = 'none';
-    document.body.style.cursor = 'none';
-
-    // Cleanup function to remove the style when component unmounts
-    return () => {
-      if (style.parentNode) {
-        style.parentNode.removeChild(style);
-      }
-      document.documentElement.style.cursor = '';
-      document.body.style.cursor = '';
-    };
-  }, []);
-
-  useEffect(() => {
-    const updatePosition = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
-
-    document.addEventListener('mousemove', updatePosition);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      document.removeEventListener('mousemove', updatePosition);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
-  return (
-    <div
-      className={`fixed top-0 left-0 pointer-events-none z-50 transition-opacity duration-200 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{
-        transform: `translate(${position.x - 12}px, ${position.y - 12}px)`,
-      }}
-    >
-      {/* Custom Logo Cursor - Replace this SVG with your actual logo */}
-      <img src="/images/cursor.svg" width="24" height="24" alt="Logo cursor" />
-    </div>
-  );
-};
-
 // Using the slim version for better compatibility
-const ParticlesBackground = () => {
-  const particlesInit = useCallback(async (engine) => {
-    // Initialize with the slim version instead of loadFull
-    await loadSlim(engine);
-  }, []);
-
-  const particlesLoaded = useCallback(async (container) => {
-    console.log("Particles container loaded", container);
-  }, []);
-
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      loaded={particlesLoaded}
-      options={{
-        background: {
-          color: {
-            value: "#00141B" // Dark background
-          }
-        },
-        fpsLimit: 60,
-        interactivity: {
-          events: {
-            onHover: { enable: true, mode: "repulse" },
-            resize: true
-          },
-          modes: {
-            repulse: { distance: 100, duration: 0.4 }
-          }
-        },
-        particles: {
-          color: { value: "#094662" }, // Lime green
-          links: {
-            color: "#094662",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1
-          },
-          collisions: { enable: false },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: { default: "bounce" },
-            random: false,
-            speed: 1.2,
-            straight: false
-          },
-          number: {
-            density: { enable: true, area: 800 },
-            value: 60
-          },
-          opacity: { value: 0.5 },
-          shape: { type: "circle" },
-          size: { value: { min: 1, max: 3 } }
-        },
-        detectRetina: true
-      }}
-      className="fixed top-0 left-0 w-full h-full z-0"
-      style={{
-        position: 'fixed',
-        width: '100%',
-        height: '100%',
-        zIndex: 0,
-        top: 0,
-        left: 0,
-        pointerEvents: 'none' // Allow interaction with elements beneath
-      }}
-    />
-  );
-};
 
 function ThreeModelOverlay() {
     // ThreeModelOverlay component code remains unchanged
@@ -797,6 +642,8 @@ function Section() {
     );
 }
 
+
+
 export default function Home() {
     const topsection = {
       translateY: [0, 30],
@@ -837,13 +684,12 @@ export default function Home() {
       children: <div className="gradient inset" />
     };
 
+
+
     return (
         <ParallaxProvider>
             <WebsiteLayout title="Home | TDF Agency" description="Welcome to TDF Agency - Your trusted digital partner.">
                 {/* Global Particles Background */}
-                <ParticlesBackground />
-
-                {/* <CustomCursor /> */}
                 <ParallaxBanner layers={[topsection, gradientOverlay]} className="full"/>
                 <ThreeModelOverlay />
                 <Section />
@@ -856,3 +702,4 @@ export default function Home() {
         </ParallaxProvider>
     );
 }
+

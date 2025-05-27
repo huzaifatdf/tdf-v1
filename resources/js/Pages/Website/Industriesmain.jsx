@@ -61,7 +61,7 @@ export default function Productinner() {
 // Indusrties Main //
 function Industriesmain() {
   return (
-    <div className="py-16">
+    <div className="py-16 relative">
       <div className="container-fluid">
         <div className="grid md:grid-cols-12 gap-12 border-b border-gray-800 pb-[60px]">
           {/* Left Column - Main Content */}
