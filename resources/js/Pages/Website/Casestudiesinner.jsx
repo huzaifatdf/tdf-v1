@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
+import parse from 'html-react-parser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +36,7 @@ export default function Casestudiesinner(props) {
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
                     <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
-                        {casestudy.title} – <br className="hidden md:block" />{casestudy.subtitle || ''}
+                        {casestudy.title} { casestudy.subtitle === '' && <> - <br className="hidden md:block" />{casestudy.subtitle}</> }
                     </h1>
                 </div>
                 <div className="md:w-1/2">
@@ -59,9 +60,9 @@ export default function Casestudiesinner(props) {
       </section>
 
       <Capabilities data={casestudy}/>
-      <Beginning />
-      <SmoothExperienceSection />
-      <Components data={casestudy.techstack}/>
+      <Beginning data={casestudy} />
+      <SmoothExperienceSection data={casestudy.experience}/>
+      <Components data={casestudy.techstack} conclusion={casestudy.component}/>
     </WebsiteLayout>
   );
 }
@@ -188,8 +189,9 @@ function Capabilities(props) {
   );
 }
 
-function Beginning() {
+function Beginning(props) {
  const sectionRef = useRef(null);
+ const { data } = props;
 
   useEffect(() => {
     // Simple fade-in animation (assuming gsap is available elsewhere)
@@ -238,44 +240,34 @@ function Beginning() {
 
           {/* Right side - Content */}
           <div className="lg:pl-8">
+            {data.goals && <>
             <h2 className="text-[30px] fc-secondary font-bold mb-3">
               The Beginning - Understanding the Need
             </h2>
 
             <div className="mb-8">
-              <p className="fc-primary text-lg leading-relaxed mb-6">
-                Right from the start, HabitMetro wasn't just after a new look — they wanted a comprehensive upgrade of their digital presence.
-              </p>
-
-              <h3 className="text-[22px] fc-primary font-bold mb-2">
-                Their goals were:
-              </h3>
-
-              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
-              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
-              <p className="fc-primary text-lg leading-relaxed mb-1">A website that was modern, responsive, and intuitive.</p>
+                { parse(data.goals) }
             </div>
-
+            </>}
+             {data.approach && <>
             <div>
               <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
                 Our Approach
               </h3>
 
-              <p className="fc-primary text-lg leading-relaxed mb-2">
-                We started by setting the groundwork. Our team created a comprehensive digital strategy, which included:
-              </p>
-
-              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
-              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
-              <p className="fc-primary text-lg leading-relaxed mb-1 ">A website that was modern, responsive, and intuitive.</p>
+              { parse(data.approach) }
             </div>
+                </>}
           </div>
+
         </div>
 
             {/* Bottom text */}
+            {data.approach_lower_text &&
             <div className="fc-primary text-lg leading-relaxed mt-7">
-              We took a very cooperative approach. Whether customers were using a desktop computer to examine financial products or a mobile device to check account details, every layout, interaction, and interface was designed with the end user in mind.
+             {data.approach_lower_text}
             </div>
+            }
       </div>
       <hr className="border-white mb-8"/>
     </div>
@@ -286,73 +278,27 @@ function Beginning() {
 
 
 // fixed hight section //
-function SmoothExperienceSection() {
+function SmoothExperienceSection(props) {
   const [activeSection, setActiveSection] = useState('text-to-text');
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
+  const { data } = props;
 
-  const sections = [
-    {
-      id: '01',
-      title: 'Designing a Smooth Experience',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
+  const [sections, setSections] = useState(
+     data
+        ? data.map((item, index) => ({
+
+      id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
+      title: item["title"] ,
+      subtitle: item["subtitle"],
+      features: item["features"] || [],
       stats: {
         models: '25+',
         performance: '99.9%',
         latency: '<100ms'
       }
-    },
-    {
-      id: '02',
-      title: 'The Website',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '15+',
-        performance: '99.8%',
-        latency: '<2s'
-      }
-    },
-    {
-      id: '03',
-      title: 'The Mobile App',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '8+',
-        performance: '99.5%',
-        latency: '<5s'
-      }
-    },
-    {
-      id: '04',
-      title: 'Multimodal Models',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    }
-  ];
+      }))
+   : []);
 
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
@@ -412,7 +358,7 @@ function SmoothExperienceSection() {
 
   const currentSection = sections.find(s => s.id === activeSection);
 
-  return (
+  return data &&  (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen">
         {/* Main Content Area */}
@@ -554,8 +500,9 @@ function SmoothExperienceSection() {
 
 // Table Section //
 function Components(props) {
-    const { data } = props;
-  return (
+    const { data,conclusion } = props;
+  return data ? (
+
     <div className="container-fluid">
       <div className="sec-padding pt-0">
         <div className="grid grid-cols-2 ">
@@ -570,7 +517,11 @@ function Components(props) {
         </div>
       </div>
     </div>
-  );
+  ) :   <div className="container-fluid">
+      <div className="sec-padding pt-0">
+        {conclusion && <p className="text-[18px] fc-primary">{conclusion}</p>}
+      </div>
+    </div> ;
 };
 
 

@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import { ChevronDown } from 'lucide-react';
+import { Link } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +68,7 @@ const [sections,setSections] = useState( data
   ? data.map((item, index) => ({
     id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
       title: item.title ,
+      slug: item.slug,
       //set description to 10 words max
       subtitle: item.description.length > 10 ? item.description.split(' ').slice(0, 10).join(' ') + '...' : item.description,
       logo: '/images/logo.svg',
@@ -242,7 +244,22 @@ const [sections,setSections] = useState( data
 
                     {/* Features */}
                     <div className="space-y-4 mb-10">
-                      {section.features.map((feature, featureIndex) => (
+                      {section.features.map((feature, featureIndex) =>{
+                        //break after 3 features and add "and more" if there are more than 3 features
+                        if (featureIndex >= 3) {
+                          if (featureIndex === 3) {
+                            return (
+                              <div key={featureIndex} className="flex items-start">
+                                <span className="fc-primary text-[18px] leading-relaxed">
+                                  and more...
+                                </span>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }
+
+                        return (
                         <div
                           key={featureIndex}
                           className="flex items-start"
@@ -252,8 +269,12 @@ const [sections,setSections] = useState( data
                             {feature["title"]}
                           </span>
                         </div>
-                      ))}
+                      )})}
+
+
                     </div>
+
+                    <Link href={route('casestudy.show', section.slug)}>Read more</Link>
                   </div>
                 </div>
               </div>

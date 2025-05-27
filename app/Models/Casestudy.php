@@ -24,6 +24,8 @@ class Casestudy extends Model
         'experience',
         'goals',
         'other',
+        'approach',
+        'approach_lower_text',
     ];
     protected $casts = [
         'services' => 'array',
@@ -35,6 +37,8 @@ class Casestudy extends Model
         'experience' => 'array',
         'goals' => 'string',
         'other' => 'string',
+        'approach' => 'string',
+        'approach_lower_text' => 'string',
     ];
     protected $table = 'casestudies';
 }
