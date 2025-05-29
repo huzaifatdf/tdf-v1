@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
@@ -192,88 +192,93 @@ const timelineData = [
     title: 'TDF was established in 2002',
     description:
       "TDF was established in 2002, providing graphic design and ATM screen UI design services globally. Extended our services to website design and development and started serving clients in Qatar and the African markets.",
-    image: '/images/timeline-office.jpg',
+    image: '/images/abac1.png',
   },
   {
     id: '02',
     range: '2007–2009',
     title: 'Expansion Phase',
     description: 'TDF grew its team and client base across the GCC region and diversified services.',
-    image: '/images/phase2.jpg',
+    image: '/images/abac1.png',
   },
   {
     id: '03',
     range: '2010–2016',
     title: 'Development Milestones',
     description: 'Major projects launched including enterprise platforms and partnerships with fintechs.',
-    image: '/images/phase3.jpg',
+    image: '/images/abac1.png',
   },
   {
     id: '04',
     range: '2016–2020',
     title: 'Digital Shift',
     description: 'Focused on UX/UI, app development, and automation tools.',
-    image: '/images/phase4.jpg',
+    image: '/images/abac1.png',
   },
   {
     id: '05',
     range: '2021–2023',
     title: 'Post-COVID Innovation',
     description: 'Launched AI-based tools and cloud services for remote business models.',
-    image: '/images/phase5.jpg',
+    image: '/images/abac1.png',
   },
   {
     id: '06',
     range: '2024 – Onwards',
     title: 'Future Ready',
     description: 'Expanding in KSA and UAE with next-gen AI solutions and custom platforms.',
-    image: '/images/phase6.jpg',
+    image: '/images/abac1.png',
   },
 ];
 
 const TimelineSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = timelineData[activeIndex];
 
   return (
-    <section className="relative bg-[#01111A] text-white py-12 px-6">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-start">
-        {/* Left Content */}
-        <div className="lg:col-span-7 space-y-6 transition-all duration-500">
-          <div>
-            <p className="text-sm text-gray-400">{active.id}</p>
-            <h3 className="text-[22px] text-lime-400 font-semibold">{active.range}</h3>
-            <p className="text-gray-300 mt-2">{active.description}</p>
-          </div>
-          <div className="overflow-hidden transition-all duration-700 ease-in-out">
-            <img
-              src={active.image}
-              alt={active.title}
-              className="rounded-md w-full h-auto object-cover"
-            />
-          </div>
-        </div>
+    <section className="relative sec-padding --small">
+      <div className="container-fluid">
+        <div className="flex overflow-x-auto no-scrollbar h-[700px] space-x-4">
+          {timelineData.map((item, idx) => {
+            const isActive = activeIndex === idx;
+            return (
+              <div
+                key={item.id}
+                onClick={() => setActiveIndex(idx)}
+                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative ${
+                  isActive
+                    ? "w-[650px] lg:w-[630px] h-full"
+                    : "w-[100px] lg:w-[100px] h-full flex flex-col items-center justify-center text-center"
+                }`}
+              >
+                {!isActive && (
+                  <div className="flex flex-col items-center justify-center w-full rotate-180">
+                    <div className="text-lime-400 text-xl mb-1 rotate-180">+</div>
+                    <p className="text-xs text-gray-500 rotate-180">{item.id}</p>
+                    <p className="text-lime-400 font-semibold text-sm mt-1 rotate-180">{item.range}</p>
+                  </div>
+                )}
 
-        {/* Right Timeline Years */}
-        <div className="lg:col-span-5 flex flex-col items-end justify-start text-right">
-          {timelineData.map((item, idx) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveIndex(idx)}
-              className={`flex items-center space-x-4 justify-end mb-6 transition-all duration-300 ${
-                activeIndex === idx ? 'opacity-100 scale-105' : 'opacity-50 hover:opacity-80'
-              }`}
-            >
-              <div className="text-lime-400 text-xl">+</div>
-              <div className="border-l border-gray-700 h-12"></div>
-              <div>
-                <p className="text-xs text-gray-500">{item.id}</p>
-                <p className={`font-medium ${
-                  activeIndex === idx ? 'text-lime-400 text-lg' : 'text-gray-400'
-                }`}>{item.range}</p>
+                {isActive && (
+                  <div className="p-6 flex flex-col justify-between h-full">
+                    <div>
+                      <p className="fc-primary text-[18px] mb-0">{item.id}</p>
+                      <p className="fc-secondary text-[30px] mb-0">{item.range}</p>
+                      <p className="fc-primary text-[18px] mb-0 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                    <div className="">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full object-cover mb-6 h-[350px]"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
