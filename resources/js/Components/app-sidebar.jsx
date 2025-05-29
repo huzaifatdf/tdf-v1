@@ -4,12 +4,16 @@ import {
   BookOpen,
   Bot,
   Command,
+  Edit3,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
+  TableOfContents,
+  Users,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -23,131 +27,58 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { usePage } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 
 // This is sample data.
 const data = {
 
   teams: [
     {
-      name: "Acme Inc",
+      name: "TDF",
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
     },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Dashboard",
       url: "#",
-      icon: SquareTerminal,
+      icon: LayoutDashboard,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Dashboard",
+          url: route('dashboard'),
         },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+
       ],
     },
+
+
     {
-      title: "Models",
+      title: "Page",
       url: "#",
-      icon: Bot,
+      icon: TableOfContents,
       items: [
         {
-          title: "Genesis",
+          title: "Add",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "List",
           url: "#",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
+
       ],
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Users",
       url: "#",
-      icon: Frame,
+      icon: Users,
     },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
+
   ],
 }
 
