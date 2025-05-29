@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import CountUp from 'react-countup';
+import parse from 'html-react-parser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,31 +31,35 @@ export default function About() {
     <WebsiteLayout title="About | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
         <section ref={introRef} className="flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
-            <div className="container-fluid relative z-10 mt-[150px]">
-                <div className="">
-                    <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
-                        <div className="lg:col-span-5 space-y-6">
-                            <h1 className="text-[62px] fc-white leading-[1.1]">
-                                About Us - TDF
-                            </h1>
-                        </div>
-                        <div className="lg:col-span-6 space-y-6">
-                            <div className="prose prose-lg prose-invert">
-                            <h2 className="text-[32px] font-bold fc-secondary leading-tight">
-                                Curiosity Brought You Here,<br />Now Let’s Show You What We’re All About.
-                            </h2>
+                <div className="container-fluid relative z-10 mt-[150px]">
+                    <div className="">
+                        <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
+                            <div className="lg:col-span-5 space-y-6">
+                                <h1 className="text-[62px] fc-white leading-[1.1]">
+                                    About Us - TDF
+                                </h1>
+                            </div>
+                            <div className="lg:col-span-6 space-y-6">
+                                <div className="prose prose-lg prose-invert">
+                                <h2 className="text-[32px] font-bold fc-secondary leading-tight">
+                                    Curiosity Brought You Here,<br />Now Let’s Show You What We’re All About.
+                                </h2>
+                                </div>
                             </div>
                         </div>
+                        <hr class="border-white mb-8"></hr>
                     </div>
-                    <hr class="border-white mb-8"></hr>
                 </div>
-            </div>
         </section>
 
     <AboutSection />
     <StatsSection />
     <Trusted />
     <TimelineSection />
+    <WhatDrivesUs />
+    <MissionVisionProposition/>
+    <MeetTheMissfits />
+    <Experience />
     </WebsiteLayout>
   );
 }
@@ -63,7 +68,7 @@ export default function About() {
 
 function AboutSection() {
   return (
-    <section className="relative sec-padding --small">
+    <section className="relative sec-padding">
       <div className="container-fluid">
         <h2 className="fc-secondary text-[30px] font-semibold mb-6">
           Creative Thinkers. Strategic Doers
@@ -144,8 +149,8 @@ function StatsSection() {
 
 function Trusted () {
     return (
-        <div className="container-fluid relative">
-            <div className="sec-padding">
+        <div className="container-fluid">
+            <div className="sec-padding relative">
                 <div className="grid md:grid-cols-12 gap-12 items-center">
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-7 space-y-6">
@@ -184,7 +189,7 @@ function Trusted () {
     )
 }
 
-
+// Accordian //
 const timelineData = [
   {
     id: '01',
@@ -235,26 +240,28 @@ const TimelineSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative sec-padding --small">
-      <div className="container-fluid">
-        <div className="flex overflow-x-auto no-scrollbar h-[700px] space-x-4">
+    <section className="container-fluid">
+      <div className="relative sec-padding">
+        <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
           {timelineData.map((item, idx) => {
             const isActive = activeIndex === idx;
             return (
               <div
                 key={item.id}
                 onClick={() => setActiveIndex(idx)}
-                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative ${
+                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
                   isActive
                     ? "w-[650px] lg:w-[630px] h-full"
                     : "w-[100px] lg:w-[100px] h-full flex flex-col items-center justify-center text-center"
                 }`}
               >
                 {!isActive && (
-                  <div className="flex flex-col items-center justify-center w-full rotate-180">
-                    <div className="text-lime-400 text-xl mb-1 rotate-180">+</div>
-                    <p className="text-xs text-gray-500 rotate-180">{item.id}</p>
-                    <p className="text-lime-400 font-semibold text-sm mt-1 rotate-180">{item.range}</p>
+                  <div className="flex flex-col items-center justify-between h-full rotate-180">
+                    <div className="transform -rotate-90 whitespace-nowrap">
+                      <p className="text-[20px] fc-primary mb-0 text-left">{item.id}</p>
+                      <p className="fc-secondary text-[30px] mb-0 text-right">{item.range}</p>
+                    </div>
+                    <div className="rotate-180 text-[32px] fc-secondary">+</div>
                   </div>
                 )}
 
@@ -281,6 +288,218 @@ const TimelineSection = () => {
           })}
         </div>
       </div>
+      <hr className="border-white mb-8"/>
     </section>
   );
 };
+
+
+function WhatDrivesUs () {
+  return (
+    <div className='container-fluid'>
+        <div className="relative flex flex-col lg:flex-row items-center sec-padding">
+            {/* Left Side Content */}
+            <div className="lg:w-1/2">
+                <h2 className="text-[30px] fc-secondary mb-2">What Drives Us</h2>
+                <p className="fc-primary text-[18px] mb-0 leading-relaxed mb-4">
+                We’re driven by the belief that digital isn’t just a platform, it’s a playground for ideas, creativity, and innovation.
+                </p>
+                <p className="fc-primary text-[18px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
+                <ul className="fc-primary text-[30px] mb-0 leading-relaxed p-0 mt-2">
+                <li>Keep it human</li>
+                <li>Make it meaningful</li>
+                <li>Never phone it in</li>
+                </ul>
+            </div>
+
+            {/* Right Side Image */}
+            <div className="lg:w-1/2">
+                <img
+                src="/images/team.png" // Replace with your correct path
+                alt="Team"
+                className="w-full object-cover"
+                />
+            </div>
+        </div>
+        <hr className="border-white mb-8"/>
+    </div>
+  );
+};
+
+
+// Mission Vision //
+const MissionVisionProposition = () => {
+  return (
+    <div className="container-fluid">
+        <div className="sec-padding relative">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Image - 5 columns */}
+            <div className="lg:col-span-6">
+                <div className="overflow-hidden shadow-2xl">
+                <h3 className="text-[30px] fc-secondary font-bold mb-3">The Why, The How, and What’s Next</h3>
+                <img
+                    src="/images/begi.png" // Replace with actual image path
+                    alt="Team collaboration in modern office"
+                    className="w-full object-cover"
+                />
+                </div>
+            </div>
+
+            {/* Right Content - 7 columns */}
+            <div className="lg:col-span-6">
+                <div className="mb-3">
+                <h3 className="text-[30px] fc-secondary font-bold mb-3">Mission</h3>
+                <p className="fc-primary text-[18px] leading-relaxed mb-3 font-[900]">
+                    We connect creativity with technology to build smart, impactful solutions
+                </p>
+                <p className="fc-primary text-[18px] leading-relaxed mb-2">
+                    We approach every project with a sense of curiosity, flexibility, and a fresh perspective,
+                    because the best results often come from ideas that break away from the norm.
+                </p>
+                </div>
+
+                <div className="mb-3">
+                <h3 className="text-[30px] fc-secondary font-bold mb-3">Vision</h3>
+                <p className="fc-primary text-[18px] leading-relaxed mb-3 font-[900]">
+                    To be the go-to creative tech partner for bold brands
+                </p>
+                <p className="fc-primary text-[18px] leading-relaxed mb-2">
+                    We’re here to push boundaries, stay ahead, and deliver work that’s not only innovative but truly meaningful.
+                </p>
+                </div>
+
+                <div className="mb-4">
+                <h3 className="text-[30px] fc-secondary font-bold mb-3">Key Proposition</h3>
+                <p className="fc-primary text-[18px] leading-relaxed mb-3 font-[900]">
+                    Helping brands grow louder, sharper, and stronger
+                </p>
+                <p className="fc-primary text-[18px] leading-relaxed mb-2">
+                    We help brands connect with the right people in the right places, through strategies that grow and adapt with the world around them.
+                </p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <hr className="border-white mb-8" />
+        </div>
+
+  );
+};
+
+
+// Meet the missfits //
+const missfits = [
+  {
+    id: '01',
+    range: 'Founder & Chief Executive Officer (CEO)',
+    title: 'Naumeena Suhail',
+    description:
+      "Naumeena Suhail, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br><br>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”",
+    image: '/images/Maam.png',
+  },
+  {
+    id: '02',
+    range: 'Partner & COO',
+    title: 'Nazish Yousuf',
+    description:
+      "Nazish Yousuf, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br><br>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”",
+    image: '/images/Maam2.png',
+  }
+];
+
+
+const MeetTheMissfits = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <section className="container-fluid">
+      <div className="relative sec-padding">
+        <h3 className="text-[30px] fc-secondary font-bold mb-0">Meet the Missfits</h3>
+        <p className='fc-primary text-[18px] mb-0 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
+        <hr className="border-white mb-8" />
+        <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
+          {missfits.map((item, idx) => {
+            const isActive = activeIndex === idx;
+            return (
+              <div
+                key={item.id}
+                onClick={() => setActiveIndex(idx)}
+                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
+                  isActive
+                    ? "w-[650px] lg:w-[910px] h-full"
+                    : "w-[100px] lg:w-[350px] h-full flex flex-col items-center justify-center text-center"
+                }`}
+              >
+                {!isActive && (
+                  <div className="flex flex-col items-center justify-between h-full">
+
+                    <div className="rotate-180 text-[32px] fc-secondary">+</div>
+                        <div className="p-6">
+                            <img src={item.image} alt="" />
+                            <p className="text-[20px] fc-primary mb-0 text-left">{item.range}</p>
+                            <p className="fc-secondary text-[30px] mb-0 text-left">{item.title}</p>
+                        </div>
+                    </div>
+                )}
+
+                {isActive && (
+                  <div className="p-6 h-full">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center h-full">
+                            {/* Image - 4 columns */}
+                            <div className="lg:col-span-5">
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                className="w-full object-cover mb-6 h-[600px]"
+                            />
+                            </div>
+
+                            {/* Text - 8 columns */}
+                            <div className="lg:col-span-7">
+                                <p className="fc-secondary text-[30px] mb-0">{item.title}</p>
+                                <p className="fc-primary text-[18px] mb-4 font-bold">{item.range}</p>
+                                <p className="fc-primary text-[18px] mb-0 leading-relaxed">
+                                    {parse(item.description)}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <hr className="border-white mb-8"/>
+    </section>
+  );
+};
+
+
+// 20 + Years //
+const Experience = () => {
+    return (
+        <div className="relative sec-padding">
+            <div className="container-fluid">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                {/* Left Heading */}
+                <div className="lg:col-span-6">
+                    <h2 className="text-[35px] leading-[1.1] fc-secondary">
+                    20+ Years in, <br className="hidden lg:block" /> & We’re Still Just Getting Started
+                    </h2>
+                </div>
+
+                {/* Right Text */}
+                <div className="lg:col-span-6">
+                    <p className="fc-primary text-[18px] mb-0 leading-relaxed">
+                        We’re proud to have spent over two decades helping brands grow through thoughtful strategy, creative thinking, and consistent results.
+                    </p>
+                    <p className="fc-primary text-[18px] mb-0 leading-relaxed font-bold mt-4">
+                        Impressed By Our Legacy?
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    )
+}

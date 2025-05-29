@@ -280,6 +280,24 @@ body {
     min-height: 20px;
 }
 
+form {
+    position: relative;
+    input {
+        background-color: transparent !important;
+        border-bottom: 1px solid #91A7BA !important;
+        outline: unset;
+        border: unset;
+        font-size: 17px;
+    }
+    textarea {
+        background-color: transparent !important;
+        border-bottom: 1px solid #91A7BA !important;
+        outline: unset;
+        border: unset;
+        font-family: "Red Hat Display", sans-serif !important;
+        font-size: 17px;
+    }
+}
 
 // Responsive Start Here //
 @media(max-width: 600px) {

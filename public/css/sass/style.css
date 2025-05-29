@@ -9318,6 +9318,25 @@ body {
   min-height: 20px;
 }
 
+form {
+  position: relative;
+}
+form input {
+  background-color: transparent !important;
+  border-bottom: 1px solid #91A7BA !important;
+  outline: unset;
+  border: unset;
+  font-size: 17px;
+}
+form textarea {
+  background-color: transparent !important;
+  border-bottom: 1px solid #91A7BA !important;
+  outline: unset;
+  border: unset;
+  font-family: "Red Hat Display", sans-serif !important;
+  font-size: 17px;
+}
+
 @media (max-width: 600px) {
   .container-fluid {
     padding-left: 10px;
