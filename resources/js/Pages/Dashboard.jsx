@@ -2,16 +2,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { SectionCards } from "@/Components/section-cards";
 
+import { useEffect } from "react";
+
 
 export default function Page() {
+
+
   return (
-   <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
+   <AuthenticatedLayout>
             <Head title="Profile" />
 
      <div className="flex flex-1 flex-col">

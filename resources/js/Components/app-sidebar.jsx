@@ -75,7 +75,7 @@ const data = {
   projects: [
     {
       name: "Users",
-      url: "#",
+      url: route('user.index'),
       icon: Users,
     },
 

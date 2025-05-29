@@ -28,6 +28,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+    require __DIR__.'/dashboard/user.php';
+});
+
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
