@@ -31,7 +31,7 @@ export default function About() {
     <WebsiteLayout title="About | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
         <section ref={introRef} className="flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
-                <div className="container-fluid relative z-10 mt-[150px]">
+                <div className="container-fluid relative mt-[150px]">
                     <div className="">
                         <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
                             <div className="lg:col-span-5 space-y-6">

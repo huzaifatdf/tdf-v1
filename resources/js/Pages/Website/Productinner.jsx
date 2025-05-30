@@ -29,7 +29,7 @@ export default function Productinner() {
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
           <section ref={introRef} className="flex items-center bg-dark-950 relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
-            <div className="container-fluid relative z-10 mt-[150px]">
+            <div className="container-fluid relative mt-[150px]">
                 <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
                         <h1 className="text-[30px] fc-secondary leading-tight mb-6">

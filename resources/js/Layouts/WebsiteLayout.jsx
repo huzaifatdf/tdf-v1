@@ -69,12 +69,13 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     {/* Side Menu */}
                     <div className={`side-menu ${menuOpen ? 'open' : ''}`} id="sideMenu">
                         <ul>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">Work</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/casestudiesmain">Case Studies</a></li>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="/Servicesmain">Services</a></li>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="/Productmain">Product</a></li>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="/Industriesmain">Industries</a></li>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="/Contact">Contact</a></li>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="/About">About Us</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/partners">Partners</a></li>
                         </ul>
                     </div>
                 </div>
