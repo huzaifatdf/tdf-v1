@@ -3,10 +3,12 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  Box,
   Command,
   Edit3,
   Frame,
   GalleryVerticalEnd,
+  Layers2Icon,
   LayoutDashboard,
   Map,
   PieChart,
@@ -59,6 +61,38 @@ const data = {
       title: "Page",
       url: "#",
       icon: TableOfContents,
+      items: [
+        {
+          title: "Add",
+          url: "#",
+        },
+        {
+          title: "List",
+          url: "#",
+        },
+
+      ],
+    },
+     {
+      title: "Services",
+      url: "#",
+      icon: Layers2Icon,
+      items: [
+        {
+          title: "Add",
+          url: "#",
+        },
+        {
+          title: "List",
+          url: "#",
+        },
+
+      ],
+    },
+    {
+      title: "Products",
+      url: "#",
+      icon: Box,
       items: [
         {
           title: "Add",
