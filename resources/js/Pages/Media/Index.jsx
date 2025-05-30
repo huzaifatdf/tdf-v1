@@ -65,6 +65,14 @@ const MediaLibrary = ({ media, filters }) => {
     });
   };
 
+  //showNotification
+    const showNotification = (message, type = 'success') => {
+      setNotification({ message, type });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    };
+
   // Copy media URL
   const copyMediaUrl = (url) => {
     navigator.clipboard.writeText(url);
@@ -250,7 +258,9 @@ const MediaLibrary = ({ media, filters }) => {
     <AuthenticatedLayout>
       <Head title="Media Library" />
 
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+            <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2 p-10">
+          <div className="w-full ">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -561,6 +571,8 @@ const MediaLibrary = ({ media, filters }) => {
           </div>
         )}
       </div>
+            </div>
+            </div>
     </AuthenticatedLayout>
   );
 };
