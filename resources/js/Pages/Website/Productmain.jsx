@@ -31,15 +31,15 @@ export default function Productmain() {
         <div className="absolute inset-0 opacity-50" />
         <div className="container-fluid relative z-10 mt-[100px]">
             <div className="">
-                <div className="flex flex-col md:flex-row gap-12 items-start">
+                <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
-                        <h1 className="text-[62px] font-bold fc-white leading-tight mb-6">
+                        <h1 className="text-[50px] font-bold fc-white leading-tight mb-0">
                             Solutions
                         </h1>
                     </div>
                     <div className="md:w-1/2">
                         <div className="prose prose-lg prose-invert">
-                        <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                        <p className="text-[16px] fc-primary leading-relaxed mb-0">
                             Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                         </p>
                         </div>
@@ -287,14 +287,14 @@ function SmoothExperienceSection() {
                           : 'hover:opacity-70'
                       }`}
                     >
-                      <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
+                      <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                      <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -363,19 +363,19 @@ function SmoothExperienceSection() {
                     </h2> */}
 
                     {/* Subtitle */}
-                    <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                    <p className="text-[18px] fc-primary mb-4 leading-relaxed">
                       {section.subtitle}
                     </p>
 
                     {/* Features */}
-                    <div className="space-y-4 mb-10">
+                    <div className="mb-10">
                       {section.features.map((feature, featureIndex) => (
                         <div
                           key={featureIndex}
                           className="flex items-start"
                         >
                           {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
-                          <span className="fc-primary text-[18px] leading-relaxed">
+                          <span className="fc-primary text-[16px] leading-relaxed">
                             {feature}
                           </span>
                         </div>

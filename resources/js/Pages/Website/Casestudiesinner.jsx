@@ -29,9 +29,9 @@ export default function Casestudiesinner(props) {
 
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-      <section ref={introRef} className="min-h-[100vh] flex items-center bg-dark-950 relative overflow-hidden">
+      <section ref={introRef} className="flex items-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-50" />
-        <div className="container-fluid relative z-10 mt-[100px]">
+        <div className="container-fluid relative z-10 mt-[150px]">
             <div className="">
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
@@ -41,7 +41,7 @@ export default function Casestudiesinner(props) {
                 </div>
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
-                    <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                    <p className="text-[16px] fc-primary leading-relaxed mb-6">
                          <div dangerouslySetInnerHTML={{ __html: casestudy.description || '' }} />
                     </p>
 
@@ -503,7 +503,7 @@ function Components(props) {
     const { data,conclusion } = props;
   return data ? (
 
-    <div className="container-fluid">
+    <div className="container-fluid relative">
       <div className="sec-padding pt-0">
         <div className="grid grid-cols-2 ">
 
@@ -517,7 +517,7 @@ function Components(props) {
         </div>
       </div>
     </div>
-  ) :   <div className="container-fluid">
+  ) :   <div className="container-fluid relative">
       <div className="sec-padding pt-0">
         {conclusion && <p className="text-[18px] fc-primary">{conclusion}</p>}
       </div>

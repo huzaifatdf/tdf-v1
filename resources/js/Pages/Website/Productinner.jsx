@@ -27,26 +27,26 @@ export default function Productinner() {
 
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-          <section ref={introRef} className="min-h-[100vh] flex items-center bg-dark-950 relative overflow-hidden">
+          <section ref={introRef} className="flex items-center bg-dark-950 relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
-            <div className="container-fluid relative z-10 mt-[100px]">
+            <div className="container-fluid relative z-10 mt-[150px]">
                 <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
-                        <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
+                        <h1 className="text-[30px] fc-secondary leading-tight mb-6">
                             Eduman<br className="hidden md:block" />A Saas-Based School Management System
                         </h1>
                         <img
                             src="/images/productinner.png"
                             alt="HabibMetro Bank Project Overview"
-                            className="w-full h-[50vh] object-cover mt-5 mb-5"
+                            className="w-full h-[50vh] object-cover mt-3 mb-5"
                         />
                     </div>
                     <div className="md:w-1/2">
                         <div className="prose prose-lg prose-invert">
-                        <p className="text-[22px] fc-primary leading-relaxed">
+                        <p className="text-[20px] font-bold fc-primary leading-relaxed  mb-2">
                             Quick Highlights
                         </p>
-                        <p className="text-[18px] fc-primary leading-relaxed mb-6">
+                        <p className="text-[16px] fc-primary leading-relaxed mb-6">
                             100% Cloud-Based: No servers or installations required.
                             Mobile App: Easy to use on smartphones and tablets.
                             Modular & Customizable: Choose the features that work best for you.
@@ -54,10 +54,10 @@ export default function Productinner() {
                             Easy Management of Fees, Exams, and Attendance: Everything in one place.
                             Trusted Worldwide: 200+ institutions and more than 1.4 million students globally.
                         </p>
-                        <p className="text-[22px] fc-primary leading-relaxed">
+                        <p className="text-[20px] font-bold fc-primary leading-relaxed mb-2">
                             Curious how it works for your school?
                         </p>
-                        <p className="text-[18px] fc-primary leading-relaxed">
+                        <p className="text-[16px] fc-primary leading-relaxed">
                             Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
                         </p>
                         </div>
@@ -70,6 +70,7 @@ export default function Productinner() {
         <DetailedOverview />
         <WhatProblem />
         <EdumanDemoSection />
+        <FloatIcon />
         </WebsiteLayout>
   );
 }
@@ -100,9 +101,9 @@ function BenefitsContactForm() {
   };
 
   return (
-    <div className="bg-[#04040466] py-16">
+    <div className="relative py-16 bg-[#040404]">
       <div className="container-fluid">
-        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-9">
           Uncover the Benefits Now!
         </h2>
 
@@ -187,19 +188,19 @@ function BenefitsContactForm() {
 function DetailedOverview() {
   return (
     <div className="container-fluid ">
-      <div className="py-16">
+      <div className="py-16 relative">
         <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
           Detailed Overview
         </h2>
 
-        <div className="space-y-6 text-gray-300 leading-relaxed">
-            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+        <div className="text-gray-300 leading-relaxed">
+            <p className="text-[16px] fc-primary leading-relaxed mb-2">
                 Managing a school is not easy. Behind the scenes, a lot is going on, including managing teacher schedules, tracking fee collections, and keeping an eye on student performance. 
             </p>
-            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+            <p className="text-[16px] fc-primary leading-relaxed mb-2">
                 EDUMAN, a cloud-based, SaaS (Software as a Service) School Management and Learning Management System (LMS), is developed to make all of this simpler. 
             </p>
-            <p className="text-[18px] fc-primary leading-relaxed mb-6">
+            <p className="text-[16px] fc-primary leading-relaxed mb-2">
                 As a strategic partner, The Design Firm (TDF) helps bring EDUMAN to educational institutions that want to simplify operations and improve the learning experience.
             </p>
         </div>
@@ -332,7 +333,7 @@ function WhatProblem() {
                 <h1 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
                   What Problems Does EDUMAN Solve?
                 </h1>
-                <p className="text-[18px] text-gray-400 leading-relaxed">
+                <p className="text-[16px] fc-primary leading-relaxed">
                   EDUMAN was built around real-world challenges faced by school administrators, teachers, and parents. It’s not just about technology, but about solving everyday problems in education.
                 </p>
               </div>
@@ -348,14 +349,14 @@ function WhatProblem() {
                           : 'hover:opacity-70'
                       }`}
                     >
-                      <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
+                      <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[22px] font-bold mb-2 transition-all duration-500 ${
+                      <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -412,11 +413,11 @@ function WhatProblem() {
                         </h2> */}
 
                         {/* Subtitle */}
-                        <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                        <p className="text-[20px] fc-primary mb-8 leading-relaxed">
                         {section.subtitle}
                         </p>
 
-                        <p className="text-[18px] fc-primary mb-8 leading-relaxed">
+                        <p className="text-[16px] fc-primary mb-8 leading-relaxed">
                         {section.description}
                         </p>
 
@@ -428,7 +429,7 @@ function WhatProblem() {
                             className="flex items-start"
                             >
                             {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
-                            <span className="fc-primary text-[18px] leading-relaxed">
+                            <span className="fc-primary text-[16px] leading-relaxed">
                                 {feature}
                             </span>
                             </div>
@@ -467,7 +468,7 @@ function WhatProblem() {
 // Ready TO See Demo//
 const EdumanDemoSection = () => {
   return (
-    <section className="bg-[#00141d] text-white py-16 px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-10">
+    <section className="container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
       {/* Left Content */}
       <div className="flex-1">
         <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
@@ -497,3 +498,29 @@ const EdumanDemoSection = () => {
   );
 };
 
+// Float Icon //
+const FloatIcon = () => {
+  return (
+    <>
+    <div className="fixed top-0 bottom-0 right-[-25px] flex items-center">
+      <a href="#">
+        <img
+            src="/images/right.svg"
+            alt="Float Icon"
+            className="w-24 h-24"
+        />
+      </a>
+    </div>
+
+    <div className="fixed top-0 bottom-0 left-[-25px] flex items-center">
+      <a href="#">
+        <img
+            src="/images/left.svg"
+            alt="Float Icon"
+            className="w-24 h-24"
+        />
+      </a>
+    </div>
+    </>
+  );
+};

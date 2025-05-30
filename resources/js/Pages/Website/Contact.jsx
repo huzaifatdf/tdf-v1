@@ -34,16 +34,16 @@ export default function About() {
                     <div className="">
                         <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
                             <div className="lg:col-span-6 space-y-6">
-                                <h1 className="text-[62px] fc-white leading-[1.1]">
+                                <h1 className="text-[50px] fc-white leading-[1.1]">
                                     Contact Us & Support
                                 </h1>
                             </div>
                             <div className="lg:col-span-6 space-y-6">
                                 <div className="prose prose-lg prose-invert">
-                                <p className="text-[20px] fc-primary leading-tight mb-0">
+                                <p className="text-[16px] fc-primary leading-tight mb-0">
                                     Have a project?
                                 </p>
-                                <p className="text-[20px] fc-primary leading-tight mb-0">
+                                <p className="text-[16px] fc-primary leading-tight mb-0">
                                     Let’s make it happen together.
                                 </p>
                                 </div>
@@ -69,9 +69,9 @@ const ContactSection = () => {
     <div className="relative sec-padding">
       <div className="container-fluid grid lg:grid-cols-12 gap-12">
         {/* Left Column: Contact Info */}
-        <div className="lg:col-span-5">
-          <h3 className="text-[20px] fc-primary leading-tight mb-3">Tell us about your vision:</h3>
-          <p className="text-[18px] fc-primary leading-tight mb-0">
+        <div className="lg:col-span-6">
+          <h3 className="text-[22px] fc-primary leading-tight mb-3">Tell us about your vision:</h3>
+          <p className="text-[16px] fc-primary leading-tight mb-0">
             Which challenges are you facing? What are your goals and expectations? What would success look like and how much are you planning to spend to get there?
           </p>
 
@@ -80,8 +80,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/email.svg" alt="Email Icon" />
                     <div>
-                    <span className="text-[18px] fc-primary leading-tight block">Email</span>
-                    <a href="mailto:info@thedesignfirm.com" className="text-[18px] text-white block">
+                    <span className="text-[16px] fc-primary leading-tight block">Email</span>
+                    <a href="mailto:info@thedesignfirm.com" className="text-[16px] text-white block">
                         Info@thedesignfirm.com
                     </a>
                     </div>
@@ -91,8 +91,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/phone.svg" alt="Phone Icon" />
                     <div>
-                    <span className="text-[18px] fc-primary leading-tight block">Phone number</span>
-                    <span className="text-[18px] text-white block">+123 456 7890</span>
+                    <span className="text-[16px] fc-primary leading-tight block">Phone number</span>
+                    <span className="text-[16px] text-white block">+123 456 7890</span>
                     </div>
                 </div>
 
@@ -100,8 +100,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/home.svg" alt="Address Icon" />
                     <div>
-                    <span className="text-[18px] fc-primary leading-tight block">Address</span>
-                    <span className="text-[18px] text-white block">
+                    <span className="text-[16px] fc-primary leading-tight block">Address</span>
+                    <span className="text-[16px] text-white block">
                         123 Business Road, City, Country
                     </span>
                     </div>
@@ -110,7 +110,7 @@ const ContactSection = () => {
             </div>
 
         {/* Right Column: Form */}
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-6">
           <h3 className="text-[30px] fc-secondary mb-9">Uncover the Benefits Now!</h3>
 
           {/* Tabs */}
@@ -121,7 +121,7 @@ const ContactSection = () => {
                         onClick={() => setActiveTab(tab)}
                         className="flex flex-col items-start pr-6 text-left"
                     >
-                        <span className="text-lime-400 font-medium">0{idx + 1}</span>
+                        <span className="fc-primary">0{idx + 1}</span>
 
                         <span
                         className={`relative text-[18px] ${
@@ -192,7 +192,7 @@ const MapSection = () => {
     <div className="container-fluid">
         <hr class="border-white mb-8"></hr>
         <div className=" sec-padding relative">
-            <h4 className='text-[32px] mb-2 fc-secondary'>Delivering trusted solutions<br></br>on a global scale</h4>
+            <h4 className='text-[30px] mb-2 fc-secondary'>Delivering trusted solutions<br></br>on a global scale</h4>
             <div className="">
                 <img
                 src="/images/map.svg"

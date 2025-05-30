@@ -5,10 +5,13 @@ import CustomCursor from "@/components/CustomCursor";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Preloader from '@/components/Preloader';
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const [loaded, setLoaded] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -16,6 +19,17 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
     return (
         <>
+            {/* Show preloader until loaded is true */}
+            {!loaded && (
+                <Preloader
+                    logoSrc="/images/logo.svg"
+                    onFinish={() => setLoaded(true)}
+                />
+            )}
+
+            {/* Show main layout only when loaded */}
+            {loaded && (
+                <>
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
@@ -56,11 +70,11 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     <div className={`side-menu ${menuOpen ? 'open' : ''}`} id="sideMenu">
                         <ul>
                             <li className="transition-transform duration-200 hover:scale-105"><a href="#">Work</a></li>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">Services</a></li>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">Product</a></li>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">Industries</a></li>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">Contact</a></li>
-                            <li className="transition-transform duration-200 hover:scale-105"><a href="#">About Us</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/Servicesmain">Services</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/Productmain">Product</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/Industriesmain">Industries</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/Contact">Contact</a></li>
+                            <li className="transition-transform duration-200 hover:scale-105"><a href="/About">About Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,6 +211,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 </div>
                 </div>
             </footer>
+                </>
+            )}
         </>
     );
 }
