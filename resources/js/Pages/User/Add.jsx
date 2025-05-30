@@ -44,7 +44,7 @@ export default function List() {
   });
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    router.post(route("users.store"), values, {
+    router.post(route("user.store"), values, {
       onSuccess: () => {
         setSubmitting(false);
         resetForm();

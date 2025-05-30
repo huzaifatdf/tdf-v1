@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator as ValidatorFacade;
+use Illuminate\Support\Facades\Session;
+
 
 class UserController extends Controller
 {
@@ -56,7 +60,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = ValidatorFacade::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role' => 'required|string|exists:roles,name',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessage = "Validation Errors:\n";
+
+            foreach ($errors as $index => $error) {
+                $errorMessage .= ($index + 1) . ". " . $error . "\n";
+            }
+            Session::flash('error', $errorMessage);
+            return back();
+        }
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+        // Assign role to user
+        $user->assignRole($request->input('role'));
+        Session::flash('success', 'User created successfully!');
+        return redirect()->route('user.index');
+
     }
 
     /**
@@ -72,7 +101,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $roles = \Spatie\Permission\Models\Role::where('name', '!=', 'superadmin')
+            ->get();
+        return Inertia::render('User/Edit', [
+            'user' => $user,
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -80,7 +115,36 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $validator = ValidatorFacade::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'role' => 'required|string|exists:roles,name',
+        ]);
+        if ($validator->fails()) {
+             $errors = $validator->errors()->all();
+            $errorMessage = "Validation Errors:\n";
+
+            foreach ($errors as $index => $error) {
+                $errorMessage .= ($index + 1) . ". " . $error . "\n";
+            }
+
+            Session::flash('error', $errorMessage);
+            return back();
+        }
+        $user = User::findOrFail($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        // Update role if provided
+        if ($request->has('role')) {
+            // Remove all roles first
+            $user->syncRoles([]);
+            // Assign new role
+            $user->assignRole($request->input('role'));
+        }
+        $user->save();
+        Session::flash('success', 'User updated successfully!');
+        return redirect()->route('user.index');
+
     }
 
     /**
@@ -91,10 +155,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         //if superadmin, prevent deletion
         if ($user->hasRole('superadmin')) {
-            return redirect()->route('user.index')->with('error', 'Cannot delete superadmin user.');
+            Session::flash('error', 'Cannot delete superadmin user.');
+            return redirect()->route('user.index');
         }
         $user->delete();
-        return redirect()->route('user.index')->with('success', 'User deleted successfully.');
+         Session::flash('success', 'User deleted successfully.');
+        return redirect()->route('user.index');
 
     }
 }

@@ -3,7 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AppSidebar } from "@/components/app-sidebar"
 
@@ -14,11 +14,64 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import Breadcrumb from '@/Components/Breadcrumb';
-
-
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/hooks/use-toast"
 
 export default function AuthenticatedLayout({ header, children }) {
+      const { auth, flash } = usePage().props;
     const user = usePage().props.auth.user;
+    const { toast } = useToast()
+
+
+    //useEffect for session flash toast
+   useEffect(() => {
+        // Handle success messages
+        if (flash?.success) {
+            toast({
+                title: "Success",
+                description: flash.success,
+                variant: "default", // or "success" if you have custom variant
+            });
+        }
+
+        // Handle error messages
+        if (flash?.error) {
+            toast({
+                title: "Error",
+                description: flash.error,
+                variant: "destructive",
+            });
+        }
+
+        // Handle warning messages
+        if (flash?.warning) {
+            toast({
+                title: "Warning",
+                description: flash.warning,
+                variant: "default", // You might want to create a warning variant
+            });
+        }
+
+        // Handle info messages
+        if (flash?.info) {
+            toast({
+                title: "Information",
+                description: flash.info,
+                variant: "default",
+            });
+        }
+
+        // Handle generic messages
+        if (flash?.message) {
+            toast({
+                title: "Notification",
+                description: flash.message,
+                variant: "default",
+            });
+        }
+    }, [flash, toast]);
+
+
 
     return (
     <div>
@@ -35,8 +88,19 @@ export default function AuthenticatedLayout({ header, children }) {
           </div>
         </header>
 
-
+  {/* <button
+      onClick={() => {
+        toast({
+          title: "Scheduled: Catch up",
+          description: "Friday, February 10, 2023 at 5:57 PM",
+        })
+      }}
+    >
+      Show Toast
+    </button> */}
              <main>{children}</main>
+
+              <Toaster />
 
       </SidebarInset>
 

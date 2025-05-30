@@ -37,6 +37,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Button as SDButton } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function List() {
     const { users, filters: initialFilters, sort: initialSort } = usePage().props;
@@ -121,13 +131,29 @@ export default function List() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>
-                                Copy user ID
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>View user</DropdownMenuItem>
-                            <DropdownMenuItem>Edit user</DropdownMenuItem>
-                            <DropdownMenuItem className="cursor-pointer" onClick={() => router.delete(route('user.destroy', user.id))} >Delete user</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.get(route('user.edit', user.id))} className="cursor-pointer">Edit user</DropdownMenuItem>
+                           <Dialog>
+                            <DialogTrigger asChild>
+                                <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
+                                Delete user
+                                </DropdownMenuItem>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                <DialogTitle>Delete User</DialogTitle>
+                                <DialogDescription>
+                                    Are you sure you want to delete this user? This action cannot be undone.
+                                </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                {/* Optional content */}
+                                </div>
+                                <DialogFooter>
+                                <Button variant="destructive" onClick={() => {router.delete(route('user.destroy', user.id))}}>Confirm Delete</Button>
+                                </DialogFooter>
+                            </DialogContent>
+                            </Dialog>
+
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -186,7 +212,6 @@ export default function List() {
         manualFiltering: true,
     })
 
-    console.log(users)
 
     return (
         <AuthenticatedLayout>

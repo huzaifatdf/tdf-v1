@@ -31,6 +31,7 @@ require __DIR__.'/auth.php';
 
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
     require __DIR__.'/dashboard/user.php';
+    require __DIR__.'/dashboard/media.php';
 });
 
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
