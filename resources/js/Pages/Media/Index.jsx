@@ -13,11 +13,19 @@ import {
   Video,
   Music,
   Download,
+  UploadIcon,
 } from 'lucide-react';
+import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, usePage } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const MediaLibrary = ({ media, filters }) => {
   const { collections } = usePage().props;
@@ -111,7 +119,7 @@ const MediaLibrary = ({ media, filters }) => {
     console.log(item),
     <div
       className={`relative group border rounded-lg overflow-hidden cursor-pointer transition-all hover:shadow-md ${
-        selectedItems.includes(item.id) ? 'ring-2 ring-blue-500' : ''
+        selectedItems.includes(item.id) ? 'ring-2 ring-gray-500' : ''
       }`}
       onClick={() => toggleSelection(item.id)}
     >
@@ -187,7 +195,7 @@ const MediaLibrary = ({ media, filters }) => {
   const MediaListItem = ({ item }) => (
     <div
       className={`flex items-center gap-4 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 ${
-        selectedItems.includes(item.id) ? 'bg-blue-50 border-blue-300' : ''
+        selectedItems.includes(item.id) ? 'bg-gray-50 border-gray-300' : ''
       }`}
       onClick={() => toggleSelection(item.id)}
     >
@@ -267,13 +275,7 @@ const MediaLibrary = ({ media, filters }) => {
             <h1 className="text-3xl font-bold">Media Library</h1>
             <p className="text-gray-600">Manage your media files</p>
           </div>
-          <button
-            onClick={() => setShowUploadModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            <Upload className="w-4 h-4" />
-            Upload Files
-          </button>
+
         </div>
 
         {/* Filters and Search */}
@@ -286,14 +288,14 @@ const MediaLibrary = ({ media, filters }) => {
                 placeholder="Search media..."
                 defaultValue={filters.search}
                 onChange={(e) => router.get(route('media.index'), { search: e.target.value }, { preserveState: true })}
-                className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-gray-500"
               />
             </div>
 
             <select
               defaultValue={filters.collection || 'all'}
               onChange={(e) => router.get(route('media.index'), { collection: e.target.value }, { preserveState: true })}
-              className="px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              className="px-3 py-2 border rounded-lg focus:outline-none focus:border-gray-500"
             >
               <option value="all">All Collections</option>
               {collections.map(collection => (
@@ -316,13 +318,13 @@ const MediaLibrary = ({ media, filters }) => {
             <div className="flex border rounded-lg">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'}`}
+                className={`p-2 ${viewMode === 'grid' ? 'bg-gray-100 text-gray-600' : 'hover:bg-gray-100'}`}
               >
                 <Grid3X3 className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'}`}
+                className={`p-2 ${viewMode === 'list' ? 'bg-gray-100 text-gray-600' : 'hover:bg-gray-100'}`}
               >
                 <List className="w-4 h-4" />
               </button>
@@ -365,7 +367,7 @@ const MediaLibrary = ({ media, filters }) => {
                 <button
                   key={index}
                   onClick={() => router.get(link.url, {}, { preserveState: true })}
-                  className={`px-3 py-1 rounded ${link.active ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  className={`px-3 py-1 rounded ${link.active ? 'bg-gray-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                   dangerouslySetInnerHTML={{ __html: link.label }}
                 />
               ))}
@@ -390,7 +392,7 @@ const MediaLibrary = ({ media, filters }) => {
               <form onSubmit={handleFileUpload}>
                 <div className="space-y-4">
                   <div
-                    className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400"
+                    className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
@@ -427,7 +429,7 @@ const MediaLibrary = ({ media, filters }) => {
                     <select
                       value={data.collection}
                       onChange={(e) => setData('collection', e.target.value)}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-gray-500"
                     >
                       <option value="">Default</option>
                       {collections.map(collection => (
@@ -447,7 +449,7 @@ const MediaLibrary = ({ media, filters }) => {
                     <button
                       type="submit"
                       disabled={processing || data.files.length === 0}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                      className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50"
                     >
                       {processing ? 'Uploading...' : 'Upload Files'}
                     </button>
@@ -527,7 +529,7 @@ const MediaLibrary = ({ media, filters }) => {
                       />
                       <button
                         onClick={() => copyMediaUrl(selectedMedia.original_url)}
-                        className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        className="px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                       >
                         <Link className="w-4 h-4" />
                       </button>
@@ -572,6 +574,29 @@ const MediaLibrary = ({ media, filters }) => {
         )}
       </div>
             </div>
+
+                 {/* Floating Action Button */}
+                <div className="fixed bottom-8 right-8 z-50">
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                            <Button
+                                size="md"
+                                className="rounded-full h-14 w-14 shadow-lg hover:shadow-xl transition-shadow"
+                                onClick={() =>setShowUploadModal(true)}
+                            >
+                                <UploadIcon className="h-6 w-6" />
+                                <span className="sr-only">Upload</span>
+                            </Button>
+                      </TooltipTrigger>
+                        <TooltipContent>
+                        <p>Upload Files</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    </TooltipProvider>
+                </div>
+
+
             </div>
     </AuthenticatedLayout>
   );
