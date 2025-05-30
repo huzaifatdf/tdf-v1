@@ -35,7 +35,7 @@ const data = {
   teams: [
     {
       name: "TDF",
-      logo: GalleryVerticalEnd,
+      logo: "/images/fav/logo2.png",
       plan: "Enterprise",
     },
   ],
@@ -72,14 +72,7 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "Users",
-      url: route('user.index'),
-      icon: Users,
-    },
 
-  ],
 }
 
 export function AppSidebar({
