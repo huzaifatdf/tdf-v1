@@ -1,4 +1,4 @@
-import { Folder, Forward, MoreHorizontal, PlusCircle, Trash2 } from "lucide-react";
+import { Folder, Forward, GalleryHorizontal, MoreHorizontal, PlusCircle, Trash2, Users } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -27,12 +27,12 @@ export function NavProjects({
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Managment</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
+
+          <SidebarMenuItem >
             <SidebarMenuButton asChild>
-              <Link href={item.url}>
-                <item.icon />
-                <span>{item.name}</span>
+              <Link href={route('user.index')}>
+                <Users/>
+                <span>Users</span>
               </Link>
             </SidebarMenuButton>
             <DropdownMenu>
@@ -56,8 +56,18 @@ export function NavProjects({
             </DropdownMenu>
 
           </SidebarMenuItem>
+             <SidebarMenuItem >
+            <SidebarMenuButton asChild>
+              <Link href={route('media.index')}>
+                <GalleryHorizontal />
+                <span>Media</span>
+              </Link>
+            </SidebarMenuButton>
 
-        ))}
+
+          </SidebarMenuItem>
+
+
         {/* <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal className="text-sidebar-foreground/70" />
