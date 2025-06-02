@@ -74,7 +74,6 @@ class FormController extends Controller
                 'status' => $request->status ?? 'active',
                 'require_captcha' => $request->boolean('require_captcha', false),
                 'store_submissions' => $request->boolean('store_submissions', true),
-                'created_by' => auth()->id(),
             ]);
 
             // Create form fields if provided

@@ -107,11 +107,7 @@ export default function List() {
             ),
             cell: ({ row }) => <div className="lowercase">{row.getValue("slug")}</div>,
         },
-        {
-            accessorKey: "created_by",
-            header: "Created By",
-            cell: ({ row }) => new Date(row.getValue("created_by")).toLocaleDateString(),
-        },
+
         {
             accessorKey: "created_at",
             header: "Joined At",

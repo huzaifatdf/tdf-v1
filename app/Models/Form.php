@@ -23,22 +23,17 @@ class Form extends Model
         'status',
         'require_captcha',
         'store_submissions',
-        'created_by',
     ];
 
     protected $casts = [
         'require_captcha' => 'boolean',
         'store_submissions' => 'boolean',
-        'created_by' => 'integer',
     ];
     public function submissions()
     {
         return $this->hasMany(FormSubmission::class);
     }
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
+
 // Add this relationship method
     public function fields()
     {

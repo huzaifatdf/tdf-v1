@@ -31,10 +31,7 @@ return new class extends Migration
             $table->boolean('require_captcha')->default(false);
             $table->boolean('store_submissions')->default(true);
 
-            // User Management
-            // User Management
-    $table->unsignedBigInteger('created_by')->nullable();
-    $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            
 
             $table->timestamps();
         });
