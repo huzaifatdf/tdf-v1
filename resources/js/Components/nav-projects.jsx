@@ -1,4 +1,4 @@
-import { Folder, Forward, GalleryHorizontal, MoreHorizontal, PlusCircle, Trash2, Users } from "lucide-react";
+import { Folder, FormInput, Forward, GalleryHorizontal, MoreHorizontal, PlusCircle, Trash2, Users } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -18,9 +18,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Link, router } from "@inertiajs/react";
 
-export function NavProjects({
-  projects
-}) {
+export function NavProjects() {
   const { isMobile } = useSidebar()
 
   return (
@@ -48,6 +46,34 @@ export function NavProjects({
                 align={isMobile ? "end" : "start"}>
 
                 <DropdownMenuItem  onClick={() => router.get(route('user.create'))} className="cursor-pointer">
+                  <PlusCircle className="text-muted-foreground" />
+                  <span>Add</span>
+                </DropdownMenuItem>
+
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+          </SidebarMenuItem>
+          <SidebarMenuItem >
+            <SidebarMenuButton asChild>
+              <Link href={route('form.index')}>
+                <FormInput/>
+                <span>Form</span>
+              </Link>
+            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuAction showOnHover>
+                  <MoreHorizontal />
+                  <span className="sr-only">More</span>
+                </SidebarMenuAction>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-48 rounded-lg"
+                side={isMobile ? "bottom" : "right"}
+                align={isMobile ? "end" : "start"}>
+
+                <DropdownMenuItem  onClick={() => router.get(route('form.create'))} className="cursor-pointer">
                   <PlusCircle className="text-muted-foreground" />
                   <span>Add</span>
                 </DropdownMenuItem>

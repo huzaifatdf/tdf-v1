@@ -80,11 +80,11 @@ const data = {
       items: [
         {
           title: "Add",
-          url: "#",
+          url: route('service.create'),
         },
         {
           title: "List",
-          url: "#",
+          url: route('service.index'),
         },
 
       ],
@@ -96,11 +96,11 @@ const data = {
       items: [
         {
           title: "Add",
-          url: "#",
+          url: route('product.create'),
         },
         {
           title: "List",
-          url: "#",
+          url: route('product.index'),
         },
 
       ],
@@ -121,7 +121,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects  />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

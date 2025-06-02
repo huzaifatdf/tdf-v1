@@ -32,6 +32,9 @@ require __DIR__.'/auth.php';
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
     require __DIR__.'/dashboard/user.php';
     require __DIR__.'/dashboard/media.php';
+    require __DIR__.'/dashboard/form.php';
+    require __DIR__.'/dashboard/product.php';
+    require __DIR__.'/dashboard/service.php';
 });
 
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
