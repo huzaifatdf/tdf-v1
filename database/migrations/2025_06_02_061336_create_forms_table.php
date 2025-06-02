@@ -31,8 +31,6 @@ return new class extends Migration
             $table->boolean('require_captcha')->default(false);
             $table->boolean('store_submissions')->default(true);
 
-            
-
             $table->timestamps();
         });
 
