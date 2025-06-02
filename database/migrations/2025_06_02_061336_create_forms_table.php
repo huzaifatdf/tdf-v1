@@ -32,12 +32,12 @@ return new class extends Migration
             $table->boolean('store_submissions')->default(true);
 
             // User Management
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+           $table->foreignId('created_by')
+            ->nullable()
+            ->constrained('users', 'id')
+            ->onDelete('set null');
 
             $table->timestamps();
-
-            $table->index(['status', 'created_at']);
         });
     }
 
