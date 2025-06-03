@@ -13,15 +13,17 @@ export function SectionCards() {
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 px-4 lg:px-8">
       {cards.map((card, i) => (
         <Card
-          key={i}
-          className={`
-            @container/card relative rounded-2xl border border-border/20 
-            bg-gradient-to-br from-muted/10 to-card/30 dark:from-background/40 dark:to-card/10 
-            backdrop-blur-md shadow-sm 
-            hover:shadow-xl hover:scale-[1.015] transition-all duration-300 ease-in-out
-            group
-          `}
-        >
+            key={i}
+            className={`
+              @container/card relative rounded-2xl border border-border/20 
+              bg-gradient-to-br from-muted/10 to-card/30 dark:from-background/40 dark:to-card/10 
+              backdrop-blur-md 
+              shadow-lg shadow-black/20 dark:shadow-black/40  // Stronger default shadow
+              hover:shadow-2xl hover:shadow-black/30 dark:hover:shadow-black/50  // More intense hover
+              hover:scale-[1.015] transition-all duration-300 ease-in-out
+              group
+            `}
+          >
           <CardHeader className="relative p-6 pb-3">
             <CardDescription className="text-muted-foreground text-sm mb-1">
               {card.description}
