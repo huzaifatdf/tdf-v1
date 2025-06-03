@@ -279,7 +279,7 @@ const MediaLibraryModel = ({showModal ,setShowModal, routename , setFieldValue ,
 
   return (
         <Modal show={showModal} maxWidth="6xl" onClose={() => setShowModal(false)}>
-          <div className="flex flex-col h-screen">
+          <div className="flex flex-col h-screen overflow-y-auto">
 
             <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2 p-10">
