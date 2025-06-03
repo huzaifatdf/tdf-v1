@@ -1,0 +1,23 @@
+import{j as e,$ as n}from"./app-CCoZaAZJ.js";import{A as i}from"./AuthenticatedLayout-7zNnDNQ5.js";import{c as l,J as c}from"./toast-DvP-FJCq.js";import{C as x,a as g,d as u,b as m,e as p}from"./card-Bz2vNWav.js";import{c as s}from"./createLucideIcon-CelHRbYg.js";import"./index-CKL0xvP7.js";/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const f=[["path",{d:"M16 17h6v-6",key:"t6n2it"}],["path",{d:"m22 17-8.5-8.5-5 5L2 7",key:"x473p"}]],o=s("trending-down",f);/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const b=[["path",{d:"M16 7h6v6",key:"box55l"}],["path",{d:"m22 7-8.5 8.5-5-5L2 17",key:"1t1m79"}]],a=s("trending-up",b),h=c("inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",{variants:{variant:{default:"border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",secondary:"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",destructive:"border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",outline:"text-foreground"}},defaultVariants:{variant:"default"}});function v({className:r,variant:t,...d}){return e.jsx("div",{className:l(h({variant:t}),r),...d})}function N(){return e.jsx("div",{className:"grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 px-4 lg:px-8",children:j.map((r,t)=>e.jsxs(x,{className:`
+              @container/card relative rounded-2xl border border-border/20 
+              bg-gradient-to-br from-muted/10 to-card/30 dark:from-background/40 dark:to-card/10 
+              backdrop-blur-md 
+              shadow-lg shadow-black/20 dark:shadow-black/40  // Stronger default shadow
+              hover:shadow-2xl hover:shadow-black/30 dark:hover:shadow-black/50  // More intense hover
+              hover:scale-[1.015] transition-all duration-300 ease-in-out
+              group
+            `,children:[e.jsxs(g,{className:"relative p-6 pb-3",children:[e.jsx(u,{className:"text-muted-foreground text-sm mb-1",children:r.description}),e.jsx(m,{className:"@[300px]/card:text-4xl text-3xl font-semibold tracking-tight tabular-nums",children:r.value}),e.jsx("div",{className:"absolute right-4 top-4",children:e.jsxs(v,{variant:"outline",className:`flex items-center gap-1 rounded-full border px-2 py-1 text-xs font-medium shadow-sm ${r.trending==="up"?"bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400":"bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400"}`,children:[r.trending==="up"?e.jsx(a,{className:"size-3.5"}):e.jsx(o,{className:"size-3.5"}),r.badge]})})]}),e.jsxs(p,{className:"flex flex-col items-start gap-1 px-6 pb-6 pt-0 text-sm",children:[e.jsxs("div",{className:`flex items-center gap-1 font-medium ${r.trending==="up"?"text-emerald-600 dark:text-emerald-400":"text-rose-600 dark:text-rose-400"}`,children:[r.footerLabel,r.trending==="up"?e.jsx(a,{className:"size-4"}):e.jsx(o,{className:"size-4"})]}),e.jsx("div",{className:"text-xs text-muted-foreground",children:r.footerNote})]}),e.jsx("div",{className:"absolute bottom-0 left-0 w-full h-1.5 bg-border/10 overflow-hidden rounded-b-2xl",children:e.jsx("div",{className:`
+                h-full rounded-r-xl transition-all duration-700 ease-out 
+                ${r.trending==="up"?"bg-emerald-500":"bg-rose-500"} 
+                group-hover:w-full
+              `,style:{width:r.trending==="up"?"85%":"60%"}})})]},t))})}const j=[{description:"Total Pages",value:"5",badge:"+12.5%",trending:"up",footerLabel:"Content expanding steadily",footerNote:"Growth over the last 6 months"},{description:"Total Services",value:"12",badge:"-20%",trending:"down",footerLabel:"Slight drop in service listings",footerNote:"Review offerings and updates"},{description:"Total Products",value:"40",badge:"+12.5%",trending:"up",footerLabel:"Inventory growing steadily",footerNote:"Strong catalog development"},{description:"Total Users",value:"2",badge:"+4.5%",trending:"up",footerLabel:"New users this week",footerNote:"On track with onboarding goals"}];function $(){return e.jsxs(i,{children:[e.jsx(n,{title:"Profile"}),e.jsx("div",{className:"flex flex-1 flex-col",children:e.jsx("div",{className:"@container/main flex flex-1 flex-col gap-2",children:e.jsx("div",{className:"flex flex-col gap-4 py-4 md:gap-6 md:py-6",children:e.jsx(N,{})})})})]})}export{$ as default};
