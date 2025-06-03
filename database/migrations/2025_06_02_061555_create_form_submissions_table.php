@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
 
+            // User Info
             $table->foreignIdFor(User::class)->nullable();
-
             // Status
             $table->enum('status', ['new', 'read', 'archived'])->default('new');
             $table->text('notes')->nullable();
