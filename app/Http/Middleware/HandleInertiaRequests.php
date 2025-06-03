@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
             ],
         ];
 
-        if ($request->routeIs('product.*') ) {
+        if ($request->routeIs('product.*') || $request->routeIs('service.*')) {
             $shared['media'] =  $this->getFilteredMedia($request);
             $shared['filters'] = $request->only(['search', 'perPage', 'mime_type', 'collection_name', 'sort', 'direction']);
             $shared['collections'] =  Media::pluck('collection_name')->unique()->values();

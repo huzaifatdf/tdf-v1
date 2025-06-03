@@ -82,23 +82,15 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
          DB::beginTransaction();
-
         try {
             $data = $request->all();
-
             // Generate slug from title
             $data['slug'] = Str::slug($data['title']);
-
-            // Handle image upload
-
-
             // Handle additional data as JSON
               if (isset($data['additional_data'])) {
                 $data['data'] = $data['additional_data'];
                 unset($data['additional_data']);
             }
-
-
             Product::create($data);
 
             DB::commit();
@@ -126,7 +118,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+
+        
     }
 
     /**
