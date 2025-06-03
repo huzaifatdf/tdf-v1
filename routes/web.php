@@ -9,12 +9,7 @@ use Inertia\Inertia;
 
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Website/Homev2');
 });
 
 Route::get('/dashboard', function () {
@@ -40,4 +35,5 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
+
 
