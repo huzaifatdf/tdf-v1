@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
 
-           $table->unsignedBigInteger('user_id')->nullable();
+           $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
 
