@@ -8,40 +8,17 @@ use Inertia\Inertia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
+use App\HandlesMediaQueries;
 
 class MediaController extends Controller
 {
+    use HandlesMediaQueries;
+
      public function index(Request $request)
     {
-        $query = Media::query();
-
-        // Filters
-        if ($request->mime_type) {
-            $query->where('mime_type', $request->mime_type);
-        }
-
-        if ($request->collection_name) {
-            $query->where('collection_name', $request->collection_name);
-        }
-
-        // Search
-        if ($request->search) {
-            $query->where(function($q) use ($request) {
-                $q->where('name', 'like', "%{$request->search}%")
-                  ->orWhere('file_name', 'like', "%{$request->search}%");
-            });
-        }
-
-        // Sorting
-        if ($request->sort) {
-            $query->orderBy($request->sort, $request->direction ?? 'asc');
-        }
-
-        $mediaItems = $query->paginate($request->perPage ?? 24)
-            ->withQueryString();
 
         return Inertia::render('Media/Index', [
-            'media' => $mediaItems,
+            'media' =>  $this->getFilteredMedia($request),
             'filters' => $request->only(['search', 'perPage', 'mime_type', 'collection_name', 'sort', 'direction']),
             'collections' => Media::pluck('collection_name')->unique()->values(),
         ]);

@@ -46,9 +46,34 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Product/Add');
+           $additionalDataStructure = [
+            'specifications' => [
+                'weight' => ['type' => 'number', 'label' => 'Weight (kg)', 'required' => false],
+                'dimensions' => ['type' => 'text', 'label' => 'Dimensions (L x W x H)', 'required' => false],
+                'color' => ['type' => 'text', 'label' => 'Color', 'required' => false],
+                'material' => ['type' => 'text', 'label' => 'Material', 'required' => false],
+            ],
+            'pricing' => [
+                'cost_price' => ['type' => 'number', 'label' => 'Cost Price', 'required' => false],
+                'selling_price' => ['type' => 'number', 'label' => 'Selling Price', 'required' => false],
+                'discount_percentage' => ['type' => 'number', 'label' => 'Discount %', 'required' => false],
+            ],
+            'inventory' => [
+                'sku' => ['type' => 'text', 'label' => 'SKU', 'required' => false],
+                'stock_quantity' => ['type' => 'number', 'label' => 'Stock Quantity', 'required' => false],
+                'reorder_level' => ['type' => 'number', 'label' => 'Reorder Level', 'required' => false],
+            ],
+            'seo' => [
+                'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
+                'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
+            ]
+        ];
+        return Inertia::render('Product/Add', [
+            'additionalDataStructure' => $additionalDataStructure,
+        ]);
     }
 
     /**
@@ -56,7 +81,36 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+         DB::beginTransaction();
+
+        try {
+            $data = $request->all();
+
+            // Generate slug from title
+            $data['slug'] = Str::slug($data['title']);
+
+            // Handle image upload
+
+
+            // Handle additional data as JSON
+              if (isset($data['additional_data'])) {
+                $data['data'] = $data['additional_data'];
+                unset($data['additional_data']);
+            }
+
+
+            Product::create($data);
+
+            DB::commit();
+
+            session()->flash('message', 'Product created successfully.');
+            return redirect()->route('product.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Failed to create product: ' . $e->getMessage());
+            return back();
+        }
     }
 
     /**

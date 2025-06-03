@@ -4,9 +4,12 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\HandlesMediaQueries;
 
 class HandleInertiaRequests extends Middleware
 {
+    use HandlesMediaQueries;
     /**
      * The root template that is loaded on the first page visit.
      *
@@ -29,7 +32,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
+
+        $shared = [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
@@ -42,5 +46,12 @@ class HandleInertiaRequests extends Middleware
                 'message' => $request->session()->get('message'),
             ],
         ];
+
+        if ($request->routeIs('product.*') ) {
+            $shared['media'] =  $this->getFilteredMedia($request);
+            $shared['filters'] = $request->only(['search', 'perPage', 'mime_type', 'collection_name', 'sort', 'direction']);
+            $shared['collections'] =  Media::pluck('collection_name')->unique()->values();
+        }
+        return $shared;
     }
 }
