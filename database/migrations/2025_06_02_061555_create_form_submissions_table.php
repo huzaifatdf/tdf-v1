@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
 
-            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(User::class)->nullable();
 
             // Status
             $table->enum('status', ['new', 'read', 'archived'])->default('new');
