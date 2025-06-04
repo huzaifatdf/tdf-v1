@@ -5,8 +5,12 @@ use App\Http\Controllers\WebSiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Artisan;
 
-
+Route::get('/run-optimize-clear', function () {
+    Artisan::call('optimize:clear');
+    return 'Optimized and cleared!';
+})->name('run-optimize-clear');
 
 Route::get('/', function () {
     return Inertia::render('Website/Homev2');
