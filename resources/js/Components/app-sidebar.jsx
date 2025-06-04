@@ -64,7 +64,7 @@ const data = {
       items: [
         {
           title: "Add",
-          url: "#",
+          url: route('page.create'),
         },
         {
           title: "List",
