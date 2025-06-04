@@ -1,8 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { SectionCards } from "@/Components/section-cards";
+
 
 import { useEffect } from "react";
+import { SectionSeoScreen } from "@/Components/section-seo-screen";
 
 
 export default function Page() {
@@ -14,10 +15,7 @@ export default function Page() {
 
      <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-
-            </div>
+            <SectionSeoScreen/>
           </div>
         </div>
 
