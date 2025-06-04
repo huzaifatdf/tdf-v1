@@ -98,15 +98,7 @@ export default function Edit() {
     });
   };
 
-  const handleImageChange = (event, setFieldValue, fieldName, setPreview) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFieldValue(fieldName, file);
-      const reader = new FileReader();
-      reader.onload = (e) => setPreview(e.target.result);
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   const removeImage = (setFieldValue, fieldName, setPreview) => {
     setFieldValue(fieldName, null);

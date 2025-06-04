@@ -143,7 +143,6 @@ public function edit(Product $product)
     return Inertia::render('Product/Edit', [
         'product' => $product,
         'additionalDataStructure' => $additionalDataStructure,
-        'appUrl' => config('app.url'), // Add this to pass the app URL
     ]);
 }
 
@@ -160,9 +159,6 @@ public function update(UpdateProductRequest $request, Product $product)
         if (isset($data['title']) && $data['title'] !== $product->title) {
             $data['slug'] = Str::slug($data['title']);
         }
-
-        // Handle image upload
-
 
         // Handle additional data as JSON
         if (isset($data['additional_data'])) {
