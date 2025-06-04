@@ -68,7 +68,7 @@ const data = {
         },
         {
           title: "List",
-          url: "#",
+          url: route('page.index'),
         },
 
       ],
