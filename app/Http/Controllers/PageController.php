@@ -54,7 +54,10 @@ class PageController extends Controller
      */
     public function store(StorePageRequest $request)
     {
-        //
+        $page = Page::create($request->all());
+        session()->flash('message', 'Page created successfully.');
+        return redirect()->route('page.index');
+
     }
 
     /**
