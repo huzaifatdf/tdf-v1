@@ -32,7 +32,16 @@ import {
 import { router, usePage } from "@inertiajs/react"
 
 // This is sample data.
-const data = {
+
+export function AppSidebar({
+  ...props
+}) {
+
+       const user = usePage().props.auth.user;
+       const dynamicFormsList = usePage().props.dynamicFormsList;
+
+
+       const data = {
 
   teams: [
     {
@@ -105,15 +114,30 @@ const data = {
 
       ],
     },
+     // Spread the mapped dynamic forms into the navMain array
+    ...(dynamicFormsList.length > 0 ? dynamicFormsList.map((form) => ({
+      title: form.name,
+      url: "#",
+      icon: Frame,
+      // You might want to add items/submenu for forms too
+      items: [
+        {
+          title: "View Form",
+          url: route('form.submission.create', { slug: form.slug }),
+        },
+        {
+          title: "Submissions",
+          url: route('form.submission.index', { slug: form.slug }),
+        },
+      ],
+    })) : []),
+
   ],
 
 }
 
-export function AppSidebar({
-  ...props
-}) {
 
-       const user = usePage().props.auth.user;
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

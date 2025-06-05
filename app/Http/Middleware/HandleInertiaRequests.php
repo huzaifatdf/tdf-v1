@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\HandlesMediaQueries;
+use App\Models\Form;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -32,6 +33,12 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+            $dynamic_forms_list = Form::where('status', 'active')
+            ->get(['id', 'name', 'slug', 'redirect_url'])
+            ->toArray();
+
+
+
 
         $shared = [
             ...parent::share($request),
@@ -46,6 +53,7 @@ class HandleInertiaRequests extends Middleware
                 'info' => $request->session()->get('info'),
                 'message' => $request->session()->get('message'),
             ],
+            'dynamicFormsList' => $dynamic_forms_list,
         ];
 
         if ($request->routeIs('product.*') || $request->routeIs('service.*')) {
@@ -53,6 +61,7 @@ class HandleInertiaRequests extends Middleware
             $shared['filters'] = $request->only(['search', 'perPage', 'mime_type', 'collection_name', 'sort', 'direction']);
             $shared['collections'] =  Media::pluck('collection_name')->unique()->values();
         }
+
         return $shared;
     }
 }
