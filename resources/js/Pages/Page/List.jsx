@@ -114,7 +114,7 @@ export default function List() {
             },
             {
                 accessorKey: "created_at",
-                header: "Joined At",
+                header: "Created At",
                 cell: ({ row }) => new Date(row.getValue("created_at")).toLocaleDateString(),
             },
             {
