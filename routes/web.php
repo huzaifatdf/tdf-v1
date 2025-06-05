@@ -6,11 +6,14 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\SitemapController;
 
 Route::get('/run-optimize-clear', function () {
     Artisan::call('optimize:clear');
     return 'Optimized and cleared!';
 })->name('run-optimize-clear');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 
 Route::get('/', function () {
     return Inertia::render('Website/Homev2');
