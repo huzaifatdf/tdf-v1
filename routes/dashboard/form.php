@@ -17,7 +17,7 @@ Route::get('submission/{slug}/create', [FormSubmissionController::class, 'create
 //submit
 Route::post('submission/{slug}/submit', [FormSubmissionController::class, 'store'])
     ->name('form.submission.store');
-    
+
 
     //dynamicform.submission.show
 Route::get('submission/{slug}/show/{id}', [FormSubmissionController::class, 'show']) ->name('form.submission.show');
@@ -26,4 +26,8 @@ Route::get('submission/{slug}/show/{id}', [FormSubmissionController::class, 'sho
     // dynamicform.submission.export
 Route::post('submission/{slug}/export', [FormSubmissionController::class, 'export'])
     ->name('form.submission.export');
+
+    // Archive Submission
+Route::post('submission/{slug}/{id}/archive', [FormSubmissionController::class, 'archive'])
+    ->name('form.submission.archive');
 

@@ -13,7 +13,4 @@
         </url>
     @endforeach
 
-
-
-
 </urlset>

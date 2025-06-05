@@ -165,14 +165,14 @@ export default function DynamicFormList() {
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
-                                    onClick={() => router.get(route('dynamicform.submission.show', [slug, submission.id]))}
+                                    onClick={() => router.get(route('form.submission.show', [slug, submission.id]))}
                                     className="cursor-pointer"
                                 >
                                     <Eye className="mr-2 h-4 w-4" />
                                     View Details
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => router.post(route('dynamicform.submission.export', [slug, submission.id]))}
+                                    onClick={() => router.post(route('form.submission.export', [slug, submission.id]))}
                                     className="cursor-pointer"
                                 >
                                     <Download className="mr-2 h-4 w-4" />
@@ -181,7 +181,13 @@ export default function DynamicFormList() {
                                 <DropdownMenuSeparator />
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <DropdownMenuItem className="cursor-pointer text-red-600" onSelect={(e) => e.preventDefault()}>
+                                        <DropdownMenuItem className="cursor-pointer text-red-600" onSelect={(e) => {e.preventDefault();
+                                             router.post(route('form.submission.archive', [slug, submission.id]), {}, {
+                                                       onSuccess: () => {
+                                                           // Page will refresh with updated data
+                                                       }
+                                                   });
+                                        }}>
                                             <Archive className="mr-2 h-4 w-4" />
                                             Archive Submission
                                         </DropdownMenuItem>

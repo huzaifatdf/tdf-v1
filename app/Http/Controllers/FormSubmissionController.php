@@ -336,10 +336,6 @@ public function index(Request $request, $slug)
     /**
      * Display the specified resource.
      */
-    public function show(FormSubmission $formSubmission)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -363,5 +359,249 @@ public function index(Request $request, $slug)
     public function destroy(FormSubmission $formSubmission)
     {
         //
+    }
+
+    public function show(Request $request, $slug, $id)
+{
+    // Get the form by slug
+    $form = Form::where('slug', $slug)->with('fields')->first();
+
+    if (!$form) {
+        abort(404, 'Form not found');
+    }
+
+    // Get the submission with relationships
+    $submission = FormSubmission::with(['form', 'user'])
+        ->where('id', $id)
+        ->whereHas('form', function ($q) use ($slug) {
+            $q->where('slug', $slug);
+        })
+        ->first();
+
+    if (!$submission) {
+        abort(404, 'Submission not found');
+    }
+
+    // Mark as read if it's new
+    if ($submission->status === 'new') {
+        $submission->update(['status' => 'read']);
+    }
+
+    // Get form fields for proper display
+    $formFields = $form->fields->sortBy('sort_order');
+
+    // Render the submission details page
+    return Inertia::render('Dynamicform/Show', [
+        'submission' => $submission,
+        'form' => $form,
+        'formFields' => $formFields,
+        'slug' => $slug,
+    ]);
+}
+
+    /**
+     * Export form submission data.
+     */
+    public function export(Request $request, $slug)
+    {
+        // Get the form by slug
+        $form = Form::where('slug', $slug)->with('fields')->first();
+
+        if (!$form) {
+            abort(404, 'Form not found');
+        }
+
+        // Get submission ID from request (for single export) or export all
+        $submissionId = $request->input('submission_id');
+        $format = $request->input('format', 'csv'); // csv, json, excel
+
+        // Build query
+        $query = FormSubmission::with(['form', 'user'])
+            ->whereHas('form', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            });
+
+        if ($submissionId) {
+            $query->where('id', $submissionId);
+        }
+
+        $submissions = $query->orderBy('created_at', 'desc')->get();
+
+        if ($submissions->isEmpty()) {
+            session()->flash('error', 'No submissions found to export');
+            return back();
+        }
+
+        // Get form fields for headers
+        $formFields = $form->fields->sortBy('sort_order');
+
+        switch ($format) {
+            case 'json':
+                return $this->exportAsJson($submissions, $form, $formFields);
+            case 'excel':
+                return $this->exportAsExcel($submissions, $form, $formFields);
+            default:
+                return $this->exportAsCsv($submissions, $form, $formFields);
+        }
+    }
+
+    /**
+     * Archive a form submission.
+     */
+    public function archive(Request $request, $slug, $id)
+    {
+        // Get the form by slug
+        $form = Form::where('slug', $slug)->first();
+
+        if (!$form) {
+            abort(404, 'Form not found');
+        }
+
+        // Get the submission
+        $submission = FormSubmission::where('id', $id)
+            ->whereHas('form', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })
+            ->first();
+
+        if (!$submission) {
+            abort(404, 'Submission not found');
+        }
+
+        try {
+            // Toggle archive status
+            $newStatus = $submission->status === 'archived' ? 'read' : 'archived';
+            $submission->update(['status' => $newStatus]);
+
+            $message = $newStatus === 'archived'
+                ? 'Submission archived successfully'
+                : 'Submission restored successfully';
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $message]);
+            }
+
+            session()->flash('success', $message);
+            return back();
+
+        } catch (\Exception $e) {
+            $errorMessage = 'Error updating submission status: ' . $e->getMessage();
+
+            if ($request->expectsJson()) {
+                return response()->json(['error' => $errorMessage], 500);
+            }
+
+            session()->flash('error', $errorMessage);
+            return back();
+        }
+    }
+
+    /**
+     * Export submissions as CSV.
+     */
+    private function exportAsCsv($submissions, $form, $formFields)
+    {
+        $filename = Str::slug($form->name) . '_submissions_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($submissions, $formFields) {
+            $file = fopen('php://output', 'w');
+
+            // Write headers
+            $csvHeaders = ['ID', 'Status', 'Submitted By', 'IP Address', 'Submitted At'];
+            foreach ($formFields as $field) {
+                $csvHeaders[] = $field->label;
+            }
+            fputcsv($file, $csvHeaders);
+
+            // Write data
+            foreach ($submissions as $submission) {
+                $row = [
+                    $submission->id,
+                    $submission->status,
+                    $submission->user ? $submission->user->name : 'Guest',
+                    $submission->ip_address,
+                    $submission->created_at->format('Y-m-d H:i:s'),
+                ];
+
+                foreach ($formFields as $field) {
+                    $value = $submission->data[$field->name] ?? '';
+
+                    // Handle different field types
+                    if ($field->type === 'file' && is_array($value)) {
+                        $value = $value['original_name'] ?? '';
+                    } elseif ($field->type === 'checkbox' && is_array($value)) {
+                        $value = implode(', ', $value);
+                    } elseif (is_array($value)) {
+                        $value = json_encode($value);
+                    }
+
+                    $row[] = $value;
+                }
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export submissions as JSON.
+     */
+    private function exportAsJson($submissions, $form, $formFields)
+    {
+        $filename = Str::slug($form->name) . '_submissions_' . now()->format('Y-m-d_H-i-s') . '.json';
+
+        $data = [
+            'form' => [
+                'name' => $form->name,
+                'slug' => $form->slug,
+                'exported_at' => now()->toISOString(),
+            ],
+            'submissions' => $submissions->map(function ($submission) {
+                return [
+                    'id' => $submission->id,
+                    'status' => $submission->status,
+                    'data' => $submission->data,
+                    'user' => $submission->user ? [
+                        'id' => $submission->user->id,
+                        'name' => $submission->user->name,
+                        'email' => $submission->user->email,
+                    ] : null,
+                    'ip_address' => $submission->ip_address,
+                    'user_agent' => $submission->user_agent,
+                    'created_at' => $submission->created_at->toISOString(),
+                    'updated_at' => $submission->updated_at->toISOString(),
+                ];
+            })
+        ];
+
+        return response()->json($data)
+            ->header('Content-Type', 'application/json')
+            ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
+    }
+
+    /**
+     * Export submissions as Excel (requires league/csv or similar package).
+     */
+    private function exportAsExcel($submissions, $form, $formFields)
+    {
+        // This is a basic implementation. For full Excel support,
+        // consider using packages like PhpSpreadsheet or Laravel Excel
+
+        $filename = Str::slug($form->name) . '_submissions_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
+
+        // For now, return CSV with Excel headers
+        // You can implement proper Excel export using PhpSpreadsheet
+        return $this->exportAsCsv($submissions, $form, $formFields)
+            ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
     }
 }
