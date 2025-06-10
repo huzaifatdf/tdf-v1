@@ -18,7 +18,8 @@ import {
   ChevronRight,
   ChevronUp,
   Eye,
-  EyeOff
+  EyeOff,
+  X
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -60,6 +61,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import MediaLibraryModel from "../Media/Model";
 
 // Section type configurations
 const SECTION_TYPES = {
@@ -131,6 +133,29 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
     onUpdate(section.id, { ...section, status: newStatus });
   };
 
+  const {forms,appUrl,components} = usePage().props;
+
+  const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
+const [imagePreview, setImagePreview] = useState(
+  section.type === 'image' && section.content ? `${appUrl}/${section.content}` : null
+);
+
+const setFieldValue = (field, value) => {
+  if (field === 'image') {
+    handleContentChange(value);
+    if (value) {
+      setImagePreview(`${appUrl}/${value}`);
+    } else {
+      setImagePreview(null);
+    }
+  }
+};
+
+const removeImage = () => {
+  setFieldValue('image', null);
+};
+
+
   const renderContentEditor = () => {
     switch (section.type) {
       case 'text':
@@ -144,24 +169,48 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
           />
         );
 
-      case 'image':
-        return (
-          <div className="space-y-3">
-            <Input
-              value={section.content || ''}
-              onChange={(e) => handleContentChange(e.target.value)}
-              placeholder="https://example.com/image.jpg"
-            />
-            {section.content && (
+    case 'image':
+      return (
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={() => setImageShowMediaLibrary(true)}
+            className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+          >
+            {imagePreview ? 'Change Media' : 'Add Media'}
+          </button>
+
+
+           <MediaLibraryModel
+                        routename={route('page.edit', section.id)}
+                        showModal={showImageMediaLibrary}
+                        setShowModal={setImageShowMediaLibrary}
+                        setFieldValue={setFieldValue}
+                        fieldName="image"
+                        setImagePreview={setImagePreview}
+                      />
+
+          {imagePreview && (
+            <div className="relative mt-4 w-fit mx-auto">
               <img
-                src={section.content}
-                alt="Preview"
-                className="max-w-xs rounded border"
-                onError={(e) => e.target.style.display = 'none'}
+                src={imagePreview}
+                alt="Image Preview"
+                className="w-24 h-24 object-cover rounded-lg border"
+                onError={(e) => (e.currentTarget.style.display = 'none')}
               />
-            )}
-          </div>
-        );
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                className="absolute -top-2 -right-2"
+                onClick={removeImage}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+        </div>
+      );
 
       case 'video':
         return (
@@ -174,15 +223,52 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
 
       case 'html':
       case 'form':
+        return (
+        <Select
+  name="form"
+  value={section.content?.toString() || ''}
+  onValueChange={(value) => handleContentChange(value)}
+>
+  <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+    <SelectValue placeholder="Select a form" />
+  </SelectTrigger>
+
+  <SelectContent>
+    {forms.map((form) => (
+      <SelectItem value={form.id.toString()} key={form.id}>
+        <div className="flex items-center">
+          <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+          <div className="font-medium">{form.name}</div>
+        </div>
+      </SelectItem>
+    ))}
+  </SelectContent>
+        </Select>
+
+
+        )
       case 'component':
         return (
-          <Textarea
-            value={section.content || ''}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder={`Enter your ${section.type} code...`}
-            rows={8}
-            className="font-mono text-sm"
-          />
+               <Select
+  name="component"
+  value={section.content?.toString() || ''}
+  onValueChange={(value) => handleContentChange(value)}
+>
+  <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+    <SelectValue placeholder="Select a component" />
+  </SelectTrigger>
+
+  <SelectContent>
+    {components.map((component, index) => (
+      <SelectItem value={component} key={index}>
+        <div className="flex items-center">
+          <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+          <div className="font-medium">{component}</div>
+        </div>
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
         );
 
       case 'table':

@@ -301,14 +301,14 @@ const MediaLibraryModel = ({showModal ,setShowModal, routename , setFieldValue ,
               <input
                 type="text"
                 placeholder="Search media..."
-                defaultValue={filters.search}
+                defaultValue={filters?.search || ''}
                 onChange={(e) => router.get(routename, { search: e.target.value }, { preserveState: true })}
                 className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-gray-500"
               />
             </div>
 
             <select
-              defaultValue={filters.collection || 'all'}
+              defaultValue={filters?.collection || 'all'}
               onChange={(e) => router.get(routename, { collection: e.target.value }, { preserveState: true })}
               className="px-3 py-2 border rounded-lg focus:outline-none focus:border-gray-500"
             >

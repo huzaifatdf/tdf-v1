@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\Form;
 use App\Models\Pagesection;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -77,14 +78,23 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::findOrFail($id);
-
         $page->load(['sections' => function($query) {
             $query->orderBy('priority', 'asc');
         }]);
+        $forms = Form::where('status','active')->get();
+        //get all components from resources/js/Components/frontend
+        $componentsWithPath = glob(resource_path('js/Components/frontend/*.jsx'));
+        $components = [];
+        foreach ($componentsWithPath as $component) {
+            $componentName = basename($component);
+            $components[] = str_replace('.jsx', '', $componentName);
+        }
 
         return Inertia::render('Page/Edit', [
             'page' => $page,
-            'sections' => $page->sections
+            'sections' => $page->sections,
+            'forms' => $forms,
+            'components' => $components
         ]);
     }
 
