@@ -86,11 +86,11 @@ export default function DynamicFormList() {
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
-                        ID
+                        S.No
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                 ),
-                cell: ({ row }) => <div className="font-medium">{row.getValue("id")}</div>,
+                cell: ({ row }) => <div className="font-medium">{row.index + 1}</div>,
             }
         ];
 

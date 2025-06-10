@@ -203,7 +203,7 @@ public function update(UpdateProductRequest $request, Product $product)
     } catch (\Exception $e) {
         DB::rollBack();
         session()->flash('error', 'Failed to update product: ' . $e->getMessage());
-        return back()->withErrors(['error' => 'Failed to update product: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'Failed to update product: ' . $e->getMessage()]);
     }
 }
 

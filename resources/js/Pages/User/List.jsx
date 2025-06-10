@@ -85,8 +85,8 @@ export default function List() {
         },
         {
             accessorKey: "id",
-            header: "ID",
-            cell: ({ row }) => <div>{row.getValue("id")}</div>,
+            header: "S.No",
+            cell: ({ row }) => <div>{row.index + 1}</div>,
         },
         {
             accessorKey: "name",
