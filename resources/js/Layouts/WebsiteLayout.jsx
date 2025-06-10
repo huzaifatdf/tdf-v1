@@ -120,9 +120,9 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         <h5 className="text-[22px] fc-primary mb-2 ml-2">Get in Touch</h5>
                         <div className="flex ml-0">
                             <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/facebook.svg" alt="Logo" width="40" className="me-2" /></a>
-                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/linkedin.svg" alt="Logo" width="41" className="me-2" /></a>
-                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/insta1.svg" alt="Logo" width="40" className="me-2" /></a>
-                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/youtube.svg" alt="Logo" width="41" className="me-2" /></a>
+                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/linkedin.svg" alt="Logo" width="40" className="me-2" /></a>
+                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/insta.svg" alt="Logo" width="40" className="me-2" /></a>
+                            <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/youtube.svg" alt="Logo" width="40" className="me-2" /></a>
                         </div>
                     </div>
                 </div>
