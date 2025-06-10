@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -48,7 +49,7 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-           $additionalDataStructure = [
+        $additionalDataStructure = [
             'specifications' => [
                 'weight' => ['type' => 'number', 'label' => 'Weight (kg)', 'required' => false],
                 'dimensions' => ['type' => 'text', 'label' => 'Dimensions (L x W x H)', 'required' => false],
@@ -81,6 +82,21 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'status' => 'required|string|in:published,draft', // Only allow 'published' or 'draft'
+            'priority' => 'required|numeric|min:0|max:100',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessage = "Validation Errors:\n";
+            foreach ($errors as $index => $error) {
+                $errorMessage .= ($index + 1) . ". " . $error . "\n";
+            }
+            session()->flash('error', $errorMessage);
+            return back()->withInput(); // preserve input for user convenience
+        }
          DB::beginTransaction();
         try {
             $data = $request->all();
@@ -186,9 +202,7 @@ public function update(UpdateProductRequest $request, Product $product)
 
     } catch (\Exception $e) {
         DB::rollBack();
-        \Log::error('Product update failed: ' . $e->getMessage());
         session()->flash('error', 'Failed to update product: ' . $e->getMessage());
-
         return back()->withErrors(['error' => 'Failed to update product: ' . $e->getMessage()]);
     }
 }
