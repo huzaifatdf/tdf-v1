@@ -2,36 +2,31 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import { usePage } from '@inertiajs/react';
+import axios from 'axios';
 
-const services = [
-  {
-    title: "Brand Communication",
-    subtitle: "shaping how the world sees you",
-    image: "/images/ser1.png",
-  },
-  {
-    title: "Web & Mobile Apps",
-    subtitle: "designed to grow and shift with your audience",
-    image: "/images/ser2.png",
-  },
-  {
-    title: "Digital Marketing Services",
-    subtitle: "measurable, malleable, memorable",
-    image: "/images/ser3.png",
-  },
-  {
-    title: "UI/UX Design",
-    subtitle: "thoughtfully created journeys for your users",
-    image: "/images/ser4.png",
-  },
-  {
-    title: "UI/UX Design",
-    subtitle: "thoughtfully created journeys for your users",
-    image: "/images/ser3.png",
-  },
-];
+
 
 function ServiceSlider() {
+
+    const {appUrl} = usePage().props
+
+    //laravel api axios api/v1/services
+    const [services , setServices] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get('/api/v1/services')
+            .then(response => {
+                console.log(response.data);
+                setServices(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+
+
   return (
     <div className="container-fluid relative">
       <div className='sec-padding pt-0'>
@@ -58,10 +53,10 @@ function ServiceSlider() {
           {services.map((service, index) => (
             <SwiperSlide key={index}>
               <div className="overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-85 object-cover" />
+                <img src={`${appUrl}/${service.image}`} alt={service.title} className="w-full h-85 object-cover" />
                 <div className="p-1 mt-2">
                   <h3 className="text-[22px] fc-primary mb-0">{service.title}</h3>
-                  <p className="text-[14px] fc-primary mb-0">{service.subtitle}</p>
+                  <p className="text-[14px] fc-primary mb-0">{service.short_description}</p>
                 </div>
               </div>
             </SwiperSlide>

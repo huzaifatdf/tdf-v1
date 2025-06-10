@@ -90,6 +90,7 @@ class PageController extends Controller
             $components[] = str_replace('.jsx', '', $componentName);
         }
 
+
         return Inertia::render('Page/Edit', [
             'page' => $page,
             'sections' => $page->sections,
@@ -190,11 +191,17 @@ class PageController extends Controller
         $updatedSectionIds = [];
 
         foreach ($sections as $index => $sectionData) {
+            // if string convert to json
+
             // Validate section data
             $validatedData = $this->validateSectionData($sectionData);
             $validatedData['priority'] = $index; // Use array index as priority
 
             if (isset($sectionData['id']) && !isset($sectionData['isNew'])) {
+
+                if(is_string($validatedData["properties"])) {
+                    $validatedData["properties"] = json_decode($validatedData["properties"], true);
+                }
                 // Update existing section
                 $section = $page->sections()->find($sectionData['id']);
                 if ($section) {
@@ -231,6 +238,7 @@ class PageController extends Controller
             'content' => $data['content'] ?? '',
             'status' => in_array($data['status'] ?? 'draft', $allowedStatuses) ? $data['status'] : 'draft',
             'priority' => (int)($data['priority'] ?? 0),
+            'properties' => json_encode($data['properties'] ?? []),
         ];
     }
 
@@ -421,5 +429,12 @@ class PageController extends Controller
                 'error' => 'Failed to import page: ' . $e->getMessage()
             ]);
         }
+    }
+
+
+    public function dynamicPage(Request $request, $slug) {
+
+        dd($slug);
+        return Inertia::render('Page/Dynamicpage');
     }
 }

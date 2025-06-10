@@ -127,36 +127,68 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
     onUpdate(section.id, { ...section, content });
   };
 
+  // Fixed property parsing and handling
+  const getSectionProperties = () => {
+    if (!section.properties) return {};
+
+    if (typeof section.properties === 'string') {
+      try {
+        return JSON.parse(section.properties);
+      } catch (e) {
+        console.error('Error parsing section properties:', e);
+        return {};
+      }
+    }
+
+    return section.properties || {};
+  };
+
+  const handlePropertyChange = (property, value) => {
+    const currentProperties = getSectionProperties();
+    const updatedProperties = {
+      ...currentProperties,
+      [property]: value
+    };
+
+    const updatedSection = {
+      ...section,
+      properties: updatedProperties // Keep as object, not stringified
+    };
+
+    onUpdate(section.id, updatedSection);
+  };
+
   const handleStatusToggle = () => {
     const newStatus = isVisible ? 'draft' : 'published';
     setIsVisible(!isVisible);
     onUpdate(section.id, { ...section, status: newStatus });
   };
 
-  const {forms,appUrl,components} = usePage().props;
+  const { forms, appUrl, components } = usePage().props;
 
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
-const [imagePreview, setImagePreview] = useState(
-  section.type === 'image' && section.content ? `${appUrl}/${section.content}` : null
-);
+  const [imagePreview, setImagePreview] = useState(
+    section.type === 'image' && section.content ? `${appUrl}/${section.content}` : null
+  );
 
-const setFieldValue = (field, value) => {
-  if (field === 'image') {
-    handleContentChange(value);
-    if (value) {
-      setImagePreview(`${appUrl}/${value}`);
-    } else {
-      setImagePreview(null);
+  const setFieldValue = (field, value) => {
+    if (field === 'image') {
+      handleContentChange(value);
+      if (value) {
+        setImagePreview(`${appUrl}/${value}`);
+      } else {
+        setImagePreview(null);
+      }
     }
-  }
-};
+  };
 
-const removeImage = () => {
-  setFieldValue('image', null);
-};
-
+  const removeImage = () => {
+    setFieldValue('image', null);
+  };
 
   const renderContentEditor = () => {
+    const properties = getSectionProperties();
+
     switch (section.type) {
       case 'text':
         return (
@@ -169,128 +201,280 @@ const removeImage = () => {
           />
         );
 
-    case 'image':
-      return (
-        <div className="space-y-3">
-          <button
-            type="button"
-            onClick={() => setImageShowMediaLibrary(true)}
-            className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
-          >
-            {imagePreview ? 'Change Media' : 'Add Media'}
-          </button>
+      case 'image':
+        return (
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={() => setImageShowMediaLibrary(true)}
+              className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+            >
+              {imagePreview ? 'Change Media' : 'Add Media'}
+            </button>
 
+            <MediaLibraryModel
+              routename={route('page.edit', section.id)}
+              showModal={showImageMediaLibrary}
+              setShowModal={setImageShowMediaLibrary}
+              setFieldValue={setFieldValue}
+              fieldName="image"
+              setImagePreview={setImagePreview}
+            />
 
-           <MediaLibraryModel
-                        routename={route('page.edit', section.id)}
-                        showModal={showImageMediaLibrary}
-                        setShowModal={setImageShowMediaLibrary}
-                        setFieldValue={setFieldValue}
-                        fieldName="image"
-                        setImagePreview={setImagePreview}
-                      />
+            {imagePreview && (
+              <div className="relative mt-4 w-fit mx-auto">
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="w-24 h-24 object-cover rounded-lg border"
+                  onError={(e) => (e.currentTarget.style.display = 'none')}
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="absolute -top-2 -right-2"
+                  onClick={removeImage}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
 
-          {imagePreview && (
-            <div className="relative mt-4 w-fit mx-auto">
-              <img
-                src={imagePreview}
-                alt="Image Preview"
-                className="w-24 h-24 object-cover rounded-lg border"
-                onError={(e) => (e.currentTarget.style.display = 'none')}
-              />
-              <Button
-                type="button"
-                variant="destructive"
-                size="sm"
-                className="absolute -top-2 -right-2"
-                onClick={removeImage}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+            {/* Fixed Properties: height, width, and alt */}
+            <div className="space-y-3">
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">Height (px)</label>
+                <Input
+                  type="number"
+                  name="height"
+                  value={properties.height || ''}
+                  onChange={(e) => handlePropertyChange('height', e.target.value)}
+                  placeholder="Height in pixels"
+                  min="1"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">Width (px)</label>
+                <Input
+                  type="number"
+                  name="width"
+                  value={properties.width || ''}
+                  onChange={(e) => handlePropertyChange('width', e.target.value)}
+                  placeholder="Width in pixels"
+                  min="1"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">Alt Text</label>
+                <Input
+                  type="text"
+                  name="alt"
+                  value={properties.alt || ''}
+                  onChange={(e) => handlePropertyChange('alt', e.target.value)}
+                  placeholder="Alternative text for accessibility"
+                />
+              </div>
             </div>
-          )}
-        </div>
-      );
+          </div>
+        );
 
       case 'video':
         return (
-          <Input
-            value={section.content || ''}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder="https://youtube.com/watch?v=... or embed code"
-          />
+          <div className="space-y-3">
+            <Input
+              value={section.content || ''}
+              onChange={(e) => handleContentChange(e.target.value)}
+              placeholder="https://youtube.com/watch?v=... or embed code"
+            />
+
+            {/* Video Properties */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">Width (px)</label>
+                <Input
+                  type="number"
+                  value={properties.width || ''}
+                  onChange={(e) => handlePropertyChange('width', e.target.value)}
+                  placeholder="560"
+                  min="1"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">Height (px)</label>
+                <Input
+                  type="number"
+                  value={properties.height || ''}
+                  onChange={(e) => handlePropertyChange('height', e.target.value)}
+                  placeholder="315"
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={properties.autoplay || false}
+                onCheckedChange={(checked) => handlePropertyChange('autoplay', checked)}
+              />
+              <label className="text-sm text-gray-700">Autoplay</label>
+            </div>
+          </div>
         );
 
       case 'html':
+        return (
+          <div className="space-y-3">
+            <Textarea
+              value={section.content || ''}
+              onChange={(e) => handleContentChange(e.target.value)}
+              placeholder={`Enter your ${section.type} code...`}
+              rows={8}
+              className="font-mono text-sm"
+            />
+
+            {/* HTML Properties */}
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">CSS Classes</label>
+              <Input
+                value={properties.cssClass || ''}
+                onChange={(e) => handlePropertyChange('cssClass', e.target.value)}
+                placeholder="custom-class another-class"
+              />
+            </div>
+          </div>
+        );
+
       case 'form':
         return (
-        <Select
-  name="form"
-  value={section.content?.toString() || ''}
-  onValueChange={(value) => handleContentChange(value)}
->
-  <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-    <SelectValue placeholder="Select a form" />
-  </SelectTrigger>
+          <div className="space-y-3">
+            <Select
+              name="form"
+              value={section.content?.toString() || ''}
+              onValueChange={(value) => handleContentChange(value)}
+            >
+              <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                <SelectValue placeholder="Select a form" />
+              </SelectTrigger>
+              <SelectContent>
+                {forms.map((form) => (
+                  <SelectItem value={form.id.toString()} key={form.id}>
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+                      <div className="font-medium">{form.name}</div>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-  <SelectContent>
-    {forms.map((form) => (
-      <SelectItem value={form.id.toString()} key={form.id}>
-        <div className="flex items-center">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
-          <div className="font-medium">{form.name}</div>
-        </div>
-      </SelectItem>
-    ))}
-  </SelectContent>
-        </Select>
+            {/* Form Properties */}
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Form Title</label>
+              <Input
+                value={properties.title || ''}
+                onChange={(e) => handlePropertyChange('title', e.target.value)}
+                placeholder="Contact Form"
+              />
+            </div>
+          </div>
+        );
 
-
-        )
       case 'component':
         return (
-               <Select
-  name="component"
-  value={section.content?.toString() || ''}
-  onValueChange={(value) => handleContentChange(value)}
->
-  <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-    <SelectValue placeholder="Select a component" />
-  </SelectTrigger>
+          <div className="space-y-3">
+            <Select
+              name="component"
+              value={section.content?.toString() || ''}
+              onValueChange={(value) => handleContentChange(value)}
+            >
+              <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                <SelectValue placeholder="Select a component" />
+              </SelectTrigger>
+              <SelectContent>
+                {components.map((component, index) => (
+                  <SelectItem value={component} key={index}>
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+                      <div className="font-medium">{component}</div>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-  <SelectContent>
-    {components.map((component, index) => (
-      <SelectItem value={component} key={index}>
-        <div className="flex items-center">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
-          <div className="font-medium">{component}</div>
-        </div>
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
+            {/* Component Properties */}
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Component Props (JSON)</label>
+              <Textarea
+                value={properties.props ? JSON.stringify(properties.props, null, 2) : '{}'}
+                onChange={(e) => {
+                  try {
+                    const props = JSON.parse(e.target.value);
+                    handlePropertyChange('props', props);
+                  } catch (err) {
+                    // Handle invalid JSON gracefully
+                  }
+                }}
+                placeholder='{"prop1": "value1", "prop2": "value2"}'
+                rows={4}
+                className="font-mono text-sm"
+              />
+            </div>
+          </div>
         );
 
       case 'table':
         return (
-          <Textarea
-            value={section.content || ''}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder="Enter table HTML or JSON data..."
-            rows={6}
-            className="font-mono text-sm"
-          />
+          <div className="space-y-3">
+            <Textarea
+              value={section.content || ''}
+              onChange={(e) => handleContentChange(e.target.value)}
+              placeholder="Enter table HTML or JSON data..."
+              rows={6}
+              className="font-mono text-sm"
+            />
+
+            {/* Table Properties */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  checked={properties.striped || false}
+                  onCheckedChange={(checked) => handlePropertyChange('striped', checked)}
+                />
+                <label className="text-sm text-gray-700">Striped Rows</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  checked={properties.bordered || false}
+                  onCheckedChange={(checked) => handlePropertyChange('bordered', checked)}
+                />
+                <label className="text-sm text-gray-700">Bordered</label>
+              </div>
+            </div>
+          </div>
         );
 
       case 'accordion':
         return (
-          <Textarea
-            value={section.content || ''}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder='{"title": "FAQ Item", "content": "Answer content..."}'
-            rows={4}
-            className="font-mono text-sm"
-          />
+          <div className="space-y-3">
+            <Textarea
+              value={section.content || ''}
+              onChange={(e) => handleContentChange(e.target.value)}
+              placeholder='{"title": "FAQ Item", "content": "Answer content..."}'
+              rows={4}
+              className="font-mono text-sm"
+            />
+
+            {/* Accordion Properties */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={properties.allowMultiple || false}
+                onCheckedChange={(checked) => handlePropertyChange('allowMultiple', checked)}
+              />
+              <label className="text-sm text-gray-700">Allow Multiple Open</label>
+            </div>
+          </div>
         );
 
       default:
@@ -305,6 +489,7 @@ const removeImage = () => {
     }
   };
 
+  // Rest of the component remains the same...
   return (
     <div className="bg-white border rounded-lg shadow-sm">
       {/* Section Header */}
@@ -997,6 +1182,7 @@ export default function Edit() {
                             </div>
 
                             {pageSections.length === 0 ? (
+
                               <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">
                                 <div className="mx-auto w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
                                   <Component className="w-6 h-6 text-gray-400" />

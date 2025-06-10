@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebSiteController;
 use Illuminate\Foundation\Application;
@@ -14,6 +15,7 @@ Route::get('/run-optimize-clear', function () {
 })->name('run-optimize-clear');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
+
 
 Route::get('/', function () {
     return Inertia::render('Website/Homev2');
@@ -31,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
     require __DIR__.'/dashboard/user.php';
     require __DIR__.'/dashboard/media.php';
@@ -40,7 +43,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     require __DIR__.'/dashboard/page.php';
 });
 
-Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
+Route::get('/{slug}', [WebSiteController::class, 'dynamicPage']);
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
 

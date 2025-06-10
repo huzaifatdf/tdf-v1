@@ -15,8 +15,11 @@ class Pagesection extends Model
         'lang',
         'content',
         'status',
-        'priority'
+        'priority',
+        'properties'
     ];
+
+
 
     public function page()
     {

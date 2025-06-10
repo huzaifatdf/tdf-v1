@@ -27,4 +27,20 @@ class Service extends Model
         'status' => 'string', // Ensure status is treated as a string
         'priority' => 'integer', // Ensure priority is an integer
     ];
+
+    //apend
+    protected $appends = ['short_description'];
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+
+    //short_description
+    public function getShortDescriptionAttribute()
+    {
+        return substr($this->description, 0, 150) . '...';
+    }
+
 }
