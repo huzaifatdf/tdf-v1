@@ -56,7 +56,7 @@ class HandleInertiaRequests extends Middleware
             'dynamicFormsList' => $dynamic_forms_list,
         ];
 
-        if ($request->routeIs('product.*') || $request->routeIs('service.*') | $request->routeIs('page.edit')) {
+        if ($request->routeIs('product.*') || $request->routeIs('service.*') || $request->routeIs('page.edit') || $request->routeIs('ourclient.*')) {
             $shared['media'] =  $this->getFilteredMedia($request);
             $shared['filters'] = $request->only(['search', 'perPage', 'mime_type', 'collection_name', 'sort', 'direction']);
             $shared['collections'] =  Media::pluck('collection_name')->unique()->values();

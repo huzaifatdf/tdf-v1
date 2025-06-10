@@ -16,6 +16,7 @@ import {
   SquareTerminal,
   TableOfContents,
   Users,
+  UsersRound,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -110,6 +111,22 @@ export function AppSidebar({
         {
           title: "List",
           url: route('product.index'),
+        },
+
+      ],
+    },
+    {
+      title: "Our Clients",
+      url: "#",
+      icon: UsersRound,
+      items: [
+        {
+          title: "Add",
+          url: route('ourclient.create'),
+        },
+        {
+          title: "List",
+          url: route('ourclient.index'),
         },
 
       ],
