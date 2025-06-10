@@ -73,13 +73,13 @@ function AboutSection() {
         <h2 className="fc-secondary text-[30px] mb-6">
           Creative Thinkers. Strategic Doers
         </h2>
-        <p className="fc-primary text-[16px] leading-[1.1]">
+        <p className="fc-primary text-[16px]">
           With a history dating back to 2002, The Design Firm has been a trusted partner for several startups and organizations when it comes to marketing, technology and innovation.
         </p>
-        <p className="fc-primary text-[16px] leading-[1.1]">
+        <p className="fc-primary text-[16px]">
           From startups to legacy organizations, we’ve worked with clients from all industries to help them scale and engage meaningfully with their audiences.
         </p>
-        <p className="fc-primary text-[16px] leading-[1.1]">
+        <p className="fc-primary text-[16px]">
           With over 300+ impactful websites and 600+ custom digital assets in our portfolio, we bring a rare mix of experience and agility to every project we touch.
         </p>
       </div>
@@ -305,7 +305,7 @@ function WhatDrivesUs () {
                 We’re driven by the belief that digital isn’t just a platform, it’s a playground for ideas, creativity, and innovation.
                 </p>
                 <p className="fc-primary text-[16px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
-                <ul className="fc-primary text-[22px] mb-0 leading-relaxed p-0 mt-2">
+                <ul className="fc-primary text-[22px] mb-0 leading-relaxed p-0 mt-2 mb-2">
                 <li>Keep it human</li>
                 <li>Make it meaningful</li>
                 <li>Never phone it in</li>

@@ -31,7 +31,7 @@ export default function Productinner() {
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px]">
                 <div className="">
-                    <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
+                    <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
                         <div className="lg:col-span-5 space-y-6">
                             <h1 className="text-[50px] fc-white leading-[1.1]">
                                 Industries We Serve
