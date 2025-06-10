@@ -33,7 +33,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
     require __DIR__.'/dashboard/user.php';
     require __DIR__.'/dashboard/media.php';
@@ -43,7 +42,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     require __DIR__.'/dashboard/page.php';
 });
 
-Route::get('/{slug}', [WebSiteController::class, 'dynamicPage']);
+Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
 
