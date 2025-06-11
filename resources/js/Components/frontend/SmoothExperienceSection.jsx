@@ -204,7 +204,7 @@ function SmoothExperienceSection() {
                     {/* Main Image */}
                     {section.thumbnail || section.thumbnail !== 'null' || section.thumbnail !== null  &&(
                     <img
-                        src={section.thumbnail}
+                        src={`${appUrl}/${section.thumbnail}`}
                         alt={`${section.title} main image`}
                         className="w-full h-auto mb-6"
                     />
