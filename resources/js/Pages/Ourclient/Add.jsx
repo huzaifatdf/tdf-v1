@@ -53,7 +53,6 @@ export default function Add() {
         setSubmitting(false);
         resetForm();
         setImagePreview(null);
-        setThumbnailPreview(null);
       },
       onError: (errors) => {
         setSubmitting(false);
