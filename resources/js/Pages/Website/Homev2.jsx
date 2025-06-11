@@ -12,6 +12,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Marquee from "react-fast-marquee";
+import ClientSlider from '@/Components/frontend/ClientSlider';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -515,44 +516,7 @@ const imageMap = {
   zafra: "zafra.png",
 };
 
-function ClientSlider() {
-  return (
-    <div className="pb-4">
-        <div className="container-fluid relative">
-            <p className="text-[20px] mb-8 fc-primary">Our Clients</p>
-            {/* <hr class="border-white mb-8"></hr> */}
-           <div className="space-y-12">
-            <div className="overflow-hidden  pb-5 mt-5">
-            <Marquee gradient={false} speed={40} direction="right" pauseOnHover={false}>
-                {clientsRow1.map((client, index) => (
-                <img
-                    key={index}
-                    src={`/images/${imageMap[client]}`}
-                    alt={client}
-                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
-                />
-                ))}
-            </Marquee>
-            </div>
-            <div className="overflow-hidden  pb-5 mt-2">
-            <Marquee gradient={false} speed={40} direction="left" pauseOnHover={false}>
-                {clientsRow2.map((client, index) => (
-                <img
-                    key={index}
-                    src={`/images/${imageMap[client]}`}
-                    alt={client}
-                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
-                />
-                ))}
-            </Marquee>
-            </div>
-        </div>
-            <hr class="border-white mb-8"></hr>
-        </div>
-    </div>
-  );
-}
-// Client Section //
+
 
 
 const ImageZoomSection = () => {
