@@ -32,7 +32,7 @@ export default function About() {
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid ">
                 <div className="relative mt-[100px] mb-[30px]">
-                    <div className="flex flex-col md:flex-row items-start">
+                    <div className="flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
                                 Contact Us & Support

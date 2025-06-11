@@ -491,20 +491,16 @@ const imageMap = {
 const ImageZoomSection = () => {
 const imageWrapperRef = useRef(null);
 
-  useEffect(() => {
-    gsap.fromTo(
-      imageWrapperRef.current,
-      { scale: 1 },
-      {
-        scale: 1.01,       // minor zoom in scale
-        duration: 4,       // duration of zoom in
-        ease: "power1.inOut",
-        yoyo: true,        // zoom back out smoothly
-        repeat: -1,        // infinite repeat
-        repeatDelay: 0.5,  // optional pause between zoom in/out
-      }
-    );
-  }, []);
+useEffect(() => {
+  gsap.to(imageWrapperRef.current, {
+    y: 20,               // move 20px down
+    duration: 2,         // animation duration
+    ease: "power1.inOut",
+    yoyo: true,          // return back to original position
+    repeat: -1,          // infinite loop
+    repeatDelay: 0.5,    // optional delay between cycles
+  });
+}, []);
 
   return (
     <>

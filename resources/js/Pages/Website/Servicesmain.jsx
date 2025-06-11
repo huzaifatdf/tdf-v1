@@ -30,16 +30,16 @@ export default function Casestudiesmain() {
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="min-h-[40vh] flex items-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-50" />
-            <div className="container-fluid relative mt-[150px]">
+            <div className="container-fluid relative mt-[150px] mb-[30px]">
                 <div className="">
-                    <div className="flex flex-col md:flex-row justify-center  mb-[100px] mar-mob-0">
+                    <div className="flex flex-col md:flex-row items-center  mb-[100px] mar-mob-0">
                         <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
                                 From Vision to Reality
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed">
+                            <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed mb-0">
                                 Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                             </p>
                         </div>
