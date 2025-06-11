@@ -55,6 +55,11 @@ class ProductController extends Controller
 
             ],
 
+             'Our Work' => [
+                'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
+                'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
+            ],
+
             'Problem' => [
                 'problem' => ['type' => 'text', 'label' => 'Problem Label', 'required' => false],
                 'problem_description' => ['type' => 'text', 'label' => 'Problem Description', 'required' => false],
@@ -174,6 +179,12 @@ public function edit(Product $product)
          'Detail' => [
                 'detail_overview' => ['type' => 'text', 'label' => 'Detail Overview', 'required' => false],
 
+            ],
+
+
+            'Our Work' => [
+                'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
+                'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
             ],
 
             'Problem' => [
