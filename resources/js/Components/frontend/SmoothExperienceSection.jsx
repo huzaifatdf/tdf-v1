@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
+import parse from 'html-react-parser';
 
 
 function SmoothExperienceSection() {
@@ -215,7 +216,7 @@ function SmoothExperienceSection() {
 
                     {/* Subtitle */}
                     <p className="text-[18px] fc-primary leading-relaxed">
-                      {section.description}
+                      {parse(section.description)}
                     </p>
 
                     {/* Features */}
