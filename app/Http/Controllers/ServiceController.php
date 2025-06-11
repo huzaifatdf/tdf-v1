@@ -49,22 +49,7 @@ class ServiceController extends Controller
     public function create()
     {
          $additionalDataStructure = [
-            'specifications' => [
-                'weight' => ['type' => 'number', 'label' => 'Weight (kg)', 'required' => false],
-                'dimensions' => ['type' => 'text', 'label' => 'Dimensions (L x W x H)', 'required' => false],
-                'color' => ['type' => 'text', 'label' => 'Color', 'required' => false],
-                'material' => ['type' => 'text', 'label' => 'Material', 'required' => false],
-            ],
-            'pricing' => [
-                'cost_price' => ['type' => 'number', 'label' => 'Cost Price', 'required' => false],
-                'selling_price' => ['type' => 'number', 'label' => 'Selling Price', 'required' => false],
-                'discount_percentage' => ['type' => 'number', 'label' => 'Discount %', 'required' => false],
-            ],
-            'inventory' => [
-                'sku' => ['type' => 'text', 'label' => 'SKU', 'required' => false],
-                'stock_quantity' => ['type' => 'number', 'label' => 'Stock Quantity', 'required' => false],
-                'reorder_level' => ['type' => 'number', 'label' => 'Reorder Level', 'required' => false],
-            ],
+
             'seo' => [
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
@@ -119,22 +104,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
          $additionalDataStructure = [
-        'specifications' => [
-            'weight' => ['type' => 'number', 'label' => 'Weight (kg)', 'required' => false],
-            'dimensions' => ['type' => 'text', 'label' => 'Dimensions (L x W x H)', 'required' => false],
-            'color' => ['type' => 'text', 'label' => 'Color', 'required' => false],
-            'material' => ['type' => 'text', 'label' => 'Material', 'required' => false],
-        ],
-        'pricing' => [
-            'cost_price' => ['type' => 'number', 'label' => 'Cost Price', 'required' => false],
-            'selling_price' => ['type' => 'number', 'label' => 'Selling Price', 'required' => false],
-            'discount_percentage' => ['type' => 'number', 'label' => 'Discount %', 'required' => false],
-        ],
-        'inventory' => [
-            'sku' => ['type' => 'text', 'label' => 'SKU', 'required' => false],
-            'stock_quantity' => ['type' => 'number', 'label' => 'Stock Quantity', 'required' => false],
-            'reorder_level' => ['type' => 'number', 'label' => 'Reorder Level', 'required' => false],
-        ],
+
         'seo' => [
             'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
             'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
