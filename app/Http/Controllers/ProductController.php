@@ -61,26 +61,47 @@ class ProductController extends Controller
             ],
 
             'problem Solutions' =>[
-                'problem_label_1' => ['type' => 'text', 'label' => 'Problem 1 Label', 'required' => false],
-                'problem_description_1' => ['type' => 'text', 'label' => 'Problem 1 Description', 'required' => false],
-                'problem_label_2' => ['type' => 'text', 'label' => 'Problem 2 Label', 'required' => false],
-                'problem_description_2' => ['type' => 'text', 'label' => 'Problem 2 Description', 'required' => false],
-                'problem_label_3' => ['type' => 'text', 'label' => 'Problem 3 Label', 'required' => false],
-                'problem_description_3' => ['type' => 'text', 'label' => 'Problem 3 Description', 'required' => false],
-                'problem_label_4' => ['type' => 'text', 'label' => 'Problem 4 Label', 'required' => false],
-                'problem_description_4' => ['type' => 'text', 'label' => 'Problem 4 Description', 'required' => false],
-                'problem_label_5' => ['type' => 'text', 'label' => 'Problem 5 Label', 'required' => false],
-                'problem_description_5' => ['type' => 'text', 'label' => 'Problem 5 Description', 'required' => false],
-                'problem_label_6' => ['type' => 'text', 'label' => 'Problem 6 Label', 'required' => false],
-                'problem_description_6' => ['type' => 'text', 'label' => 'Problem 6 Description', 'required' => false],
-                'problem_label_7' => ['type' => 'text', 'label' => 'Problem 7 Label', 'required' => false],
-                'problem_description_7' => ['type' => 'text', 'label' => 'Problem 7 Description', 'required' => false],
-                'problem_label_8' => ['type' => 'text', 'label' => 'Problem 8 Label', 'required' => false],
-                'problem_description_8' => ['type' => 'text', 'label' => 'Problem 8 Description', 'required' => false],
-                'problem_label_9' => ['type' => 'text', 'label' => 'Problem 9 Label', 'required' => false],
-                'problem_description_9' => ['type' => 'text', 'label' => 'Problem 9 Description', 'required' => false],
-                'problem_label_10' => ['type' => 'text', 'label' => 'Problem 10 Label', 'required' => false],
-                'problem_description_10' => ['type' => 'text', 'label' => 'Problem 10 Description', 'required' => false],
+
+                'label_1' => ['type' => 'text', 'label' => '1 Label', 'required' => false],
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'description_1' => ['type' => 'text', 'label' => '1 Description', 'required' => false],
+
+                'label_2' => ['type' => 'text', 'label' => '2 Label', 'required' => false],
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'description_2' => ['type' => 'text', 'label' => '2 Description', 'required' => false],
+
+                'label_3' => ['type' => 'text', 'label' => '3 Label', 'required' => false],
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'description_3' => ['type' => 'text', 'label' => '3 Description', 'required' => false],
+
+                'label_4' => ['type' => 'text', 'label' => '4 Label', 'required' => false],
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'description_4' => ['type' => 'text', 'label' => '4 Description', 'required' => false],
+
+                'label_5' => ['type' => 'text', 'label' => '5 Label', 'required' => false],
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'description_5' => ['type' => 'text', 'label' => '5 Description', 'required' => false],
+
+                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
+                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
+                'description_6' => ['type' => 'text', 'label' => '6 Description', 'required' => false],
+
+                'label_7' => ['type' => 'text', 'label' => '7 Label', 'required' => false],
+                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'description_7' => ['type' => 'text', 'label' => '7 Description', 'required' => false],
+
+                'label_8' => ['type' => 'text', 'label' => '8 Label', 'required' => false],
+                'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
+                'description_8' => ['type' => 'text', 'label' => '8 Description', 'required' => false],
+
+                'label_9' => ['type' => 'text', 'label' => '9 Label', 'required' => false],
+                'title_9' => ['type' => 'text', 'label' => '9 Title', 'required' => false],
+                'description_9' => ['type' => 'text', 'label' => '9 Description', 'required' => false],
+
+                'label_10' => ['type' => 'text', 'label' => '10 Label', 'required' => false],
+                'title_10' => ['type' => 'text', 'label' => '10 Title', 'required' => false],
+                'description_10' => ['type' => 'text', 'label' => '10 Description', 'required' => false],
+
             ],
 
             'seo' => [
@@ -161,26 +182,47 @@ public function edit(Product $product)
             ],
 
             'problem Solutions' =>[
-                'problem_label_1' => ['type' => 'text', 'label' => 'Problem 1 Label', 'required' => false],
-                'problem_description_1' => ['type' => 'text', 'label' => 'Problem 1 Description', 'required' => false],
-                'problem_label_2' => ['type' => 'text', 'label' => 'Problem 2 Label', 'required' => false],
-                'problem_description_2' => ['type' => 'text', 'label' => 'Problem 2 Description', 'required' => false],
-                'problem_label_3' => ['type' => 'text', 'label' => 'Problem 3 Label', 'required' => false],
-                'problem_description_3' => ['type' => 'text', 'label' => 'Problem 3 Description', 'required' => false],
-                'problem_label_4' => ['type' => 'text', 'label' => 'Problem 4 Label', 'required' => false],
-                'problem_description_4' => ['type' => 'text', 'label' => 'Problem 4 Description', 'required' => false],
-                'problem_label_5' => ['type' => 'text', 'label' => 'Problem 5 Label', 'required' => false],
-                'problem_description_5' => ['type' => 'text', 'label' => 'Problem 5 Description', 'required' => false],
-                'problem_label_6' => ['type' => 'text', 'label' => 'Problem 6 Label', 'required' => false],
-                'problem_description_6' => ['type' => 'text', 'label' => 'Problem 6 Description', 'required' => false],
-                'problem_label_7' => ['type' => 'text', 'label' => 'Problem 7 Label', 'required' => false],
-                'problem_description_7' => ['type' => 'text', 'label' => 'Problem 7 Description', 'required' => false],
-                'problem_label_8' => ['type' => 'text', 'label' => 'Problem 8 Label', 'required' => false],
-                'problem_description_8' => ['type' => 'text', 'label' => 'Problem 8 Description', 'required' => false],
-                'problem_label_9' => ['type' => 'text', 'label' => 'Problem 9 Label', 'required' => false],
-                'problem_description_9' => ['type' => 'text', 'label' => 'Problem 9 Description', 'required' => false],
-                'problem_label_10' => ['type' => 'text', 'label' => 'Problem 10 Label', 'required' => false],
-                'problem_description_10' => ['type' => 'text', 'label' => 'Problem 10 Description', 'required' => false],
+
+                'label_1' => ['type' => 'text', 'label' => '1 Label', 'required' => false],
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'description_1' => ['type' => 'text', 'label' => '1 Description', 'required' => false],
+
+                'label_2' => ['type' => 'text', 'label' => '2 Label', 'required' => false],
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'description_2' => ['type' => 'text', 'label' => '2 Description', 'required' => false],
+
+                'label_3' => ['type' => 'text', 'label' => '3 Label', 'required' => false],
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'description_3' => ['type' => 'text', 'label' => '3 Description', 'required' => false],
+
+                'label_4' => ['type' => 'text', 'label' => '4 Label', 'required' => false],
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'description_4' => ['type' => 'text', 'label' => '4 Description', 'required' => false],
+
+                'label_5' => ['type' => 'text', 'label' => '5 Label', 'required' => false],
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'description_5' => ['type' => 'text', 'label' => '5 Description', 'required' => false],
+
+                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
+                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
+                'description_6' => ['type' => 'text', 'label' => '6 Description', 'required' => false],
+
+                'label_7' => ['type' => 'text', 'label' => '7 Label', 'required' => false],
+                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'description_7' => ['type' => 'text', 'label' => '7 Description', 'required' => false],
+
+                'label_8' => ['type' => 'text', 'label' => '8 Label', 'required' => false],
+                'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
+                'description_8' => ['type' => 'text', 'label' => '8 Description', 'required' => false],
+
+                'label_9' => ['type' => 'text', 'label' => '9 Label', 'required' => false],
+                'title_9' => ['type' => 'text', 'label' => '9 Title', 'required' => false],
+                'description_9' => ['type' => 'text', 'label' => '9 Description', 'required' => false],
+
+                'label_10' => ['type' => 'text', 'label' => '10 Label', 'required' => false],
+                'title_10' => ['type' => 'text', 'label' => '10 Title', 'required' => false],
+                'description_10' => ['type' => 'text', 'label' => '10 Description', 'required' => false],
+
             ],
         'seo' => [
             'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
