@@ -129,7 +129,7 @@ export default function Edit() {
 
                   <div className="grid gap-2">
                     <label htmlFor="description" className="text-sm font-medium">
-                      Description *
+                      Description
                     </label>
                     <Field
                       as={Textarea}
