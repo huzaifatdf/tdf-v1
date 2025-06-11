@@ -146,7 +146,7 @@ function SmoothExperienceSection() {
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
-                        {section.id}
+                        {section.section_no}
                       </h5>
                       <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
                         activeSection === section.section_no
