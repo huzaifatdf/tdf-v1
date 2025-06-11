@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Marquee from "react-fast-marquee";
 import ClientSlider from '@/Components/frontend/ClientSlider';
+import ServiceSlider from '@/Components/frontend/ServiceSlider';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -317,39 +318,7 @@ const services = [
   },
 ];
 
-const ServiceSlider = () => {
-  // ServiceSlider component code remains unchanged
-  return (
-    <div className="container-fluid relative">
-      <div className='sec-padding pt-0 '>
-        <div className="mb-8">
-            <p className="text-[20px] mb-8 fc-primary">Strategy, creativity, technology - aligned in perfect sync<br />Always adjusting, always forward</p>
-        </div>
 
-        <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
-            }}
-        >
-            {services.map((service, index) => (
-            <SwiperSlide key={index}>
-                <div className="overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-85 object-cover" />
-                <div className="p-1 mt-2">
-                    <h3 className="text-[22px] fc-primary mb-0">{service.title}</h3>
-                    <p className="text-[14px] fc-primary mb-0">{service.subtitle}</p>
-                </div>
-                </div>
-            </SwiperSlide>
-            ))}
-        </Swiper>
-      </div>
-    </div>
-  );
-};
 
 function TestimonialsSection() {
   // TestimonialsSection component code remains unchanged
