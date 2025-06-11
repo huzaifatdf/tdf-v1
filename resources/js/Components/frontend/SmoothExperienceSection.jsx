@@ -114,7 +114,7 @@ function SmoothExperienceSection() {
 
   return (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen">
+      <section ref={sectionRef} className="container-fluid min-h-screen service-main">
         {/* Main Content Area */}
         {/* <div className="mb-12">
             <h1 className="text-[32px] font-bold fc-secondary leading-tight">
