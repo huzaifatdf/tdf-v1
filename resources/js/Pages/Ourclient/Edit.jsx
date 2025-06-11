@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import React, { useState } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
 import { Upload, X, ChevronDown, ChevronRight } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,8 +17,9 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MediaLibraryModel from "../Media/Model";
 
-export default function Add() {
-  const [imagePreview, setImagePreview] = useState(null);
+export default function Edit() {
+  const { ourclient,appUrl } = usePage().props;
+  const [imagePreview, setImagePreview] = useState(appUrl + '/' + ourclient.image || null);
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -31,10 +33,10 @@ export default function Add() {
     priority: Yup.number()
       .required("Priority is required")
       .min(0, "Priority must be at least 0")
-      .max(9999999, "Priority must not exceed 9999999"),
+      .max(100, "Priority must not exceed 100"),
   });
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const formData = new FormData();
 
     // Append basic form fields
@@ -43,17 +45,18 @@ export default function Add() {
       formData.append(key, values[key]);
     });
 
-    // Handle file uploads
-    if (values.image) {
-      formData.append('image', values.image);
-    }
-    router.post(route("ourclient.store"), formData, {
+    // Handle file uploads - only append if new files are selected
+
+    formData.append('image', values.image);
+
+
+    // Add method spoofing for PUT request
+    formData.append('_method', 'PUT');
+
+    router.post(route("ourclient.update", ourclient.id), formData, {
       forceFormData: true,
       onSuccess: () => {
         setSubmitting(false);
-        resetForm();
-        setImagePreview(null);
-        setThumbnailPreview(null);
       },
       onError: (errors) => {
         setSubmitting(false);
@@ -62,30 +65,35 @@ export default function Add() {
   };
 
 
+
   const removeImage = (setFieldValue, fieldName, setPreview) => {
     setFieldValue(fieldName, null);
     setPreview(null);
   };
 
-  // Create initial values for additional data fields
+
+
+  // Create initial values populated with existing ourclient data
   const createInitialValues = () => {
     const initialValues = {
-      name: "",
-      description: "",
-      image: null,
-      thumbnail: null,
-      status: "",
-      priority: 0,
+      name: ourclient.name || "",
+      description: ourclient.description || "",
+      image: ourclient.image || null,
+      status: ourclient.status || "",
+      priority: ourclient.priority || 0,
     };
+
+
 
     return initialValues;
   };
 
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
+  const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
 
   return (
     <AuthenticatedLayout>
-      <Head title="Add ourclient" />
+      <Head title={`Edit ourclient - ${ourclient.name}`} />
 
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2 p-10">
@@ -97,9 +105,14 @@ export default function Add() {
             >
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form className="space-y-6 bg-white p-6 rounded-lg shadow">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900">Edit ourclient</h2>
+                    <p className="text-gray-600">Update ourclient information</p>
+                  </div>
+
                   <div className="grid gap-2">
                     <label htmlFor="name" className="text-sm font-medium">
-                      Client name *
+                      Client Name *
                     </label>
                     <Field
                       as={Input}
@@ -116,7 +129,7 @@ export default function Add() {
 
                   <div className="grid gap-2">
                     <label htmlFor="description" className="text-sm font-medium">
-                      Description
+                      Description *
                     </label>
                     <Field
                       as={Textarea}
@@ -181,17 +194,23 @@ export default function Add() {
                       ourclient Image
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-                      <button type="button" onClick={() => setImageShowMediaLibrary(true)}>Add Media</button>
-                      <MediaLibraryModel routename={route('ourclient.create')} showModal={showImageMediaLibrary} setShowModal={setImageShowMediaLibrary} setFieldValue={setFieldValue}
-                      fieldName="image"
-                      setImagePreview={setImagePreview}
+                      <button type="button" onClick={() => setImageShowMediaLibrary(true)}>
+                        {imagePreview ? 'Change Media' : 'Add Media'}
+                      </button>
+                      <MediaLibraryModel
+                        routename={route('ourclient.edit', ourclient.id)}
+                        showModal={showImageMediaLibrary}
+                        setShowModal={setImageShowMediaLibrary}
+                        setFieldValue={setFieldValue}
+                        fieldName="image"
+                        setImagePreview={setImagePreview}
                       />
 
-                       {imagePreview && (
-                        <div className="relative">
+                      {imagePreview && (
+                        <div className="relative mt-4">
                           <img
-                            src={imagePreview}
-                            alt="Thumbnail Preview"
+                            src={typeof imagePreview === 'string' ? imagePreview : URL.createObjectURL(imagePreview)}
+                            alt="ourclient Preview"
                             className="w-24 h-24 object-cover rounded-lg mx-auto"
                           />
                           <Button
@@ -211,6 +230,7 @@ export default function Add() {
 
 
 
+
                   <div className="flex justify-end gap-3 pt-4">
                     <Button
                       type="button"
@@ -220,7 +240,7 @@ export default function Add() {
                       Cancel
                     </Button>
                     <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? "Creating..." : "Create client"}
+                      {isSubmitting ? "Updating..." : "Update client"}
                     </Button>
                   </div>
                 </Form>

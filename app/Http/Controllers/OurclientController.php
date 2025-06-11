@@ -101,7 +101,9 @@ class OurclientController extends Controller
      */
     public function edit(Ourclient $ourclient)
     {
-        //
+        return Inertia::render('Ourclient/Edit', [
+            'ourclient' => $ourclient,
+        ]);
     }
 
     /**
@@ -109,7 +111,28 @@ class OurclientController extends Controller
      */
     public function update(UpdateOurclientRequest $request, Ourclient $ourclient)
     {
-        //
+         DB::beginTransaction();
+    try {
+        $data = $request->except(['_method', '_token']);
+
+        // Remove empty values but keep 0 and false values
+        $data = array_filter($data, function($value) {
+            return $value !== null && $value !== '';
+        });
+
+        // Update the product
+        $ourclient->update($data);
+
+        DB::commit();
+
+        session()->flash('message', 'Client updated successfully.');
+        return redirect()->route('ourclient.index');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        session()->flash('error', 'Failed to update ourclient: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to update ourclient: ' . $e->getMessage()]);
+    }
     }
 
     /**
