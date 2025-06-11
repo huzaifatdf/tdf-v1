@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePage } from "@inertiajs/react";
+import axios from "axios";
 
 
 function SmoothExperienceSection() {
@@ -9,186 +11,23 @@ function SmoothExperienceSection() {
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
 
-  const sections = [
-    {
-      id: '01',
-      title: 'Brand and Communication',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App','Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-        'Mobile App',
-        'Customized Applications',
-        'Website',
-        'Mobile App',
-      ],
-      stats: {
-        models: '25+',
-        performance: '99.9%',
-        latency: '<100ms'
-      }
-    },
-    {
-      id: '02',
-      title: 'Website & Mobile App Development ',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '15+',
-        performance: '99.8%',
-        latency: '<2s'
-      }
-    },
-    {
-      id: '03',
-      title: 'ECommerce Solutions',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '8+',
-        performance: '99.5%',
-        latency: '<5s'
-      }
-    },
-    {
-      id: '04',
-      title: 'AI Integration & Software Development',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '05',
-      title: 'Digital Product Development',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '06',
-      title: 'Social Media Marketing',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '07',
-      title: 'SEO/SEM/GDN Services',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '08',
-      title: 'UX/UI Design',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    },
-    {
-      id: '09',
-      title: 'Content Development',
-      subtitle: 'We brought the vision to life using a minimalist, clean, and modern design language, focusing on:',
-      mainImage: '/images/ser5.png',
-      features: [
-        'Clarity over clutter',
-        'Consistency across web and mobile',
-        'Accessibility in both English and Urdu'
-      ],
-      stats: {
-        models: '12+',
-        performance: '99.7%',
-        latency: '<200ms'
-      }
-    }
-  ];
+
+
+    const {appUrl} = usePage().props
+    //laravel api axios api/v1/services
+    const [sections , setSection] = React.useState([]);
+    React.useEffect(() => {
+        axios.get('/api/v1/services')
+            .then(response => {
+                console.log(response.data);
+                setSection(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+
 
 
   useEffect(() => {
@@ -198,11 +37,11 @@ function SmoothExperienceSection() {
     let currentSection = '01';
 
     sections.forEach(section => {
-      const element = sectionsRefs.current[section.id];
+      const element = sectionsRefs.current[section.section_no];
       if (element) {
         const { offsetTop, offsetHeight } = element;
         if (scrollPosition >= offsetTop - 100 && scrollPosition < offsetTop + offsetHeight - 100) {
-          currentSection = section.id;
+          currentSection = section.section_no;
         }
       }
     });
@@ -222,7 +61,7 @@ function SmoothExperienceSection() {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setActiveSection(section.id);
+            setActiveSection(section.section_no);
           }
         },
         {
@@ -231,7 +70,7 @@ function SmoothExperienceSection() {
         }
       );
 
-      const element = sectionsRefs.current[section.id];
+      const element = sectionsRefs.current[section.section_no];
       if (element) {
         observer.observe(element);
         observers.push(observer);
@@ -270,7 +109,7 @@ function SmoothExperienceSection() {
     }
     };
 
-  const currentSection = sections.find(s => s.id === activeSection);
+  const currentSection = sections.find(s => s.section_no === activeSection);
 
   return (
     <>
@@ -295,22 +134,22 @@ function SmoothExperienceSection() {
                 {sections.map((section, index) => (
                   <div key={section.id} className="relative group">
                     <button
-                      onClick={() => handleSectionClick(section.id)}
+                      onClick={() => handleSectionClick(section.section_no)}
                       className={`text-left w-full transition-all duration-500 ${
-                        activeSection === section.id
+                        activeSection === section.section_no
                           ? 'opacity-100'
                           : 'hover:opacity-70'
                       }`}
                     >
                       <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
-                        activeSection === section.id
+                        activeSection === section.section_no
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
                         {section.id}
                       </h5>
                       <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
-                        activeSection === section.id
+                        activeSection === section.section_no
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
@@ -326,7 +165,7 @@ function SmoothExperienceSection() {
                     </button>
 
                     {/* Active indicator */}
-                    {activeSection === section.id && (
+                    {activeSection === section.section_no && (
                       <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
 
                     )}
@@ -354,19 +193,21 @@ function SmoothExperienceSection() {
           <div className="w-1/2">
             {sections.map((section, index) => (
               <div
-                key={section.id}
-                ref={el => sectionsRefs.current[section.id] = el}
+                key={section.section_no}
+                ref={el => sectionsRefs.current[section.section_no] = el}
                 className="min-h-screen flex items-center py-20" // Added py-20
                 >
                 <div className="">
                   <div className="animate-fadeIn">
 
                     {/* Main Image */}
+                    {section.thumbnail || section.thumbnail !== 'null' || section.thumbnail !== null  &&(
                     <img
-                        src={section.mainImage}
+                        src={section.thumbnail}
                         alt={`${section.title} main image`}
                         className="w-full h-auto mb-6"
                     />
+                    )}
                     {/* Title */}
                     {/* <h2 className="text-[36px] font-bold text-white mb-3">
                       {section.title}
@@ -374,23 +215,23 @@ function SmoothExperienceSection() {
 
                     {/* Subtitle */}
                     <p className="text-[18px] fc-primary leading-relaxed">
-                      {section.subtitle}
+                      {section.description}
                     </p>
 
                     {/* Features */}
-                    <div className="mb-10">
+                    {/* <div className="mb-10">
                       {section.features.map((feature, featureIndex) => (
                         <div
                           key={featureIndex}
                           className="flex items-start"
                         >
-                          {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
+
                           <span className="text-[16px] fc-primary leading-relaxed">
                             {feature}
                           </span>
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

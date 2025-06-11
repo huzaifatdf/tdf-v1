@@ -10,6 +10,6 @@ class ServiceController extends BaseController
 {
     public function index()
     {
-          return Service::published()->get();
+          return Service::published()->orderBy('priority', 'asc')->get();
     }
 }
