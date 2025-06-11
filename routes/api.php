@@ -18,5 +18,6 @@ Route::prefix('v1')->group(function() {
 
     Route::get('/services', [App\Http\Controllers\Api\V1\ServiceController::class, 'index']);
     Route::get('/ourclient', [App\Http\Controllers\Api\V1\OurclientController::class, 'index']);
-
+    Route::get('/form/{slug}', [App\Http\Controllers\Api\V1\FormController::class, 'form']);
+    Route::post('form/{slug}/submit', [App\Http\Controllers\Api\V1\FormController::class, 'submit']);
 });

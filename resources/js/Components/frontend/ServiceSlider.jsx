@@ -17,7 +17,6 @@ function ServiceSlider() {
     React.useEffect(() => {
         axios.get('/api/v1/services')
             .then(response => {
-                console.log(response.data);
                 setServices(response.data);
             })
             .catch(error => {

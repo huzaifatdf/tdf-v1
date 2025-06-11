@@ -14,7 +14,6 @@ function ClientSlider() {
     React.useEffect(() => {
         axios.get('/api/v1/ourclient')
             .then(response => {
-                console.log(response.data);
                 //first get total ourclients then split them into 2 rows
                 const totalOurclients = response.data;
                 const middleIndex = Math.ceil(totalOurclients.length / 2);
