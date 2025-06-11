@@ -20,15 +20,15 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
     return (
         <>
             {/* Show preloader until loaded is true */}
-            {!loaded && (
+            {/* {!loaded && (
                 <Preloader
                     logoSrc="/images/logo.svg"
                     onFinish={() => setLoaded(true)}
                 />
-            )}
+            )} */}
 
             {/* Show main layout only when loaded */}
-            {loaded && (
+            {/* {loaded && ( */}
                 <>
             <Head>
                 <title>{title}</title>
@@ -129,7 +129,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 </div>
             </footer>
                 </>
-            )}
+            {/* )} */}
         </>
     );
 }
