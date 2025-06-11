@@ -143,7 +143,7 @@ const [sections,setSections] = useState( data
   return (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen">
-        <div className="flex sec-padding">
+        <div className="flex sec-padding pt-0">
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
             <div className="max-w-lg">
 
