@@ -310,7 +310,9 @@ form {
         border: 2px solid $theme-secondary;
     }
 }
-
+.service-main {
+    padding: 0;
+}
 // Responsive Start Here //
 @media(max-width: 600px) {
     .container-fluid {

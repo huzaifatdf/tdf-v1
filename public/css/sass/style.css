@@ -9350,6 +9350,10 @@ form textarea {
   border: 2px solid #9BE500;
 }
 
+.service-main {
+  padding: 0;
+}
+
 @media (max-width: 600px) {
   .container-fluid {
     padding-left: 10px;
