@@ -33,6 +33,9 @@ export default function Add() {
       .required("Title is required")
       .min(2, "Title must be at least 2 characters")
       .max(255, "Title must not exceed 255 characters"),
+    slug: Yup.string()
+      .required("Slug is required")
+      .matches(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
     description: Yup.string()
       .required("Description is required")
       .min(10, "Description must be at least 10 characters"),
@@ -49,7 +52,7 @@ export default function Add() {
     const formData = new FormData();
 
     // Append basic form fields
-    const basicFields = ['title', 'description', 'status', 'priority'];
+    const basicFields = ['title', 'slug', 'description', 'status', 'priority'];
     basicFields.forEach(key => {
       formData.append(key, values[key]);
     });
@@ -211,6 +214,22 @@ export default function Add() {
                     />
                     <ErrorMessage
                       name="title"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <label htmlFor="slug" className="text-sm font-medium">
+                      Product Slug *
+                    </label>
+                    <Field
+                      as={Input}
+                      id="slug"
+                      name="slug"
+                      placeholder="Enter product slug"
+                    />
+                    <ErrorMessage
+                      name="slug"
                       component="div"
                       className="text-red-500 text-sm"
                     />

@@ -143,8 +143,6 @@ class ProductController extends Controller
          DB::beginTransaction();
         try {
             $data = $request->all();
-            // Generate slug from title
-            $data['slug'] = Str::slug($data['title']);
             // Handle additional data as JSON
               if (isset($data['additional_data'])) {
                 $data['data'] = $data['additional_data'];
@@ -180,8 +178,6 @@ public function edit(Product $product)
                 'detail_overview' => ['type' => 'text', 'label' => 'Detail Overview', 'required' => false],
 
             ],
-
-
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
@@ -256,11 +252,6 @@ public function update(UpdateProductRequest $request, Product $product)
     DB::beginTransaction();
     try {
         $data = $request->except(['_method', '_token']);
-
-        // Update slug if title changed
-        if (isset($data['title']) && $data['title'] !== $product->title) {
-            $data['slug'] = Str::slug($data['title']);
-        }
 
         // Handle additional data as JSON
         if (isset($data['additional_data'])) {
