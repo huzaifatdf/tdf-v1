@@ -1,4 +1,8 @@
-import React from 'react'
+
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 
 function SmoothExperienceSection() {
   const [activeSection, setActiveSection] = useState('text-to-text');
@@ -272,15 +276,15 @@ function SmoothExperienceSection() {
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen">
         {/* Main Content Area */}
-        <div className="mb-12">
+        {/* <div className="mb-12">
             <h1 className="text-[32px] font-bold fc-secondary leading-tight">
                 AI Model Suite
             </h1>
             <hr class="border-white mb-8"></hr>
-            {/* <p className="text-[18px] text-gray-400 leading-relaxed">
+            <p className="text-[18px] text-gray-400 leading-relaxed">
                 Explore our comprehensive collection of AI models designed for different use cases and applications.
-            </p> */}
-            </div>
+            </p>
+            </div> */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
