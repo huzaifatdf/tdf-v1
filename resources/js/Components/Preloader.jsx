@@ -1,60 +1,61 @@
 import React, { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 
-const Preloader = ({ logoSrc, onFinish }) => {
-  const [loading, setLoading] = useState(true);
-  const logoRef = useRef(null);
+const Preloader = ({ onFinish }) => {
+  const [percent, setPercent] = useState(0);
   const preloaderRef = useRef(null);
 
   useEffect(() => {
-    const handlePageLoad = () => {
-      // Zoom animation
-      gsap.to(logoRef.current, {
-        scale: 100,
-        duration: 1,
-        ease: "power2.inOut",
-      });
+    // Disable scroll
+    document.body.style.overflow = 'hidden';
 
-      // Fade out preloader container after zoom
-      gsap.to(preloaderRef.current, {
-        autoAlpha: 0,
-        delay: 1,
+    let animationFrame;
+    let startTime;
+
+    const animatePercent = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const newPercent = Math.min(100, Math.floor(progress / 20)); // ~2 seconds total
+
+      setPercent(newPercent);
+
+      if (newPercent < 100) {
+        animationFrame = requestAnimationFrame(animatePercent);
+      } else {
+        // Fade out preloader
+        // Fade out and slide up
+        gsap.to(preloaderRef.current, {
+        y: -100,            // Slide upward by 100px
+        autoAlpha: 0,       // Fade out
         duration: 0.8,
+        ease: 'power2.inOut',
         onComplete: () => {
-          setLoading(false);
-          if (onFinish) onFinish();
+            document.body.style.overflow = '';
+            if (onFinish) onFinish();
         },
-      });
+        });
+
+      }
     };
 
-    if (document.readyState === "complete") {
-      // Page already loaded
-      handlePageLoad();
-    } else {
-      // Wait for load event
-      window.addEventListener("load", handlePageLoad);
-    }
+    animationFrame = requestAnimationFrame(animatePercent);
 
     return () => {
-      window.removeEventListener("load", handlePageLoad);
+      cancelAnimationFrame(animationFrame);
+      document.body.style.overflow = ''; // Restore scroll just in case
     };
   }, [onFinish]);
 
-  if (!loading) return null;
-
   return (
     <div
-      ref={preloaderRef}
-      className="fixed inset-0 bg-[#00141b] flex items-center justify-center z-[9999]"
-      style={{ perspective: "600px" }}
-    >
-      <img
-        ref={logoRef}
-        src={logoSrc}
-        alt="Loading Logo"
-        className="w-32 h-32 object-contain"
-        style={{ transformOrigin: "center center" }}
-      />
+      ref={preloaderRef} className="fixed inset-0 bg-[#00141b] flex items-center justify-center z-[9999]">
+
+        <div className="flex flex-col items-center">
+            <div>
+                <img className="w-[210px]" src="/images/logo.svg" alt="Logo" />
+            </div>
+            <div className="text-white text-[90px] font-bold">{percent}%</div>
+        </div>
     </div>
   );
 };

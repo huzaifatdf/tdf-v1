@@ -39,7 +39,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
     return (
         <>
-            {/* <Preloader logoSrc="/images/logo.svg" onFinish={() => setLoaded(true)} /> */}
+            <Preloader onFinish={() => setLoaded(true)} />
+
 
             {/* Main layout */}
             {loaded && (
@@ -53,7 +54,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
                     {/* Global Components */}
                     <ParticlesBackground />
-                    {/* <CustomCursor /> */}
+                    <CustomCursor />
 
                     {/* Navbar */}
                     <nav className="navbar navbar-expand-lg bg-transparent position-absolute top-0 start-0 w-100 shadow-none" style={{ zIndex: 3 }}>
