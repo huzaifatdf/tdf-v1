@@ -28,5 +28,9 @@ class Ourclient extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
 
 }

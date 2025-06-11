@@ -1,41 +1,37 @@
+import { usePage } from '@inertiajs/react';
+import axios from 'axios';
 import React from 'react'
 import Marquee from "react-fast-marquee";
 
-const clientsRow1 = [
-  "ibm", "pg", "bok", "bankak", "time", "authentik", "rbs", "christou", "saeed", "metro", "rayan", "payfast"
-];
-const clientsRow2 = [
-  "sosafe", "sunrise", "ziauddin", "bok2", "nift", "radiant", "alliend", "idem", "askari", "blinkq", "bluebird", "zafra"
-];
-
-const imageMap = {
-  ibm: "ibm.png",
-  pg: "pg.png",
-  bok: "bok.png",
-  bankak: "bankak.png",
-  time: "time.png",
-  authentik: "authentik.png",
-  christou: "christou.png",
-  saeed: "saeed.png",
-  metro: "metro.png",
-  rayan: "rayan.png",
-  payfast: "payfast.png",
-  rbs: "rbs.png",
-  sosafe: "sosafe.png",
-  sunrise: "sunrise.png",
-  ziauddin: "ziauddin.png",
-  bok2: "bok2.png",
-  nift: "nift.png",
-  radiant: "radiant.png",
-  alliend: "alliend.png",
-  idem: "idem.png",
-  askari: "askari.png",
-  blinkq: "blinkq.png",
-  bluebird: "bluebird.png",
-  zafra: "zafra.png",
-};
-
 function ClientSlider() {
+
+
+      const {appUrl} = usePage().props
+
+    const [upperourclients , setUpperOurclients] = React.useState([]);
+    const [lowerourclients , setLowerOurclients] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get('/api/v1/ourclient')
+            .then(response => {
+                console.log(response.data);
+                //first get total ourclients then split them into 2 rows
+                const totalOurclients = response.data;
+                const middleIndex = Math.ceil(totalOurclients.length / 2);
+                const upperOurclients = totalOurclients.slice(0, middleIndex);
+                const lowerOurclients = totalOurclients.slice(middleIndex);
+                setUpperOurclients(upperOurclients);
+                setLowerOurclients(lowerOurclients);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+    //
+
+
+
   return (
     <div className="pb-4">
         <div className="container-fluid relative">
@@ -44,10 +40,10 @@ function ClientSlider() {
            <div className="space-y-12">
             <div className="overflow-hidden  pb-5 mt-5">
             <Marquee gradient={false} speed={40} direction="right" pauseOnHover={false}>
-                {clientsRow1.map((client, index) => (
+                {upperourclients.map((client, index) => (
                 <img
                     key={index}
-                    src={`/images/${imageMap[client]}`}
+                    src={`${appUrl}/${client.image}`}
                     alt={client}
                     className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
                 />
@@ -56,10 +52,10 @@ function ClientSlider() {
             </div>
             <div className="overflow-hidden  pb-5 mt-2">
             <Marquee gradient={false} speed={40} direction="left" pauseOnHover={false}>
-                {clientsRow2.map((client, index) => (
+                {lowerourclients.map((client, index) => (
                 <img
                     key={index}
-                    src={`/images/${imageMap[client]}`}
+                    src={`${appUrl}/${client.image}`}
                     alt={client}
                     className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
                 />

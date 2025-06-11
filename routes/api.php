@@ -17,5 +17,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function() {
 
     Route::get('/services', [App\Http\Controllers\Api\V1\ServiceController::class, 'index']);
+    Route::get('/ourclient', [App\Http\Controllers\Api\V1\OurclientController::class, 'index']);
 
 });
