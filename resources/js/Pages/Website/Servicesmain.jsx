@@ -31,18 +31,16 @@ export default function Casestudiesmain() {
         <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[100px]">
                 <div className="">
-                    <div className="flex flex-col md:flex-row gap-12 items-center justify-center  mb-[100px]">
+                    <div className="flex flex-col md:flex-row justify-center  mb-[100px] mar-mob-0">
                         <div className="md:w-1/2">
-                            <h1 className="text-[50px] fc-white leading-[1.1] mb-6">
-                                From Vision <br /> to Reality
+                            <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
+                                From Vision to Reality
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <div className="prose prose-lg prose-invert">
-                            <p className="text-[16px] fc-primary leading-relaxed">
+                            <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed">
                                 Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                             </p>
-                            </div>
                         </div>
                     </div>
                     <p class="text-[32px] font-bold fc-secondary leading-tight">Services</p>

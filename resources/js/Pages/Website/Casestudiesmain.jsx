@@ -34,18 +34,16 @@ export default function Casestudiesmain(props) {
         <div className="absolute inset-0 opacity-50" />
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">
-                <div className="flex flex-col md:flex-row items-start align-items-center">
+                <div className="flex flex-col md:flex-row items-start">
                     <div className="md:w-1/2">
-                        <h1 className="text-[50px] font-bold fc-white leading-tight mb-0">
+                        <h1 className="mobile-banner-heading text-[50px] fc-white leading-tight mb-0">
                             Behind the Work
                         </h1>
                     </div>
                     <div className="md:w-1/2">
-                        <div className="prose prose-lg prose-invert">
-                        <p className="text-[16px] fc-primary leading-relaxed mb-0">
+                        <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed mb-0">
                             Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                         </p>
-                        </div>
                     </div>
                 </div>
             </div>

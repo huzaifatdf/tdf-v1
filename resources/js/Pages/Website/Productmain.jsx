@@ -33,12 +33,12 @@ export default function Productmain() {
             <div className="">
                 <div className="flex flex-col md:flex-row ">
                     <div className="md:w-1/2">
-                        <h1 className="text-[50px] font-bold fc-white leading-tight mb-0">
+                        <h1 className="mobile-banner-heading text-[50px] fc-white leading-tight mb-0">
                             Solutions
                         </h1>
                     </div>
                     <div className="md:w-1/2">
-                        <p className="text-[16px] fc-primary leading-relaxed mb-0">
+                        <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed mb-0">
                             Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                         </p>
                     </div>

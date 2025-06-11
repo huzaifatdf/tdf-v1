@@ -35,7 +35,7 @@ export default function Casestudiesinner(props) {
             <div className="">
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
-                    <h1 className="text-[32px] font-bold fc-secondary leading-tight mb-6">
+                    <h1 className="text-[32px] fc-secondary leading-tight mb-6">
                         {casestudy.title} { casestudy.subtitle === '' && <> - <br className="hidden md:block" />{casestudy.subtitle}</> }
                     </h1>
                 </div>

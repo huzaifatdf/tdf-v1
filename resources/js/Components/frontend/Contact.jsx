@@ -37,58 +37,60 @@ function Contact() {
                     </div>
                 </div>
 
+                {/* Expandable Box with Smooth Animation */}
+                <div
+                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 transform transition-transform duration-500 ease-in-out">
+                        <div className='row m-0'>
+                            <p className="text-[22px] fc-primary mb-0  p-0">Start a Conversation</p>
+                            <div className="mt-4 col-md-6 p-0">
+                                <p className="text-[22px] fc-primary mb-0">Email:</p>
+                                <a
+                                    href="mailto:info@thedesignfirm.com"
+                                    className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200"
+                                >
+                                    info@thedesignfirm.com
+                                </a>
+                            </div>
 
-                {/* Expandable Box */}
-                {isExpanded && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 ">
-                    <div className='row'>
-                        <p className="text-[22px] fc-primary mb-0">Start a Conversation</p>
-                        <div className="mt-4 col-md-6">
-                            <p className="text-[22px] fc-primary mb-0">Email:</p>
-                            <a
-                                href="mailto:info@thedesignfirm.com"
-                                className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200"
-                            >
-                                info@thedesignfirm.com
-                            </a>
+                            <div className="mt-4 col-md-6  p-0" >
+                                <p className="text-[22px] fc-primary mb-0">USA:</p>
+                                <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>+12393565070</a>
+                            </div>
+                            <div className="mt-4  p-0">
+                                <p className="text-[22px] fc-primary mb-0">Pakistan:</p>
+                                <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+92 303 080 8833'>+92 303 080 8833</a>
+                            </div>
                         </div>
 
-                        <div className="mt-4 col-md-6" >
-                            <p className="text-[22px] fc-primary mb-0">USA:</p>
-                            <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>+12393565070</a>
-                        </div>
-                        <div className="mt-4">
-                            <p className="text-[22px] fc-primary mb-0">Pakistan:</p>
-                            <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+92 303 080 8833'>+92 303 080 8833</a>
-                        </div>
+                        <form className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
+                            <input
+                                type="text"
+                                placeholder="Full Name"
+                                className="w-full"
+                            />
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                className="w-full md:w-[45%] "
+                            />
+                            <input
+                                type="tel"
+                                placeholder="Phone"
+                                className="w-full md:w-[45%]"
+                            />
+                            <textarea
+                                placeholder="Message"
+                                rows="4"
+                                className="w-full"
+                            ></textarea>
+                            <button type="button" className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer">Submit<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></button>
+                        </form>
                     </div>
-
-                    <form className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
-                        <input
-                            type="text"
-                            placeholder="Full Name"
-                            className="w-full"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            className="w-full md:w-[45%] "
-                        />
-                        <input
-                            type="tel"
-                            placeholder="Phone"
-                            className="w-full md:w-[45%]"
-                        />
-                        <textarea
-                            placeholder="Message"
-                            rows="4"
-                            className="w-full"
-                        ></textarea>
-                        <button type="button" class="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer">Submit<span class="fc-purple group-hover:translate-x-1 transition-transform">→</span></button>
-                    </form>
-
-                    </div>
-                )}
+                </div>
    </>
   )
 }

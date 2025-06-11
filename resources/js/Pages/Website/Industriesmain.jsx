@@ -33,16 +33,16 @@ export default function Productinner() {
                 <div className="">
                     <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
                         <div className="lg:col-span-5 space-y-6">
-                            <h1 className="text-[50px] fc-white leading-[1.1]">
+                            <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
                                 Industries We Serve
                             </h1>
                         </div>
                         <div className="lg:col-span-5 space-y-6">
                             <div className="prose prose-lg prose-invert">
-                            <h2 className="text-[30px] font-bold fc-secondary leading-tight">
+                            <h2 className="mobile-banner-sub-heading text-[30px] fc-secondary leading-tight">
                                 Delivering Impact in Every Industry<br />Industries Powered by Our Expertise
                             </h2>
-                            <p className="text-[16px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[16px] fc-primary leading-relaxed mb-0">
                                No matter your field, your challenges are unique - and so are our solutions. TDF helps businesses in every industry reimagine how their brands connect with their audiences.
                             </p>
                             </div>

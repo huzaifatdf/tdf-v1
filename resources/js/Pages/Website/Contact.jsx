@@ -28,30 +28,28 @@ export default function About() {
 
   return (
     <WebsiteLayout title="Contact | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-        <section ref={introRef} className="flex relative overflow-hidden">
+        <section ref={introRef} className="min-h-[40vh] flex items-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
-                <div className="container-fluid relative mt-[150px]">
-                    <div className="">
-                        <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
-                            <div className="lg:col-span-6 space-y-6">
-                                <h1 className="text-[50px] fc-white leading-[1.1]">
-                                    Contact Us & Support
-                                </h1>
-                            </div>
-                            <div className="lg:col-span-6 space-y-6">
-                                <div className="prose prose-lg prose-invert">
-                                <p className="text-[16px] fc-primary leading-tight mb-0">
-                                    Have a project?
-                                </p>
-                                <p className="text-[16px] fc-primary leading-tight mb-0">
-                                    Let’s make it happen together.
-                                </p>
-                                </div>
-                            </div>
+            <div className="container-fluid ">
+                <div className="relative mt-[100px] mb-[30px]">
+                    <div className="flex flex-col md:flex-row items-start">
+                        <div className="md:w-1/2">
+                            <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
+                                Contact Us & Support
+                            </h1>
                         </div>
-                        <hr class="border-white mb-8"></hr>
+                        <div className="md:w-1/2">
+                            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                                Have a project?
+                            </p>
+                            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                                Let’s make it happen together.
+                            </p>
+                        </div>
                     </div>
                 </div>
+                <hr class="border-white mb-8"></hr>
+            </div>
         </section>
         <ContactSection />
         <MapSection />
@@ -66,8 +64,8 @@ const ContactSection = () => {
   const tabs = ['Business development', 'Support', 'Others'];
 
   return (
-    <div className="relative sec-padding">
-      <div className="container-fluid grid lg:grid-cols-12 gap-12">
+    <div className="relative sec-padding pt-0">
+      <div className="container-fluid grid lg:grid-cols-12">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">
           <h3 className="text-[22px] fc-primary leading-tight mb-3">Tell us about your vision:</h3>

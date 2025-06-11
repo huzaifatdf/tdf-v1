@@ -32,18 +32,18 @@ export default function About() {
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">
                     <div className="">
-                        <div className="grid md:grid-cols-12 gap-12 items-center justify-center pb-[60px]">
+                        <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
                             <div className="lg:col-span-6 space-y-6">
-                                <h1 className="text-[50px] fc-white leading-[1.1]">
+                                <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
                                      Meet Our Partners
                                 </h1>
                             </div>
                             <div className="lg:col-span-6 space-y-6">
                                 <div className="prose prose-lg prose-invert">
-                                <h2 className="text-[30px] font-bold fc-secondary leading-tight">
+                                <h2 className="mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight">
                                    Unlocking Growth Through Strategic Alliances
                                 </h2>
-                                <p className="text-[16px] fc-primary leading-tight mb-0">
+                                <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
                                     Our strategic partners are an extension of our business and help us provide engaging customer experiences that benefit our customers' bottom lines.
                                 </p>
                                 </div>

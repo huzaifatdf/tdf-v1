@@ -9381,6 +9381,18 @@ form textarea {
   .absolute.top-32.left-\[50\%\] {
     left: 0% !important;
   }
+  .mobile-banner-heading {
+    font-size: 30px;
+  }
+  .mar-mob-0 {
+    margin: 0;
+  }
+  .mobile-banner-sub-heading {
+    font-size: 25px;
+  }
+  .side-menu {
+    right: 10px;
+  }
 }
 footer {
   position: relative;
