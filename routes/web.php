@@ -48,3 +48,7 @@ Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
 
 
+Route::get('/product/{slug}', [WebSiteController::class, 'showProduct'])
+    ->name('web.product.show');
+
+

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import WebsiteLayout from "@/Layouts/WebsiteLayout";
+
 import { ChevronDown } from 'lucide-react';
 import SmoothProductSection from "@/Components/frontend/SmoothProductSection";
+import WebsiteLayout from "@/Layouts/WebsiteLayout";
 
 gsap.registerPlugin(ScrollTrigger);
 

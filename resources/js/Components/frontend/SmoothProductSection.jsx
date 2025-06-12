@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 import { ChevronDown } from 'lucide-react';
-import { usePage } from "@inertiajs/react";
+import { usePage,Link } from "@inertiajs/react";
 import axios from "axios";
 import parse from 'html-react-parser';
 
@@ -209,7 +209,7 @@ function SmoothProductSection() {
                       ))}
                     </div> */}
 
-                    <a className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer" href='/productinner'>Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></a>
+                    <Link className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer" href={route('web.product.show', {slug: section.slug})}>Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                   </div>
                 </div>
               </div>

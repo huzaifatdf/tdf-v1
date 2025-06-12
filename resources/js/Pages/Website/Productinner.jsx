@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
+import { usePage } from "@inertiajs/react";
+import parse from 'html-react-parser';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Productinner() {
   const introRef = useRef(null);
+  const {product} = usePage().props;
+  const jsonParseData = JSON.parse(product.data);
+  console.log(jsonParseData);
 
   useEffect(() => {
     const intro = introRef.current;
@@ -33,7 +38,8 @@ export default function Productinner() {
                 <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
                         <h1 className="text-[30px] fc-secondary leading-tight mb-6">
-                            Eduman<br className="hidden md:block" />A Saas-Based School Management System
+                            {/* Eduman<br className="hidden md:block" />A Saas-Based School Management System */}
+                            {product.title}
                         </h1>
                         <img
                             src="/images/productinner.png"
@@ -46,7 +52,7 @@ export default function Productinner() {
                         <p className="text-[20px] font-bold fc-primary leading-relaxed  mb-2">
                             Quick Highlights
                         </p>
-                        <p className="text-[16px] fc-primary leading-relaxed mb-6">
+                        {/* <p className="text-[16px] fc-primary leading-relaxed mb-6">
                             100% Cloud-Based: No servers or installations required.
                             Mobile App: Easy to use on smartphones and tablets.
                             Modular & Customizable: Choose the features that work best for you.
@@ -59,7 +65,8 @@ export default function Productinner() {
                         </p>
                         <p className="text-[16px] fc-primary leading-relaxed">
                             Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
-                        </p>
+                        </p> */}
+                       <p className="text-[16px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
                         </div>
                     </div>
                 </div>
@@ -67,8 +74,23 @@ export default function Productinner() {
           </section>
 
         <BenefitsContactForm />
-        <DetailedOverview />
-        <WhatProblem />
+          <div className="container-fluid ">
+            <div className="py-16 relative">
+                <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+                Detailed Overview
+                </h2>
+
+                <div className="text-gray-300 leading-relaxed">
+                    <p className="text-[16px] fc-primary leading-relaxed mb-2">
+                        {parse(jsonParseData.Detail.detail_overview)}
+                    </p>
+
+                </div>
+            </div>
+
+                <hr className="border-white mb-8"/>
+            </div>
+        <WhatProblem problem={jsonParseData.Problem} solutions={jsonParseData["problem Solutions"]} />
         <EdumanDemoSection />
         <FloatIcon />
         </WebsiteLayout>
@@ -184,39 +206,15 @@ function BenefitsContactForm() {
 }
 
 
-// Detailed Overview //
-function DetailedOverview() {
-  return (
-    <div className="container-fluid ">
-      <div className="py-16 relative">
-        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
-          Detailed Overview
-        </h2>
-
-        <div className="text-gray-300 leading-relaxed">
-            <p className="text-[16px] fc-primary leading-relaxed mb-2">
-                Managing a school is not easy. Behind the scenes, a lot is going on, including managing teacher schedules, tracking fee collections, and keeping an eye on student performance. 
-            </p>
-            <p className="text-[16px] fc-primary leading-relaxed mb-2">
-                EDUMAN, a cloud-based, SaaS (Software as a Service) School Management and Learning Management System (LMS), is developed to make all of this simpler. 
-            </p>
-            <p className="text-[16px] fc-primary leading-relaxed mb-2">
-                As a strategic partner, The Design Firm (TDF) helps bring EDUMAN to educational institutions that want to simplify operations and improve the learning experience.
-            </p>
-        </div>
-      </div>
-
-        <hr className="border-white mb-8"/>
-    </div>
-  );
-}
 
 
 // What PRoblem //
-function WhatProblem() {
+function WhatProblem(props) {
   const [activeSection, setActiveSection] = useState('text-to-text');
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
+
+  const { problem, solutions } = props;
 
   const sections = [
     {
@@ -331,10 +329,10 @@ function WhatProblem() {
             <div className="max-w-lg">
               <div className="mb-12">
                 <h1 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
-                  What Problems Does EDUMAN Solve?
+                  {problem?.problem || 'What Problem?'}
                 </h1>
                 <p className="text-[16px] fc-primary leading-relaxed">
-                  EDUMAN was built around real-world challenges faced by school administrators, teachers, and parents. It’s not just about technology, but about solving everyday problems in education.
+                    {problem?.problem_description || '...'}
                 </p>
               </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Casestudy;
 use App\Models\Page;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -48,6 +49,13 @@ class WebSiteController extends Controller
         $page = Page::where('slug', $slug)->with('publishedSections')->first();
         return Inertia::render('Website/Dynamicpage', [
             'page' => $page
+        ]);
+    }
+
+    public function showProduct(Request $request, $slug) {
+        $product = Product::where('slug', $slug)->published()->first();
+        return Inertia::render('Website/Productinner', [
+            'product' => $product
         ]);
     }
 }
