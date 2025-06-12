@@ -106,7 +106,7 @@ function TestimonialsSection() {
         <div className="floating-avatars absolute inset-0">
           <div
             className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "15%", left: "10%" }}
+            style={{ top: "5%", left: "15%" }}
           >
             CK
           </div>
@@ -123,31 +123,31 @@ function TestimonialsSection() {
               alt=""
               style={
                 i === 0
-                  ? { top: "25%", left: "20%" }
+                  ? { top: "15%", left: "25%" }
                   : i === 1
-                  ? { top: "50%", left: "25%" }
+                  ? { top: "35%", left: "30%" }
                   : i === 2
-                  ? { top: "25%", right: "20%" }
-                  : { top: "15%", right: "10%" }
+                  ? { top: "15%", right: "25%" }
+                  : { top: "5%", right: "15%" }
               }
             />
           ))}
 
           <div
             className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "50%", left: "15%" }}
+            style={{ top: "35%", left: "17%" }}
           >
             JB
           </div>
           <div
             className="circle-avatar absolute w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "50%", right: "25%" }}
+            style={{ top: "35%", right: "30%" }}
           >
             HT
           </div>
           <div
             className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "50%", right: "15%" }}
+            style={{ top: "35%", right: "17%" }}
           >
             JB
           </div>

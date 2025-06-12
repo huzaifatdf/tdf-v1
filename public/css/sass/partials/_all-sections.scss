@@ -317,6 +317,12 @@ form {
 .border-testi {
     border: 2px solid $theme-secondary;
 }
+.swiper-button-prev, .swiper-button-next {
+    color: $theme-primary !important;
+}
+.for-padd {
+    padding: 0px 170px 0px 0;
+}
 // Responsive Start Here //
 @media(max-width: 600px) {
     .container-fluid {

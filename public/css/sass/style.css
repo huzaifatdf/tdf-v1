@@ -9014,19 +9014,21 @@ header nav.pn ul li ul li ul {
   height: 100%;
   z-index: 2;
   padding: 2rem;
-  mix-blend-mode: difference;
+  mix-blend-mode: exclusion;
   top: 30%;
 }
 .box.hero-section .hero-content h1 {
   font-size: 60px;
   font-weight: 600;
   margin: 0;
+  will-change: transform;
 }
 .box.hero-section .hero-content h2 {
   font-size: 94px;
   font-weight: 800;
   margin: 0;
   line-height: 1;
+  will-change: transform;
 }
 .box.inside-page-banner {
   margin-top: 60px;
@@ -9358,6 +9360,14 @@ form textarea {
 
 .border-testi {
   border: 2px solid #9BE500;
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: #91A7BA !important;
+}
+
+.for-padd {
+  padding: 0px 170px 0px 0;
 }
 
 @media (max-width: 600px) {

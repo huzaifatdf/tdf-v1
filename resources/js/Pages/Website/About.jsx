@@ -77,7 +77,7 @@ function AboutSection() {
           With a history dating back to 2002, The Design Firm has been a trusted partner for several startups and organizations when it comes to marketing, technology and innovation.
         </p>
         <p className="fc-primary text-[16px]">
-          From startups to legacy organizations, we’ve worked with clients from all industries to help them scale and engage meaningfully with their audiences.
+          From startups to legacy organizations, we've worked with clients from all industries to help them scale and engage meaningfully with their audiences.
         </p>
         <p className="fc-primary text-[16px]">
           With over 300+ impactful websites and 600+ custom digital assets in our portfolio, we bring a rare mix of experience and agility to every project we touch.
@@ -159,7 +159,7 @@ function Trusted () {
                         </h2>
 
                         <p className="text-[16px] fc-primary leading-relaxed">
-                            Finance & Banking  |  Technology  |  Logistics  |  Energy Sector  |  MNCs  |  Retail  |  Manufacturing  |  Real Estate  |  Health  |  Payment Industry  |  Water Industry  |  Associations  |  NGO  |  Travel
+                            Finance & Banking | Technology | Logistics | Energy Sector | MNCs | Retail | Manufacturing | Real Estate | Health | Payment Industry | Water Industry | Associations
                         </p>
                     </div>
 
@@ -193,45 +193,44 @@ function Trusted () {
 const timelineData = [
   {
     id: '01',
-    range: '2002–2006',
+    range: '2002-2006',
     title: 'TDF was established in 2002',
-    description:
-      "TDF was established in 2002, providing graphic design and ATM screen UI design services globally. Extended our services to website design and development and started serving clients in Qatar and the African markets.",
+    description: "TDF was established in 2002, providing graphic design and ATM screen UI design services globally.",
     image: '/images/abac1.png',
   },
   {
     id: '02',
-    range: '2007–2009',
-    title: 'Expansion Phase',
-    description: 'TDF grew its team and client base across the GCC region and diversified services.',
+    range: '2007-2009',
+    title: 'Extended our services to website design',
+    description: 'Extended our services to website design and development and started serving clients in Qatar and the African markets.',
     image: '/images/abac1.png',
   },
   {
     id: '03',
-    range: '2010–2016',
-    title: 'Development Milestones',
-    description: 'Major projects launched including enterprise platforms and partnerships with fintechs.',
+    range: '2010-2016',
+    title: 'Entered into software development',
+    description: 'Entered into software development and designed Intranet portals for renowned financial institutions.',
     image: '/images/abac1.png',
   },
   {
     id: '04',
-    range: '2016–2020',
-    title: 'Digital Shift',
-    description: 'Focused on UX/UI, app development, and automation tools.',
+    range: '2016-2020',
+    title: 'Ventured into Event Management',
+    description: 'Ventured into Event Management and Stall Fabrication services from design to execution, having worked with clients such as the World Bank, USAID, IBM, ICAP, and more.',
     image: '/images/abac1.png',
   },
   {
     id: '05',
-    range: '2021–2023',
-    title: 'Post-COVID Innovation',
-    description: 'Launched AI-based tools and cloud services for remote business models.',
+    range: '2021-2023',
+    title: 'We included social media marketing in our portfolio',
+    description: `We included social media marketing in our portfolio to serve our diverse clientele. Registered in the USA and now leveraging AI and ML technologies to drive our clients' success as a full-service zmarketing agency.`,
     image: '/images/abac1.png',
   },
   {
     id: '06',
-    range: '2024 – Onwards',
-    title: 'Future Ready',
-    description: 'Expanding in KSA and UAE with next-gen AI solutions and custom platforms.',
+    range: '2024 - Onwards ',
+    title: 'Onboarded strategic partners in KSA',
+    description: 'Onboarded strategic partners in KSA and Oman. Extended our services in Tajkistanthe market. ',
     image: '/images/abac1.png',
   },
 ];
@@ -242,7 +241,7 @@ const TimelineSection = () => {
   return (
     <section className="container-fluid">
       <div className="relative sec-padding">
-        <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
+        <div className="flex overflow-x-auto no-scrollbar h-[650px] space-x-4">
           {timelineData.map((item, idx) => {
             const isActive = activeIndex === idx;
             return (
@@ -257,7 +256,7 @@ const TimelineSection = () => {
               >
                 {!isActive && (
                   <div className="flex flex-col items-center justify-between h-full rotate-180">
-                    <div className="transform -rotate-90 whitespace-nowrap">
+                    <div className="for-padd  transform -rotate-90 whitespace-nowrap">
                       <p className="text-[20px] fc-primary mb-0 text-left">{item.id}</p>
                       <p className="fc-secondary text-[30px] mb-0 text-right">{item.range}</p>
                     </div>
@@ -302,7 +301,7 @@ function WhatDrivesUs () {
             <div className="lg:w-1/2">
                 <h2 className="text-[30px] fc-secondary mb-2">What Drives Us</h2>
                 <p className="fc-primary text-[16px] leading-relaxed mb-4">
-                We’re driven by the belief that digital isn’t just a platform, it’s a playground for ideas, creativity, and innovation.
+                We’re driven by the belief that digital isn’t just a platform,  it’s a playground for ideas, creativity, and innovation.
                 </p>
                 <p className="fc-primary text-[16px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
                 <ul className="fc-primary text-[22px] mb-0 leading-relaxed p-0 mt-2 mb-2">
@@ -336,7 +335,7 @@ const MissionVisionProposition = () => {
             {/* Left Image - 5 columns */}
             <div className="lg:col-span-6">
                 <div className="overflow-hidden shadow-2xl">
-                <h3 className="text-[30px] fc-secondary font-bold mb-3">The Why, The How, and What’s Next</h3>
+                <h3 className="text-[30px] fc-secondary font-bold mb-3">The Why, The How, and The What Next</h3>
                 <img
                     src="/images/begi.png" // Replace with actual image path
                     alt="Team collaboration in modern office"
@@ -353,8 +352,7 @@ const MissionVisionProposition = () => {
                     We connect creativity with technology to build smart, impactful solutions
                 </p>
                 <p className="fc-primary text-[16px] leading-relaxed">
-                    We approach every project with a sense of curiosity, flexibility, and a fresh perspective,
-                    because the best results often come from ideas that break away from the norm.
+                    We approach every project with a sense of curiosity, flexibility, and a fresh perspective, because the best results often come from ideas that break away from the norm.
                 </p>
                 </div>
 
@@ -394,15 +392,16 @@ const missfits = [
     range: 'Founder & Chief Executive Officer (CEO)',
     title: 'Naumeena Suhail',
     description:
-      "Naumeena Suhail, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br><br>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”",
+      `Naumeena Suhail, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br></br><i>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”
+</i>`,
     image: '/images/Maam.png',
   },
   {
     id: '02',
-    range: 'Partner & COO',
+    range: 'Partner, Chief Operating Officer (COO)',
     title: 'Nazish Yousuf',
     description:
-      "Nazish Yousuf, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br><br>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”",
+      "Nazish doesn’t just manage operations, she fine-tunes the rhythm that keeps The Design Firm moving with purpose. Since joining TDF in 2014, she’s brought more than just experience to the table, she’s brought vision, consistency, and a sixth sense for what makes a brand truly resonate. With over 18 years in creative marketing and advertising, Nazish has a gift for seeing what others miss. <br><br>Her philosophy is simple but powerful: <br><br><strong>“Brands do have voices,”</strong> she says. <strong>“I help them find theirs and use it in ways people remember.”</strong>",
     image: '/images/Maam2.png',
   }
 ];
@@ -414,7 +413,7 @@ const MeetTheMissfits = () => {
   return (
     <section className="container-fluid">
       <div className="relative sec-padding">
-        <h3 className="text-[30px] fc-secondary font-bold mb-0">Meet the Missfits</h3>
+        <h3 className="text-[30px] fc-secondary font-bold mb-0">Meet the Misfits</h3>
         <p className='fc-primary text-[16px] mb-0 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
         <hr className="border-white mb-8" />
         <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
@@ -484,8 +483,8 @@ const Experience = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left Heading */}
                 <div className="lg:col-span-6">
-                    <h2 className="text-[30px] leading-[1.1] fc-secondary">
-                    20+ Years in, <br className="hidden lg:block" /> & We’re Still Just Getting Started
+                    <h2 className="text-[50px] leading-[1.1] fc-secondary">
+                    20+ Years in, <br className="hidden lg:block" /> and We’re Still Just Getting Started
                     </h2>
                 </div>
 

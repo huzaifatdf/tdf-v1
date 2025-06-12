@@ -147,7 +147,7 @@ const [sections,setSections] = useState( data
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
             <div className="max-w-lg">
 
-              <nav className="space-y-8 pl-6 h-[750px] overflow-y-auto custom-scrollbar custom-mobile-height"
+              <nav className="space-y-8 pl-6 h-[650px] overflow-y-auto custom-scrollbar custom-mobile-height"
                 style={{ direction: 'rtl' }}
                 >
                 {sections.map((section, index) => (
