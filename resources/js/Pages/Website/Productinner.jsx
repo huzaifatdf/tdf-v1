@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Productinner() {
   const introRef = useRef(null);
-  const {product} = usePage().props;
+  const {product,appUrl} = usePage().props;
   const jsonParseData = JSON.parse(product.data);
   console.log(jsonParseData);
 
@@ -42,7 +42,7 @@ export default function Productinner() {
                             {product.title}
                         </h1>
                         <img
-                            src="/images/productinner.png"
+                            src={`${appUrl}/${product?.thumbnail}`}
                             alt="HabibMetro Bank Project Overview"
                             className="w-full h-[50vh] object-cover mt-3 mb-5"
                         />
@@ -91,7 +91,34 @@ export default function Productinner() {
                 <hr className="border-white mb-8"/>
             </div>
         <WhatProblem problem={jsonParseData.Problem} solutions={jsonParseData["problem Solutions"]} />
-        <EdumanDemoSection />
+           <section className="container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
+      {/* Left Content */}
+        <div className="flex-1">
+            <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+            {jsonParseData["Our Work"]["title"]}
+            </h2>
+            <p className="text-[18px] text-gray-400 leading-relaxed">
+            {/* Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
+            <span className="text-lime-400 font-medium">Book a Demo</span> today! */}
+            {parse(jsonParseData["Our Work"]["description"])}
+            </p>
+            <div className="mt-6">
+            <a href="#" className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">
+                See Our Work
+                <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            </div>
+        </div>
+
+        {/* Right Image */}
+        <div className="flex-1">
+            <img
+            src={`${appUrl}/${product?.image}`}
+            alt="Eduman Demo Devices"
+            className="w-full"
+            />
+        </div>
+        </section>
         <FloatIcon />
         </WebsiteLayout>
   );
@@ -208,6 +235,30 @@ function BenefitsContactForm() {
 
 
 
+
+
+
+function parseData(data) {
+  if (!data || typeof data !== 'object') return [];
+
+  const grouped = {};
+
+  Object.keys(data).forEach(key => {
+    const match = key.match(/(label|description)_(\d+)/);
+    if (!match) return;
+
+    const [, type, index] = match;
+    if (!grouped[index]) grouped[index] = { id: `0${index}` };
+    grouped[index][type] = data[key];
+  });
+
+  return Object.entries(grouped).map(([index, obj]) => ({
+    id: obj.id.padStart(2, '0'), // Make sure id is like '01', '02'
+    title: obj.label || '',
+    description: obj.description || '', // Ensures string, not undefined
+  }));
+}
+
 // What PRoblem //
 function WhatProblem(props) {
   const [activeSection, setActiveSection] = useState('text-to-text');
@@ -216,50 +267,7 @@ function WhatProblem(props) {
 
   const { problem, solutions } = props;
 
-  const sections = [
-    {
-      id: '01',
-      title: 'For Teachers',
-      subtitle: 'Academic Scheduling',
-      description: 'The Problem: Timetables often clash, teachers get overloaded, or free periods aren’t used well.',
-      features: [
-        'EDUMAN’s Solution: Smart, automated scheduling ensures teachers get well-balanced workloads with no conflicts.',
-      ],
-      stats: {
-        models: '25+',
-        performance: '99.9%',
-        latency: '<100ms'
-      }
-    },
-    {
-      id: '02',
-      title: 'For Parents',
-      subtitle: 'Paperwork & Tracking',
-      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
-      features: [
-        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
-      ],
-      stats: {
-        models: '15+',
-        performance: '99.8%',
-        latency: '<2s'
-      }
-    },
-    {
-      id: '03',
-      title: 'For School Admins & Management',
-      subtitle: 'Paperwork & Tracking',
-      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
-      features: [
-        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
-      ],
-      stats: {
-        models: '8+',
-        performance: '99.5%',
-        latency: '<5s'
-      }
-    }
-  ];
+  const sections = parseData(solutions);
 
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
@@ -411,28 +419,27 @@ function WhatProblem(props) {
                         </h2> */}
 
                         {/* Subtitle */}
-                        <p className="text-[20px] fc-primary mb-8 leading-relaxed">
+                        {/* <p className="text-[20px] fc-primary mb-8 leading-relaxed">
                         {section.subtitle}
-                        </p>
+                        </p> */}
 
                         <p className="text-[16px] fc-primary mb-8 leading-relaxed">
-                        {section.description}
+                        {parse(section.description)}
                         </p>
 
                         {/* Features */}
-                        <div className="space-y-4 mb-10">
+                        {/* <div className="space-y-4 mb-10">
                         {section.features.map((feature, featureIndex) => (
                             <div
                             key={featureIndex}
                             className="flex items-start"
                             >
-                            {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
                             <span className="fc-primary text-[16px] leading-relaxed">
                                 {feature}
                             </span>
                             </div>
                         ))}
-                        </div>
+                        </div> */}
                     </div>
                     <hr className="border-white mb-8"/>
                 </div>
@@ -464,37 +471,7 @@ function WhatProblem(props) {
 
 
 // Ready TO See Demo//
-const EdumanDemoSection = () => {
-  return (
-    <section className="container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
-      {/* Left Content */}
-      <div className="flex-1">
-        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
-          Ready to See It in Action?
-        </h2>
-        <p className="text-[18px] text-gray-400 leading-relaxed">
-          Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
-          <span className="text-lime-400 font-medium">Book a Demo</span> today!
-        </p>
-        <div className="mt-6">
-          <a href="#" className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">
-            See Our Work
-            <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
-          </a>
-        </div>
-      </div>
 
-      {/* Right Image */}
-      <div className="flex-1">
-        <img
-          src="/images/productinner2.png"
-          alt="Eduman Demo Devices"
-          className="w-full"
-        />
-      </div>
-    </section>
-  );
-};
 
 // Float Icon //
 const FloatIcon = () => {
