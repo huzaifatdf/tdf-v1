@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
 import { Upload, X, ChevronDown, ChevronRight } from "lucide-react";
 
@@ -17,10 +17,121 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MediaLibraryModel from "../Media/Model";
 
+// Summernote Editor Component
+const SummernoteEditor = ({ value, onChange, placeholder, fieldName }) => {
+  const editorRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Load Summernote CSS and JS
+    const loadSummernote = async () => {
+      // Load jQuery first if not already loaded
+      if (!window.jQuery) {
+        const jqueryScript = document.createElement('script');
+        jqueryScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+        jqueryScript.onload = () => loadSummernoteAssets();
+        document.head.appendChild(jqueryScript);
+      } else {
+        loadSummernoteAssets();
+      }
+    };
+
+    const loadSummernoteAssets = () => {
+      // Load Summernote CSS
+      if (!document.querySelector('link[href*="summernote"]')) {
+        const summernoteCSS = document.createElement('link');
+        summernoteCSS.rel = 'stylesheet';
+        summernoteCSS.href = 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css';
+        document.head.appendChild(summernoteCSS);
+      }
+
+      // Load Summernote JS
+      if (!window.$.fn.summernote) {
+        const summernoteScript = document.createElement('script');
+        summernoteScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js';
+        summernoteScript.onload = () => {
+          setIsLoaded(true);
+        };
+        document.head.appendChild(summernoteScript);
+      } else {
+        setIsLoaded(true);
+      }
+    };
+
+    loadSummernote();
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded && editorRef.current && window.$ && window.$.fn.summernote) {
+      const $editor = window.$(editorRef.current);
+
+      $editor.summernote({
+        placeholder: placeholder || 'Enter content...',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        callbacks: {
+          onChange: function(contents) {
+            onChange(contents);
+          },
+          onInit: function() {
+            // Set initial value
+            if (value) {
+              $editor.summernote('code', value);
+            }
+          }
+        }
+      });
+
+      // Set initial content if value exists
+      if (value) {
+        $editor.summernote('code', value);
+      }
+
+      // Cleanup function
+      return () => {
+        if ($editor.summernote) {
+          $editor.summernote('destroy');
+        }
+      };
+    }
+  }, [isLoaded, value, onChange, placeholder]);
+
+  // Update content when value changes externally
+  useEffect(() => {
+    if (isLoaded && editorRef.current && window.$ && window.$.fn.summernote) {
+      const $editor = window.$(editorRef.current);
+      const currentContent = $editor.summernote('code');
+      if (currentContent !== value) {
+        $editor.summernote('code', value || '');
+      }
+    }
+  }, [value, isLoaded]);
+
+  return (
+    <div className="summernote-wrapper">
+      <textarea
+        ref={editorRef}
+        className="form-control"
+        style={{ display: 'none' }}
+        defaultValue={value || ''}
+      />
+    </div>
+  );
+};
+
 export default function Edit() {
-  const { product, additionalDataStructure,appUrl } = usePage().props;
+  const { product, additionalDataStructure, appUrl } = usePage().props;
   const [imagePreview, setImagePreview] = useState(appUrl + '/' + product.image || null);
-  const [thumbnailPreview, setThumbnailPreview] = useState( appUrl + '/' + product.thumbnail || null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(appUrl + '/' + product.thumbnail || null);
   const [expandedSections, setExpandedSections] = useState({
     specifications: true,
     pricing: true,
@@ -58,12 +169,8 @@ export default function Edit() {
     });
 
     // Handle file uploads - only append if new files are selected
-
     formData.append('image', values.image);
-
-
     formData.append('thumbnail', values.thumbnail);
-
 
     // Handle additional data - structure it properly
     const additionalData = {};
@@ -88,8 +195,6 @@ export default function Edit() {
     // Add method spoofing for PUT request
     formData.append('_method', 'PUT');
 
-
-
     router.post(route("product.update", product.id), formData, {
       forceFormData: true,
       onSuccess: () => {
@@ -100,8 +205,6 @@ export default function Edit() {
       },
     });
   };
-
-
 
   const removeImage = (setFieldValue, fieldName, setPreview) => {
     setFieldValue(fieldName, null);
@@ -120,6 +223,15 @@ export default function Edit() {
     const fieldValue = values[fieldName] || '';
 
     switch (fieldConfig.type) {
+      case 'summernote':
+        return (
+          <SummernoteEditor
+            value={fieldValue}
+            onChange={(content) => setFieldValue(fieldName, content)}
+            placeholder={`Enter ${fieldConfig.label.toLowerCase()}`}
+            fieldName={fieldName}
+          />
+        );
       case 'textarea':
         return (
           <Textarea
@@ -223,20 +335,20 @@ export default function Edit() {
 
                   <div className="grid gap-2">
                     <label htmlFor="slug" className="text-sm font-medium">
-                    Product Slug *
+                      Product Slug *
                     </label>
                     <Field
-                    as={Input}
-                    id="slug"
-                    name="slug"
-                    placeholder="Enter product slug"
+                      as={Input}
+                      id="slug"
+                      name="slug"
+                      placeholder="Enter product slug"
                     />
                     <ErrorMessage
-                    name="slug"
-                    component="div"
-                    className="text-red-500 text-sm"
+                      name="slug"
+                      component="div"
+                      className="text-red-500 text-sm"
                     />
-                </div>
+                  </div>
 
                   <div className="grid gap-2">
                     <label htmlFor="description" className="text-sm font-medium">
