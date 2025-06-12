@@ -429,7 +429,7 @@ const ctx = gsap.context(() => {
     gsap.fromTo(
     imageWrapperRef.current,
     {
-        scale: 1.2, // start slightly zoomed in
+        scale: 1.9, // start slightly zoomed in
         opacity: 0,
     },
     {
@@ -448,6 +448,71 @@ const ctx = gsap.context(() => {
 
 return () => ctx.revert();
 }, []);
+
+
+  const creativityRef = useRef(null);
+  const strategyRef = useRef(null);
+  const technologyRef = useRef(null);
+
+  useEffect(() => {
+    const spheres = [
+      { ref: creativityRef, delay: 0 },
+      { ref: strategyRef, delay: 0.2 },
+      { ref: technologyRef, delay: 0.4 },
+    ];
+
+    spheres.forEach(({ ref, delay }) => {
+      // Entrance animation
+      gsap.fromTo(
+        ref.current,
+        { y: 60, opacity: 0, scale: 0.8 },
+        {
+          y: 0,
+          opacity: 1,
+        //   scale: 1,
+          duration: 3.8,
+          ease: 'power3.out',
+          delay,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: 'top 80%',
+          },
+        }
+      );
+
+      // Continuous floating animation
+      gsap.to(ref.current, {
+        y: '-=10',
+        duration: 3.8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: delay + 1.2,
+      });
+    });
+  }, []);
+
+
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      textRef.current.querySelectorAll('p'),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.4,
+        ease: 'power3.out',
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: textRef.current,
+          start: 'top 85%',
+        },
+      }
+    );
+  }, []);
+
 
   return (
     <>
@@ -468,48 +533,46 @@ return () => ctx.revert();
       </div>
     </div>
 
-    <div className="relative from-slate-900 to-slate-800 flex flex-col items-center justify-center px-4 py-16">
-      {/* Background overlay for darker effect */}
-      <div className="absolute inset-0"></div>
+    <div className="relative px-4 ">
+        <div className="relative z-10 w-full max-w-4xl mx-auto mb-11 py-16">
+            {/* Top sphere - Creativity */}
+            <div ref={creativityRef}  className="absolute top-1 left-1/2 ">
+                <div className="relative group">
+                    <img
+                    src="/images/creat.svg"
+                    alt="Creativity"
+                    className="w-[260px] h-[260px] object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                </div>
+            </div>
 
-      {/* Floating spheres container */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto mb-11">
-        {/* Top sphere - Creativity */}
-        <div className="absolute top-1 left-1/2 ">
-          <div className="relative group">
-            <img
-              src="/images/creat.svg"
-              alt="Creativity"
-              className="w-70 h-70 object-contain hover:scale-110 transition-transform duration-300"
-            />
-          </div>
+            {/* Left sphere - Strategy */}
+            <div ref={strategyRef}  className="absolute top-20 left-40">
+                <div className="relative group">
+                    <img
+                    src="/images/strat.svg"
+                    alt="Strategy"
+                    className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                </div>
+            </div>
+
+            {/* Right sphere - Technology */}
+            <div ref={technologyRef} className="absolute top-[130%] left-[40%] ">
+                <div className="relative group">
+                    <img
+                    src="/images/tech.svg"
+                    alt="Technology"
+                    className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                </div>
+            </div>
         </div>
+    </div>
 
-        {/* Left sphere - Strategy */}
-        <div className="absolute top-20 left-40">
-          <div className="relative group">
-            <img
-              src="/images/strat.svg"
-              alt="Strategy"
-              className="w-90 h-90 object-contain hover:scale-110 transition-transform duration-300"
-            />
-          </div>
-        </div>
-
-        {/* Right sphere - Technology */}
-        <div className="absolute top-32 left-[50%] ">
-          <div className="relative group">
-            <img
-              src="/images/tech.svg"
-              alt="Technology"
-              className="w-110 h-110 object-contain hover:scale-110 transition-transform duration-300"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom text section */}
-      <div className="relative z-10 mt-80 text-center max-w-2xl">
+    <div className='flex flex-col items-center justify-center '>
+        {/* Bottom text section */}
+      <div ref={textRef}  className="relative z-10 mt-80 text-center max-w-2xl">
         <p className="text-[20px] leading-relaxed mb-2 fc-primary">
           Strategy, creativity, technology - aligned in perfect sync
         </p>
