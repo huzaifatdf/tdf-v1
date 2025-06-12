@@ -18,6 +18,7 @@ Route::prefix('v1')->group(function() {
 
     Route::get('/services', [App\Http\Controllers\Api\V1\ServiceController::class, 'index']);
     Route::get('/products', [App\Http\Controllers\Api\V1\ProductController::class, 'index']);
+     Route::get('/case', [App\Http\Controllers\Api\V1\CaseController::class, 'index']);
     Route::get('/ourclient', [App\Http\Controllers\Api\V1\OurclientController::class, 'index']);
     //form group
     Route::prefix('form')->group(function () {
