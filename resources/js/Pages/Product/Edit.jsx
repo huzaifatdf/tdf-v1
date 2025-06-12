@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
-import { Upload, X, ChevronDown, ChevronRight } from "lucide-react";
+import { X, ChevronDown, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,126 +16,17 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MediaLibraryModel from "../Media/Model";
-
-// Summernote Editor Component
-const SummernoteEditor = ({ value, onChange, placeholder, fieldName }) => {
-  const editorRef = useRef(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    // Load Summernote CSS and JS
-    const loadSummernote = async () => {
-      // Load jQuery first if not already loaded
-      if (!window.jQuery) {
-        const jqueryScript = document.createElement('script');
-        jqueryScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js';
-        jqueryScript.onload = () => loadSummernoteAssets();
-        document.head.appendChild(jqueryScript);
-      } else {
-        loadSummernoteAssets();
-      }
-    };
-
-    const loadSummernoteAssets = () => {
-      // Load Summernote CSS
-      if (!document.querySelector('link[href*="summernote"]')) {
-        const summernoteCSS = document.createElement('link');
-        summernoteCSS.rel = 'stylesheet';
-        summernoteCSS.href = 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css';
-        document.head.appendChild(summernoteCSS);
-      }
-
-      // Load Summernote JS
-      if (!window.$.fn.summernote) {
-        const summernoteScript = document.createElement('script');
-        summernoteScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js';
-        summernoteScript.onload = () => {
-          setIsLoaded(true);
-        };
-        document.head.appendChild(summernoteScript);
-      } else {
-        setIsLoaded(true);
-      }
-    };
-
-    loadSummernote();
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded && editorRef.current && window.$ && window.$.fn.summernote) {
-      const $editor = window.$(editorRef.current);
-
-      $editor.summernote({
-        placeholder: placeholder || 'Enter content...',
-        tabsize: 2,
-        height: 200,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-          onChange: function(contents) {
-            onChange(contents);
-          },
-          onInit: function() {
-            // Set initial value
-            if (value) {
-              $editor.summernote('code', value);
-            }
-          }
-        }
-      });
-
-      // Set initial content if value exists
-      if (value) {
-        $editor.summernote('code', value);
-      }
-
-      // Cleanup function
-      return () => {
-        if ($editor.summernote) {
-          $editor.summernote('destroy');
-        }
-      };
-    }
-  }, [isLoaded, value, onChange, placeholder]);
-
-  // Update content when value changes externally
-  useEffect(() => {
-    if (isLoaded && editorRef.current && window.$ && window.$.fn.summernote) {
-      const $editor = window.$(editorRef.current);
-      const currentContent = $editor.summernote('code');
-      if (currentContent !== value) {
-        $editor.summernote('code', value || '');
-      }
-    }
-  }, [value, isLoaded]);
-
-  return (
-    <div className="summernote-wrapper">
-      <textarea
-        ref={editorRef}
-        className="form-control"
-        style={{ display: 'none' }}
-        defaultValue={value || ''}
-      />
-    </div>
-  );
-};
+import SummernoteInput from "@/Components/SummernoteInput";
 
 export default function Edit() {
   const { product, additionalDataStructure, appUrl } = usePage().props;
   const [imagePreview, setImagePreview] = useState(appUrl + '/' + product.image || null);
   const [thumbnailPreview, setThumbnailPreview] = useState(appUrl + '/' + product.thumbnail || null);
   const [expandedSections, setExpandedSections] = useState({
-    specifications: true,
-    pricing: true,
-    inventory: false,
+    Detail: false,
+    'Our Work': false,
+    Problem: false,
+    'problem Solutions': false,
     seo: false,
   });
 
@@ -159,7 +50,7 @@ export default function Edit() {
       .max(100, "Priority must not exceed 100"),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = useCallback((values, { setSubmitting }) => {
     const formData = new FormData();
 
     // Append basic form fields
@@ -168,11 +59,11 @@ export default function Edit() {
       formData.append(key, values[key]);
     });
 
-    // Handle file uploads - only append if new files are selected
+    // Handle file uploads
     formData.append('image', values.image);
     formData.append('thumbnail', values.thumbnail);
 
-    // Handle additional data - structure it properly
+    // Handle additional data
     const additionalData = {};
     Object.keys(additionalDataStructure).forEach(section => {
       additionalData[section] = {};
@@ -182,7 +73,6 @@ export default function Edit() {
           additionalData[section][field] = values[fieldName];
         }
       });
-      // Remove empty sections
       if (Object.keys(additionalData[section]).length === 0) {
         delete additionalData[section];
       }
@@ -192,44 +82,41 @@ export default function Edit() {
       formData.append('additional_data', JSON.stringify(additionalData));
     }
 
-    // Add method spoofing for PUT request
     formData.append('_method', 'PUT');
 
     router.post(route("product.update", product.id), formData, {
       forceFormData: true,
-      onSuccess: () => {
-        setSubmitting(false);
-      },
-      onError: (errors) => {
-        setSubmitting(false);
-      },
+      onSuccess: () => setSubmitting(false),
+      onError: () => setSubmitting(false),
     });
-  };
+  }, [product.id, additionalDataStructure]);
 
-  const removeImage = (setFieldValue, fieldName, setPreview) => {
+  const removeImage = useCallback((setFieldValue, fieldName, setPreview) => {
     setFieldValue(fieldName, null);
     setPreview(null);
-  };
+  }, []);
 
-  const toggleSection = (section) => {
+  const toggleSection = useCallback((section) => {
     setExpandedSections(prev => ({
       ...prev,
       [section]: !prev[section]
     }));
-  };
+  }, []);
 
-  const renderAdditionalField = (section, fieldKey, fieldConfig, values, setFieldValue) => {
+  const renderAdditionalField = useCallback((section, fieldKey, fieldConfig, values, setFieldValue) => {
     const fieldName = `${section}_${fieldKey}`;
     const fieldValue = values[fieldName] || '';
 
     switch (fieldConfig.type) {
       case 'summernote':
         return (
-          <SummernoteEditor
+          <SummernoteInput
             value={fieldValue}
             onChange={(content) => setFieldValue(fieldName, content)}
             placeholder={`Enter ${fieldConfig.label.toLowerCase()}`}
-            fieldName={fieldName}
+            height={200}
+            showToggle={true}
+            defaultMode="simple"
           />
         );
       case 'textarea':
@@ -267,10 +154,10 @@ export default function Edit() {
           />
         );
     }
-  };
+  }, []);
 
   // Create initial values populated with existing product data
-  const createInitialValues = () => {
+  const createInitialValues = useCallback(() => {
     const initialValues = {
       title: product.title || "",
       slug: product.slug || "",
@@ -281,7 +168,6 @@ export default function Edit() {
       priority: product.priority || 0,
     };
 
-    // Add initial values for additional data fields from existing product data
     const existingData = product.data ? JSON.parse(product.data) : {};
 
     Object.keys(additionalDataStructure).forEach(section => {
@@ -292,7 +178,7 @@ export default function Edit() {
     });
 
     return initialValues;
-  };
+  }, [product, additionalDataStructure]);
 
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
   const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
@@ -417,9 +303,14 @@ export default function Edit() {
                       Product Image
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-                      <button type="button" onClick={() => setImageShowMediaLibrary(true)}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setImageShowMediaLibrary(true)}
+                        className="w-full"
+                      >
                         {imagePreview ? 'Change Media' : 'Add Media'}
-                      </button>
+                      </Button>
                       <MediaLibraryModel
                         routename={route('product.edit', product.id)}
                         showModal={showImageMediaLibrary}
@@ -430,20 +321,20 @@ export default function Edit() {
                       />
 
                       {imagePreview && (
-                        <div className="relative mt-4">
+                        <div className="relative mt-4 inline-block">
                           <img
                             src={typeof imagePreview === 'string' ? imagePreview : URL.createObjectURL(imagePreview)}
                             alt="Product Preview"
-                            className="w-24 h-24 object-cover rounded-lg mx-auto"
+                            className="w-24 h-24 object-cover rounded-lg"
                           />
                           <Button
                             type="button"
                             variant="destructive"
                             size="sm"
-                            className="absolute -top-2 -right-2"
+                            className="absolute -top-2 -right-2 h-6 w-6 p-0"
                             onClick={() => removeImage(setFieldValue, "image", setImagePreview)}
                           >
-                            <X className="h-4 w-4" />
+                            <X className="h-3 w-3" />
                           </Button>
                         </div>
                       )}
@@ -455,9 +346,14 @@ export default function Edit() {
                       Thumbnail Image
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-                      <button type="button" onClick={() => setThumbnailShowMediaLibrary(true)}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setThumbnailShowMediaLibrary(true)}
+                        className="w-full"
+                      >
                         {thumbnailPreview ? 'Change Media' : 'Add Media'}
-                      </button>
+                      </Button>
                       <MediaLibraryModel
                         routename={route('product.edit', product.id)}
                         showModal={showThumbnailMediaLibrary}
@@ -468,20 +364,20 @@ export default function Edit() {
                       />
 
                       {thumbnailPreview && (
-                        <div className="relative mt-4">
+                        <div className="relative mt-4 inline-block">
                           <img
                             src={typeof thumbnailPreview === 'string' ? thumbnailPreview : URL.createObjectURL(thumbnailPreview)}
                             alt="Thumbnail Preview"
-                            className="w-24 h-24 object-cover rounded-lg mx-auto"
+                            className="w-24 h-24 object-cover rounded-lg"
                           />
                           <Button
                             type="button"
                             variant="destructive"
                             size="sm"
-                            className="absolute -top-2 -right-2"
+                            className="absolute -top-2 -right-2 h-6 w-6 p-0"
                             onClick={() => removeImage(setFieldValue, "thumbnail", setThumbnailPreview)}
                           >
-                            <X className="h-4 w-4" />
+                            <X className="h-3 w-3" />
                           </Button>
                         </div>
                       )}
@@ -495,31 +391,31 @@ export default function Edit() {
                     </h3>
 
                     {Object.keys(additionalDataStructure).map(section => (
-                      <div key={section} className="border rounded-lg">
+                      <div key={section} className="border rounded-lg overflow-hidden">
                         <button
                           type="button"
-                          className="w-full px-4 py-3 text-left flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg"
+                          className="w-full px-4 py-3 text-left flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors"
                           onClick={() => toggleSection(section)}
                         >
                           <span className="font-medium capitalize">
                             {section.replace('_', ' ')}
                           </span>
                           {expandedSections[section] ? (
-                            <ChevronDown className="h-4 w-4" />
+                            <ChevronDown className="h-4 w-4 transition-transform" />
                           ) : (
-                            <ChevronRight className="h-4 w-4" />
+                            <ChevronRight className="h-4 w-4 transition-transform" />
                           )}
                         </button>
 
                         {expandedSections[section] && (
-                          <div className="p-4 space-y-4 border-t">
+                          <div className="p-4 space-y-4 border-t bg-white">
                             {Object.keys(additionalDataStructure[section]).map(fieldKey => {
                               const fieldConfig = additionalDataStructure[section][fieldKey];
                               const fieldName = `${section}_${fieldKey}`;
 
                               return (
-                                <div key={fieldKey} className="grid gap-2">
-                                  <label htmlFor={fieldName} className="text-sm font-medium">
+                                <div key={fieldKey} className="space-y-2">
+                                  <label htmlFor={fieldName} className="text-sm font-medium text-gray-700">
                                     {fieldConfig.label}
                                     {fieldConfig.required && <span className="text-red-500 ml-1">*</span>}
                                   </label>
