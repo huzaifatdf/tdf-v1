@@ -187,96 +187,103 @@ SimpleRichTextEditor.displayName = 'SimpleRichTextEditor';
 const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, height = 200 }) => {
   const editorRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
+  const summernoteInstance = useRef(null);
   const mountedRef = useRef(true);
 
-  const handleChange = useCallback((content) => {
-    if (mountedRef.current) {
-      onChange(content);
-    }
-  }, [onChange]);
-
+  // Initialize Summernote only once when isReady becomes true
   useEffect(() => {
     if (!isReady || !editorRef.current || !window.$ || !window.$.fn.summernote) return;
 
     const $editor = window.$(editorRef.current);
-    let isInitialized = false;
 
-    const initEditor = () => {
-      if (isInitialized) return;
+    // Skip if already initialized
+    if (summernoteInstance.current) {
+      if (value !== $editor.summernote('code')) {
+        $editor.summernote('code', value || '');
+      }
+      return;
+    }
 
-      $editor.summernote({
-        placeholder: placeholder || 'Enter content...',
-        tabsize: 2,
-        height: height,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['fontname', ['fontname']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-          onChange: handleChange,
-          onInit: function() {
-            if (value && mountedRef.current) {
-              $editor.summernote('code', value);
-            }
+    // Initialize Summernote
+    $editor.summernote({
+      placeholder: placeholder || 'Enter content...',
+      tabsize: 2,
+      height: height,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ],
+      callbacks: {
+        onChange: (content) => {
+          if (mountedRef.current) {
+            onChange(content);
           }
         }
-      });
-
-      isInitialized = true;
-
-      if (value) {
-        $editor.summernote('code', value);
       }
-    };
+    });
 
-    initEditor();
+    summernoteInstance.current = $editor;
+
+    // Set initial value
+    if (value) {
+      $editor.summernote('code', value);
+    }
 
     return () => {
-      if (isInitialized && $editor.data('summernote')) {
-        $editor.summernote('destroy');
+      if (summernoteInstance.current && summernoteInstance.current.summernote) {
+        try {
+          summernoteInstance.current.summernote('destroy');
+        } catch (e) {
+          console.error('Error destroying Summernote:', e);
+        }
+        summernoteInstance.current = null;
       }
     };
-  }, [isReady, value, handleChange, placeholder, height]);
+  }, [isReady, height, placeholder]); // Only depend on these values
 
+  // Effect to update content when value prop changes
   useEffect(() => {
-    if (isReady && editorRef.current && window.$ && window.$.fn.summernote) {
-      const $editor = window.$(editorRef.current);
-      if ($editor.data('summernote')) {
-        const currentContent = $editor.summernote('code');
-        if (currentContent !== value && mountedRef.current) {
-          $editor.summernote('code', value || '');
-        }
-      }
+    if (summernoteInstance.current && value !== summernoteInstance.current.summernote('code')) {
+      summernoteInstance.current.summernote('code', value || '');
     }
-  }, [value, isReady]);
+  }, [value]);
 
+  // Check for Summernote availability
   useEffect(() => {
     const checkSummernote = () => {
-      if (window.$ && window.$.fn.summernote && mountedRef.current) {
+      if (window.$ && window.$.fn.summernote) {
         setIsReady(true);
+        return true;
       }
+      return false;
     };
 
-    checkSummernote();
-    const interval = setInterval(checkSummernote, 100);
+    if (!checkSummernote()) {
+      const interval = setInterval(() => {
+        if (checkSummernote()) {
+          clearInterval(interval);
+        }
+      }, 100);
 
-    return () => {
-      clearInterval(interval);
-      mountedRef.current = false;
-    };
+      return () => {
+        clearInterval(interval);
+        mountedRef.current = false;
+      };
+    }
   }, []);
 
   if (!isReady) {
     return (
-      <div className="border rounded-md p-4 bg-gray-50 flex items-center justify-center" style={{ height: `${height + 40}px` }}>
+      <div className="border rounded-md p-4 bg-gray-50 flex items-center justify-center"
+           style={{ height: `${height + 40}px` }}>
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-sm text-gray-600">Initializing editor...</span>
+        <span className="ml-2 text-sm text-gray-600">Loading advanced editor...</span>
       </div>
     );
   }
