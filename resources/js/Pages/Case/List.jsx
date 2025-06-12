@@ -50,15 +50,15 @@ import {
 
 
 export default function List() {
-    const { products, filters: initialFilters, sort: initialSort } = usePage().props;
+    const { cases, filters: initialFilters, sort: initialSort } = usePage().props;
 
     const [sorting, setSorting] = useState(initialSort || []);
     const [columnFilters, setColumnFilters] = useState(initialFilters || []);
     const [columnVisibility, setColumnVisibility] = useState({})
     const [rowSelection, setRowSelection] = useState({})
     const [pagination, setPagination] = useState({
-        pageIndex: products.current_page - 1,
-        pageSize: products.per_page,
+        pageIndex: cases.current_page - 1,
+        pageSize: cases.per_page,
     })
 
     const columns = [
@@ -121,7 +121,7 @@ export default function List() {
             id: "actions",
             enableHiding: false,
             cell: ({ row }) => {
-                const product = row.original
+                const caselist = row.original
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -132,25 +132,25 @@ export default function List() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => router.get(route('product.edit', product.id))} className="cursor-pointer">Edit product</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.get(route('case.edit', caselist.id))} className="cursor-pointer">Edit case</DropdownMenuItem>
                            <Dialog>
                             <DialogTrigger asChild>
                                 <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
-                                Delete product
+                                Delete case
                                 </DropdownMenuItem>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
-                                <DialogTitle>Delete product</DialogTitle>
+                                <DialogTitle>Delete case</DialogTitle>
                                 <DialogDescription>
-                                    Are you sure you want to delete this product? This action cannot be undone.
+                                    Are you sure you want to delete this case? This action cannot be undone.
                                 </DialogDescription>
                                 </DialogHeader>
                                 <div className="grid gap-4 py-4">
                                 {/* Optional content */}
                                 </div>
                                 <DialogFooter>
-                                <Button variant="destructive" onClick={() => {router.delete(route('product.destroy', product.id))}}>Confirm Delete</Button>
+                                <Button variant="destructive" onClick={() => {router.delete(route('case.destroy', caselist.id))}}>Confirm Delete</Button>
                                 </DialogFooter>
                             </DialogContent>
                             </Dialog>
@@ -182,16 +182,16 @@ export default function List() {
         params.page = pagination.pageIndex + 1;
         params.perPage = pagination.pageSize;
 
-        router.get(route('product.index'), params, {
+        router.get(route('case.index'), params, {
             preserveState: true,
             replace: true,
         });
     }, [columnFilters, sorting, pagination]);
 
     const table = useReactTable({
-        data: products.data,
+        data: cases.data,
         columns,
-        pageCount: products.last_page,
+        pageCount: cases.last_page,
         state: {
             sorting,
             columnFilters,
@@ -216,7 +216,7 @@ export default function List() {
 
     return (
         <AuthenticatedLayout>
-            <Head title="products" />
+            <Head title="cases" />
 
             <div className="flex flex-1 flex-col">
                 <div className="@container/main flex flex-1 flex-col gap-2 p-10">
@@ -300,7 +300,7 @@ export default function List() {
                         <div className="flex items-center justify-end space-x-2 py-4">
                             <div className="flex-1 text-sm text-muted-foreground">
                                 {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                                {products.total} row(s) selected.
+                                {cases.total} row(s) selected.
                             </div>
                             <div className="space-x-2">
                                 <Button
@@ -331,14 +331,14 @@ export default function List() {
                             <Button
                                 size="md"
                                 className="rounded-full h-14 w-14 shadow-lg hover:shadow-xl transition-shadow"
-                                onClick={() => router.get(route('product.create'))}
+                                onClick={() => router.get(route('case.create'))}
                             >
                                 <Plus className="h-6 w-6" />
-                                <span className="sr-only">Add product</span>
+                                <span className="sr-only">Add Case</span>
                             </Button>
                       </TooltipTrigger>
                         <TooltipContent>
-                        <p>Add product</p>
+                        <p>Add Case</p>
                         </TooltipContent>
                     </Tooltip>
                     </TooltipProvider>

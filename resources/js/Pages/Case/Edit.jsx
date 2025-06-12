@@ -19,9 +19,9 @@ import MediaLibraryModel from "../Media/Model";
 import SummernoteInput from "@/Components/SummernoteInput";
 
 export default function Edit() {
-  const { product, additionalDataStructure, appUrl } = usePage().props;
-  const [imagePreview, setImagePreview] = useState(appUrl + '/' + product.image || null);
-  const [thumbnailPreview, setThumbnailPreview] = useState(appUrl + '/' + product.thumbnail || null);
+  const { caselist, additionalDataStructure, appUrl } = usePage().props;
+  const [imagePreview, setImagePreview] = useState(appUrl + '/' + caselist.image || null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(appUrl + '/' + caselist.thumbnail || null);
   const [expandedSections, setExpandedSections] = useState({
     Detail: false,
     'Our Work': false,
@@ -84,12 +84,12 @@ export default function Edit() {
 
     formData.append('_method', 'PUT');
 
-    router.post(route("product.update", product.id), formData, {
+    router.post(route("caselist.update", caselist.id), formData, {
       forceFormData: true,
       onSuccess: () => setSubmitting(false),
       onError: () => setSubmitting(false),
     });
-  }, [product.id, additionalDataStructure]);
+  }, [caselist.id, additionalDataStructure]);
 
   const removeImage = useCallback((setFieldValue, fieldName, setPreview) => {
     setFieldValue(fieldName, null);
@@ -156,19 +156,19 @@ export default function Edit() {
     }
   }, []);
 
-  // Create initial values populated with existing product data
+  // Create initial values populated with existing caselist data
   const createInitialValues = useCallback(() => {
     const initialValues = {
-      title: product.title || "",
-      slug: product.slug || "",
-      description: product.description || "",
-      image: product.image || null,
-      thumbnail: product.thumbnail || null,
-      status: product.status || "",
-      priority: product.priority || 0,
+      title: caselist.title || "",
+      slug: caselist.slug || "",
+      description: caselist.description || "",
+      image: caselist.image || null,
+      thumbnail: caselist.thumbnail || null,
+      status: caselist.status || "",
+      priority: caselist.priority || 0,
     };
 
-    const existingData = product.data ? JSON.parse(product.data) : {};
+    const existingData = caselist.data ? JSON.parse(caselist.data) : {};
 
     Object.keys(additionalDataStructure).forEach(section => {
       Object.keys(additionalDataStructure[section]).forEach(field => {
@@ -178,14 +178,14 @@ export default function Edit() {
     });
 
     return initialValues;
-  }, [product, additionalDataStructure]);
+  }, [caselist, additionalDataStructure]);
 
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
   const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
 
   return (
     <AuthenticatedLayout>
-      <Head title={`Edit Product - ${product.title}`} />
+      <Head title={`Edit caselist - ${caselist.title}`} />
 
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2 p-10">
@@ -198,19 +198,19 @@ export default function Edit() {
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form className="space-y-6 bg-white p-6 rounded-lg shadow">
                   <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900">Edit Product</h2>
-                    <p className="text-gray-600">Update product information</p>
+                    <h2 className="text-2xl font-bold text-gray-900">Edit caselist</h2>
+                    <p className="text-gray-600">Update caselist information</p>
                   </div>
 
                   <div className="grid gap-2">
                     <label htmlFor="title" className="text-sm font-medium">
-                      Product Title *
+                      caselist Title *
                     </label>
                     <Field
                       as={Input}
                       id="title"
                       name="title"
-                      placeholder="Enter product title"
+                      placeholder="Enter caselist title"
                     />
                     <ErrorMessage
                       name="title"
@@ -221,13 +221,13 @@ export default function Edit() {
 
                   <div className="grid gap-2">
                     <label htmlFor="slug" className="text-sm font-medium">
-                      Product Slug *
+                      caselist Slug *
                     </label>
                     <Field
                       as={Input}
                       id="slug"
                       name="slug"
-                      placeholder="Enter product slug"
+                      placeholder="Enter caselist slug"
                     />
                     <ErrorMessage
                       name="slug"
@@ -244,7 +244,7 @@ export default function Edit() {
                       as={Textarea}
                       id="description"
                       name="description"
-                      placeholder="Enter product description"
+                      placeholder="Enter caselist description"
                       rows={4}
                     />
                     <ErrorMessage
@@ -300,7 +300,7 @@ export default function Edit() {
 
                   <div className="grid gap-2">
                     <label htmlFor="image" className="text-sm font-medium">
-                      Product Image
+                      caselist Image
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                       <Button
@@ -312,7 +312,7 @@ export default function Edit() {
                         {imagePreview ? 'Change Media' : 'Add Media'}
                       </Button>
                       <MediaLibraryModel
-                        routename={route('product.edit', product.id)}
+                        routename={route('case.edit', caselist.id)}
                         showModal={showImageMediaLibrary}
                         setShowModal={setImageShowMediaLibrary}
                         setFieldValue={setFieldValue}
@@ -324,7 +324,7 @@ export default function Edit() {
                         <div className="relative mt-4 inline-block">
                           <img
                             src={typeof imagePreview === 'string' ? imagePreview : URL.createObjectURL(imagePreview)}
-                            alt="Product Preview"
+                            alt="caselist Preview"
                             className="w-24 h-24 object-cover rounded-lg"
                           />
                           <Button
@@ -355,7 +355,7 @@ export default function Edit() {
                         {thumbnailPreview ? 'Change Media' : 'Add Media'}
                       </Button>
                       <MediaLibraryModel
-                        routename={route('product.edit', product.id)}
+                        routename={route('case.edit', caselist.id)}
                         showModal={showThumbnailMediaLibrary}
                         setShowModal={setThumbnailShowMediaLibrary}
                         setFieldValue={setFieldValue}
@@ -433,12 +433,12 @@ export default function Edit() {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => router.get(route("product.index"))}
+                      onClick={() => router.get(route("case.index"))}
                     >
                       Cancel
                     </Button>
                     <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? "Updating..." : "Update Product"}
+                      {isSubmitting ? "Updating..." : "Update caselist"}
                     </Button>
                   </div>
                 </Form>

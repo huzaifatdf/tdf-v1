@@ -85,7 +85,7 @@ export default function Add() {
       formData.append('additional_data', JSON.stringify(additionalData));
     }
 
-    router.post(route("product.store"), formData, {
+    router.post(route("case.store"), formData, {
       forceFormData: true,
       onSuccess: () => {
         setSubmitting(false);
@@ -190,7 +190,7 @@ export default function Add() {
 
   return (
     <AuthenticatedLayout>
-      <Head title="Add Product" />
+      <Head title="Add Case" />
 
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2 p-10">
@@ -204,13 +204,13 @@ export default function Add() {
                 <Form className="space-y-6 bg-white p-6 rounded-lg shadow">
                   <div className="grid gap-2">
                     <label htmlFor="title" className="text-sm font-medium">
-                      Product Title *
+                      Case Title *
                     </label>
                     <Field
                       as={Input}
                       id="title"
                       name="title"
-                      placeholder="Enter product title"
+                      placeholder="Enter case title"
                     />
                     <ErrorMessage
                       name="title"
@@ -220,13 +220,13 @@ export default function Add() {
                   </div>
                   <div className="grid gap-2">
                     <label htmlFor="slug" className="text-sm font-medium">
-                      Product Slug *
+                      Case Slug *
                     </label>
                     <Field
                       as={Input}
                       id="slug"
                       name="slug"
-                      placeholder="Enter product slug"
+                      placeholder="Enter case slug"
                     />
                     <ErrorMessage
                       name="slug"
@@ -243,7 +243,7 @@ export default function Add() {
                       as={Textarea}
                       id="description"
                       name="description"
-                      placeholder="Enter product description"
+                      placeholder="Enter case description"
                       rows={4}
                     />
                     <ErrorMessage
@@ -299,11 +299,11 @@ export default function Add() {
 
                   <div className="grid gap-2">
                     <label htmlFor="image" className="text-sm font-medium">
-                      Product Image
+                      Case Image
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                       <button type="button" onClick={() => setImageShowMediaLibrary(true)}>Add Media</button>
-                      <MediaLibraryModel routename={route('product.create')} showModal={showImageMediaLibrary} setShowModal={setImageShowMediaLibrary} setFieldValue={setFieldValue}
+                      <MediaLibraryModel routename={route('case.create')} showModal={showImageMediaLibrary} setShowModal={setImageShowMediaLibrary} setFieldValue={setFieldValue}
                       fieldName="image"
                       setImagePreview={setImagePreview}
                       />
@@ -335,7 +335,7 @@ export default function Add() {
                     </label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                         <button type="button" onClick={() => setThumbnailShowMediaLibrary(true)}>Add Media</button>
-                      <MediaLibraryModel routename={route('product.create')} showModal={showThumbnailMediaLibrary} setShowModal={setThumbnailShowMediaLibrary} setFieldValue={setFieldValue}
+                      <MediaLibraryModel routename={route('case.create')} showModal={showThumbnailMediaLibrary} setShowModal={setThumbnailShowMediaLibrary} setFieldValue={setFieldValue}
                         fieldName="thumbnail"
                       setImagePreview={setThumbnailPreview}
                       />
@@ -411,12 +411,12 @@ export default function Add() {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => router.get(route("product.index"))}
+                      onClick={() => router.get(route("case.index"))}
                     >
                       Cancel
                     </Button>
                     <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? "Creating..." : "Create Product"}
+                      {isSubmitting ? "Creating..." : "Create Case"}
                     </Button>
                   </div>
                 </Form>

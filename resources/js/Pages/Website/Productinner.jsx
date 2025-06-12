@@ -233,12 +233,15 @@ function parseData(data) {
     grouped[index][type] = data[key];
   });
 
-  return Object.entries(grouped).map(([index, obj]) => ({
-    id: obj.id.padStart(2, '0'), // Make sure id is like '01', '02'
-    title: obj.label || '',
-    description: obj.description || '', // Ensures string, not undefined
-  }));
+  return Object.values(grouped)
+    .filter(obj => obj.label != null)
+    .map(obj => ({
+      id: obj.id.padStart(2, '0'), // Ensure two-digit id like '01', '02'
+      title: obj.label,
+      description: obj.description || ''
+    }));
 }
+
 
 // What PRoblem //
 function WhatProblem(props) {

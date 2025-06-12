@@ -115,6 +115,22 @@ export function AppSidebar({
 
       ],
     },
+      {
+      title: "Case Studies",
+      url: "#",
+      icon: Box,
+      items: [
+        {
+          title: "Add",
+          url: route('case.create'),
+        },
+        {
+          title: "List",
+          url: route('case.index'),
+        },
+
+      ],
+    },
     {
       title: "Our Clients",
       url: "#",
