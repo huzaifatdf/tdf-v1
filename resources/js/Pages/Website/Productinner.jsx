@@ -313,7 +313,7 @@ function WhatProblem(props) {
 
   return (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen">
+      <section ref={sectionRef} className="container-fluid min-h-screen content-style">
         {/* Main Content Area */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
