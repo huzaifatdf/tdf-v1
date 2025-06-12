@@ -223,6 +223,14 @@ public function edit(Product $product)
                 'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
                 'description_8' => ['type' => 'summernote', 'label' => '8 Description', 'required' => false],
 
+                'label_9' => ['type' => 'text', 'label' => '9 Label', 'required' => false],
+                'title_9' => ['type' => 'text', 'label' => '9 Title', 'required' => false],
+                'description_9' => ['type' => 'summernote', 'label' => '9 Description', 'required' => false],
+
+                'label_10' => ['type' => 'text', 'label' => '10 Label', 'required' => false],
+                'title_10' => ['type' => 'text', 'label' => '10 Title', 'required' => false],
+                'description_10' => ['type' => 'summernote', 'label' => '10 Description', 'required' => false],
+
 
 
             ],
