@@ -74,7 +74,7 @@ export default function Productinner() {
             </div>
           </section>
 
-        <BenefitsContactForm />
+        <BenefitsContactForm product={product.title}/>
           <div className="container-fluid ">
             <div className="py-16 relative">
                 <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
@@ -128,8 +128,8 @@ export default function Productinner() {
 
 
 // Form //
-function BenefitsContactForm() {
-
+function BenefitsContactForm(props) {
+    const { product} = props;
 
   return (
     <div className="relative py-16 bg-[#040404]">
@@ -139,7 +139,7 @@ function BenefitsContactForm() {
         </h2>
 
         <div className="space-y-8">
-        <ProductForm/>
+        <ProductForm product={product}/>
           {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <div className="relative">

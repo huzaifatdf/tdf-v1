@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 
-function ProductForm() {
+function ProductForm(props) {
      const [isExpanded, setIsExpanded] = React.useState(false);
     const [form, setForm] = React.useState(null);
     const [formData, setFormData] = React.useState({});
@@ -9,7 +9,7 @@ function ProductForm() {
     const [loading, setLoading] = React.useState(false);
     const [errors, setErrors] = React.useState({});
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-
+    const {product} = props;
     React.useEffect(() => {
         // Fetch form configuration
         axios.get('/api/v1/form/product-form')
@@ -89,6 +89,7 @@ function ProductForm() {
             // Create FormData for file uploads
             const submitData = new FormData();
             console.log(formData);
+            formData["field_product"] =product;
             // Add all form fields to FormData
             Object.keys(formData).forEach(key => {
                 if (Array.isArray(formData[key])) {
@@ -96,6 +97,7 @@ function ProductForm() {
                     formData[key].forEach(value => {
                         submitData.append(`${key}[]`, value);
                     });
+
                 } else {
                     submitData.append(key, formData[key] || '');
                 }
