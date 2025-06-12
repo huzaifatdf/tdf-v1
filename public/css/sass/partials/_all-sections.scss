@@ -300,7 +300,8 @@ form {
     }
 }
 .swiper-pagination-custom {
-    top: 60% !important;
+    top: 50% !important;
+    height: max-content;
     .swiper-pagination-bullet {
         padding: 5px;
         background: $theme-primary;
@@ -312,6 +313,9 @@ form {
 }
 .service-main p ul {
     padding: 0;
+}
+.border-testi {
+    border: 2px solid $theme-secondary;
 }
 // Responsive Start Here //
 @media(max-width: 600px) {

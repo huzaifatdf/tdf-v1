@@ -14,6 +14,8 @@ import "swiper/css/pagination";
 import Marquee from "react-fast-marquee";
 import ClientSlider from '@/Components/frontend/ClientSlider';
 import ServiceSlider from '@/Components/frontend/ServiceSlider';
+import SmartToolsSlider from '@/Components/frontend/SmartToolsSlider';
+import TestimonialsSection from '@/Components/frontend/TestimonialsSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -210,85 +212,7 @@ function ThreeModelOverlay() {
 }
 
 // Other component definitions remain unchanged
-const SmartToolsSlider = () => {
-  // SmartToolsSlider component code remains unchanged
-  return (
-    <div className="container-fluid relative">
-      <div className='sec-padding pb-4'>
-        <h2 className="text-[20px] mb-8 fc-primary">
-        We Offer Smart Tools for Strategic Growth
-      </h2>
 
-      <hr className="border-white mb-8" />
-
-      <div className="relative">
-        <Swiper
-        modules={[Pagination]}
-        pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
-        spaceBetween={30}
-        slidesPerView={1}
-        className="w-full"
-      >
-        {[1, 2, 3].map((_, index) => (
-          <SwiperSlide key={index}>
-            <div className="flex flex-col md:flex-row">
-              {/* Left Side Image */}
-              <div className="md:w-5/12 w-full">
-                <img
-                  src="/images/slider.png"
-                  alt="Students in a smart classroom"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Right Side Content */}
-                <div className="md:w-7/12 w-full flex flex-col justify-between pt-4 pl-4 pb-0">
-                    <div>
-                    <h3 className="text-[28px] font-light fc-secondary mb-2">Eduman</h3>
-                    <p className="text-[18px] fc-primary mb-2">
-                    For Control, Clarity, & Campus-Wide Confidence
-                    </p>
-                    <p className="text-[18px] fc-primary mb-2">
-                    Eduman is a cloud-based, SaaS (Software as a Service) system
-                    that simplifies the academic, administrative, and communication
-                    workflows for modern schools.
-                    </p>
-                    </div>
-                    <button className="group text-left text-[18px] fc-primary mb-2 flex items-center">
-                    <span className="inline-block border-b-2 border-transparent group-hover:border-current transition-all duration-200">
-                        Click to Explore
-                    </span>
-                    <span className="ml-3 fc-secondary transform transition-transform duration-200 group-hover:scale-125">
-                        &rarr;
-                    </span>
-                    </button>
-
-                    <div className="flex items-end justify-between">
-                    <a
-                        href="#"
-                        className="inline-block text-left text-[18px] fc-secondary font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
-                        >
-                        View All Products
-                    </a>
-
-                    <img
-                        src="/images/slider2.png"
-                        alt="Roundabout"
-                        className="w-[50%] h-auto rounded"
-                    />
-                    </div>
-                </div>
-            </div>
-          </SwiperSlide>
-        ))}
-        <div className="swiper-pagination-custom absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10" />
-      </Swiper>
-      </div>
-      <hr className="border-white mb-8" />
-      </div>
-    </div>
-  );
-};
 
 const services = [
   {
@@ -319,134 +243,6 @@ const services = [
 ];
 
 
-
-function TestimonialsSection() {
-  // TestimonialsSection component code remains unchanged
-  const [selected, setSelected] = useState(0);
-  const [testimonials, setTestimonials] = useState([
-    {
-      id: 1,
-      name: "Becky Nelson",
-      rating: 4,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      // subtitle: "Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-    },
-    {
-      id: 2,
-      name: "John Brown",
-      rating: 5,
-      title: "Tech-savvy and user-focused",
-      // subtitle: "Building seamless experiences",
-      image: "https://randomuser.me/api/portraits/men/45.jpg",
-    },
-    {
-      id: 3,
-      name: "Hannah Thompson",
-      rating: 3,
-      title: "Efficient, dedicated, consistent",
-      // subtitle: "A reliable team player",
-      image: "https://randomuser.me/api/portraits/women/50.jpg",
-    },
-    {
-      id: 4,
-      name: "Chris King",
-      rating: 5,
-      title: "Vision meets execution",
-      // subtitle: "Driving innovation every day",
-      image: "https://randomuser.me/api/portraits/men/55.jpg",
-    },
-    {
-      id: 5,
-      name: "Sarah Lopez",
-      rating: 4,
-      title: "Creative brilliance meets business sense",
-      // subtitle: "On-point and always on time",
-      image: "https://randomuser.me/api/portraits/women/60.jpg",
-    },
-  ]);
-
-
-  const handleSwapWithCenter = (index) => {
-    if (index === 0) return;
-
-    const updated = [...testimonials];
-    const temp = updated[0];
-    updated[0] = updated[index];
-    updated[index] = temp;
-
-    setTestimonials(updated);
-    setSelected(0); // keep center fixed
-  };
-
-  return (
-    <div className="testimonial-wrapper sec-padding">
-      {/* Floating Avatars */}
-      <div className="floating-avatars">
-        <div className="circle-avatar" style={{ top: "5%", left: "10%" }}>
-          CK
-        </div>
-
-        {/* These indexes determine which avatars are visible */}
-        {[1, 2, 3, 4].map((index, i) => (
-          <img
-            key={index}
-            className="circle-avatar small"
-            src={testimonials[index].image}
-            onClick={() => handleSwapWithCenter(index)}
-            alt=""
-            style={
-              i === 0
-                ? { top: "15%", left: "25%" }
-                : i === 1
-                ? { top: "40%", left: "27%" }
-                : i === 2
-                ? { top: "15%", right: "25%" }
-                : { top: "5%", right: "10%" }
-            }
-          />
-        ))}
-
-        <div className="circle-avatar" style={{ top: "40%", left: "10%" }}>
-          JB
-        </div>
-        <div className="circle-avatar small" style={{ top: "40%", left: "70%" }}>
-          HT
-        </div>
-        <div className="circle-avatar" style={{ top: "40%", right: "10%" }}>
-          JB
-        </div>
-      </div>
-
-      {/* Centered Testimonial */}
-      <div className="center-profile">
-        <img
-          src={testimonials[0].image}
-          alt="user"
-          className="center-image"
-        />
-        <div className="stars">
-          {"★".repeat(testimonials[0].rating)}
-          {"☆".repeat(5 - testimonials[0].rating)}
-        </div>
-        <h3 className="text-[22px] fc-primary fw-bold">{testimonials[0].name}</h3>
-        <p className="text-[18px] fc-primary mt-1">{testimonials[0].title}</p>
-        <p className="subtitle text-white">{testimonials[0].subtitle}</p>
-
-        {/* Dots */}
-        <div className="dots">
-        {testimonials.map((_, i) => (
-            <span
-            key={i}
-            className={`dot ${i === selected ? "active" : ""}`}
-            onClick={() => handleSwapWithCenter(i)}
-            ></span>
-        ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 // VIDEO SECTION //
 
 

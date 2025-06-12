@@ -9339,7 +9339,9 @@ form textarea {
 }
 
 .swiper-pagination-custom {
-  top: 60% !important;
+  top: 50% !important;
+  height: -moz-max-content;
+  height: max-content;
 }
 .swiper-pagination-custom .swiper-pagination-bullet {
   padding: 5px;
@@ -9352,6 +9354,10 @@ form textarea {
 
 .service-main p ul {
   padding: 0;
+}
+
+.border-testi {
+  border: 2px solid #9BE500;
 }
 
 @media (max-width: 600px) {
