@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { usePage } from "@inertiajs/react";
 import parse from 'html-react-parser';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
+import ProductForm from "@/Components/ProductForm";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,26 +129,7 @@ export default function Productinner() {
 
 // Form //
 function BenefitsContactForm() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    company: '',
-    email: '',
-    mobileNumber: ''
-  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
-  };
 
   return (
     <div className="relative py-16 bg-[#040404]">
@@ -157,8 +139,9 @@ function BenefitsContactForm() {
         </h2>
 
         <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Full Name */}
+        <ProductForm/>
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
             <div className="relative">
               <input
                 type="text"
@@ -172,7 +155,7 @@ function BenefitsContactForm() {
               />
             </div>
 
-            {/* Company */}
+
             <div className="relative">
               <input
                 type="text"
@@ -186,7 +169,6 @@ function BenefitsContactForm() {
               />
             </div>
 
-            {/* Email */}
             <div className="relative">
               <input
                 type="email"
@@ -200,7 +182,7 @@ function BenefitsContactForm() {
               />
             </div>
 
-            {/* Mobile Number */}
+
             <div className="relative">
               <input
                 type="tel"
@@ -215,7 +197,6 @@ function BenefitsContactForm() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="flex justify-end mt-12">
             <button
               type="button"
@@ -225,7 +206,7 @@ function BenefitsContactForm() {
               Submit
               <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

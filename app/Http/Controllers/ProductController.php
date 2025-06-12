@@ -210,7 +210,20 @@ public function edit(Product $product)
                 'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
                 'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
 
-               
+                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
+                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
+                'description_6' => ['type' => 'summernote', 'label' => '6 Description', 'required' => false],
+
+                'label_7' => ['type' => 'text', 'label' => '7 Label', 'required' => false],
+                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'description_7' => ['type' => 'summernote', 'label' => '7 Description', 'required' => false],
+
+
+                'label_8' => ['type' => 'text', 'label' => '8 Label', 'required' => false],
+                'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
+                'description_8' => ['type' => 'summernote', 'label' => '8 Description', 'required' => false],
+
+
 
             ],
         'seo' => [
