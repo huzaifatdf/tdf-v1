@@ -92,7 +92,7 @@ class FormController extends BaseController
                 case 'select':
                 case 'radio':
                     if ($field->options && is_array($field->options)) {
-                        $fieldRules[] = 'in:' . implode(',', array_keys($field->options));
+                        // $fieldRules[] = 'in:' . implode(',', array_keys($field->options));
                     }
                     break;
                 case 'checkbox':

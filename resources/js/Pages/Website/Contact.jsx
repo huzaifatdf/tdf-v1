@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import parse from 'html-react-parser';
+import DynamicForm from '@/Components/frontend/DynamicForm';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,71 +112,7 @@ const ContactSection = () => {
         <div className="lg:col-span-6">
           <h3 className="text-[30px] fc-secondary mb-9">Uncover the Benefits Now!</h3>
 
-          {/* Tabs */}
-            <div className="flex mb-6 mt-6 text-sm">
-                {tabs.map((tab, idx) => (
-                    <div key={tab} className="flex items-center">
-                    <button
-                        onClick={() => setActiveTab(tab)}
-                        className="flex flex-col items-start pr-6 text-left"
-                    >
-                        <span className="fc-primary">0{idx + 1}</span>
-
-                        <span
-                        className={`relative text-[18px] ${
-                            activeTab === tab ? 'text-lime-400' : 'text-white'
-                        }`}
-                        >
-                        {tab}
-                        {activeTab === tab && (
-                            <span className="absolute left-0 -bottom-1 w-1/2 border-b-2 border-lime-400"></span>
-                        )}
-                        </span>
-                    </button>
-
-                    {/* Vertical separator except after last */}
-                    {idx < tabs.length - 1 && (
-                        <div className="border-r border-gray-600 h-6 mx-3"></div>
-                    )}
-                    </div>
-                ))}
-            </div>
-
-
-
-          {/* Form */}
-          <form className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                className=""
-              />
-              <input
-                type="text"
-                placeholder="Company name"
-                className=""
-              />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="email"
-                placeholder="Email"
-                className=""
-              />
-              <input
-                type="text"
-                placeholder="Mobile Number"
-                className=""
-              />
-            </div>
-            <textarea
-              placeholder="Message"
-              className="w-full"
-            ></textarea>
-
-            <button type="button" class="d-block ml-auto group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer">Submit<span class="fc-purple group-hover:translate-x-1 transition-transform ml-3">→</span></button>
-          </form>
+          <DynamicForm formSlug="queries"/>
         </div>
       </div>
     </div>
