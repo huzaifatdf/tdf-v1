@@ -9417,6 +9417,23 @@ form textarea {
     height: 500px;
   }
 }
+.horizontal-scroll-container {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizontal-scroll-sections {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+.panel {
+  flex: 0 0 100vw;
+  height: 100vh;
+}
+
 footer {
   position: relative;
 }

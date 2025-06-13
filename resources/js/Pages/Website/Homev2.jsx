@@ -16,6 +16,7 @@ import ClientSlider from '@/Components/frontend/ClientSlider';
 import ServiceSlider from '@/Components/frontend/ServiceSlider';
 import SmartToolsSlider from '@/Components/frontend/SmartToolsSlider';
 import TestimonialsSection from '@/Components/frontend/TestimonialsSection';
+import ParticleCanvas from "@/components/Space";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -569,6 +570,28 @@ export default function Home() {
     };
 
 
+      const sectionRef = useRef(null);
+
+        useEffect(() => {
+            if (!sectionRef.current) return;
+
+            gsap.fromTo(
+            sectionRef.current,
+            { scale: 0.8, opacity: 0.6 },
+            {
+                scale: 1,
+                opacity: 1,
+                duration: 1.5,
+                ease: 'power3.out',
+                scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse',
+                },
+            }
+            );
+        }, []);
 
     return (
         <ParallaxProvider>
@@ -577,11 +600,17 @@ export default function Home() {
                 <ParallaxBanner layers={[topsection, gradientOverlay]} className="full"/>
                 <ThreeModelOverlay />
                 <Section />
-                <ImageZoomSection />
-                <SmartToolsSlider />
-                <ClientSlider />
-                <ServiceSlider />
-                <TestimonialsSection />
+                <div ref={sectionRef} className="relative overflow-hidden bg-[#000]">
+                    <ParticleCanvas />
+
+                    <div className="relative z-10">
+                        <ImageZoomSection />
+                        <SmartToolsSlider />
+                        <ClientSlider />
+                        <ServiceSlider />
+                        <TestimonialsSection />
+                    </div>
+                </div>
             </WebsiteLayout>
         </ParallaxProvider>
     );
