@@ -54,7 +54,7 @@ const Preloader = ({ onFinish }) => {
             <div>
                 <img className="w-[210px]" src="/images/logo.svg" alt="Logo" />
             </div>
-            <div className="text-white text-[90px] font-bold">{percent}%</div>
+            <div className="text-white text-[60px] font-bold">{percent}%</div>
         </div>
     </div>
   );
