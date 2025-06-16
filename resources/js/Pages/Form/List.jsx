@@ -129,6 +129,7 @@ export default function List() {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem onClick={() => router.get(route('form.edit', form.id))} className="cursor-pointer">Edit form</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.get(route('form.duplicate', form.slug))} className="cursor-pointer">Duplicate form</DropdownMenuItem>
                            <Dialog>
                             <DialogTrigger asChild>
                                 <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>

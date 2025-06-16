@@ -399,6 +399,31 @@ public function index(Request $request, $slug)
     ]);
 }
 
+
+    public function duplicate($slug)
+    {
+        // Get the form by slug
+        $form = Form::where('slug', $slug)->with('fields')->first();
+
+        if (!$form) {
+            abort(404, 'Form not found');
+        }
+
+        // Duplicate the form
+        $duplicateForm = $form->replicate();
+        $duplicateForm->slug = $form->slug . '-copy-' . time();
+        $duplicateForm->save();
+
+        // Duplicate form fields
+        foreach ($form->fields as $field) {
+            $duplicateField = $field->replicate();
+            $duplicateField->form_id = $duplicateForm->id;
+            $duplicateField->save();
+        }
+
+        session()->flash('message', 'Form duplicated successfully.');
+        return redirect()->route('form.index');
+    }
     /**
      * Export form submission data.
      */

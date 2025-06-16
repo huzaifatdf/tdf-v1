@@ -27,7 +27,7 @@ function SmoothCaseStudiesSection() {
           subtitle: item.description.length > 10
             ? item.description.split(' ').slice(0, 10).join(' ') + '...'
             : item.description,
-          logo: '/images/logo.svg',
+        //   logo: '/images/logo.svg',
           mainImage: item.image ? `${appUrl}/${item.image}` : '/images/case4.png',
           features: Array.isArray(item.services) ? item.services : [],
           stats: {
@@ -170,11 +170,11 @@ function SmoothCaseStudiesSection() {
               className="min-h-screen flex items-center"
             >
               <div className="animate-fadeIn">
-                <img
+                {/* <img
                   src={section.logo}
                   alt={`${section.title} logo`}
                   className="w-32 h-auto mb-4"
-                />
+                /> */}
 
                 <img
                   src={section.mainImage}

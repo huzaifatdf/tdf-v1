@@ -31,3 +31,7 @@ Route::post('submission/{slug}/export', [FormSubmissionController::class, 'expor
 Route::post('submission/{slug}/{id}/archive', [FormSubmissionController::class, 'archive'])
     ->name('form.submission.archive');
 
+Route::get('form/{slug}/duplicate', [FormSubmissionController::class, 'duplicate']) ->name('form.duplicate');
+
+
+
