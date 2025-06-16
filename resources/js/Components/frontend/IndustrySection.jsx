@@ -36,7 +36,7 @@ export default function IndustrySection() {
           const isExpanded = expandedItems[index] || false;
 
           return (
-            <div className="grid md:grid-cols-12 gap-12 border-b border-gray-800 pb-[60px]" key={index}>
+            <div className={`grid md:grid-cols-12 gap-12 border-b border-gray-800 pb-[60px] ${index === 0 ? 'pt-0' : 'pt-[60px]'}`} key={index}>
               {/* Left Column */}
               <div className="lg:col-span-5 space-y-6">
                 <h2 className="text-[30px] fc-secondary leading-tight">
