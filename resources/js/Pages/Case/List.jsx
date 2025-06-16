@@ -133,6 +133,8 @@ export default function List() {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem onClick={() => router.get(route('case.edit', caselist.id))} className="cursor-pointer">Edit case</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.get(route('case.duplicate', caselist.id))} className="cursor-pointer">Duplicate case</DropdownMenuItem>
+
                            <Dialog>
                             <DialogTrigger asChild>
                                 <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>

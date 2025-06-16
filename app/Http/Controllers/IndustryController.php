@@ -189,4 +189,15 @@ class IndustryController extends Controller
         session()->flash('message', 'Industry deleted successfully.');
         return redirect()->route('industry.index');
     }
+
+    //duplicate
+    public function duplicate(Industry $industry)
+    {
+        $newIndustry = $industry->replicate();
+        $newIndustry->slug = $industry->slug . '-copy-' . time();
+        $newIndustry->status = 'draft';
+        $newIndustry->save();
+        session()->flash('message', 'Industry duplicated successfully.');
+        return redirect()->route('industry.index');
+    }
 }

@@ -215,8 +215,10 @@ class CaselistController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Caselist $caselist)
+    public function edit($id)
     {
+           $caselist = Caselist::findOrFail($id);
+
            $additionalDataStructure = [
             'Detail' => [
                 'subtitle' => ['type' => 'text', 'label' => 'subtitle', 'required' => false],
@@ -336,8 +338,9 @@ class CaselistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCaselistRequest $request, Caselist $caselist)
+    public function update(UpdateCaselistRequest $request, $id)
     {
+        $caselist = Caselist::findOrFail($id);
          DB::beginTransaction();
     try {
         $data = $request->except(['_method', '_token']);
@@ -376,10 +379,23 @@ class CaselistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Caselist $caselist)
+    public function destroy($id)
     {
+        $caselist = Caselist::findOrFail($id);
           $caselist->delete();
         session()->flash('message', 'Case deleted successfully.');
+        return redirect()->route('case.index');
+    }
+
+      //duplicate
+    public function duplicate($id)
+    {
+        $caselist = Caselist::findOrFail($id);
+        $newCaselist = $caselist->replicate();
+        $newCaselist->slug = $caselist->slug . '-copy-' . time();
+        $newCaselist->status = 'draft';
+        $newCaselist->save();
+        session()->flash('message', 'Case duplicated successfully.');
         return redirect()->route('case.index');
     }
 }

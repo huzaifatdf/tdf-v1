@@ -245,8 +245,9 @@ class PageController extends Controller
     /**
      * Duplicate a page with its sections
      */
-    public function duplicate(Page $page)
+    public function duplicate($id)
     {
+        $page = Page::findOrFail($id);
         DB::beginTransaction();
 
         try {
@@ -275,7 +276,7 @@ class PageController extends Controller
             DB::commit();
 
             session()->flash('message', 'Page duplicated successfully.');
-            return redirect()->route('page.edit', $newPage);
+            return redirect()->route('page.index');
 
         } catch (\Exception $e) {
             DB::rollback();
