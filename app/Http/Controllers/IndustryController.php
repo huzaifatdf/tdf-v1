@@ -121,7 +121,23 @@ class IndustryController extends Controller
      */
     public function edit(Industry $industry)
     {
-        //
+           $additionalDataStructure = [
+            'Our Work' => [
+                'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
+                'description' => ['type' => 'summernote', 'label' => 'description', 'required' => false],
+            ],
+
+        'seo' => [
+            'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
+            'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
+            'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
+        ]
+    ];
+
+    return Inertia::render('Industry/Edit', [
+        'industry' => $industry,
+        'additionalDataStructure' => $additionalDataStructure,
+    ]);
     }
 
     /**
@@ -129,7 +145,39 @@ class IndustryController extends Controller
      */
     public function update(UpdateIndustryRequest $request, Industry $industry)
     {
-        //
+         DB::beginTransaction();
+    try {
+        $data = $request->except(['_method', '_token']);
+
+        // Handle additional data as JSON
+        if (isset($data['additional_data'])) {
+            $additionalData = json_decode($data['additional_data'], true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $data['data'] = json_encode($additionalData);
+            } else {
+                $data['data'] = $data['additional_data'];
+            }
+            unset($data['additional_data']);
+        }
+
+        // Remove empty values but keep 0 and false values
+        $data = array_filter($data, function($value) {
+            return $value !== null && $value !== '';
+        });
+
+        // Update the industry
+        $industry->update($data);
+
+        DB::commit();
+
+        session()->flash('message', 'Industry updated successfully.');
+        return redirect()->route('industry.index');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        session()->flash('error', 'Failed to update industry: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to update industry: ' . $e->getMessage()]);
+    }
     }
 
     /**
@@ -137,6 +185,8 @@ class IndustryController extends Controller
      */
     public function destroy(Industry $industry)
     {
-        //
+          $industry->delete();
+        session()->flash('message', 'Industry deleted successfully.');
+        return redirect()->route('industry.index');
     }
 }
