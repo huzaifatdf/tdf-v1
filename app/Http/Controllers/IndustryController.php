@@ -52,6 +52,10 @@ class IndustryController extends Controller
     {
           $additionalDataStructure = [
 
+            'Detail' => [
+                'more_detail' => ['type' => 'text', 'label' => 'More Detail', 'required' => false],
+            ],
+
              'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
@@ -122,6 +126,12 @@ class IndustryController extends Controller
     public function edit(Industry $industry)
     {
            $additionalDataStructure = [
+
+            'Detail' => [
+                'more_detail' => ['type' => 'text', 'label' => 'More Detail', 'required' => false],
+            ],
+
+
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'summernote', 'label' => 'description', 'required' => false],
