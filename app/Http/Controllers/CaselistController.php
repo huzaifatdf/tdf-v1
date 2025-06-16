@@ -49,55 +49,106 @@ class CaselistController extends Controller
      */
     public function create()
     {
-        $additionalDataStructure = [
+                $additionalDataStructure = [
             'Detail' => [
-                'detail_overview' => ['type' => 'text', 'label' => 'Detail Overview', 'required' => false],
-
+                'subtitle' => ['type' => 'text', 'label' => 'subtitle', 'required' => false],
+                'website' => ['type' => 'text', 'label' => 'website', 'required' => false],
             ],
-
-             'Our Work' => [
+            'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
-                'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
+                'description' => ['type' => 'summernote', 'label' => 'description', 'required' => false],
             ],
 
-            'Problem' => [
-                'problem' => ['type' => 'text', 'label' => 'Problem Label', 'required' => false],
-                'problem_description' => ['type' => 'text', 'label' => 'Problem Description', 'required' => false],
+
+            'Service' =>[
+
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'description_1' => ['type' => 'summernote', 'label' => '1 Description', 'required' => false],
+                'image_1' => ['type' => 'text', 'label' => '1 Image', 'required' => false],
+
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'description_2' => ['type' => 'summernote', 'label' => '2 Description', 'required' => false],
+                'image_2' => ['type' => 'text', 'label' => '2 Image', 'required' => false],
+
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'description_3' => ['type' => 'summernote', 'label' => '3 Description', 'required' => false],
+                'image_3' => ['type' => 'text', 'label' => '3 Image', 'required' => false],
+
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'description_4' => ['type' => 'summernote', 'label' => '4 Description', 'required' => false],
+                'image_4' => ['type' => 'text', 'label' => '4 Image', 'required' => false],
+
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
+                'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
+
             ],
 
-            'problem Solutions' =>[
+            'Service' =>[
+
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'image_1' => ['type' => 'text', 'label' => '1 Image', 'required' => false],
+
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'image_2' => ['type' => 'text', 'label' => '2 Image', 'required' => false],
+
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'image_3' => ['type' => 'text', 'label' => '3 Image', 'required' => false],
+
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'image_4' => ['type' => 'text', 'label' => '4 Image', 'required' => false],
+
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
+
+            ],
+
+            'Technology' =>[
+
+                'component_1' => ['type' => 'text', 'label' => '1 Component', 'required' => false],
+                'technology_1' => ['type' => 'text', 'label' => '1 Technology', 'required' => false],
+
+                'component_2' => ['type' => 'text', 'label' => '2 Component', 'required' => false],
+                'technology_2' => ['type' => 'text', 'label' => '2 Technology', 'required' => false],
+
+                'component_3' => ['type' => 'text', 'label' => '3 Component', 'required' => false],
+                'technology_3' => ['type' => 'text', 'label' => '3 Technology', 'required' => false],
+
+                'component_4' => ['type' => 'text', 'label' => '4 Component', 'required' => false],
+                'technology_4' => ['type' => 'text', 'label' => '4 Technology', 'required' => false],
+
+                'component_5' => ['type' => 'text', 'label' => '5 Component', 'required' => false],
+                'technology_5' => ['type' => 'text', 'label' => '5 Technology', 'required' => false],
+
+            ],
+
+             'Component' =>[
+                'description' => ['type' => 'summernote', 'label' => 'Description', 'required' => false],
+             ],
+
+              'Approach' =>[
+                'description' => ['type' => 'summernote', 'label' => 'Description', 'required' => false],
+                'lower_description' => ['type' => 'summernote', 'label' => 'Lower Description', 'required' => false],
+             ],
+
+
+            'Experience' =>[
 
                 'label_1' => ['type' => 'text', 'label' => '1 Label', 'required' => false],
-                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
-                'description_1' => ['type' => 'text', 'label' => '1 Description', 'required' => false],
+                'description_1' => ['type' => 'summernote', 'label' => '1 Description', 'required' => false],
 
                 'label_2' => ['type' => 'text', 'label' => '2 Label', 'required' => false],
-                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
-                'description_2' => ['type' => 'text', 'label' => '2 Description', 'required' => false],
+                'description_2' => ['type' => 'summernote', 'label' => '2 Description', 'required' => false],
 
                 'label_3' => ['type' => 'text', 'label' => '3 Label', 'required' => false],
-                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
-                'description_3' => ['type' => 'text', 'label' => '3 Description', 'required' => false],
+                'description_3' => ['type' => 'summernote', 'label' => '3 Description', 'required' => false],
 
                 'label_4' => ['type' => 'text', 'label' => '4 Label', 'required' => false],
-                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
-                'description_4' => ['type' => 'text', 'label' => '4 Description', 'required' => false],
+                'description_4' => ['type' => 'summernote', 'label' => '4 Description', 'required' => false],
 
                 'label_5' => ['type' => 'text', 'label' => '5 Label', 'required' => false],
-                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
-                'description_5' => ['type' => 'text', 'label' => '5 Description', 'required' => false],
+                'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
 
-                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
-                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
-                'description_6' => ['type' => 'text', 'label' => '6 Description', 'required' => false],
-
-                'label_7' => ['type' => 'text', 'label' => '7 Label', 'required' => false],
-                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
-                'description_7' => ['type' => 'text', 'label' => '7 Description', 'required' => false],
-
-                'label_8' => ['type' => 'text', 'label' => '8 Label', 'required' => false],
-                'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
-                'description_8' => ['type' => 'text', 'label' => '8 Description', 'required' => false],
 
             ],
 
@@ -106,7 +157,8 @@ class CaselistController extends Controller
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
                 'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
             ]
-        ];
+    ];
+
         return Inertia::render('Case/Add', [
             'additionalDataStructure' => $additionalDataStructure,
         ]);
@@ -166,70 +218,113 @@ class CaselistController extends Controller
     public function edit(Caselist $caselist)
     {
            $additionalDataStructure = [
-         'Detail' => [
-                'detail_overview' => ['type' => 'summernote', 'label' => 'Detail Overview', 'required' => false],
+            'Detail' => [
+                'subtitle' => ['type' => 'text', 'label' => 'subtitle', 'required' => false],
+                'website' => ['type' => 'text', 'label' => 'website', 'required' => false],
             ],
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'summernote', 'label' => 'description', 'required' => false],
             ],
 
-            'Problem' => [
-                'problem' => ['type' => 'text', 'label' => 'Problem Label', 'required' => false],
-                'problem_description' => ['type' => 'summernote', 'label' => 'Problem Description', 'required' => false],
+
+            'Service' =>[
+
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'description_1' => ['type' => 'summernote', 'label' => '1 Description', 'required' => false],
+                'image_1' => ['type' => 'text', 'label' => '1 Image', 'required' => false],
+
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'description_2' => ['type' => 'summernote', 'label' => '2 Description', 'required' => false],
+                'image_2' => ['type' => 'text', 'label' => '2 Image', 'required' => false],
+
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'description_3' => ['type' => 'summernote', 'label' => '3 Description', 'required' => false],
+                'image_3' => ['type' => 'text', 'label' => '3 Image', 'required' => false],
+
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'description_4' => ['type' => 'summernote', 'label' => '4 Description', 'required' => false],
+                'image_4' => ['type' => 'text', 'label' => '4 Image', 'required' => false],
+
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
+                'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
+
             ],
 
-            'problem Solutions' =>[
+            'Service' =>[
+
+                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'image_1' => ['type' => 'text', 'label' => '1 Image', 'required' => false],
+
+                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'image_2' => ['type' => 'text', 'label' => '2 Image', 'required' => false],
+
+                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'image_3' => ['type' => 'text', 'label' => '3 Image', 'required' => false],
+
+                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'image_4' => ['type' => 'text', 'label' => '4 Image', 'required' => false],
+
+                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
+
+            ],
+
+            'Technology' =>[
+
+                'component_1' => ['type' => 'text', 'label' => '1 Component', 'required' => false],
+                'technology_1' => ['type' => 'text', 'label' => '1 Technology', 'required' => false],
+
+                'component_2' => ['type' => 'text', 'label' => '2 Component', 'required' => false],
+                'technology_2' => ['type' => 'text', 'label' => '2 Technology', 'required' => false],
+
+                'component_3' => ['type' => 'text', 'label' => '3 Component', 'required' => false],
+                'technology_3' => ['type' => 'text', 'label' => '3 Technology', 'required' => false],
+
+                'component_4' => ['type' => 'text', 'label' => '4 Component', 'required' => false],
+                'technology_4' => ['type' => 'text', 'label' => '4 Technology', 'required' => false],
+
+                'component_5' => ['type' => 'text', 'label' => '5 Component', 'required' => false],
+                'technology_5' => ['type' => 'text', 'label' => '5 Technology', 'required' => false],
+
+            ],
+
+             'Component' =>[
+                'description' => ['type' => 'summernote', 'label' => 'Description', 'required' => false],
+             ],
+
+              'Approach' =>[
+                'description' => ['type' => 'summernote', 'label' => 'Description', 'required' => false],
+                'lower_description' => ['type' => 'summernote', 'label' => 'Lower Description', 'required' => false],
+             ],
+
+
+            'Experience' =>[
 
                 'label_1' => ['type' => 'text', 'label' => '1 Label', 'required' => false],
-                'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
                 'description_1' => ['type' => 'summernote', 'label' => '1 Description', 'required' => false],
 
                 'label_2' => ['type' => 'text', 'label' => '2 Label', 'required' => false],
-                'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
                 'description_2' => ['type' => 'summernote', 'label' => '2 Description', 'required' => false],
 
                 'label_3' => ['type' => 'text', 'label' => '3 Label', 'required' => false],
-                'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
                 'description_3' => ['type' => 'summernote', 'label' => '3 Description', 'required' => false],
 
                 'label_4' => ['type' => 'text', 'label' => '4 Label', 'required' => false],
-                'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
                 'description_4' => ['type' => 'summernote', 'label' => '4 Description', 'required' => false],
 
                 'label_5' => ['type' => 'text', 'label' => '5 Label', 'required' => false],
-                'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
                 'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
-
-                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
-                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
-                'description_6' => ['type' => 'summernote', 'label' => '6 Description', 'required' => false],
-
-                'label_7' => ['type' => 'text', 'label' => '7 Label', 'required' => false],
-                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
-                'description_7' => ['type' => 'summernote', 'label' => '7 Description', 'required' => false],
-
-
-                'label_8' => ['type' => 'text', 'label' => '8 Label', 'required' => false],
-                'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
-                'description_8' => ['type' => 'summernote', 'label' => '8 Description', 'required' => false],
-
-                'label_9' => ['type' => 'text', 'label' => '9 Label', 'required' => false],
-                'title_9' => ['type' => 'text', 'label' => '9 Title', 'required' => false],
-                'description_9' => ['type' => 'summernote', 'label' => '9 Description', 'required' => false],
-
-                'label_10' => ['type' => 'text', 'label' => '10 Label', 'required' => false],
-                'title_10' => ['type' => 'text', 'label' => '10 Title', 'required' => false],
-                'description_10' => ['type' => 'summernote', 'label' => '10 Description', 'required' => false],
-
 
 
             ],
-        'seo' => [
-            'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
-            'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
-            'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
-        ]
+
+            'seo' => [
+                'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
+                'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
+            ]
     ];
 
     return Inertia::render('Case/Edit', [
