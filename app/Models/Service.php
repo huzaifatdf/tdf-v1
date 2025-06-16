@@ -40,7 +40,7 @@ class Service extends Model
     //short_description
     public function getShortDescriptionAttribute()
     {
-        return substr($this->description, 0, 150) . '...';
+        return substr($this->description, 0, 80) . '...';
     }
 
     //section_no 01,02,03 ... all items according to priority start with 01
