@@ -9,7 +9,7 @@ trait HandlesMediaQueries
 {
      protected function getFilteredMedia(Request $request)
     {
-        $query = Media::query();
+        $query = Media::query()->orderBy('created_at', 'desc');
 
         // Filters
         if ($request->mime_type) {
