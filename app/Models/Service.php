@@ -45,7 +45,7 @@ class Service extends Model
 
        public function getShortTitleAttribute()
     {
-        return substr($this->title, 0, 20) . '...';
+        return substr($this->title, 0, 10) . '...';
     }
 
     //section_no 01,02,03 ... all items according to priority start with 01
