@@ -53,7 +53,7 @@ function ServiceSlider() {
                   className="w-full h-85 object-cover"
                 />
                 <div className="p-1 mt-2">
-                  <h3 className="text-[22px] fc-primary mb-0">{service.title}</h3>
+                  <h3 className="text-[22px] fc-primary mb-0">{service.short_title}</h3>
                   <p className="text-[14px] fc-primary mb-0">{service.short_description}</p>
                 </div>
               </div>

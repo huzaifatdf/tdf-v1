@@ -29,7 +29,7 @@ class Service extends Model
     ];
 
     //apend
-    protected $appends = ['short_description','section_no'];
+    protected $appends = ['short_description','short_title','section_no'];
 
     public function scopePublished($query)
     {
@@ -41,6 +41,11 @@ class Service extends Model
     public function getShortDescriptionAttribute()
     {
         return substr($this->description, 0, 80) . '...';
+    }
+
+       public function getShortTitleAttribute()
+    {
+        return substr($this->title, 0, 20) . '...';
     }
 
     //section_no 01,02,03 ... all items according to priority start with 01
