@@ -131,6 +131,22 @@ export function AppSidebar({
 
       ],
     },
+      {
+      title: "Industries",
+      url: "#",
+      icon: Box,
+      items: [
+        {
+          title: "Add",
+          url: route('industry.create'),
+        },
+        {
+          title: "List",
+          url: route('industry.index'),
+        },
+
+      ],
+    },
     {
       title: "Our Clients",
       url: "#",
