@@ -24,7 +24,7 @@ function ServiceSlider() {
     <div className="container-fluid relative">
       <div className='sec-padding pt-0'>
         <div className="mb-8">
-          <p className="text-[20px] mb-8 fc-primary">
+          <p className="text-[30px] mb-6 fc-primary">
             Strategy, creativity, technology - aligned in perfect sync<br />
             Always adjusting, always forward
           </p>
@@ -50,7 +50,7 @@ function ServiceSlider() {
                 <img
                   src={`${appUrl}/${service.image}`}
                   alt={service.title}
-                  className="w-full h-85 object-cover"
+                  className="w-full h-[420px] object-cover"
                 />
                 <div className="p-1 mt-2">
                   <h3 className="text-[22px] fc-primary mb-0">{service.short_title}</h3>

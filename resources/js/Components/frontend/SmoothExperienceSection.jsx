@@ -202,7 +202,7 @@ function SmoothExperienceSection() {
                   <div className="animate-fadeIn">
 
                     {/* Main Image */}
-                 
+
                     <img
                         src={`${appUrl}/${section.thumbnail}`}
                         alt={`${section.title} main image`}
@@ -210,9 +210,9 @@ function SmoothExperienceSection() {
                     />
 
                     {/* Title */}
-                    {/* <h2 className="text-[36px] font-bold text-white mb-3">
+                    <h2 className="text-[26px] text-white mb-2">
                       {section.title}
-                    </h2> */}
+                    </h2>
 
                     {/* Subtitle */}
                     <p className="text-[18px] fc-primary leading-relaxed">

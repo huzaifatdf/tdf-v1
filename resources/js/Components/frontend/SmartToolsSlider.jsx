@@ -8,7 +8,7 @@ const SmartToolsSlider = () => {
   return (
     <div className="container-fluid relative">
       <div className='sec-padding pb-4'>
-        <h2 className="text-[20px] mb-8 fc-primary">
+        <h2 className="text-[30px] mb-6 fc-primary">
           We Offer Smart Tools for Strategic Growth
         </h2>
 
@@ -35,7 +35,7 @@ const SmartToolsSlider = () => {
                     <img
                       src="/images/slider.png"
                       alt="Students in a smart classroom"
-                      className="w-full h-full object-cover"
+                      className="w-full h-[500px] object-cover"
                     />
                   </div>
 

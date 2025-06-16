@@ -34,7 +34,7 @@ function ClientSlider() {
   return (
     <div className="pb-4">
         <div className="container-fluid relative">
-            <p className="text-[20px] mb-8 fc-primary">Our Clients</p>
+            <p className="text-[30px] mb-6 fc-primary">Our Clients</p>
             {/* <hr class="border-white mb-8"></hr> */}
            <div className="space-y-12">
             <div className="overflow-hidden  pb-5 mt-5">

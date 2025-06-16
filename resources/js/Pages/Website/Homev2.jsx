@@ -497,7 +497,7 @@ function Section() {
 
                 {/* Section 1 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-30">
-                    <Parallax translateY={[0, 0]} opacity={[1, 0]} scale={[0.5, 1]}>
+                   <Parallax scale={[0.5, 1.5]} opacity={[0, 4]}>
                     <div className="text-center">
                         <h1 className="text-[40px] mb-5 fc-primary">Look at this dot</h1>
                         <p className="text-[30px]  mb-0 fc-primary">it's like a planet in the vast universe <br /> At a distance, it seems like nothing <span className='font-weight-bold'><br />But zoom in </span></p>
@@ -507,7 +507,7 @@ function Section() {
 
                 {/* Section 2 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-20">
-                    <Parallax translateY={[0, 0]} opacity={[0, 1]} scale={[0.5, 1]}>
+                    <Parallax scale={[0.5, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">and you'll find life, movement, possibilities…</p>
                     </div>
@@ -516,7 +516,7 @@ function Section() {
 
                 {/* Section 3 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-10">
-                    <Parallax translateY={[0, 0]} opacity={[0, 1]} scale={[0.5, 1]}>
+                    <Parallax scale={[0.5, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">Just like the universe, the digital world is infinite<br />Multiple ideas with untapped potential floating around</p>
                     </div>
@@ -570,28 +570,28 @@ export default function Home() {
     };
 
 
-      const sectionRef = useRef(null);
+  const sectionRef = useRef(null);
 
-        useEffect(() => {
-            if (!sectionRef.current) return;
+  useEffect(() => {
+    if (!sectionRef.current) return;
 
-            gsap.fromTo(
-            sectionRef.current,
-            { scale: 0.8, opacity: 0.6 },
-            {
-                scale: 1,
-                opacity: 1,
-                duration: 1.5,
-                ease: 'power3.out',
-                scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse',
-                },
-            }
-            );
-        }, []);
+    gsap.fromTo(
+      sectionRef.current,
+      { scale: 0.8, opacity: 0 },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
+  }, []);
 
     return (
         <ParallaxProvider>
@@ -602,7 +602,6 @@ export default function Home() {
                 <Section />
                 <div ref={sectionRef} className="relative overflow-hidden bg-[#000]">
                     <ParticleCanvas />
-
                     <div className="relative z-10">
                         <ImageZoomSection />
                         <SmartToolsSlider />

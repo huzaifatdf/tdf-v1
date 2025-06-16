@@ -24,7 +24,7 @@ const Space = () => {
 
     const cow = new Image();
     cow.src =
-      "https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Hamburger_PNG_Vector_Picture.png?m=1507172108";
+      "";
 
     const start = () => {
       canvas.width = canvas.offsetWidth;
@@ -43,6 +43,8 @@ const Space = () => {
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           z: Math.random() * canvas.width,
+          cow: Math.random() > 0.98, // randomly assign cows to some stars
+          rotation_speed: Math.random() * 100 + 50,
         });
       }
 
@@ -53,7 +55,10 @@ const Space = () => {
 
     const render = () => {
       animationRef.current = requestAnimationFrame(render);
-      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 🌀 Add smoky trail effect
+      context.fillStyle = "rgba(0, 0, 0, 0.2)";
+      context.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < stars.length; i++) {
         let star = stars[i];
@@ -64,6 +69,8 @@ const Space = () => {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             z: canvas.width,
+            cow: Math.random() > 0.98,
+            rotation_speed: Math.random() * 100 + 50,
           };
           star = stars[i];
         }
@@ -74,10 +81,7 @@ const Space = () => {
         const star_y =
           (star.y - canvas_center_y) * (focal_length / star.z) +
           canvas_center_y;
-        const star_radius = Math.max(
-          0,
-          1.4 * (focal_length / star.z) / 2
-        );
+        const star_radius = Math.max(0, 1.4 * (focal_length / star.z) / 2);
         const star_opacity = 1.2 - star.z / canvas.width;
         const cow_width = Math.max(0.1, 100 * (focal_length / star.z) / 2);
 
@@ -106,8 +110,7 @@ const Space = () => {
           );
           context.restore();
         } else {
-          context.fillStyle =
-            "rgba(" + config.star_color + "," + star_opacity + ")";
+          context.fillStyle = `rgba(${config.star_color}, ${star_opacity})`;
           context.beginPath();
           context.arc(star_x, star_y, star_radius, 0, Math.PI * 2);
           context.fill();
@@ -115,7 +118,6 @@ const Space = () => {
       }
     };
 
-    // Resize listener
     const handleResize = () => {
       cancelAnimationFrame(animationRef.current);
       start();

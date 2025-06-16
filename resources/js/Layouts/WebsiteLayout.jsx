@@ -63,7 +63,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                 <img
                                     src="/images/logo.svg"
                                     alt="Logo"
-                                    width="150"
+                                    width="120"
                                     className="me-2"
                                 />
                             </a>
