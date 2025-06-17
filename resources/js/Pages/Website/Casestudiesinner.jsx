@@ -194,16 +194,16 @@ function Capabilities(props) {
   const { data,jsonData } = props;
   const {appUrl} = usePage().props;
   console.log(jsonData["Service"]);
-  const services = transformData(parseTitles(jsonData["Service"])) || [];
+  const services = jsonData && jsonData["Service"] ? transformData(parseTitles(jsonData["Service"])) : [];
   const projects =
    services
   ? services.map((item, index) => ({
     id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
-      title: item["title"],
+      title: item?.title,
       //set description to 10 words max
-      description:data.description || '',
-         link: jsonData["Detail"].website || '',
-         image:`${appUrl}/${item["image"]}` || '/images/case2.png', // Default image if not provided
+      description:data?.description || '',
+         link: jsonData["Detail"]?.website || '',
+         image:`${appUrl}/${item?.image}` || '/images/case2.png', // Default image if not provided
     }))
   : [];
 
@@ -275,7 +275,7 @@ function Beginning(props) {
 
           {/* Right side - Content */}
           <div className="lg:pl-8">
-            {jsonData["Detail"]["the_beginning"] && <>
+            {jsonData["Detail"]?.the_beginning && <>
             <h2 className="text-[30px] fc-secondary font-bold mb-3">
               The Beginning - Understanding the Need
             </h2>
@@ -284,7 +284,7 @@ function Beginning(props) {
                 { parse(jsonData["Detail"]["the_beginning"]) }
             </div>
             </>}
-             {jsonData["Approach"]["description"] && <>
+             {jsonData["Approach"]?.description && <>
             <div>
               <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
                 Our Approach
