@@ -299,9 +299,9 @@ console.log("beginning",jsonData["Approach"]["lower_description"]);
         </div>
 
             {/* Bottom text */}
-            {jsonData["Approach"]["lower_description"] &&
+            {jsonData["Approach"]?.lower_description &&
             <div className="fc-primary text-lg leading-relaxed mt-7">
-             { parse(jsonData["Approach"]["lower_description"]) }
+             { parse(jsonData["Approach"]?.lower_description || '') }
             </div>
             }
       </div>
