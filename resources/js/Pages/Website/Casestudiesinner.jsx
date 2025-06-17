@@ -337,8 +337,8 @@ function SmoothExperienceSection(props) {
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
   const { data , jsonData } = props;
-    console.log(jsonData);
-    const experience = transformDataExperience(parseTitles(jsonData["Experience"])) || [];
+
+    const experience = transformDataExperience(parseTitles(jsonData["Experience"] || {})) || [];
 
   const [sections, setSections] = useState(
      experience
@@ -450,7 +450,7 @@ function SmoothExperienceSection(props) {
                           ? 'fc-secondary'
                           : 'fc-white'
                       }`}>
-                        {section.title}
+                        {section?.title || ''}
                       </h3>
                       {/* <p className={`text-[14px] leading-relaxed transition-all duration-500 ${
                         activeSection === section.id
@@ -503,7 +503,7 @@ function SmoothExperienceSection(props) {
 
                     {/* Subtitle */}
                     <p className="text-[22px] fc-primary mb-8 leading-relaxed">
-                      {parse(section.subtitle)}
+                      {parse(section?.subtitle || '')}
                     </p>
 
                     {/* Features */}
