@@ -84,7 +84,7 @@ export default function Edit() {
 
     formData.append('_method', 'PUT');
 
-    router.post(route("caselist.update", caselist.id), formData, {
+    router.post(route("case.update", caselist.id), formData, {
       forceFormData: true,
       onSuccess: () => setSubmitting(false),
       onError: () => setSubmitting(false),
