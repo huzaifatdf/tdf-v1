@@ -256,6 +256,10 @@ class CaselistController extends Controller
                 'description_6' => ['type' => 'summernote', 'label' => '6 Description', 'required' => false],
                 'image_6' => ['type' => 'text', 'label' => '6 Image', 'required' => false],
 
+                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'description_7' => ['type' => 'summernote', 'label' => '7 Description', 'required' => false],
+                'image_7' => ['type' => 'text', 'label' => '7 Image', 'required' => false],
+
             ],
 
             'Service' =>[
@@ -274,6 +278,12 @@ class CaselistController extends Controller
 
                 'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
                 'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
+
+                'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
+                'image_6' => ['type' => 'text', 'label' => '6 Image', 'required' => false],
+
+                'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'image_7' => ['type' => 'text', 'label' => '7 Image', 'required' => false],
 
             ],
 
