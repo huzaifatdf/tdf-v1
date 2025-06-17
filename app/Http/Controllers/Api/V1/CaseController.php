@@ -10,7 +10,7 @@ class CaseController extends BaseController
 {
     public function index()
     {
-          return Casestudy::where('status', 'published')
+          return Caselist::where('status', 'published')
             ->orderBy('priority', 'desc')
             ->get();
     }

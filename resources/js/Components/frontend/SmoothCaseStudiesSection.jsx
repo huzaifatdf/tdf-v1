@@ -4,6 +4,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePage, Link } from "@inertiajs/react";
 import axios from "axios";
 
+
+
+function parseTitles(data) {
+  return Object.keys(data).map(key => {
+    const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
+    return { key: cleanedKey, value: data[key] };
+  });
+}
+
+
+
+
 function SmoothCaseStudiesSection() {
   const { appUrl } = usePage().props;
   const [data, setData] = useState([]);
@@ -17,10 +29,14 @@ function SmoothCaseStudiesSection() {
     axios.get('/api/v1/case')
       .then(response => {
         const fetchedData = response.data;
+        console.log(fetchedData);
         setData(fetchedData);
 
         // Transform the data into sections format
-        const newSections = fetchedData.map((item, index) => ({
+        const newSections = fetchedData.map((item, index) => {
+        const jsonData = JSON.parse(item.data);
+        const services = parseTitles(jsonData["Service"]);
+        return({
           id: String(index + 1).padStart(2, '0'),
           title: item.title,
           slug: item.slug,
@@ -29,13 +45,12 @@ function SmoothCaseStudiesSection() {
             : item.description,
         //   logo: '/images/logo.svg',
           mainImage: item.image ? `${appUrl}/${item.image}` : '/images/case4.png',
-          features: Array.isArray(item.services) ? item.services : [],
-          stats: {
-            models: '25+',
-            performance: '99.9%',
-            latency: '<100ms',
-          },
-        }));
+          features:services.length > 0 ? services.map(service =>{
+            if(service.key === 'title'){
+              return service.value
+            }
+          }) : [],
+        })});
 
         setSections(newSections);
         setActiveSection(newSections.length > 0 ? newSections[0].id : null);
@@ -200,7 +215,7 @@ function SmoothCaseStudiesSection() {
                     return (
                       <div key={featureIndex} className="flex items-start">
                         <span className="fc-primary text-[16px] leading-relaxed">
-                          {feature.title}
+                          {feature}
                         </span>
                       </div>
                     );
