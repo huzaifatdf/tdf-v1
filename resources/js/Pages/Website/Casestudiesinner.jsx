@@ -74,8 +74,8 @@ export default function Casestudiesinner(props) {
 
       <Capabilities data={casestudy} jsonData={jsonData}/>
       <Beginning data={casestudy} jsonData={jsonData} />
-      {/* <SmoothExperienceSection data={casestudy.experience}/>
-      <Components data={casestudy.techstack} conclusion={casestudy.component}/> */}
+      <SmoothExperienceSection data={casestudy} jsonData={jsonData}/>
+      {/* <Components data={casestudy.techstack} conclusion={casestudy.component}/> */}
     </WebsiteLayout>
   );
 }
@@ -311,29 +311,46 @@ function Beginning(props) {
 }
 
 
+function transformDataExperience(data) {
+  const result = [];
+    console.log("dara",data);
+  for (let i = 0; i < data.length; i += 2) {
+    const labelObj = data[i];
+    const descriptionObj = data[i + 1];
+    console.log("dara",labelObj, descriptionObj);
+    // Make sure both objects exist and are valid
+    if (labelObj?.key === 'label' && descriptionObj?.key === 'description') {
+      result.push({
+        label: labelObj.value,
+        description: descriptionObj.value
+      });
+    }
+  }
+
+  return result;
+}
+
+
 
 // fixed hight section //
 function SmoothExperienceSection(props) {
   const [activeSection, setActiveSection] = useState('text-to-text');
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
-  const { data } = props;
-
+  const { data , jsonData } = props;
+    console.log(jsonData);
+    const experience = transformDataExperience(parseTitles(jsonData["Experience"]));
+    console.log(experience);
   const [sections, setSections] = useState(
-     data
-        ? data.map((item, index) => ({
+     experience
+        ? experience.map((item, index) => ({
 
       id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
-      title: item["title"] ,
-      subtitle: item["subtitle"],
-      features: item["features"] || [],
-      stats: {
-        models: '25+',
-        performance: '99.9%',
-        latency: '<100ms'
-      }
+      title: item?.label || '',
+      subtitle: item?.description || '',
       }))
    : []);
+
 
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
@@ -412,6 +429,7 @@ function SmoothExperienceSection(props) {
 
               <nav className="space-y-8">
                 {sections.map((section, index) => (
+                    console.log(section),
                   <div key={section.id} className="relative group">
                     <button
                       onClick={() => handleSectionClick(section.id)}
@@ -486,23 +504,22 @@ function SmoothExperienceSection(props) {
 
                     {/* Subtitle */}
                     <p className="text-[22px] fc-primary mb-8 leading-relaxed">
-                      {section.subtitle}
+                      {parse(section.subtitle)}
                     </p>
 
                     {/* Features */}
-                    <div className="space-y-4 mb-10">
+                    {/* <div className="space-y-4 mb-10">
                       {section.features.map((feature, featureIndex) => (
                         <div
                           key={featureIndex}
                           className="flex items-start"
                         >
-                          {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
                           <span className="fc-primary text-[18px] leading-relaxed">
                             {feature}
                           </span>
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
