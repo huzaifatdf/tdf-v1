@@ -53,6 +53,8 @@ class CaselistController extends Controller
             'Detail' => [
                 'subtitle' => ['type' => 'text', 'label' => 'subtitle', 'required' => false],
                 'website' => ['type' => 'text', 'label' => 'website', 'required' => false],
+
+                'the_beginning' => ['type' => 'text', 'label' => 'The Beginning', 'required' => false],
             ],
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
@@ -223,6 +225,7 @@ class CaselistController extends Controller
             'Detail' => [
                 'subtitle' => ['type' => 'text', 'label' => 'subtitle', 'required' => false],
                 'website' => ['type' => 'text', 'label' => 'website', 'required' => false],
+                'the_beginning' => ['type' => 'summernote', 'label' => 'The Beginning', 'required' => false],
             ],
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
