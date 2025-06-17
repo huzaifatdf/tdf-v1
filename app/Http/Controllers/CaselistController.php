@@ -342,10 +342,12 @@ class CaselistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCaselistRequest $request, Caselist $caselist)
+    public function update(UpdateCaselistRequest $request, $id)
     {
-        // $caselist = Caselist::findOrFail($id);
-         DB::beginTransaction();
+
+        $caselist = Caselist::findOrFail($id);
+
+        DB::beginTransaction();
     try {
         $data = $request->except(['_method', '_token']);
 
