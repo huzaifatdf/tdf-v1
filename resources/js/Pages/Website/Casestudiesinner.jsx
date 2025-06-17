@@ -317,7 +317,6 @@ function transformDataExperience(data) {
   for (let i = 0; i < data.length; i += 2) {
     const labelObj = data[i];
     const descriptionObj = data[i + 1];
-    console.log("dara",labelObj, descriptionObj);
     // Make sure both objects exist and are valid
     if (labelObj?.key === 'label' && descriptionObj?.key === 'description') {
       result.push({
@@ -339,8 +338,8 @@ function SmoothExperienceSection(props) {
   const sectionsRefs = useRef({});
   const { data , jsonData } = props;
     console.log(jsonData);
-    const experience = transformDataExperience(parseTitles(jsonData["Experience"]));
-    console.log(experience);
+    const experience = transformDataExperience(parseTitles(jsonData["Experience"])) || [];
+
   const [sections, setSections] = useState(
      experience
         ? experience.map((item, index) => ({
