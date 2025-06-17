@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Caselist;
 use App\Models\Casestudy;
 use App\Models\Page;
 use App\Models\Product;
@@ -33,7 +34,7 @@ class WebSiteController extends Controller
     //showCaseStudy
     public function showCaseStudy($slug)
     {
-        $casestudy = Casestudy::where('slug', $slug)
+        $casestudy = Caselist::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 

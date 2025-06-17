@@ -3,14 +3,27 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import parse from 'html-react-parser';
+import { usePage } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+
+
+
+function parseTitles(data) {
+  return Object.keys(data).map(key => {
+    const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
+    return { key: cleanedKey, value: data[key] };
+  });
+}
+
 
 export default function Casestudiesinner(props) {
   const introRef = useRef(null);
   const {casestudy} = props;
   console.log(casestudy);
-
+  const jsonData = JSON.parse(casestudy.data);
+    console.log(jsonData);
   useEffect(() => {
     const intro = introRef.current;
 
@@ -36,7 +49,7 @@ export default function Casestudiesinner(props) {
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
                     <h1 className="text-[32px] fc-secondary leading-tight mb-6">
-                        {casestudy.title} { casestudy.subtitle === '' && <> - <br className="hidden md:block" />{casestudy.subtitle}</> }
+                        {casestudy.title} { jsonData.subtitle === '' && <> - <br className="hidden md:block" />{jsonData.subtitle}</> }
                     </h1>
                 </div>
                 <div className="md:w-1/2">
@@ -59,10 +72,10 @@ export default function Casestudiesinner(props) {
         </div>
       </section>
 
-      <Capabilities data={casestudy}/>
-      <Beginning data={casestudy} />
-      <SmoothExperienceSection data={casestudy.experience}/>
-      <Components data={casestudy.techstack} conclusion={casestudy.component}/>
+      <Capabilities data={casestudy} jsonData={jsonData}/>
+      <Beginning data={casestudy} jsonData={jsonData} />
+      {/* <SmoothExperienceSection data={casestudy.experience}/>
+      <Components data={casestudy.techstack} conclusion={casestudy.component}/> */}
     </WebsiteLayout>
   );
 }
@@ -157,17 +170,40 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
   );
 };
 
+function transformData(data) {
+  const result = [];
+
+  for (let i = 0; i < data.length; i += 2) {
+    const titleObj = data[i];
+    const imageObj = data[i + 1];
+
+    // Make sure both objects exist and are valid
+    if (titleObj?.key === 'title' && imageObj?.key === 'image') {
+      result.push({
+        title: titleObj.value,
+        image: imageObj.value
+      });
+    }
+  }
+
+  return result;
+}
+
+
 function Capabilities(props) {
-  const { data } = props;
+  const { data,jsonData } = props;
+  const {appUrl} = usePage().props;
+  console.log(jsonData["Service"]);
+  const services = transformData(parseTitles(jsonData["Service"])) || [];
   const projects =
-   data
-  ? data.services.map((item, index) => ({
+   services
+  ? services.map((item, index) => ({
     id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
-      title: item["title"] ,
+      title: item["title"],
       //set description to 10 words max
       description:data.description || '',
-         link: data.website || '',
-        image:item["image"] || '/images/case2.png', // Default image if not provided
+         link: jsonData["Detail"].website || '',
+         image:`${appUrl}/${item["image"]}` || '/images/case2.png', // Default image if not provided
     }))
   : [];
 
@@ -191,8 +227,8 @@ function Capabilities(props) {
 
 function Beginning(props) {
  const sectionRef = useRef(null);
- const { data } = props;
-
+ const { data ,jsonData } = props;
+console.log("beginning",jsonData["Approach"]["lower_description"]);
   useEffect(() => {
     // Simple fade-in animation (assuming gsap is available elsewhere)
     const section = sectionRef.current;
@@ -240,22 +276,22 @@ function Beginning(props) {
 
           {/* Right side - Content */}
           <div className="lg:pl-8">
-            {data.goals && <>
+            {jsonData["Detail"]["the_beginning"] && <>
             <h2 className="text-[30px] fc-secondary font-bold mb-3">
               The Beginning - Understanding the Need
             </h2>
 
             <div className="mb-8">
-                { parse(data.goals) }
+                { parse(jsonData["Detail"]["the_beginning"]) }
             </div>
             </>}
-             {data.approach && <>
+             {jsonData["Approach"]["description"] && <>
             <div>
               <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
                 Our Approach
               </h3>
 
-              { parse(data.approach) }
+              { parse(jsonData["Approach"]["description"]) }
             </div>
                 </>}
           </div>
@@ -263,9 +299,9 @@ function Beginning(props) {
         </div>
 
             {/* Bottom text */}
-            {data.approach_lower_text &&
+            {jsonData["Approach"]["lower_description"] &&
             <div className="fc-primary text-lg leading-relaxed mt-7">
-             {data.approach_lower_text}
+             { parse(jsonData["Approach"]["lower_description"]) }
             </div>
             }
       </div>
