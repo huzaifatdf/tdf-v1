@@ -228,7 +228,6 @@ function Capabilities(props) {
 function Beginning(props) {
  const sectionRef = useRef(null);
  const { data ,jsonData } = props;
-console.log("beginning",jsonData["Approach"]["lower_description"]);
   useEffect(() => {
     // Simple fade-in animation (assuming gsap is available elsewhere)
     const section = sectionRef.current;
