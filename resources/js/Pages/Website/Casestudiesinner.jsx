@@ -39,7 +39,7 @@ export default function Casestudiesinner(props) {
       }
     });
   }, []);
-
+  console.log("json",jsonData);
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="flex items-center relative overflow-hidden">
@@ -75,7 +75,7 @@ export default function Casestudiesinner(props) {
       <Capabilities data={casestudy} jsonData={jsonData}/>
       <Beginning data={casestudy} jsonData={jsonData} />
       <SmoothExperienceSection data={casestudy} jsonData={jsonData}/>
-      {/* <Components data={casestudy.techstack} conclusion={casestudy.component}/> */}
+      <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/>
     </WebsiteLayout>
   );
 }
@@ -549,9 +549,32 @@ function SmoothExperienceSection(props) {
 }
 
 
+
+function transformDataComp(data) {
+  const result = [];
+
+  for (let i = 0; i < data.length; i += 2) {
+    const componentObj = data[i];
+    const technologyObj = data[i + 1];
+
+    // Make sure both objects exist and are valid
+    if (componentObj?.key === 'component' && technologyObj?.key === 'technology') {
+      result.push({
+        component: componentObj.value,
+        technology: technologyObj.value
+      });
+    }
+  }
+
+  return result;
+}
+
+
+
 // Table Section //
 function Components(props) {
     const { data,conclusion } = props;
+   const parseCom = transformDataComp(data);
   return data ? (
 
     <div className="container-fluid relative">
@@ -561,7 +584,7 @@ function Components(props) {
           <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Component</div>
           <div className="text-[22px] fc-secondary border-b border-gray-800 pb-3 pt-3 ">Technology</div>
 
-         {data && data.map((item, index) => (
+         {parseCom && parseCom.map((item, index) => (
    <>       <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">{item["component"]}</div>
           <div className="text-[18px] fc-primary border-b border-gray-800 pb-3 pt-3 ">{item["technology"]}</div>
 </>))}
