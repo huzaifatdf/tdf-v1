@@ -154,6 +154,11 @@ class CaselistController extends Controller
 
             ],
 
+
+            'conclusion' => [
+                'description' => ['type' => 'text', 'label' => 'Description', 'required' => false],
+            ],
+
             'seo' => [
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
@@ -337,6 +342,10 @@ class CaselistController extends Controller
                 'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
 
 
+            ],
+
+            'conclusion' => [
+                'description' => ['type' => 'summernote', 'label' => 'Description', 'required' => false],
             ],
 
             'seo' => [
