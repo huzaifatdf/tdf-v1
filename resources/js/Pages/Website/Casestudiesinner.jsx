@@ -338,7 +338,7 @@ function SmoothExperienceSection(props) {
   const sectionsRefs = useRef({});
   const { data , jsonData } = props;
 
-    const experience = transformDataExperience(parseTitles(jsonData["Experience"] || {})) || [];
+    const experience = jsonData["Experience"]  && transformDataExperience(parseTitles(jsonData["Experience"] || {})) || [];
 
   const [sections, setSections] = useState(
      experience
