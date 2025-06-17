@@ -341,6 +341,9 @@ class CaselistController extends Controller
                 'label_5' => ['type' => 'text', 'label' => '5 Label', 'required' => false],
                 'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
 
+                'label_6' => ['type' => 'text', 'label' => '6 Label', 'required' => false],
+                'description_6' => ['type' => 'summernote', 'label' => '6 Description', 'required' => false],
+
 
             ],
 
