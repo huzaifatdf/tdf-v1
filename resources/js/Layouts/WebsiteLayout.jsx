@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import ParticlesBackground from "@/components/ParticlesBackground";
 import CustomCursor from "@/components/CustomCursor";
 
@@ -7,13 +7,67 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Preloader from '@/components/Preloader';
 import Contact from '@/Components/frontend/Contact';
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/hooks/use-toast"
+
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [loaded, setLoaded] = useState(true); // set true to bypass Preloader for now
-
+      const { auth, flash } = usePage().props;
     const menuRef = useRef(null);
     const burgerRef = useRef(null);
+
+    const { toast } = useToast()
+
+
+    //useEffect for session flash toast
+   useEffect(() => {
+        // Handle success messages
+        if (flash?.success) {
+            toast({
+                title: "Success",
+                description: flash.success,
+                variant: "default", // or "success" if you have custom variant
+            });
+        }
+
+        // Handle error messages
+        if (flash?.error) {
+            toast({
+                title: "Error",
+                description: flash.error,
+                variant: "destructive",
+            });
+        }
+
+        // Handle warning messages
+        if (flash?.warning) {
+            toast({
+                title: "Warning",
+                description: flash.warning,
+                variant: "default", // You might want to create a warning variant
+            });
+        }
+
+        // Handle info messages
+        if (flash?.info) {
+            toast({
+                title: "Information",
+                description: flash.info,
+                variant: "default",
+            });
+        }
+
+        // Handle generic messages
+        if (flash?.message) {
+            toast({
+                title: "Notification",
+                description: flash.message,
+                variant: "default",
+            });
+        }
+    }, [flash, toast]);
 
     const toggleMenu = () => {
         setMenuOpen(prev => !prev);
@@ -39,6 +93,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
     return (
         <>
+         <Toaster />
             <Preloader onFinish={() => setLoaded(true)} />
 
 

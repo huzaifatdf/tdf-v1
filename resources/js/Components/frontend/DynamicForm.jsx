@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useEffect } from 'react'
 
@@ -128,14 +129,22 @@ function DynamicForm(props) {
             });
 
             // Submit to API
-            const response = await axios.post(`/api/v1/form/${form.slug}/submit`, submitData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            // const response = await axios.post(`/api/v1/form/${form.slug}/submit`, submitData, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            // });
+                const response = router.post(route('client.submit.form', form.slug), submitData,  {
+                                        preserveScroll: true,
+                                        preserveState: true,
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
+                                    })
+
 
             // Handle success
-            alert(form.success_message || 'Form submitted successfully!');
+            // alert(form.success_message || 'Form submitted successfully!');
 
             // Reset form
             const initialData = {};

@@ -19,6 +19,7 @@ Route::post('submission/{slug}/submit', [FormSubmissionController::class, 'store
     ->name('form.submission.store');
 
 
+
     //dynamicform.submission.show
 Route::get('submission/{slug}/show/{id}', [FormSubmissionController::class, 'show']) ->name('form.submission.show');
 
@@ -35,3 +36,4 @@ Route::get('form/{slug}/duplicate', [FormSubmissionController::class, 'duplicate
 
 
 
+Route::post('submission/client/{slug}/submit', [FormController::class, 'submit'])->name('client.submit.form');

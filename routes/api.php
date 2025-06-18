@@ -24,7 +24,6 @@ Route::prefix('v1')->group(function() {
     //form group
     Route::prefix('form')->group(function () {
         Route::get('/{slug}', [App\Http\Controllers\Api\V1\FormController::class, 'form']);
-        Route::post('/{slug}/submit', [App\Http\Controllers\Api\V1\FormController::class, 'submit']);
     });
 
 
