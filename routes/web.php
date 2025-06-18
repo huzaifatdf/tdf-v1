@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $ahrefs = new \App\Services\AhrefsService();
-    $rating = $ahrefs->getDomainRating("https://www.thedesignsfirm.com");
+    $rating = $ahrefs->getDomainRating("https://thedesignsfirm.com/");
     return Inertia::render('Dashboard', [
         'rating' => $rating
     ]);
