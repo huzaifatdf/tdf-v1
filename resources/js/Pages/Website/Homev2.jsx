@@ -358,7 +358,7 @@ const ImageZoomSection = () => {
 
     return (
         <>
-            <div className="container-fluid relative w-full h-screen overflow-hidden d-none">
+            <div className="container-fluid relative w-full h-screen overflow-hidden">
                 <div
                     ref={imageWrapperRef}
                     className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover mb-[80px]"
@@ -375,7 +375,7 @@ const ImageZoomSection = () => {
                 </div>
             </div>
 
-            <div className="relative px-4 d-none">
+            <div className="relative px-4 ">
                 <div className="relative z-10 w-full max-w-4xl mx-auto mb-11 py-16">
                     <div ref={creativityRef} className="absolute top-1 left-1/2 ">
                         <div className="relative group">
@@ -409,7 +409,7 @@ const ImageZoomSection = () => {
                 </div>
             </div>
 
-            <div className='flex flex-col items-center justify-center d-none'>
+            <div className='flex flex-col items-center justify-center '>
                 <div ref={textRef} className="relative z-10 mt-80 text-center max-w-2xl">
                     <p className="text-[20px] leading-relaxed mb-2 fc-primary">
                         Strategy, creativity, technology - aligned in perfect sync
@@ -446,6 +446,91 @@ const ImageZoomSection = () => {
         </>
     );
 };
+
+
+const AnimatedIconText = ({ id, iconSrc, words }) => {
+  const [text, setText] = useState("");
+  const iconRef = useRef(null);
+  const textRef = useRef(null);
+  const getInitialDelay = () => {
+    switch (id) {
+      case "one":
+        return 0;
+      case "two":
+        return 1.5;
+      case "three":
+        return 3;
+      default:
+        return 0;
+    }
+  };
+    useEffect(() => {
+    const delay = getInitialDelay();
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5, delay });
+
+    // Set initial styles
+    gsap.set(iconRef.current, { opacity: 1, scale: 1 });
+    gsap.set(textRef.current, { opacity: 0, rotateX: -90, transformPerspective: 1000 });
+
+    // Hide icon
+    tl.to(iconRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.6,
+    });
+
+    // Animate through each word
+    words.forEach((word) => {
+        tl.call(() => setText(word)); // Set new word
+        tl.fromTo(
+        textRef.current,
+        { opacity: 0, rotateX: -90 },
+        {
+            opacity: 1,
+            rotateX: 0,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            transformPerspective: 1000,
+        }
+        );
+        tl.to(textRef.current, {
+        opacity: 0,
+        rotateX: 90,
+        duration: 0.6,
+        delay: 0.8,
+        ease: "power2.in",
+        transformPerspective: 1000,
+        });
+    });
+
+    // Show icon again
+    tl.to(iconRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+    });
+    }, [id]);
+
+    return (
+    <>
+    <div className="text-center text-lime-400 relative min-w-[350px] h-[100px]">
+        <div className="w-full h-full relative flex items-center justify-center">
+            <div ref={iconRef} className="absolute inset-0 flex items-center justify-center">
+            <img src={iconSrc} alt="icon" className="w-16" />
+            </div>
+            <h2
+            ref={textRef}
+            className="text-[34px] tracking-wide absolute inset-0 flex items-center justify-center"
+            style={{ opacity: 0 }}
+            >
+            {text}
+            </h2>
+        </div>
+    </div>
+    </>
+  );
+};
+
 
 function Section() {
     return (
@@ -531,15 +616,14 @@ export default function Home() {
         children: <div className="gradient inset" />
     };
 
-      const sectionRef = useRef(null);
 
+    const sectionRef = useRef(null);
     useEffect(() => {
         const ctx = gsap.context(() => {
         if (!sectionRef.current) return;
-
         gsap.fromTo(
             sectionRef.current,
-            { scale: 0.8, opacity: 0 },
+            { scale: 0.2, opacity: 0 },
             {
             scale: 1,
             opacity: 1,
@@ -554,9 +638,9 @@ export default function Home() {
             }
         );
         }, sectionRef);
-
         return () => ctx.revert();
     }, []);
+
 
     return (
         <ParallaxProvider>
@@ -565,12 +649,33 @@ export default function Home() {
                 <ThreeModelOverlay />
                 <Section />
                 <div
-                    ref={sectionRef}
                     className="relative overflow-hidden bg-black min-h-screen w-full"
                     >
                     <ParticleCanvas />
                     <div className="relative z-10">
-                        <ImageZoomSection />
+                        <div ref={sectionRef} className="min-h-screen flex flex-col justify-center items-center text-center gap-y-20">
+                            <div className="flex justify-center items-center gap-20">
+                                <AnimatedIconText
+                                id="one"
+                                iconSrc="/images/icon1.svg"
+                                words={["Strategy", "Creativity", "Technology"]}
+                                />
+                                <AnimatedIconText
+                                id="two"
+                                iconSrc="/images/icon1.svg"
+                                words={["Creativity", "Technology", "Strategy"]}
+                                />
+                                <AnimatedIconText
+                                id="three"
+                                iconSrc="/images/icon1.svg"
+                                words={["Technology", "Strategy", "Creativity"]}
+                                />
+                            </div>
+
+                            <p className="text-[22px] fc-primary">
+                                aligned in perfect sync — Always adjusting, always forward
+                            </p>
+                        </div>
                         <SmartToolsSlider />
                         <ClientSlider />
                         <ServiceSlider />
