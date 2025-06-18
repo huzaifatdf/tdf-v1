@@ -133,14 +133,14 @@ const NotificationsPage = () => {
 
   const filteredNotifications = notifications
     .filter(notification => {
-      const matchesFilter = filter === 'all' || 
+      const matchesFilter = filter === 'all' ||
         (filter === 'unread' && !notification.read) ||
         (filter === 'read' && notification.read) ||
         (filter === notification.type);
-      
+
       const matchesSearch = notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         notification.message.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       return matchesFilter && matchesSearch;
     })
     .sort((a, b) => {
@@ -184,7 +184,7 @@ const NotificationsPage = () => {
     <AuthenticatedLayout>
       <Head title="Notifications" />
       <div className="min-h-screen p-6">
-        <div className="max-w-4xl mx-auto">
+        <div className=" mx-auto">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
@@ -202,7 +202,7 @@ const NotificationsPage = () => {
                   <p className="text-slate-600">Stay updated with your latest activities</p>
                 </div>
               </div>
-              
+
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
@@ -266,7 +266,7 @@ const NotificationsPage = () => {
                     className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50"
                   />
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <Filter className="w-4 h-4 text-slate-400" />
                   <select
@@ -303,8 +303,8 @@ const NotificationsPage = () => {
                 <div
                   key={notification.id}
                   className={`backdrop-blur-sm rounded-xl border-l-4 ${getNotificationBorder(notification.type)} border-r border-t border-b p-4 transition-all duration-200 hover:shadow-lg ${
-                    !notification.read 
-                      ? 'bg-gray-50/90 border-white/40 shadow-lg ring-2 ring-blue-100/50' 
+                    !notification.read
+                      ? 'bg-gray-50/90 border-white/40 shadow-lg ring-2 ring-blue-100/50'
                       : 'bg-white/70 border-white/20 opacity-75'
                   } hover:bg-white/80`}
                 >
@@ -313,7 +313,7 @@ const NotificationsPage = () => {
                       <div className="flex-shrink-0 mt-1">
                         {getNotificationIcon(notification.type)}
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
                           <h3 className={`font-semibold ${!notification.read ? 'text-slate-900' : 'text-slate-600'}`}>
@@ -325,11 +325,11 @@ const NotificationsPage = () => {
                             </span>
                           )}
                         </div>
-                        
+
                         <p className={`text-sm mb-2 ${!notification.read ? 'text-slate-800 font-medium' : 'text-slate-600'}`}>
                           {notification.message}
                         </p>
-                        
+
                         <div className="flex items-center space-x-3 text-xs text-slate-500">
                           <div className="flex items-center space-x-1">
                             <User className="w-3 h-3" />
@@ -340,7 +340,7 @@ const NotificationsPage = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2 ml-4">
                       {!notification.read ? (
                         <div className="flex items-center space-x-2">
@@ -388,7 +388,7 @@ const NotificationsPage = () => {
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                
+
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
                   <button
                     key={number}
@@ -398,7 +398,7 @@ const NotificationsPage = () => {
                     {number}
                   </button>
                 ))}
-                
+
                 <button
                   onClick={nextPage}
                   disabled={currentPage === totalPages}
