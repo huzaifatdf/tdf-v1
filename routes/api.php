@@ -26,6 +26,4 @@ Route::prefix('v1')->group(function() {
         Route::get('/{slug}', [App\Http\Controllers\Api\V1\FormController::class, 'form']);
     });
 
-
-
 });
