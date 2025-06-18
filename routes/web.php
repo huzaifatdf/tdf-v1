@@ -23,7 +23,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $ahrefs = new \App\Services\AhrefsService();
+    $rating = $ahrefs->getDomainRating("https://www.thedesignsfirm.com");
+    return Inertia::render('Dashboard', [
+        'rating' => $rating
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

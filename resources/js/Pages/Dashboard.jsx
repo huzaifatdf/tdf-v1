@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 
 
 import { useEffect } from "react";
@@ -7,7 +7,8 @@ import { SectionSeoScreen } from "@/Components/section-seo-screen";
 
 
 export default function Page() {
-
+    const {rating} = usePage().props
+    console.log(rating);
 
   return (
    <AuthenticatedLayout>
