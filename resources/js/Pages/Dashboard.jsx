@@ -8,7 +8,7 @@ import { SectionSeoScreen } from "@/Components/section-seo-screen";
 
 export default function Page() {
     const {rating} = usePage().props
-    console.log(rating);
+    console.log("rating",rating);
 
   return (
    <AuthenticatedLayout>
