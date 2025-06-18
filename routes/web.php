@@ -43,6 +43,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     require __DIR__.'/dashboard/ourclient.php';
     require __DIR__.'/dashboard/case.php';
     require __DIR__.'/dashboard/industry.php';
+    require __DIR__.'/dashboard/notification.php';
 });
 
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);

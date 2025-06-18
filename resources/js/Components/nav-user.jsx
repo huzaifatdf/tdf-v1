@@ -87,7 +87,7 @@ export function NavUser({
                 Profile
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => { router.get(route('notification.index')) }}>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
