@@ -4,21 +4,32 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import parse from 'html-react-parser';
 import { usePage } from "@inertiajs/react";
+import PropTypes from 'prop-types';
+import DOMPurify from 'dompurify'; // For sanitizing HTML
 
 gsap.registerPlugin(ScrollTrigger);
 
 function parseTitles(data) {
-  if (!data || typeof data !== 'object') return [];
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return [];
   return Object.keys(data).map(key => ({
     key: key.replace(/_\d+$/, ''),
     value: data[key] || ''
   }));
 }
 
-export default function Casestudiesinner(props) {
+export default function Casestudiesinner({ casestudy }) {
   const introRef = useRef(null);
-  const { casestudy } = props;
-  const jsonData = casestudy?.data ? JSON.parse(casestudy.data) : {};
+  const { appUrl } = usePage().props || {};
+
+  // Safely parse JSON data with error handling
+  const jsonData = (() => {
+    try {
+      return casestudy?.data ? JSON.parse(casestudy.data) : {};
+    } catch (e) {
+      console.error('Failed to parse casestudy.data:', e);
+      return {};
+    }
+  })();
 
   useEffect(() => {
     const intro = introRef.current;
@@ -39,7 +50,7 @@ export default function Casestudiesinner(props) {
 
   return (
     <WebsiteLayout
-      title="Case Studies | TDF Agency"
+      title={`${casestudy?.title || 'Case Study'} | TDF Agency`}
       description="Explore our portfolio of successful digital transformations and client success stories."
     >
       <section ref={introRef} className="flex items-center relative overflow-hidden">
@@ -50,37 +61,45 @@ export default function Casestudiesinner(props) {
               <div className="md:w-1/2">
                 <h1 className="text-[32px] fc-secondary leading-tight mb-6">
                   {casestudy?.title || 'Case Study'}
-                  {jsonData?.subtitle && (
-                    <> - <br className="hidden md:block" />{jsonData.subtitle}</>
+                  {jsonData?.Detail?.subtitle && (
+                    <> - <br className="hidden md:block" />{jsonData.Detail.subtitle}</>
                   )}
                 </h1>
               </div>
               <div className="md:w-1/2">
                 <div className="prose prose-lg prose-invert">
                   <p className="text-[16px] fc-primary leading-relaxed mb-6">
-                    <div dangerouslySetInnerHTML={{ __html: casestudy?.description || '' }} />
+                    {casestudy?.description ? parse(DOMPurify.sanitize(casestudy.description)) : 'No description available.'}
                   </p>
                 </div>
               </div>
             </div>
             <img
-              src="/images/case.png"
-              alt="HabibMetro Bank Project Overview"
+              src={jsonData?.Detail?.image ? `${appUrl}/${jsonData.Detail.image}` : '/images/placeholder.png'}
+              alt={`${casestudy?.title || 'Case Study'} Overview`}
               className="w-full h-[50vh] object-cover mt-5 mb-5"
             />
             <p className="text-[32px] font-bold fc-secondary leading-tight">Services Provided</p>
-            <hr className="border-white mb-8"/>
+            <hr className="border-white mb-8" />
           </div>
         </div>
       </section>
 
-      <Capabilities data={casestudy} jsonData={jsonData}/>
-      <Beginning data={casestudy} jsonData={jsonData} />
-      <SmoothExperienceSection data={casestudy} jsonData={jsonData}/>
-      <Components data={jsonData?.Technology ? parseTitles(jsonData.Technology) : []} conclusion={jsonData?.conclusion || ''}/>
+      <Capabilities data={casestudy} jsonData={jsonData} appUrl={appUrl} />
+      <Beginning data={casestudy} jsonData={jsonData} appUrl={appUrl} />
+      <SmoothExperienceSection data={casestudy} jsonData={jsonData} />
+      <Components data={jsonData?.Technology ? parseTitles(jsonData.Technology) : []} conclusion={jsonData?.Detail?.conclusion || ''} />
     </WebsiteLayout>
   );
 }
+
+Casestudiesinner.propTypes = {
+  casestudy: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    data: PropTypes.string
+  }).isRequired
+};
 
 const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => {
   const sectionRef = useRef(null);
@@ -114,7 +133,8 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      tl.scrollTrigger?.kill();
+      tl.kill();
     };
   }, [isLast]);
 
@@ -135,6 +155,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
+                aria-label={`Visit ${title} website`}
               >
                 {link}
               </a>
@@ -144,7 +165,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
             <div className="absolute inset-0 transform transition-transform duration-500" />
             <img
               src={image || '/images/placeholder.png'}
-              alt={title || 'Image'}
+              alt={title || 'Project Image'}
               className="w-full transform transition-all duration-500"
             />
           </div>
@@ -152,6 +173,15 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
       </div>
     </section>
   );
+};
+
+WebsiteShowcase.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  link: PropTypes.string,
+  image: PropTypes.string,
+  index: PropTypes.number.isRequired,
+  isLast: PropTypes.bool.isRequired
 };
 
 function transformData(data) {
@@ -173,38 +203,45 @@ function transformData(data) {
   return result;
 }
 
-function Capabilities(props) {
-  const { data, jsonData } = props;
-  const { appUrl } = usePage().props || {};
+function Capabilities({ data, jsonData, appUrl }) {
   const services = jsonData?.Service ? transformData(parseTitles(jsonData.Service)) : [];
   const projects = services.map((item, index) => ({
     id: String(index + 1).padStart(2, '0'),
     title: item?.title || '',
-    description: data?.description ? data.description.slice(0, 10) : '',
+    description: data?.description || '', // Fixed: No truncation
     link: jsonData?.Detail?.website || '',
-    image: item?.image ? `${appUrl}/${item.image}` : '/images/case2.png',
+    image: item?.image ? `${appUrl}/${item.image}` : '/images/placeholder.png',
   }));
 
   return (
     <div className="relative">
-      {projects.map((project, index) => (
-        <WebsiteShowcase
-          key={index}
-          title={project.title}
-          description={project.description}
-          link={project.link}
-          image={project.image}
-          index={index}
-          isLast={index === projects.length - 1}
-        />
-      ))}
+      {projects.length > 0 ? (
+        projects.map((project, index) => (
+          <WebsiteShowcase
+            key={index}
+            title={project.title}
+            description={project.description}
+            link={project.link}
+            image={project.image}
+            index={index}
+            isLast={index === projects.length - 1}
+          />
+        ))
+      ) : (
+        <p className="text-[18px] fc-primary text-center">No services available for this case study.</p>
+      )}
     </div>
   );
 }
 
-function Beginning(props) {
+Capabilities.propTypes = {
+  data: PropTypes.object.isRequired,
+  jsonData: PropTypes.object.isRequired,
+  appUrl: PropTypes.string
+};
+
+function Beginning({ data, jsonData, appUrl }) {
   const sectionRef = useRef(null);
-  const { data, jsonData } = props;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -233,14 +270,14 @@ function Beginning(props) {
   return (
     <section ref={sectionRef} className="">
       <div className="container-fluid">
-        <hr className="border-white mb-8"/>
+        <hr className="border-white mb-8" />
         <div className="sec-padding">
           <div className="grid lg:grid-cols-2 gap-12 align-items-center">
             <div className="relative">
               <div className="overflow-hidden shadow-2xl">
                 <img
-                  src="/images/begi.png"
-                  alt="Team collaboration in modern office"
+                  src={jsonData?.Detail?.beginning_image ? `${appUrl}/${jsonData.Detail.beginning_image}` : '/images/placeholder.png'}
+                  alt="Project background"
                   className="w-full object-cover"
                 />
               </div>
@@ -252,7 +289,7 @@ function Beginning(props) {
                     The Beginning - Understanding the Need
                   </h2>
                   <div className="mb-8">
-                    {parse(jsonData.Detail.the_beginning)}
+                    {parse(DOMPurify.sanitize(jsonData.Detail.the_beginning))}
                   </div>
                 </>
               )}
@@ -261,22 +298,28 @@ function Beginning(props) {
                   <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
                     Our Approach
                   </h3>
-                  {parse(jsonData.Approach.description)}
+                  {parse(DOMPurify.sanitize(jsonData.Approach.description))}
                 </div>
               )}
             </div>
           </div>
           {jsonData?.Approach?.lower_description && (
             <div className="fc-primary text-lg leading-relaxed mt-7">
-              {parse(jsonData.Approach.lower_description)}
+              {parse(DOMPurify.sanitize(jsonData.Approach.lower_description))}
             </div>
           )}
         </div>
-        <hr className="border-white mb-8"/>
+        <hr className="border-white mb-8" />
       </div>
     </section>
   );
 }
+
+Beginning.propTypes = {
+  data: PropTypes.object.isRequired,
+  jsonData: PropTypes.object.isRequired,
+  appUrl: PropTypes.string
+};
 
 function transformDataExperience(data) {
   if (!data || !Array.isArray(data)) return [];
@@ -297,11 +340,10 @@ function transformDataExperience(data) {
   return result;
 }
 
-function SmoothExperienceSection(props) {
+function SmoothExperienceSection({ data, jsonData }) {
   const [activeSection, setActiveSection] = useState('01');
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
-  const { data, jsonData } = props;
 
   const experience = jsonData?.Experience ? transformDataExperience(parseTitles(jsonData.Experience)) : [];
   const sections = experience.map((item, index) => ({
@@ -367,14 +409,17 @@ function SmoothExperienceSection(props) {
       <div className="flex">
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">
-            <nav className="space-y-8">
+            <nav className="space-y-8" role="navigation" aria-label="Experience sections">
               {sections.map((section) => (
                 <div key={section.id} className="relative group">
                   <button
                     onClick={() => handleSectionClick(section.id)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSectionClick(section.id)}
                     className={`text-left w-full transition-all duration-500 ${
                       activeSection === section.id ? 'opacity-100' : 'hover:opacity-70'
                     }`}
+                    aria-current={activeSection === section.id ? 'true' : 'false'}
+                    tabIndex={0}
                   >
                     <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
                       activeSection === section.id ? 'fc-secondary' : 'fc-white'
@@ -388,7 +433,7 @@ function SmoothExperienceSection(props) {
                     </h3>
                   </button>
                   {activeSection === section.id && (
-                    <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
+                    <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500" />
                   )}
                 </div>
               ))}
@@ -399,13 +444,13 @@ function SmoothExperienceSection(props) {
           {sections.map((section) => (
             <div
               key={section.id}
-              ref={el => sectionsRefs.current[section.id] = el}
+              ref={(el) => (sectionsRefs.current[section.id] = el)}
               className="min-h-screen flex items-center"
             >
               <div className="max-w-xl">
                 <div className="animate-fadeIn">
                   <p className="text-[22px] fc-primary mb-8 leading-relaxed">
-                    {parse(section.subtitle)}
+                    {parse(DOMPurify.sanitize(section.subtitle))}
                   </p>
                 </div>
               </div>
@@ -413,10 +458,19 @@ function SmoothExperienceSection(props) {
           ))}
         </div>
       </div>
-      <hr className="border-white mb-8"/>
+      <hr className="border-white mb-8" />
     </section>
-  ) : null;
+  ) : (
+    <section className="container-fluid">
+      <p className="text-[18px] fc-primary text-center">No experience details available for this case study.</p>
+    </section>
+  );
 }
+
+SmoothExperienceSection.propTypes = {
+  data: PropTypes.object.isRequired,
+  jsonData: PropTypes.object.isRequired
+};
 
 function transformDataComp(data) {
   if (!data || !Array.isArray(data)) return [];
@@ -437,11 +491,10 @@ function transformDataComp(data) {
   return result;
 }
 
-function Components(props) {
-  const { data, conclusion } = props;
+function Components({ data, conclusion }) {
   const parseCom = data ? transformDataComp(data) : [];
 
-  return data ? (
+  return data || conclusion ? (
     <div className="container-fluid relative">
       <div className="sec-padding pt-0">
         {parseCom.length > 0 ? (
@@ -456,9 +509,16 @@ function Components(props) {
             ))}
           </div>
         ) : (
-          conclusion && <p className="text-[18px] fc-primary">{conclusion}</p>
+          <p className="text-[18px] fc-primary">{parse(DOMPurify.sanitize(conclusion)) || 'No components or conclusion provided.'}</p>
         )}
       </div>
     </div>
-  ) : null;
+  ) : (
+    <p className="text-[18px] fc-primary text-center">No components or conclusion available.</p>
+  );
 }
+
+Components.propTypes = {
+  data: PropTypes.array,
+  conclusion: PropTypes.string
+};
