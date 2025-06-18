@@ -8,7 +8,7 @@ const SmartToolsSlider = () => {
   return (
     <div className="container-fluid relative">
       <div className='sec-padding pb-4'>
-        <h2 className="text-[30px] mb-6 fc-primary">
+        <h2 className="text-[34px] mb-6 fc-secondary">
           We Offer Smart Tools for Strategic Growth
         </h2>
 
@@ -42,8 +42,8 @@ const SmartToolsSlider = () => {
                   {/* Right Side Content */}
                   <div className="md:w-7/12 w-full flex flex-col justify-between pt-4 pl-4 pb-0">
                     <div>
-                      <h3 className="text-[28px] font-light fc-secondary mb-2">Eduman</h3>
-                      <p className="text-[18px] fc-primary mb-2">
+                      <h3 className="text-[30px] font-light fc-secondary mb-2">Eduman</h3>
+                      <p className="text-[24px] fc-primary mb-2">
                         For Control, Clarity, & Campus-Wide Confidence
                       </p>
                       <p className="text-[18px] fc-primary mb-2">
@@ -64,7 +64,7 @@ const SmartToolsSlider = () => {
                     <div className="flex items-end justify-between">
                       <a
                         href="#"
-                        className="inline-block text-left text-[18px] fc-secondary font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
+                        className="inline-block text-left text-[18px] fc-purple font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
                       >
                         View All Products
                       </a>

@@ -9033,6 +9033,9 @@ header nav.pn ul li ul li ul {
 .box.inside-page-banner {
   margin-top: 60px;
 }
+.box.services:hover .text-inner {
+  display: none;
+}
 
 .side-menu {
   display: none;
@@ -9432,6 +9435,25 @@ form textarea {
 .panel {
   flex: 0 0 100vw;
   height: 100vh;
+}
+
+.swiper-container-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-services {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-services .swiper-slide {
+  transition: transform 0.3s ease;
+}
+
+/* Prevent layout shift during loading */
+.swiper-services {
+  min-height: 420px;
 }
 
 footer {

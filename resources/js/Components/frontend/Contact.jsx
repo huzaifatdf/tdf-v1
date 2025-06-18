@@ -367,8 +367,8 @@ function Contact() {
    <>
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-700 pb-6 gap-4">
                     {/* Left Text */}
-                    <p className="text-[18px] md:text-[22px] fc-primary mb-0">
-                        Stay Ahead. Stay Relevant...
+                    <p className="text-[25px] md:text-[50px] fc-primary mb-0">
+                        Stay Ahead. Stay Relevant.
                     </p>
 
                     {/* Right 'Let's Talk' with Icon */}
