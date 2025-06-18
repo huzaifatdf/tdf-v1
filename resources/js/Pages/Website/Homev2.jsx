@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import gsap from 'gsap';
+import gsap from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WebsiteLayout from '@/Layouts/WebsiteLayout';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
@@ -18,43 +18,49 @@ import SmartToolsSlider from '@/Components/frontend/SmartToolsSlider';
 import TestimonialsSection from '@/Components/frontend/TestimonialsSection';
 import ParticleCanvas from "@/components/Space";
 
+// Register GSAP plugins only once at the top level
 gsap.registerPlugin(ScrollTrigger);
 
-
-// Using the slim version for better compatibility
-
 function ThreeModelOverlay() {
-    // ThreeModelOverlay component code remains unchanged
     const mountRef = useRef(null);
-    const modelRef = useRef(null); // To store reference to the loaded model
+    const modelRef = useRef(null);
 
     useEffect(() => {
-        // ThreeModelOverlay effect code remains unchanged
+        // Store cleanup functions
+        const cleanupFunctions = [];
+
         let isModelActive = false;
         const handleMouseMove = (event) => {
-        if (!isModelActive || !modelRef.current) return;
+            if (!isModelActive || !modelRef.current) return;
 
-        const bounds = mount.getBoundingClientRect();
-        const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-        const y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+            const mount = mountRef.current;
+            if (!mount) return;
 
-        // Example movement (update model rotation based on cursor)
-        modelRef.current.rotation.x = y * 0.5;
-        modelRef.current.rotation.y = x * 0.5;
+            const bounds = mount.getBoundingClientRect();
+            const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+            const y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+
+            modelRef.current.rotation.x = y * 0.5;
+            modelRef.current.rotation.y = x * 0.5;
         };
-        window.addEventListener('mousemove', handleMouseMove);
-        ScrollTrigger.create({
-        trigger: "#scroll-zoom-section",
-        start: "top top",
-        end: "bottom top",
-        onEnter: () => { isModelActive = true; },
-        onLeave: () => { isModelActive = false; },
-        onEnterBack: () => { isModelActive = true; },
-        onLeaveBack: () => { isModelActive = false; },
-        });
 
+        window.addEventListener('mousemove', handleMouseMove);
+        cleanupFunctions.push(() => window.removeEventListener('mousemove', handleMouseMove));
+
+        // Create ScrollTrigger with proper cleanup
+        const scrollTrigger = ScrollTrigger.create({
+            trigger: "#scroll-zoom-section",
+            start: "top top",
+            end: "bottom top",
+            onEnter: () => { isModelActive = true; },
+            onLeave: () => { isModelActive = false; },
+            onEnterBack: () => { isModelActive = true; },
+            onLeaveBack: () => { isModelActive = false; },
+        });
+        cleanupFunctions.push(() => scrollTrigger.kill());
 
         const mount = mountRef.current;
+        if (!mount) return;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(55, mount.clientWidth / mount.clientHeight, 0.9, 1000);
@@ -69,20 +75,16 @@ function ThreeModelOverlay() {
         light.position.set(1, 1, 1).normalize();
         scene.add(light);
 
-     // Spot Light from above
         const spotLight = new THREE.SpotLight(0xffffff, 2);
-        spotLight.position.set(0, 5, 5); // above and in front
+        spotLight.position.set(0, 5, 5);
         spotLight.angle = Math.PI / 6;
         spotLight.penumbra = 0.3;
         spotLight.decay = 2;
         spotLight.distance = 20;
         spotLight.castShadow = true;
-
-        // Target the spotlight to look at origin or model position
         spotLight.target.position.set(0, 0, 0);
-        scene.add(spotLight.target); // ✅ This is required
-        scene.add(spotLight);        // Don't forget this (you already had it)
-
+        scene.add(spotLight.target);
+        scene.add(spotLight);
 
         // Raycaster and mouse
         const raycaster = new THREE.Raycaster();
@@ -94,52 +96,47 @@ function ThreeModelOverlay() {
             const model = gltf.scene;
             model.scale.set(0.5, 0.5, 0.5);
             model.position.set(0, -0.5, 0);
-            model.name = 'BallModel'; // Optional: useful for identifying in raycasting
+            model.name = 'BallModel';
             scene.add(model);
             modelRef.current = model;
         });
 
-        // Animation
+        // Animation loop
+        let animationId;
         const animate = () => {
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
             if (modelRef.current) modelRef.current.rotation.y += 0.01;
             renderer.render(scene, camera);
         };
         animate();
-
-        // Scroll Zoom
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Scroll-triggered zoom in
-        gsap.to(camera.position, {
-        z: 1, // Zoom in more (was 3)
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#scroll-zoom-section",
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-        },
-        onUpdate: () => {
-            console.log("Camera Z:", camera.position.z);
-
-
-            camera.position.z = Math.max(1, Math.min(9, camera.position.z)); // updated bounds
-            renderer.render(scene, camera);
-            //element state fade out after Camera Z 2.857022
-
-        }
+        cleanupFunctions.push(() => {
+            if (animationId) cancelAnimationFrame(animationId);
         });
 
-
-        gsap.to(mount, {
-            autoAlpha: 0,
-            ease: "power4.inOut",         // starts slow, accelerates in middle, smooth end
-            duration: 2,                  // just in case fallback is needed
+        // GSAP ScrollTrigger animations
+        const cameraAnimation = gsap.to(camera.position, {
+            z: 1,
+            ease: "none",
             scrollTrigger: {
                 trigger: "#scroll-zoom-section",
-                start: "bottom bottom",   // starts fading as soon as bottom of section hits bottom of viewport
-                end: "bottom top-=80",   // longer range to make fade-out slower
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                onUpdate: () => {
+                    camera.position.z = Math.max(1, Math.min(9, camera.position.z));
+                    renderer.render(scene, camera);
+                }
+            },
+        });
+
+        const fadeAnimation = gsap.to(mount, {
+            autoAlpha: 0,
+            ease: "power4.inOut",
+            duration: 2,
+            scrollTrigger: {
+                trigger: "#scroll-zoom-section",
+                start: "bottom bottom",
+                end: "bottom top-=80",
                 scrub: true,
                 onUpdate: () => {
                     renderer.render(scene, camera);
@@ -147,55 +144,35 @@ function ThreeModelOverlay() {
             }
         });
 
-        // Fade out after the section is scrolled past
-        // gsap.to(mount, {
-        //     autoAlpha: 0,              // fade out and disable interaction
-        //     ease: "power2.out",        // smooth transition
-        //     duration: 1.5,             // fade duration in seconds
-        //     scrollTrigger: {
-        //         trigger: "#scroll-zoom-section",
-        //         start: "bottom top",     // when section scrolls out of view
-        //         end: "bottom top+=300",  // longer scroll range for slower fade
-        //         scrub: true,
-        //         onUpdate: () => {
-        //         renderer.render(scene, camera);
-        //         }
-        //     }
-        // });
-
-
         // Click handler
         const handleClick = (event) => {
-            // Calculate mouse position in normalized device coordinates
             const bounds = mount.getBoundingClientRect();
             mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
             mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
-
             raycaster.setFromCamera(mouse, camera);
-
-            // if (modelRef.current) {
-            //     const intersects = raycaster.intersectObject(modelRef.current, true);
-            //     if (intersects.length > 0) {
-            //         alert("You clicked on the 3D model!");
-            //     }
-            // }
         };
 
         mount.addEventListener('click', handleClick);
+        cleanupFunctions.push(() => mount.removeEventListener('click', handleClick));
 
         // Resize handler
         const handleResize = () => {
+            if (!mount) return;
             camera.aspect = mount.clientWidth / mount.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(mount.clientWidth, mount.clientHeight);
         };
         window.addEventListener('resize', handleResize);
+        cleanupFunctions.push(() => window.removeEventListener('resize', handleResize));
 
+        // Cleanup function
         return () => {
-            window.removeEventListener('resize', handleResize);
-            mount.removeEventListener('click', handleClick);
-            mount.innerHTML = '';
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            cleanupFunctions.forEach(cleanup => cleanup());
+            if (mount && mount.contains(renderer.domElement)) {
+                mount.removeChild(renderer.domElement);
+            }
+            renderer.dispose();
+            scene.clear();
         };
     }, []);
 
@@ -204,22 +181,20 @@ function ThreeModelOverlay() {
             ref={mountRef}
             className="fixed top-0 start-0 w-100"
             style={{
-                height: '100vh',       // full-screen coverage
+                height: '100vh',
                 pointerEvents: 'auto',
-                cursor: 'pointer',          // ensure it's on top
+                cursor: 'pointer',
             }}
         />
     );
 }
 
-// Other component definitions remain unchanged
-
-
+// Rest of your component code remains the same...
 const services = [
   {
     title: "Brand Communication",
     subtitle: "shaping how the world sees you",
-    image: "/images/ser1.png", // replace with your image path
+    image: "/images/ser1.png",
   },
   {
     title: "Web & Mobile Apps",
@@ -243,11 +218,6 @@ const services = [
   },
 ];
 
-
-// VIDEO SECTION //
-
-
-// Client Section //
 const clientsRow1 = [
   "ibm", "pg", "bok", "bankak", "time", "authentik", "rbs", "christou", "saeed", "metro", "rayan", "payfast"
 ];
@@ -282,243 +252,240 @@ const imageMap = {
   zafra: "zafra.png",
 };
 
-
 const ImageZoomSection = () => {
-const imageWrapperRef = useRef(null);
+    const imageWrapperRef = useRef(null);
 
-useEffect(() => {
-  gsap.to(imageWrapperRef.current, {
-    y: 20,               // move 20px down
-    duration: 2,         // animation duration
-    ease: "power1.inOut",
-    yoyo: true,          // return back to original position
-    repeat: -1,          // infinite loop
-    repeatDelay: 0.5,    // optional delay between cycles
-  });
-}, []);
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.to(imageWrapperRef.current, {
+                y: 20,
+                duration: 2,
+                ease: "power1.inOut",
+                yoyo: true,
+                repeat: -1,
+                repeatDelay: 0.5,
+            });
 
+            gsap.fromTo(
+                imageWrapperRef.current,
+                {
+                    scale: 1.9,
+                    opacity: 0,
+                },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 3.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: imageWrapperRef.current,
+                        start: "top 80%",
+                        toggleActions: "play none none none",
+                    },
+                }
+            );
+        });
 
-useEffect(() => {
-const ctx = gsap.context(() => {
-    gsap.fromTo(
-    imageWrapperRef.current,
-    {
-        scale: 1.9, // start slightly zoomed in
-        opacity: 0,
-    },
-    {
-        scale: 1, // zoom to normal
-        opacity: 1,
-        duration: 3.8,
-        ease: "power3.out",
-        scrollTrigger: {
-        trigger: imageWrapperRef.current,
-        start: "top 80%", // when imageWrapper is 80% into the viewport
-        toggleActions: "play none none none",
-        },
-    }
+        return () => ctx.revert();
+    }, []);
+
+    const creativityRef = useRef(null);
+    const strategyRef = useRef(null);
+    const technologyRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const spheres = [
+                { ref: creativityRef, delay: 0 },
+                { ref: strategyRef, delay: 0.2 },
+                { ref: technologyRef, delay: 0.4 },
+            ];
+
+            spheres.forEach(({ ref, delay }) => {
+                gsap.fromTo(
+                    ref.current,
+                    { y: 60, opacity: 0, scale: 0.8 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 3.8,
+                        ease: 'power3.out',
+                        delay,
+                        scrollTrigger: {
+                            trigger: ref.current,
+                            start: 'top 80%',
+                        },
+                    }
+                );
+
+                gsap.to(ref.current, {
+                    y: '-=10',
+                    duration: 3.8,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                    delay: delay + 1.2,
+                });
+            });
+        });
+
+        return () => ctx.revert();
+    }, []);
+
+    const textRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(
+                textRef.current.querySelectorAll('p'),
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.4,
+                    ease: 'power3.out',
+                    stagger: 0.3,
+                    scrollTrigger: {
+                        trigger: textRef.current,
+                        start: 'top 85%',
+                    },
+                }
+            );
+        });
+
+        return () => ctx.revert();
+    }, []);
+
+    return (
+        <>
+            <div className="container-fluid relative w-full h-screen overflow-hidden d-none">
+                <div
+                    ref={imageWrapperRef}
+                    className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover mb-[80px]"
+                    style={{
+                        transformOrigin: "center center",
+                        backgroundImage: `url('/images/backhome.png')`,
+                    }}
+                />
+
+                <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
+                    <p className="text-[30px] mb-0 fc-primary">
+                        We find the dots, draw the lines, and shape experiences
+                    </p>
+                </div>
+            </div>
+
+            <div className="relative px-4 d-none">
+                <div className="relative z-10 w-full max-w-4xl mx-auto mb-11 py-16">
+                    <div ref={creativityRef} className="absolute top-1 left-1/2 ">
+                        <div className="relative group">
+                            <img
+                                src="/images/creat.svg"
+                                alt="Creativity"
+                                className="w-[260px] h-[260px] object-contain hover:scale-110 transition-transform duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    <div ref={strategyRef} className="absolute top-20 left-40">
+                        <div className="relative group">
+                            <img
+                                src="/images/strat.svg"
+                                alt="Strategy"
+                                className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    <div ref={technologyRef} className="absolute top-[130%] left-[40%] ">
+                        <div className="relative group">
+                            <img
+                                src="/images/tech.svg"
+                                alt="Technology"
+                                className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='flex flex-col items-center justify-center d-none'>
+                <div ref={textRef} className="relative z-10 mt-80 text-center max-w-2xl">
+                    <p className="text-[20px] leading-relaxed mb-2 fc-primary">
+                        Strategy, creativity, technology - aligned in perfect sync
+                    </p>
+                    <p className="text-[20px] leading-relaxed mb-2 fc-primary">
+                        Always adjusting, always forward
+                    </p>
+                </div>
+
+                <style jsx>{`
+                    @keyframes float {
+                        0%, 100% { transform: translateY(0px) translateX(-50%); }
+                        50% { transform: translateY(-10px) translateX(-50%); }
+                    }
+                    @keyframes floatLeft {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-8px); }
+                    }
+                    @keyframes floatRight {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-12px); }
+                    }
+                    .absolute:nth-child(1) > div {
+                        animation: float 6s ease-in-out infinite;
+                    }
+                    .absolute:nth-child(2) > div {
+                        animation: floatLeft 8s ease-in-out infinite 2s;
+                    }
+                    .absolute:nth-child(3) > div {
+                        animation: floatRight 7s ease-in-out infinite 1s;
+                    }
+                `}</style>
+            </div>
+        </>
     );
-});
-
-return () => ctx.revert();
-}, []);
-
-
-  const creativityRef = useRef(null);
-  const strategyRef = useRef(null);
-  const technologyRef = useRef(null);
-
-  useEffect(() => {
-    const spheres = [
-      { ref: creativityRef, delay: 0 },
-      { ref: strategyRef, delay: 0.2 },
-      { ref: technologyRef, delay: 0.4 },
-    ];
-
-    spheres.forEach(({ ref, delay }) => {
-      // Entrance animation
-      gsap.fromTo(
-        ref.current,
-        { y: 60, opacity: 0, scale: 0.8 },
-        {
-          y: 0,
-          opacity: 1,
-        //   scale: 1,
-          duration: 3.8,
-          ease: 'power3.out',
-          delay,
-          scrollTrigger: {
-            trigger: ref.current,
-            start: 'top 80%',
-          },
-        }
-      );
-
-      // Continuous floating animation
-      gsap.to(ref.current, {
-        y: '-=10',
-        duration: 3.8,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: delay + 1.2,
-      });
-    });
-  }, []);
-
-
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    gsap.fromTo(
-      textRef.current.querySelectorAll('p'),
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.4,
-        ease: 'power3.out',
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: textRef.current,
-          start: 'top 85%',
-        },
-      }
-    );
-  }, []);
-
-
-  return (
-    <>
-    <div className="container-fluid relative w-full h-screen overflow-hidden">
-      <div
-        ref={imageWrapperRef}
-        className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover mb-[80px]"
-        style={{
-          transformOrigin: "center center",
-          backgroundImage: `url('/images/backhome.png')`,
-        }}
-      />
-
-      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
-        <p className="text-[30px] mb-0 fc-primary">
-          We find the dots, draw the lines, and shape experiences
-        </p>
-      </div>
-    </div>
-
-    <div className="relative px-4 ">
-        <div className="relative z-10 w-full max-w-4xl mx-auto mb-11 py-16">
-            {/* Top sphere - Creativity */}
-            <div ref={creativityRef}  className="absolute top-1 left-1/2 ">
-                <div className="relative group">
-                    <img
-                    src="/images/creat.svg"
-                    alt="Creativity"
-                    className="w-[260px] h-[260px] object-contain hover:scale-110 transition-transform duration-300"
-                    />
-                </div>
-            </div>
-
-            {/* Left sphere - Strategy */}
-            <div ref={strategyRef}  className="absolute top-20 left-40">
-                <div className="relative group">
-                    <img
-                    src="/images/strat.svg"
-                    alt="Strategy"
-                    className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
-                    />
-                </div>
-            </div>
-
-            {/* Right sphere - Technology */}
-            <div ref={technologyRef} className="absolute top-[130%] left-[40%] ">
-                <div className="relative group">
-                    <img
-                    src="/images/tech.svg"
-                    alt="Technology"
-                    className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
-                    />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div className='flex flex-col items-center justify-center '>
-        {/* Bottom text section */}
-      <div ref={textRef}  className="relative z-10 mt-80 text-center max-w-2xl">
-        <p className="text-[20px] leading-relaxed mb-2 fc-primary">
-          Strategy, creativity, technology - aligned in perfect sync
-        </p>
-        <p className="text-[20px] leading-relaxed mb-2 fc-primary">
-          Always adjusting, always forward
-        </p>
-      </div>
-
-      {/* Subtle floating animation */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) translateX(-50%); }
-          50% { transform: translateY(-10px) translateX(-50%); }
-        }
-        @keyframes floatLeft {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes floatRight {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .absolute:nth-child(1) > div {
-          animation: float 6s ease-in-out infinite;
-        }
-        .absolute:nth-child(2) > div {
-          animation: floatLeft 8s ease-in-out infinite 2s;
-        }
-        .absolute:nth-child(3) > div {
-          animation: floatRight 7s ease-in-out infinite 1s;
-        }
-      `}</style>
-    </div>
-
-    </>
-  );
 };
 
-// VIDEO SECTION //
-
-
 function Section() {
-    // Section component code, now we removed the ParticlesBackground call from here
     return (
         <>
             <div id="scroll-zoom-section" className="relative h-[300vh] overflow-hidden">
-                {/* ParticlesBackground removed from here as it's now global */}
-
                 {/* Section 1 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-30">
-                   <Parallax scale={[0.5, 1.5]} opacity={[0, 4]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]}>
                     <div className="text-center">
                         <h1 className="text-[40px] mb-5 fc-primary">Look at this dot</h1>
-                        <p className="text-[30px]  mb-0 fc-primary">it's like a planet in the vast universe <br /> At a distance, it seems like nothing <span className='font-weight-bold'><br />But zoom in </span></p>
+                        <p className="text-[30px] mb-0 fc-primary">
+                        it's like a planet in the vast universe <br />
+                        At a distance, it seems like nothing
+                        <br />
+                        <span className="font-weight-bold">But zoom in</span>
+                        </p>
                     </div>
                     </Parallax>
                 </div>
 
                 {/* Section 2 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-20">
-                    <Parallax scale={[0.5, 1.5]} opacity={[0, 1]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
-                        <p className="text-[30px] mb-0 fc-primary">and you'll find life, movement, possibilities…</p>
+                        <p className="text-[30px] mb-0 fc-primary">
+                        and you'll find life, movement, possibilities…
+                        </p>
                     </div>
                     </Parallax>
                 </div>
 
                 {/* Section 3 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-10">
-                    <Parallax scale={[0.5, 1.5]} opacity={[0, 1]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
-                        <p className="text-[30px] mb-0 fc-primary">Just like the universe, the digital world is infinite<br />Multiple ideas with untapped potential floating around</p>
+                        <p className="text-[30px] mb-0 fc-primary">
+                        Just like the universe, the digital world is infinite
+                        <br />
+                        Multiple ideas with untapped potential floating around
+                        </p>
                     </div>
                     </Parallax>
                 </div>
@@ -527,80 +494,80 @@ function Section() {
     );
 }
 
-
-
 export default function Home() {
     const topsection = {
-      translateY: [0, 30],
-      scale: [1, 1.05, "easeOutCubic"],
-      shouldAlwaysCompleteAnimation: true,
-      expanded: false,
-      children: (
-        <div className="box hero-section position-relative">
-          {/* Video container with overlay and wave effect */}
-          <div className="video-overlay-container position-absolute top-0 start-0 w-100 h-100">
-            <video
-              className="w-100 h-100 object-fit-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src="/images/tdfvideo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            {/* Overlay */}
-            <div className="video-overlay position-absolute top-0 start-0 w-100 h-100" />
-          </div>
+        translateY: [0, 30],
+        scale: [1, 1.05, "easeOutCubic"],
+        shouldAlwaysCompleteAnimation: true,
+        expanded: false,
+        children: (
+            <div className="box hero-section position-relative">
+                <div className="video-overlay-container position-absolute top-0 start-0 w-100 h-100">
+                    <video
+                        className="w-100 h-100 object-fit-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                    >
+                        <source src="/images/tdfvideo.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                    <div className="video-overlay position-absolute top-0 start-0 w-100 h-100" />
+                </div>
 
-          {/* Content */}
-          <div className="hero-content relative text-white text-center d-flex flex-column justify-content-center align-items-center">
-            <h1>Keeping You Ahead,</h1>
-            <h2>Keeping You Relevant</h2>
-          </div>
-        </div>
-      )
+                <div className="hero-content relative text-white text-center d-flex flex-column justify-content-center align-items-center">
+                    <h1>Keeping You Ahead,</h1>
+                    <h2>Keeping You Relevant</h2>
+                </div>
+            </div>
+        )
     };
 
     const gradientOverlay = {
-      opacity: [0, 1, "easeOutCubic"],
-      shouldAlwaysCompleteAnimation: true,
-      expanded: false,
-      children: <div className="gradient inset" />
+        opacity: [0, 1, "easeOutCubic"],
+        shouldAlwaysCompleteAnimation: true,
+        expanded: false,
+        children: <div className="gradient inset" />
     };
 
+      const sectionRef = useRef(null);
 
-  const sectionRef = useRef(null);
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+        if (!sectionRef.current) return;
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+        gsap.fromTo(
+            sectionRef.current,
+            { scale: 0.8, opacity: 0 },
+            {
+            scale: 1,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top center',
+                end: 'top center',
+                toggleActions: 'play none none reverse',
+            },
+            }
+        );
+        }, sectionRef);
 
-    gsap.fromTo(
-      sectionRef.current,
-      { scale: 0.8, opacity: 0 },
-      {
-        scale: 1,
-        opacity: 1,
-        duration: 1.5,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-  }, []);
+        return () => ctx.revert();
+    }, []);
 
     return (
         <ParallaxProvider>
             <WebsiteLayout title="Home | TDF Agency" description="Welcome to TDF Agency - Your trusted digital partner.">
-                {/* Global Particles Background */}
                 <ParallaxBanner layers={[topsection, gradientOverlay]} className="full"/>
                 <ThreeModelOverlay />
                 <Section />
-                <div ref={sectionRef} className="relative overflow-hidden bg-[#000]">
+                <div
+                    ref={sectionRef}
+                    className="relative overflow-hidden bg-black min-h-screen w-full"
+                    >
                     <ParticleCanvas />
                     <div className="relative z-10">
                         <ImageZoomSection />
@@ -614,4 +581,3 @@ export default function Home() {
         </ParallaxProvider>
     );
 }
-
