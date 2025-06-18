@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\FormController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebSiteController;
