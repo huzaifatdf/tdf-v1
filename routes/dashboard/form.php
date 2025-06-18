@@ -35,5 +35,3 @@ Route::post('submission/{slug}/{id}/archive', [FormSubmissionController::class, 
 Route::get('form/{slug}/duplicate', [FormSubmissionController::class, 'duplicate']) ->name('form.duplicate');
 
 
-
-Route::post('submission/client/{slug}/submit', [FormController::class, 'submit'])->name('client.submit.form');
