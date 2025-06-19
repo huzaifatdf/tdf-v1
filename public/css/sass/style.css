@@ -9033,6 +9033,9 @@ header nav.pn ul li ul li ul {
 .box.inside-page-banner {
   margin-top: 60px;
 }
+.box.services:hover .text-inner {
+  display: none;
+}
 
 .side-menu {
   display: none;

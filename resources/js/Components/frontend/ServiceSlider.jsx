@@ -24,9 +24,8 @@ function ServiceSlider() {
     <div className="container-fluid relative">
       <div className='sec-padding pt-0'>
         <div className="mb-8">
-          <p className="text-[30px] mb-6 fc-primary">
-            Strategy, creativity, technology - aligned in perfect sync<br />
-            Always adjusting, always forward
+          <p className="text-[30px] mb-6 fc-secondary">
+            Our Services
           </p>
         </div>
 
@@ -45,18 +44,18 @@ function ServiceSlider() {
           modules={[Autoplay, Navigation]}
         >
           {services.map((service, index) => (
-            <SwiperSlide key={index}>
-              <div className="overflow-hidden">
-                <img
-                  src={`${appUrl}/${service.image}`}
-                  alt={service.title}
-                  className="w-full h-[420px] object-cover"
-                />
-                <div className="p-1 mt-2">
-                  <h3 className="text-[22px] fc-primary mb-0">{service.short_title}</h3>
-                  <p className="text-[14px] fc-primary mb-0">{service.short_description}</p>
+            <SwiperSlide key="web-apps">
+                <div className="relative w-full h-[420px] overflow-hidden group box services">
+                    <img
+                        src={`${appUrl}/${service.image}`}
+                        alt={service.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-[#00141b]/80 flex flex-col justify-center items-center text-center px-8 text-inner">
+                        <h3 className="text-[22px] fc-secondary mb-2">{service.short_title}</h3>
+                        <p className="text-[14px] fc-white">{service.short_description}</p>
+                    </div>
                 </div>
-              </div>
             </SwiperSlide>
           ))}
         </Swiper>

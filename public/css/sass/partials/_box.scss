@@ -31,5 +31,12 @@
         // height: 100vh;
         margin-top: 60px;
     }
-}
 
+    &.services {
+        &:hover {
+            .text-inner {
+                display: none;
+            }
+        }
+    }
+}
