@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use WhichBrowser\Parser as BrowserParser;
-use Torann\GeoIP\Facades\GeoIP;
+
 
 class SeoVisitorService
 {
@@ -68,24 +68,35 @@ class SeoVisitorService
     protected function getGeoData(): array
     {
         $ip = $this->request->ip();
+        // $ip = "124.29.249.221"; // Test IP if needed
 
-        if ($ip && $ip !== '127.0.0.1') {
-            $geoData = GeoIP::getLocation($ip);
-
-            return [
-                'country' => $geoData->country,
-                'country_code' => $geoData->iso_code,
-                'region' => $geoData->state,
-                'region_name' => $geoData->state_name,
-                'city' => $geoData->city,
-                'zip' => $geoData->postal_code,
-                'latitude' => $geoData->lat,
-                'longitude' => $geoData->lon,
-                'timezone' => $geoData->timezone,
-            ];
+        if (!$ip || $ip === '127.0.0.1') {
+            return [];
         }
 
-        return [];
+        try {
+            $response = file_get_contents("https://ipapi.co/{$ip}/json/");
+            $geoData = json_decode($response, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE || isset($geoData['error'])) {
+                throw new \Exception('Invalid response from ipapi.co');
+            }
+
+            return [
+                'country' => $geoData['country_name'] ?? null,
+                'country_code' => $geoData['country'] ?? null,
+                'region' => $geoData['region_code'] ?? null,
+                'region_name' => $geoData['region'] ?? null,
+                'city' => $geoData['city'] ?? null,
+                'zip' => $geoData['postal'] ?? null,
+                'latitude' => $geoData['latitude'] ?? null,
+                'longitude' => $geoData['longitude'] ?? null,
+                'timezone' => $geoData['timezone'] ?? null,
+            ];
+        } catch (\Exception $e) {
+            \Log::error("ipapi.co lookup failed for IP {$ip}: " . $e->getMessage());
+            return [];
+        }
     }
 
     /**
