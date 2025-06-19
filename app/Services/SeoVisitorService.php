@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\SeoPageVisitor;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
@@ -67,15 +68,18 @@ class SeoVisitorService
      */
     protected function getGeoData(): array
     {
-        $ip = $this->request->ip();
-        // $ip = "124.29.249.221"; // Test IP if needed
+        //$ip = $this->request->ip();
+         $ip = "124.29.249.221"; // Test IP if needed
 
         if (!$ip || $ip === '127.0.0.1') {
             return [];
         }
 
         try {
-            $response = file_get_contents("https://ipapi.co/{$ip}/json/");
+            //use HTTP guzzle
+            $client = new Client();
+            $response = $client->get('http://ip-api.com/json/' . $ip)->getBody()->getContents();
+
             $geoData = json_decode($response, true);
 
             if (json_last_error() !== JSON_ERROR_NONE || isset($geoData['error'])) {
@@ -94,6 +98,7 @@ class SeoVisitorService
                 'timezone' => $geoData['timezone'] ?? null,
             ];
         } catch (\Exception $e) {
+    
             \Log::error("ipapi.co lookup failed for IP {$ip}: " . $e->getMessage());
             return [];
         }
