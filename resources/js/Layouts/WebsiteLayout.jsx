@@ -9,6 +9,7 @@ import Preloader from '@/components/Preloader';
 import Contact from '@/Components/frontend/Contact';
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
+import ContactFormFloating from '@/Components/ContactFormFloating';
 
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
@@ -200,6 +201,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     <main>
                         <div>
                             {children}
+                            <ContactFormFloating />
                         </div>
                     </main>
 
