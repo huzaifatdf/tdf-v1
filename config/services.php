@@ -18,8 +18,11 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'ahrefs' => [
-        'token' => env('AHREFS_API_TOKEN'),
+    'seo' => [
+        'tracking' => [
+            'skip_bots' => true,
+            'geoip_enabled' => true,
+        ],
     ],
 
     'ses' => [

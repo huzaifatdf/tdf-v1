@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SitemapController;
+use App\Http\Middleware\TrackSeoVisits;
 
 Route::get('/run-optimize-clear', function () {
     Artisan::call('optimize:clear');
@@ -18,16 +19,19 @@ Route::get('/run-optimize-clear', function () {
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 
 
-Route::get('/', function () {
-    return Inertia::render('Website/Homev2');
-});
+
+
+
 
 Route::get('/dashboard', function () {
-    $ahrefs = new \App\Services\AhrefsService();
-    $rating = $ahrefs->getDomainRating("thedesignsfirm.com");
-    return Inertia::render('Dashboard', [
-        'rating' => $rating
-    ]);
+
+$visitorService = app(\App\Services\SeoVisitorService::class);
+$stats = $visitorService->getStatistics([
+    'date_from' => '2023-01-01',
+    'date_to' => '2025-12-31'
+]);
+dd($stats);
+    return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -55,6 +59,10 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     require __DIR__.'/dashboard/notification.php';
 });
 
+Route::middleware(TrackSeoVisits::class)->group(function () {
+Route::get('/', function () {
+    return Inertia::render('Website/Homev2');
+});
 Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
@@ -62,5 +70,6 @@ Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
 
 Route::get('/product/{slug}', [WebSiteController::class, 'showProduct'])
     ->name('web.product.show');
+});
 
 
