@@ -649,7 +649,7 @@ export default function Home() {
                 <ThreeModelOverlay />
                 <Section />
                 <div
-                    className="relative overflow-hidden bg-black min-h-screen w-full"
+                    className="relative overflow-hidden min-h-screen w-full"
                     >
                     <ParticleCanvas />
                     <div className="relative z-10">

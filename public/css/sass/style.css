@@ -9042,8 +9042,8 @@ header nav.pn ul li ul li ul {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 30%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 550px;
   background: rgba(0, 20, 27, 0.9215686275);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -9450,6 +9450,18 @@ form textarea {
 
 .panel {
   flex: 0 0 100vw;
+  height: 100vh;
+}
+
+/* Add to your CSS */
+.scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.scroll-section {
+  scroll-snap-align: start;
   height: 100vh;
 }
 
