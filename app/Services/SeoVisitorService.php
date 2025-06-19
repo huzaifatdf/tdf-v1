@@ -63,93 +63,95 @@ class SeoVisitorService
         ], $geoData, $browserData, $referrerData, $utmData);
     }
 
+    
+
     protected function getConnectionType(): ?string
-{
-    // Check if connection type was passed from frontend
-    if ($connection = $this->request->input('connection_type')) {
-        return strtolower($connection);
+    {
+        // Check if connection type was passed from frontend
+        if ($connection = $this->request->input('connection_type')) {
+            return strtolower($connection);
+        }
+
+        // Try to detect from user agent or other headers
+        $userAgent = $this->request->userAgent();
+
+        if (strpos($userAgent, 'Mobile') !== false) {
+            return 'cellular'; // Default for mobile devices
+        }
+
+        return 'wired'; // Default for desktop
     }
-
-    // Try to detect from user agent or other headers
-    $userAgent = $this->request->userAgent();
-
-    if (strpos($userAgent, 'Mobile') !== false) {
-        return 'cellular'; // Default for mobile devices
-    }
-
-    return 'wired'; // Default for desktop
-}
 
     /**
      * Get geographic data
      */
-protected function getGeoData(): array
-{
-    $ip = $this->request->ip();
-    // $ip = "124.29.249.221"; // Test IP if needed
+    protected function getGeoData(): array
+    {
+        $ip = $this->request->ip();
+        // $ip = "124.29.249.221"; // Test IP if needed
 
-    if (!$ip || $ip === '127.0.0.1') {
-        return [];
+        if (!$ip || $ip === '127.0.0.1') {
+            return [];
+        }
+
+        try {
+            $client = new Client();
+            $response = $client->get('http://ip-api.com/json/' . $ip)->getBody()->getContents();
+            $geoData = json_decode($response, true);
+
+            // Check if the request was successful
+            if ($geoData['status'] !== 'success') {
+                throw new \Exception('IP lookup failed: ' . ($geoData['message'] ?? 'Unknown error'));
+            }
+
+            return [
+                'country' => $geoData['country'] ?? null,
+                'country_code' => $geoData['countryCode'] ?? null,
+                'region' => $geoData['region'] ?? null,  // Note: ip-api.com uses 'region' for code
+                'region_name' => $geoData['regionName'] ?? null,
+                'city' => $geoData['city'] ?? null,
+                'zip' => $geoData['zip'] ?? null,
+                'latitude' => $geoData['lat'] ?? null,
+                'longitude' => $geoData['lon'] ?? null,
+                'timezone' => $geoData['timezone'] ?? null,
+                'isp' => $geoData['isp'] ?? null,      // Additional fields available
+                'org' => $geoData['org'] ?? null        // from ip-api.com
+            ];
+        } catch (\Exception $e) {
+            \Log::error("IP lookup failed for IP {$ip}: " . $e->getMessage());
+            return [];
+        }
     }
 
-    try {
-        $client = new Client();
-        $response = $client->get('http://ip-api.com/json/' . $ip)->getBody()->getContents();
-        $geoData = json_decode($response, true);
+        /**
+         * Get browser/device data
+         */
+    protected function getBrowserData(): array
+    {
+        $deviceType = 'desktop'; // default
+        $isMobile = false;
+        $isTablet = false;
 
-        // Check if the request was successful
-        if ($geoData['status'] !== 'success') {
-            throw new \Exception('IP lookup failed: ' . ($geoData['message'] ?? 'Unknown error'));
+        if ($this->browserParser->isMobile()) {
+            $deviceType = 'mobile';
+            $isMobile = true;
+        } elseif ($this->browserParser->isType('tablet')) {
+            $deviceType = 'tablet';
+            $isTablet = true;
         }
 
         return [
-            'country' => $geoData['country'] ?? null,
-            'country_code' => $geoData['countryCode'] ?? null,
-            'region' => $geoData['region'] ?? null,  // Note: ip-api.com uses 'region' for code
-            'region_name' => $geoData['regionName'] ?? null,
-            'city' => $geoData['city'] ?? null,
-            'zip' => $geoData['zip'] ?? null,
-            'latitude' => $geoData['lat'] ?? null,
-            'longitude' => $geoData['lon'] ?? null,
-            'timezone' => $geoData['timezone'] ?? null,
-            'isp' => $geoData['isp'] ?? null,      // Additional fields available
-            'org' => $geoData['org'] ?? null        // from ip-api.com
+            'os' => $this->browserParser->os->getName() ?? null,
+            'os_version' => $this->browserParser->os->getVersion() ?? null,
+            'browser' => $this->browserParser->browser->getName() ?? null,
+            'browser_version' => $this->browserParser->browser->getVersion() ?? null,
+            'device' => $this->browserParser->device->getModel() ?? null,
+            'device_type' => $deviceType,
+            'is_mobile' => $isMobile,
+            'is_tablet' => $isTablet,
+            'is_desktop' => (!$isMobile && !$isTablet),
         ];
-    } catch (\Exception $e) {
-        \Log::error("IP lookup failed for IP {$ip}: " . $e->getMessage());
-        return [];
     }
-}
-
-    /**
-     * Get browser/device data
-     */
-protected function getBrowserData(): array
-{
-    $deviceType = 'desktop'; // default
-    $isMobile = false;
-    $isTablet = false;
-
-    if ($this->browserParser->isMobile()) {
-        $deviceType = 'mobile';
-        $isMobile = true;
-    } elseif ($this->browserParser->isType('tablet')) {
-        $deviceType = 'tablet';
-        $isTablet = true;
-    }
-
-    return [
-        'os' => $this->browserParser->os->getName() ?? null,
-        'os_version' => $this->browserParser->os->getVersion() ?? null,
-        'browser' => $this->browserParser->browser->getName() ?? null,
-        'browser_version' => $this->browserParser->browser->getVersion() ?? null,
-        'device' => $this->browserParser->device->getModel() ?? null,
-        'device_type' => $deviceType,
-        'is_mobile' => $isMobile,
-        'is_tablet' => $isTablet,
-        'is_desktop' => (!$isMobile && !$isTablet),
-    ];
-}
 
     /**
      * Get referrer data

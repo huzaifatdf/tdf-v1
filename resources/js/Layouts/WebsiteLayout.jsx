@@ -9,7 +9,6 @@ import Preloader from '@/components/Preloader';
 import Contact from '@/Components/frontend/Contact';
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
-import ContactFormFloating from '@/Components/ContactFormFloating';
 
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
@@ -143,17 +142,57 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                 ref={menuRef}
                                 className={`side-menu ${menuOpen ? 'open' : ''}`}
                                 id="sideMenu"
-                            >
-                                <ul>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/casestudiesmain">Case Studies</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/Servicesmain">Services</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/Productmain">Product</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/Industriesmain">Industries</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/Contact">Contact</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/About">About Us</a></li>
-                                    <li className="transition-transform duration-200 hover:scale-105"><a href="/partners">Partners</a></li>
-                                </ul>
-                            </div>
+                                >
+                                <div className="flex flex-col justify-between h-full">
+                                    {/* Centered Menu Links */}
+                                    <div className="flex-1 flex items-center justify-center">
+                                    <ul className="space-y-4 w-[80%] px-6 m-0">
+                                        {[
+                                            { href: "/casestudiesmain", label: "Case Studies", icon: "/images/home.svg" },
+                                            { href: "/Servicesmain", label: "Services", icon: "/images/home.svg" },
+                                            { href: "/Productmain", label: "Product", icon: "/images/home.svg" },
+                                            { href: "/Industriesmain", label: "Industries", icon: "/images/home.svg" },
+                                            { href: "/Contact", label: "Contact", icon: "/images/home.svg" },
+                                            { href: "/About", label: "About Us", icon: "/images/home.svg" },
+                                            { href: "/partners", label: "Partners", icon: "/images/home.svg" },
+                                        ].map((item, index) => (
+                                            <li
+                                            key={index}
+                                            className="transition-transform duration-200 hover:scale-105"
+                                            >
+                                            <a
+                                                href={item.href}
+                                                className="flex items-center gap-3 text-white"
+                                            >
+                                                <img src={item.icon} alt={item.label} width="50" />
+                                                <span>{item.label}</span>
+                                            </a>
+                                            </li>
+                                        ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Bottom Fixed Social Icons */}
+                                    <div className="pt-4 pb-4">
+                                    <h5 className="text-[20px] text-white mb-2 text-center">Get in Touch</h5>
+                                    <div className="flex justify-center gap-3">
+                                        <a href="#" className="hover:text-gray-300 rotate-hover">
+                                        <img src="/images/facebook.svg" alt="Facebook" width="40" />
+                                        </a>
+                                        <a href="#" className="hover:text-gray-300 rotate-hover">
+                                        <img src="/images/linkedin.svg" alt="LinkedIn" width="40" />
+                                        </a>
+                                        <a href="#" className="hover:text-gray-300 rotate-hover">
+                                        <img src="/images/insta.svg" alt="Instagram" width="40" />
+                                        </a>
+                                        <a href="#" className="hover:text-gray-300 rotate-hover">
+                                        <img src="/images/youtube.svg" alt="YouTube" width="40" />
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
                         </div>
                     </nav>
 
@@ -161,7 +200,6 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     <main>
                         <div>
                             {children}
-                            <ContactFormFloating />
                         </div>
                     </main>
 
@@ -190,7 +228,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                 </div>
 
                                 <div className="items-center space-x-4">
-                                    <h5 className="text-[22px] fc-primary mb-2 ml-2">Get in Touch</h5>
+                                    <h5 className="text-[20px] fc-primary mb-2">Get in Touch</h5>
                                     <div className="flex ml-0">
                                         <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/facebook.svg" alt="Facebook" width="40" className="me-2" /></a>
                                         <a href="#" className="hover:text-gray-300 rotate-hover"><img src="/images/linkedin.svg" alt="LinkedIn" width="40" className="me-2" /></a>
