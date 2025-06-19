@@ -18,12 +18,7 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'seo' => [
-        'tracking' => [
-            'skip_bots' => true,
-            'geoip_enabled' => true,
-        ],
-    ],
+
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

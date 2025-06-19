@@ -28,7 +28,7 @@ class SeoVisitorService
     public function trackVisit()
     {
         // Skip tracking for bots if configured
-        if (config('seo.tracking.skip_bots') && $this->isBot()) {
+        if ($this->isBot()) {
             return null;
         }
 
@@ -69,7 +69,7 @@ class SeoVisitorService
     {
         $ip = $this->request->ip();
 
-        if (config('seo.tracking.geoip_enabled') && $ip && $ip !== '127.0.0.1') {
+        if ($ip && $ip !== '127.0.0.1') {
             $geoData = GeoIP::getLocation($ip);
 
             return [
