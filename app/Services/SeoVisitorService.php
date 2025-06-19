@@ -66,43 +66,43 @@ class SeoVisitorService
     /**
      * Get geographic data
      */
-    protected function getGeoData(): array
-    {
-        $ip = $this->request->ip();
-         //$ip = "124.29.249.221"; // Test IP if needed
+protected function getGeoData(): array
+{
+    $ip = $this->request->ip();
+    // $ip = "124.29.249.221"; // Test IP if needed
 
-        if (!$ip || $ip === '127.0.0.1') {
-            return [];
-        }
-
-        try {
-            //use HTTP guzzle
-            $client = new Client();
-            $response = $client->get('http://ip-api.com/json/' . $ip)->getBody()->getContents();
-            dd($response);
-            $geoData = json_decode($response, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE || isset($geoData['error'])) {
-                throw new \Exception('Invalid response from ipapi.co');
-            }
-
-            return [
-                'country' => $geoData['country_name'] ?? null,
-                'country_code' => $geoData['country'] ?? null,
-                'region' => $geoData['region_code'] ?? null,
-                'region_name' => $geoData['region'] ?? null,
-                'city' => $geoData['city'] ?? null,
-                'zip' => $geoData['postal'] ?? null,
-                'latitude' => $geoData['latitude'] ?? null,
-                'longitude' => $geoData['longitude'] ?? null,
-                'timezone' => $geoData['timezone'] ?? null,
-            ];
-        } catch (\Exception $e) {
-
-            \Log::error("ipapi.co lookup failed for IP {$ip}: " . $e->getMessage());
-            return [];
-        }
+    if (!$ip || $ip === '127.0.0.1') {
+        return [];
     }
+
+    try {
+        $client = new Client();
+        $response = $client->get('http://ip-api.com/json/' . $ip)->getBody()->getContents();
+        $geoData = json_decode($response, true);
+
+        // Check if the request was successful
+        if ($geoData['status'] !== 'success') {
+            throw new \Exception('IP lookup failed: ' . ($geoData['message'] ?? 'Unknown error'));
+        }
+
+        return [
+            'country' => $geoData['country'] ?? null,
+            'country_code' => $geoData['countryCode'] ?? null,
+            'region' => $geoData['region'] ?? null,  // Note: ip-api.com uses 'region' for code
+            'region_name' => $geoData['regionName'] ?? null,
+            'city' => $geoData['city'] ?? null,
+            'zip' => $geoData['zip'] ?? null,
+            'latitude' => $geoData['lat'] ?? null,
+            'longitude' => $geoData['lon'] ?? null,
+            'timezone' => $geoData['timezone'] ?? null,
+            'isp' => $geoData['isp'] ?? null,      // Additional fields available
+            'org' => $geoData['org'] ?? null        // from ip-api.com
+        ];
+    } catch (\Exception $e) {
+        \Log::error("IP lookup failed for IP {$ip}: " . $e->getMessage());
+        return [];
+    }
+}
 
     /**
      * Get browser/device data
