@@ -406,24 +406,24 @@ function Contact() {
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 transform transition-transform duration-500 ease-in-out">
                         <div className='row m-0'>
-                            <p className="text-[22px] fc-primary mb-0  p-0">Start a Conversation</p>
+                            <p className="text-[30px] fc-secondary mb-0 p-0">Start a Conversation</p>
                             <div className="mt-4 col-md-6 p-0">
-                                <p className="text-[22px] fc-primary mb-0">Email:</p>
+                                <p className="text-[20px] fc-primary mb-0">Email:</p>
                                 <a
                                     href="mailto:info@thedesignfirm.com"
-                                    className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200"
+                                    className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200"
                                 >
                                     info@thedesignfirm.com
                                 </a>
                             </div>
 
                             <div className="mt-4 col-md-6  p-0" >
-                                <p className="text-[22px] fc-primary mb-0">USA:</p>
-                                <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>+12393565070</a>
+                                <p className="text-[20px] fc-primary mb-0">USA:</p>
+                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>+12393565070</a>
                             </div>
                             <div className="mt-4  p-0">
-                                <p className="text-[22px] fc-primary mb-0">Pakistan:</p>
-                                <a className="inline-block text-[18px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+92 303 080 8833'>+92 303 080 8833</a>
+                                <p className="text-[20px] fc-primary mb-0">Pakistan:</p>
+                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+92 303 080 8833'>+92 303 080 8833</a>
                             </div>
                         </div>
 

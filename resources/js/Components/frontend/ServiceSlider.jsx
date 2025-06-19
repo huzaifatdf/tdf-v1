@@ -22,7 +22,7 @@ function ServiceSlider() {
 
   return (
     <div className="container-fluid relative">
-      <div className='sec-padding pt-0'>
+      <div className='sec-padding --large pt-0'>
         <div className="mb-8">
           <p className="text-[30px] mb-6 fc-secondary">
             Our Services
@@ -30,7 +30,7 @@ function ServiceSlider() {
         </div>
 
         <Swiper
-          spaceBetween={10}
+          spaceBetween={20}
           slidesPerView={1}
           autoplay={{
             delay: 3000,
@@ -38,7 +38,7 @@ function ServiceSlider() {
           }}
           breakpoints={{
             768: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
+            1024: { slidesPerView: 5 },
           }}
           navigation={true}
           modules={[Autoplay, Navigation]}

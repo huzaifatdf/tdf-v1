@@ -46,7 +46,7 @@ const SmartToolsSlider = () => {
                       <p className="text-[24px] fc-primary mb-2">
                         For Control, Clarity, & Campus-Wide Confidence
                       </p>
-                      <p className="text-[18px] fc-primary mb-2">
+                      <p className="text-[18px] fc-primary mb-2 w-[70%]">
                         Eduman is a cloud-based, SaaS (Software as a Service) system
                         that simplifies the academic, administrative, and communication
                         workflows for modern schools.

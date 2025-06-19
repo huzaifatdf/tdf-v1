@@ -101,7 +101,7 @@ function TestimonialsSection() {
         </svg>
       </div>
 
-      <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding px-8">
+      <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding --large px-8">
         {/* Floating Avatars */}
         <div className="floating-avatars absolute inset-0">
           <div

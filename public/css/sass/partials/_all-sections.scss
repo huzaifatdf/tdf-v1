@@ -1,37 +1,55 @@
-// Burger Menu //
+/* Burger Menu */
 .side-menu {
-    display: none;
-    position: absolute;
-    top: 80px;
-    right: 40px;
-    width: 270px;
-    background: #00354eeb;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 30%;
+    max-width: 400px;
+    background: #00141beb;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    padding: 1rem;
+    padding: 1.5rem 0;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
 .side-menu.open {
-    display: block;
+    right: 0;
+    opacity: 1;
+    pointer-events: auto;
 }
+@media (max-width: 768px) {
+  .side-menu {
+    width: 100%;
+  }
+}
+
+
+
 .side-menu ul {
     padding: 0;
 }
 .side-menu ul li {
     text-align: right;
-    padding: 10px;
-    border-bottom: 1px solid white;
+    padding: 10px 0px 16px 0px;
+    border-bottom: 1px solid #ffffff21;
 }
 .side-menu ul li:last-child {
     border: unset;
 }
 .side-menu ul li a {
-    font-size: 22px;
+    font-size: 18px;
     color: white;
+    letter-spacing: 2px;
 }
 .burger {
     width: 40px;
     height: 40px;
+    z-index: 111111;
 }
 
 .burger .bar {
@@ -300,7 +318,7 @@ form {
     }
 }
 .swiper-pagination-custom {
-    top: 50% !important;
+    top: 30% !important;
     height: max-content;
     .swiper-pagination-bullet {
         padding: 5px;

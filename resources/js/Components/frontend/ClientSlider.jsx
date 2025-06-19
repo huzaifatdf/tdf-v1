@@ -44,12 +44,12 @@ function ClientSlider() {
                     key={index}
                     src={`${appUrl}/${client.image}`}
                     alt={client}
-                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
+                    className="mx-6 h-25 object-contain grayscale hover:grayscale-0 transition duration-300"
                 />
                 ))}
             </Marquee>
             </div>
-            <div className="overflow-hidden  pb-5 mt-2">
+            {/* <div className="overflow-hidden  pb-5 mt-2">
             <Marquee gradient={false} speed={40} direction="left" pauseOnHover={false}>
                 {lowerourclients.map((client, index) => (
                 <img
@@ -60,7 +60,7 @@ function ClientSlider() {
                 />
                 ))}
             </Marquee>
-            </div>
+            </div> */}
         </div>
             <hr class="border-white mb-8"></hr>
         </div>
