@@ -59,9 +59,26 @@ class SeoVisitorService
 
             'is_bot' => $this->isBot(),
             'screen_resolution' => $this->request->input('screen_resolution'),
-            'connection_type' => $this->request->input('connection_type'),
+            'connection_type' => $this->getConnectionType(),
         ], $geoData, $browserData, $referrerData, $utmData);
     }
+
+    protected function getConnectionType(): ?string
+{
+    // Check if connection type was passed from frontend
+    if ($connection = $this->request->input('connection_type')) {
+        return strtolower($connection);
+    }
+
+    // Try to detect from user agent or other headers
+    $userAgent = $this->request->userAgent();
+
+    if (strpos($userAgent, 'Mobile') !== false) {
+        return 'cellular'; // Default for mobile devices
+    }
+
+    return 'wired'; // Default for desktop
+}
 
     /**
      * Get geographic data
@@ -192,6 +209,7 @@ protected function getBrowserData(): array
     {
         // This should be implemented based on how your application stores page titles
         // For example, you might get it from the request or a service
+        //get page head title
         return null;
     }
 
