@@ -15,10 +15,12 @@ class AhrefsService
     {
         $this->client = new Client();
         $this->token = config('services.ahrefs.token');
+
     }
 
     public function makeRequest($endpoint, $params = [])
     {
+       
         try {
             $response = $this->client->get($this->baseUrl . $endpoint, [
                 'query' => array_merge(['token' => $this->token], $params),
@@ -26,9 +28,11 @@ class AhrefsService
                     'Accept' => 'application/json',
                 ],
             ]);
+            dd($response);
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
+            dd($e);
             // Handle exception or log error
             return [
                 'error' => true,
