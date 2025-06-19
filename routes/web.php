@@ -3,6 +3,7 @@
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SeoTrackingController;
 use App\Http\Controllers\WebSiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -71,5 +72,6 @@ Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
 Route::get('/product/{slug}', [WebSiteController::class, 'showProduct'])
     ->name('web.product.show');
 });
+
 
 

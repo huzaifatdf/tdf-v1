@@ -58,12 +58,30 @@ class SeoVisitorService
             'session_id' => $this->request->session()->getId(),
 
             'is_bot' => $this->isBot(),
-            'screen_resolution' => $this->request->input('screen_resolution'),
+            'screen_resolution' => $this->getScreenResolution(),
             'connection_type' => $this->getConnectionType(),
         ], $geoData, $browserData, $referrerData, $utmData);
     }
 
-    
+    /**
+     * Get screen resolution from request or session
+     */
+    protected function getScreenResolution(): ?string
+    {
+        // First check if it's sent in the current request
+        if ($resolution = $this->request->input('screen_resolution')) {
+            // Store in session for future requests
+            $this->request->session()->put('screen_resolution', $resolution);
+            return $resolution;
+        }
+
+        // Check if we have it stored in session from previous requests
+        if ($resolution = $this->request->session()->get('screen_resolution')) {
+            return $resolution;
+        }
+
+        return null;
+    }
 
     protected function getConnectionType(): ?string
     {
@@ -174,11 +192,11 @@ class SeoVisitorService
     }
 
     /**
-     * Get UTM parameters
+     * Get UTM parameters - Enhanced for Inertia
      */
     protected function getUtmData(): array
     {
-        return [
+        $utmData = [
             'utm_source' => $this->request->input('utm_source'),
             'utm_medium' => $this->request->input('utm_medium'),
             'utm_campaign' => $this->request->input('utm_campaign'),
@@ -189,12 +207,21 @@ class SeoVisitorService
             'fbclid' => $this->request->input('fbclid'),
             'msclkid' => $this->request->input('msclkid'),
         ];
+
+        // Store UTM data in session if present (for attribution across pages)
+        $sessionUtmData = [];
+        foreach ($utmData as $key => $value) {
+            if ($value) {
+                $this->request->session()->put("utm_data.{$key}", $value);
+                $sessionUtmData[$key] = $value;
+            } else {
+                // Use session data if not in current request
+                $sessionUtmData[$key] = $this->request->session()->get("utm_data.{$key}");
+            }
+        }
+
+        return $sessionUtmData;
     }
-
-    /**
-     * Get device type
-     */
-
 
     /**
      * Check if visitor is a bot
@@ -205,14 +232,53 @@ class SeoVisitorService
     }
 
     /**
-     * Get page title (to be implemented by the application)
+     * Get page title from Inertia props or request
      */
     protected function getPageTitle(): ?string
     {
-        // This should be implemented based on how your application stores page titles
-        // For example, you might get it from the request or a service
-        //get page head title
-        return null;
+        // Method 1: Check if title is passed in request (from frontend)
+        if ($title = $this->request->input('page_title')) {
+            return $title;
+        }
+
+        // Method 2: Check if it's stored in session from Inertia
+        if ($title = $this->request->session()->get('page_title')) {
+            return $title;
+        }
+
+        // Method 3: Try to extract from route name or URL
+        $routeName = $this->request->route() ? $this->request->route()->getName() : null;
+        if ($routeName) {
+            return $this->generateTitleFromRoute($routeName);
+        }
+
+        // Method 4: Generate from URL path
+        $path = trim($this->request->getPathInfo(), '/');
+        if (empty($path)) {
+            return 'Home - TDF Agency';
+        }
+
+        return ucfirst(str_replace(['/', '-', '_'], [' - ', ' ', ' '], $path)) . ' - TDF Agency';
+    }
+
+    /**
+     * Generate title from route name
+     */
+    protected function generateTitleFromRoute(string $routeName): string
+    {
+        $routeToTitle = [
+            'home' => 'Home - TDF Agency',
+            'about' => 'About Us - TDF Agency',
+            'services' => 'Services - TDF Agency',
+            'contact' => 'Contact - TDF Agency',
+            'casestudiesmain' => 'Case Studies - TDF Agency',
+            'servicesmain' => 'Services - TDF Agency',
+            'productmain' => 'Products - TDF Agency',
+            'industriesmain' => 'Industries - TDF Agency',
+            'partners' => 'Partners - TDF Agency',
+        ];
+
+        return $routeToTitle[$routeName] ?? ucfirst(str_replace(['.', '-', '_'], [' - ', ' ', ' '], $routeName)) . ' - TDF Agency';
     }
 
     /**

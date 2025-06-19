@@ -3,11 +3,38 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SearchConsoleController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
+
+
+Route::prefix('search-console')->group(function () {
+
+    // Get list of sites
+    Route::get('/sites', [SearchConsoleController::class, 'getSites']);
+
+    // Get site information
+    Route::get('/site-info', [SearchConsoleController::class, 'getSiteInfo']);
+
+    // Get general analytics data
+    Route::post('/analytics', [SearchConsoleController::class, 'getAnalytics']);
+
+    // Get top queries
+    Route::get('/top-queries', [SearchConsoleController::class, 'getTopQueries']);
+
+    // Get top pages
+    Route::get('/top-pages', [SearchConsoleController::class, 'getTopPages']);
+
+    // Get performance summary
+    Route::get('/performance-summary', [SearchConsoleController::class, 'getPerformanceSummary']);
+
+    // Get query specific performance
+    Route::get('/query-performance', [SearchConsoleController::class, 'getQueryPerformance']);
+
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

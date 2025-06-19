@@ -10,6 +10,10 @@ class TrackSeoVisits
     {
         $response = $next($request);
 
+        // Skip tracking for non-GET requests
+        if ($request->method() !== 'GET') {
+            return $response;
+        }
 
         app(SeoVisitorService::class)->trackVisit();
 

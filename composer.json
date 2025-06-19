@@ -7,6 +7,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "google/analytics-data": "^0.22.2",
+        "google/apiclient": "*",
+        "google/apiclient-services": "^0.399.0",
         "inertiajs/inertia-laravel": "^2.0",
         "intervention/image": "^3.11",
         "jaybizzle/crawler-detect": "^1.3",
