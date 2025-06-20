@@ -26,12 +26,12 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.i
 
 Route::get('/dashboard', function () {
 
-$visitorService = app(\App\Services\SeoVisitorService::class);
-$stats = $visitorService->getStatistics([
-    'date_from' => '2023-01-01',
-    'date_to' => '2025-12-31'
-]);
-dd($stats);
+// $visitorService = app(\App\Services\SeoVisitorService::class);
+// $stats = $visitorService->getStatistics([
+//     'date_from' => '2023-01-01',
+//     'date_to' => '2025-12-31'
+// ]);
+// dd($stats);
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
