@@ -21,6 +21,8 @@ class GoogleSearchConsoleService
     /**
      * Initialize Google Client with Service Account only
      */
+
+
     private function initializeClient()
     {
         try {
@@ -245,34 +247,37 @@ class GoogleSearchConsoleService
     /**
      * Get sitemaps for a site
      */
-    public function getSitemaps($siteUrl)
-    {
-        try {
-            $sitemaps = $this->service->sitemaps->listSitemaps($siteUrl);
-            $sitemapList = $sitemaps->getSitemap() ?: [];
+/**
+ * Get sitemaps for a site
+ */
+public function getSitemaps($siteUrl)
+{
+    try {
+        $sitemaps = $this->service->sitemaps->listSitemaps($siteUrl);
+        $sitemapList = $sitemaps->getSitemap() ?: [];
 
-            $result = [];
-            foreach ($sitemapList as $sitemap) {
-                $result[] = [
-                    'path' => $sitemap->getFeedpath(),
-                    'last_submitted' => $sitemap->getLastSubmitted(),
-                    'last_downloaded' => $sitemap->getLastDownloaded(),
-                    'type' => $sitemap->getType(),
-                    'warnings' => $sitemap->getWarnings(),
-                    'errors' => $sitemap->getErrors(),
-                    'is_pending' => $sitemap->getIsPending(),
-                    'is_sitemaps_index' => $sitemap->getIsSitemapsIndex()
-                ];
-            }
-
-            Log::info("Retrieved " . count($result) . " sitemaps for {$siteUrl}");
-
-            return $result;
-        } catch (Exception $e) {
-            Log::error("Failed to get sitemaps for {$siteUrl}: " . $e->getMessage());
-            throw new Exception('Unable to fetch sitemaps: ' . $e->getMessage());
+        $result = [];
+        foreach ($sitemapList as $sitemap) {
+            $result[] = [
+                'path' => $sitemap->getPath(),  // Changed from getFeedpath() to getPath()
+                'last_submitted' => $sitemap->getLastSubmitted(),
+                'last_downloaded' => $sitemap->getLastDownloaded(),
+                'type' => $sitemap->getType(),
+                'warnings' => $sitemap->getWarnings(),
+                'errors' => $sitemap->getErrors(),
+                'is_pending' => $sitemap->getIsPending(),
+                'is_sitemaps_index' => $sitemap->getIsSitemapsIndex()
+            ];
         }
+
+        Log::info("Retrieved " . count($result) . " sitemaps for {$siteUrl}");
+
+        return $result;
+    } catch (Exception $e) {
+        Log::error("Failed to get sitemaps for {$siteUrl}: " . $e->getMessage());
+        throw new Exception('Unable to fetch sitemaps: ' . $e->getMessage());
     }
+}
 
     /**
      * Submit sitemap
