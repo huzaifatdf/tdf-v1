@@ -9,7 +9,7 @@ import GoogleSearchConsoleTable from "@/Components/GoogleSearchConsoleTable";
 
 export default function Page() {
     const {rating,report} = usePage().props
-    // console.log("report",report)
+
   return (
    <AuthenticatedLayout>
             <Head title="Profile" />
@@ -19,7 +19,7 @@ export default function Page() {
              <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-900 dark:to-slate-800">
                 <div className="border-b bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
                     <div className="px-6 py-4">
-                        {report?.data ? (
+                        {report ? (
                             <GoogleSearchConsoleTable data={report }/>
                         )  : (
 
