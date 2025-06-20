@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Services;
 
-use Google\Client;
-use Google\Service\SearchConsole;
+use Google\Client as GoogleClient;
+use Google\Service\SearchConsole as GoogleSearchConsole;
 use Google\Service\SearchConsole\SearchAnalyticsQueryRequest;
+use Google\Service\SearchConsole\InspectUrlIndexRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +12,6 @@ class GoogleSearchConsoleService
 {
     private $client;
     private $service;
-    private $siteUrl;
 
     public function __construct()
     {
@@ -20,271 +19,353 @@ class GoogleSearchConsoleService
     }
 
     /**
-     * Initialize Google Client with service account credentials
+     * Initialize Google Client with Service Account only
      */
     private function initializeClient()
     {
         try {
-            $this->client = new Client();
+            $this->client = new GoogleClient();
 
-            // Path to your service account JSON file
-            $credentialsPath = storage_path('app/private/tdf-search-console-api-df4af3a0bc8a.json');
+            // Set application name
+            $this->client->setApplicationName('Laravel Search Console Integration');
 
-            if (!file_exists($credentialsPath)) {
-                throw new Exception('Service account credentials file not found');
+            // Service Account authentication
+            $serviceAccountPath = storage_path('app/private/tdf-search-console-api-df4af3a0bc8a.json');
+
+            if (!$serviceAccountPath || !file_exists($serviceAccountPath)) {
+                throw new Exception('Service account key file not found. Please check GOOGLE_SERVICE_ACCOUNT_KEY_PATH in your .env file');
             }
 
-            // Set the credentials
-            $this->client->setAuthConfig($credentialsPath);
+            // Set authentication using service account
+            $this->client->setAuthConfig($serviceAccountPath);
 
-            // Set the required scopes
+            // Set required scopes
             $this->client->setScopes([
-                'https://www.googleapis.com/auth/webmasters.readonly',
-                'https://www.googleapis.com/auth/webmasters'
+                GoogleSearchConsole::WEBMASTERS_READONLY,
+                GoogleSearchConsole::WEBMASTERS
             ]);
 
             // Initialize the Search Console service
-            $this->service = new SearchConsole($this->client);
+            $this->service = new GoogleSearchConsole($this->client);
+
+            Log::info('Google Search Console service initialized successfully with Service Account');
 
         } catch (Exception $e) {
             Log::error('Failed to initialize Google Search Console client: ' . $e->getMessage());
-            throw $e;
+            throw new Exception('Google Search Console initialization failed: ' . $e->getMessage());
         }
     }
 
     /**
-     * Set the site URL for queries
+     * Verify service account connection
      */
-    public function setSiteUrl($siteUrl)
+    public function verifyConnection()
     {
-        $this->siteUrl = $siteUrl;
-        return $this;
+        try {
+            $sites = $this->service->sites->listSites();
+            return [
+                'status' => 'success',
+                'message' => 'Service account connected successfully',
+                'sites_count' => count($sites->getSiteEntry() ?: []),
+                'connected_at' => now()->toISOString()
+            ];
+        } catch (Exception $e) {
+            Log::error('Service account verification failed: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Service account verification failed: ' . $e->getMessage(),
+                'connected_at' => now()->toISOString()
+            ];
+        }
     }
 
     /**
-     * Get list of sites from Search Console
+     * Get all sites from Search Console
      */
     public function getSites()
     {
         try {
             $sites = $this->service->sites->listSites();
-            return $sites->getSiteEntry();
+            $siteEntries = $sites->getSiteEntry() ?: [];
+
+            Log::info('Retrieved ' . count($siteEntries) . ' sites from Search Console');
+
+            return $siteEntries;
         } catch (Exception $e) {
             Log::error('Failed to get sites: ' . $e->getMessage());
-            throw $e;
+            throw new Exception('Unable to fetch sites from Google Search Console: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get site status and verification details
+     */
+    public function getSiteStatus($siteUrl)
+    {
+        try {
+            $site = $this->service->sites->get($siteUrl);
+
+            return [
+                'site_url' => $site->getSiteUrl(),
+                'permission_level' => $site->getPermissionLevel(),
+                'verification_status' => 'verified',
+                'last_updated' => now()->toISOString(),
+                'status' => 'active'
+            ];
+        } catch (Exception $e) {
+            Log::error("Failed to get site status for {$siteUrl}: " . $e->getMessage());
+
+            return [
+                'site_url' => $siteUrl,
+                'permission_level' => 'none',
+                'verification_status' => 'not_verified',
+                'last_updated' => now()->toISOString(),
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ];
         }
     }
 
     /**
      * Get search analytics data
      */
-    public function getSearchAnalytics($siteUrl, $startDate, $endDate, $options = [])
+    public function getSearchAnalytics($siteUrl, $startDate = null, $endDate = null, $dimensions = ['query'])
     {
         try {
             $request = new SearchAnalyticsQueryRequest();
 
-            // Set date range
+            $startDate = $startDate ?: date('Y-m-d', strtotime('-30 days'));
+            $endDate = $endDate ?: date('Y-m-d', strtotime('-1 day'));
+
             $request->setStartDate($startDate);
             $request->setEndDate($endDate);
-
-            // Set dimensions (what data to group by)
-            $dimensions = $options['dimensions'] ?? ['query'];
             $request->setDimensions($dimensions);
+            $request->setRowLimit(1000);
+            $request->setStartRow(0);
 
-            // Set search type (web, image, video)
-            $searchType = $options['searchType'] ?? 'web';
-            $request->setSearchType($searchType);
-
-            // Set row limit
-            $rowLimit = $options['rowLimit'] ?? 1000;
-            $request->setRowLimit($rowLimit);
-
-            // Set start row for pagination
-            if (isset($options['startRow'])) {
-                $request->setStartRow($options['startRow']);
-            }
-
-            // Execute the query
-            $response = $this->service->searchanalytics->query($siteUrl, $request);
-
-            return $response->getRows();
-
-        } catch (Exception $e) {
-            Log::error('Failed to get search analytics: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
-    /**
-     * Get top queries
-     */
-    public function getTopQueries($siteUrl, $startDate, $endDate, $limit = 100)
-    {
-        return $this->getSearchAnalytics($siteUrl, $startDate, $endDate, [
-            'dimensions' => ['query'],
-            'rowLimit' => $limit
-        ]);
-    }
-
-    /**
-     * Get top pages
-     */
-    public function getTopPages($siteUrl, $startDate, $endDate, $limit = 100)
-    {
-        return $this->getSearchAnalytics($siteUrl, $startDate, $endDate, [
-            'dimensions' => ['page'],
-            'rowLimit' => $limit
-        ]);
-    }
-
-    /**
-     * Get performance by country
-     */
-    public function getPerformanceByCountry($siteUrl, $startDate, $endDate, $limit = 50)
-    {
-        return $this->getSearchAnalytics($siteUrl, $startDate, $endDate, [
-            'dimensions' => ['country'],
-            'rowLimit' => $limit
-        ]);
-    }
-
-    /**
-     * Get performance by device
-     */
-    public function getPerformanceByDevice($siteUrl, $startDate, $endDate)
-    {
-        return $this->getSearchAnalytics($siteUrl, $startDate, $endDate, [
-            'dimensions' => ['device'],
-            'rowLimit' => 10
-        ]);
-    }
-
-    /**
-     * Get detailed analytics with multiple dimensions
-     */
-    public function getDetailedAnalytics($siteUrl, $startDate, $endDate, $dimensions = ['query', 'page'], $limit = 500)
-    {
-        return $this->getSearchAnalytics($siteUrl, $startDate, $endDate, [
-            'dimensions' => $dimensions,
-            'rowLimit' => $limit
-        ]);
-    }
-
-    /**
-     * Get performance data for a specific query
-     */
-    public function getQueryPerformance($siteUrl, $query, $startDate, $endDate)
-    {
-        try {
-            $request = new SearchAnalyticsQueryRequest();
-            $request->setStartDate($startDate);
-            $request->setEndDate($endDate);
-            $request->setDimensions(['query', 'page']);
-
-            // Filter by specific query
-            $dimensionFilter = new \Google\Service\SearchConsole\ApiDimensionFilter();
-            $dimensionFilter->setDimension('query');
-            $dimensionFilter->setOperator('equals');
-            $dimensionFilter->setExpression($query);
-
-            $dimensionFilterGroup = new \Google\Service\SearchConsole\ApiDimensionFilterGroup();
-            $dimensionFilterGroup->setFilters([$dimensionFilter]);
-
-            $request->setDimensionFilterGroups([$dimensionFilterGroup]);
+            Log::info("Fetching search analytics for {$siteUrl} from {$startDate} to {$endDate}");
 
             $response = $this->service->searchanalytics->query($siteUrl, $request);
+            $rows = $response->getRows() ?: [];
 
-            return $response->getRows();
-
-        } catch (Exception $e) {
-            Log::error('Failed to get query performance: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
-    /**
-     * Get site information
-     */
-    public function getSiteInfo($siteUrl)
-    {
-        try {
-            return $this->service->sites->get($siteUrl);
-        } catch (Exception $e) {
-            Log::error('Failed to get site info: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
-    /**
-     * Submit URL for indexing
-     */
-    public function submitUrl($url)
-    {
-        try {
-            // Note: This requires the Indexing API, which is separate from Search Console API
-            // You'll need to enable the Indexing API and add the scope
-            Log::info('URL submission requested for: ' . $url);
-            // Implementation would go here for Indexing API
-            return true;
-        } catch (Exception $e) {
-            Log::error('Failed to submit URL: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
-    /**
-     * Format the response data for easier consumption
-     */
-    public function formatAnalyticsData($rows)
-    {
-        $formatted = [];
-
-        if (!$rows) {
-            return $formatted;
-        }
-
-        foreach ($rows as $row) {
-            $formatted[] = [
-                'keys' => $row->getKeys(),
-                'clicks' => $row->getClicks(),
-                'impressions' => $row->getImpressions(),
-                'ctr' => round($row->getCtr() * 100, 2), // Convert to percentage
-                'position' => round($row->getPosition(), 1)
+            return [
+                'rows' => $rows,
+                'total_clicks' => $this->calculateTotal($rows, 'getClicks'),
+                'total_impressions' => $this->calculateTotal($rows, 'getImpressions'),
+                'average_ctr' => $this->calculateAverageCtr($rows),
+                'average_position' => $this->calculateAveragePosition($rows),
+                'date_range' => [
+                    'start_date' => $startDate,
+                    'end_date' => $endDate
+                ],
+                'dimensions' => $dimensions,
+                'total_rows' => count($rows)
             ];
+        } catch (Exception $e) {
+            Log::error("Failed to get search analytics for {$siteUrl}: " . $e->getMessage());
+            throw new Exception('Unable to fetch search analytics data: ' . $e->getMessage());
         }
-
-        return $formatted;
     }
 
     /**
-     * Get aggregated data for a date range
+     * Calculate total for a metric using getter method
      */
-    public function getAggregatedData($siteUrl, $startDate, $endDate)
+    private function calculateTotal($rows, $getterMethod)
+    {
+        $total = 0;
+        foreach ($rows as $row) {
+            if (method_exists($row, $getterMethod)) {
+                $total += $row->{$getterMethod}();
+            }
+        }
+        return $total;
+    }
+
+    /**
+     * Calculate average CTR
+     */
+    private function calculateAverageCtr($rows)
+    {
+        if (empty($rows)) return 0;
+
+        $totalCtr = 0;
+        foreach ($rows as $row) {
+            $totalCtr += $row->getCtr();
+        }
+        return round($totalCtr / count($rows), 4);
+    }
+
+    /**
+     * Calculate average position
+     */
+    private function calculateAveragePosition($rows)
+    {
+        if (empty($rows)) return 0;
+
+        $totalPosition = 0;
+        foreach ($rows as $row) {
+            $totalPosition += $row->getPosition();
+        }
+        return round($totalPosition / count($rows), 2);
+    }
+
+    /**
+     * Get URL inspection data
+     */
+    public function inspectUrl($siteUrl, $inspectionUrl)
     {
         try {
-            $request = new SearchAnalyticsQueryRequest();
-            $request->setStartDate($startDate);
-            $request->setEndDate($endDate);
-            // No dimensions = aggregated data
+            $request = new InspectUrlIndexRequest();
+            $request->setInspectionUrl($inspectionUrl);
+            $request->setSiteUrl($siteUrl);
 
-            $response = $this->service->searchanalytics->query($siteUrl, $request);
-            $rows = $response->getRows();
+            Log::info("Inspecting URL: {$inspectionUrl} for site: {$siteUrl}");
 
-            if (!empty($rows)) {
-                $row = $rows[0];
-                return [
-                    'total_clicks' => $row->getClicks(),
-                    'total_impressions' => $row->getImpressions(),
-                    'average_ctr' => round($row->getCtr() * 100, 2),
-                    'average_position' => round($row->getPosition(), 1)
+            $response = $this->service->urlInspection->index->inspect($request);
+            $inspectionResult = $response->getInspectionResult();
+
+            return [
+                'inspection_result' => [
+                    'index_status_result' => $inspectionResult->getIndexStatusResult(),
+                    'url_is_indexed' => $inspectionResult->getIndexStatusResult() ?
+                        $inspectionResult->getIndexStatusResult()->getVerdict() : null,
+                    'coverage_state' => $inspectionResult->getIndexStatusResult() ?
+                        $inspectionResult->getIndexStatusResult()->getCoverageState() : null,
+                ],
+                'url' => $inspectionUrl,
+                'site_url' => $siteUrl,
+                'timestamp' => now()->toISOString()
+            ];
+        } catch (Exception $e) {
+            Log::error("Failed to inspect URL {$inspectionUrl}: " . $e->getMessage());
+            throw new Exception('Unable to inspect URL: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get sitemaps for a site
+     */
+    public function getSitemaps($siteUrl)
+    {
+        try {
+            $sitemaps = $this->service->sitemaps->listSitemaps($siteUrl);
+            $sitemapList = $sitemaps->getSitemap() ?: [];
+
+            $result = [];
+            foreach ($sitemapList as $sitemap) {
+                $result[] = [
+                    'path' => $sitemap->getFeedpath(),
+                    'last_submitted' => $sitemap->getLastSubmitted(),
+                    'last_downloaded' => $sitemap->getLastDownloaded(),
+                    'type' => $sitemap->getType(),
+                    'warnings' => $sitemap->getWarnings(),
+                    'errors' => $sitemap->getErrors(),
+                    'is_pending' => $sitemap->getIsPending(),
+                    'is_sitemaps_index' => $sitemap->getIsSitemapsIndex()
                 ];
             }
 
-            return null;
+            Log::info("Retrieved " . count($result) . " sitemaps for {$siteUrl}");
 
+            return $result;
         } catch (Exception $e) {
-            Log::error('Failed to get aggregated data: ' . $e->getMessage());
-            throw $e;
+            Log::error("Failed to get sitemaps for {$siteUrl}: " . $e->getMessage());
+            throw new Exception('Unable to fetch sitemaps: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Submit sitemap
+     */
+    public function submitSitemap($siteUrl, $feedpath)
+    {
+        try {
+            $this->service->sitemaps->submit($siteUrl, $feedpath);
+            Log::info("Sitemap {$feedpath} submitted successfully for {$siteUrl}");
+
+            return [
+                'status' => 'success',
+                'message' => 'Sitemap submitted successfully',
+                'sitemap_url' => $feedpath,
+                'site_url' => $siteUrl,
+                'submitted_at' => now()->toISOString()
+            ];
+        } catch (Exception $e) {
+            Log::error("Failed to submit sitemap {$feedpath} for {$siteUrl}: " . $e->getMessage());
+            throw new Exception('Unable to submit sitemap: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete sitemap
+     */
+    public function deleteSitemap($siteUrl, $feedpath)
+    {
+        try {
+            $this->service->sitemaps->delete($siteUrl, $feedpath);
+            Log::info("Sitemap {$feedpath} deleted successfully for {$siteUrl}");
+
+            return [
+                'status' => 'success',
+                'message' => 'Sitemap deleted successfully',
+                'sitemap_url' => $feedpath,
+                'site_url' => $siteUrl,
+                'deleted_at' => now()->toISOString()
+            ];
+        } catch (Exception $e) {
+            Log::error("Failed to delete sitemap {$feedpath} for {$siteUrl}: " . $e->getMessage());
+            throw new Exception('Unable to delete sitemap: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get comprehensive site report
+     */
+    public function getSiteReport($siteUrl, $days = 30)
+    {
+        try {
+            $startDate = date('Y-m-d', strtotime("-{$days} days"));
+            $endDate = date('Y-m-d', strtotime('-1 day'));
+
+            // Get basic site info
+            $siteStatus = $this->getSiteStatus($siteUrl);
+
+            // Get sitemaps
+            $sitemaps = $this->getSitemaps($siteUrl);
+
+            // Get analytics by query
+            $queryAnalytics = $this->getSearchAnalytics($siteUrl, $startDate, $endDate, ['query']);
+
+            // Get analytics by page
+            $pageAnalytics = $this->getSearchAnalytics($siteUrl, $startDate, $endDate, ['page']);
+
+            // Get analytics by date
+            $dateAnalytics = $this->getSearchAnalytics($siteUrl, $startDate, $endDate, ['date']);
+
+            return [
+                'site_info' => $siteStatus,
+                'sitemaps' => [
+                    'count' => count($sitemaps),
+                    'list' => $sitemaps
+                ],
+                'performance' => [
+                    'period_days' => $days,
+                    'date_range' => ['start' => $startDate, 'end' => $endDate],
+                    'totals' => [
+                        'clicks' => $queryAnalytics['total_clicks'],
+                        'impressions' => $queryAnalytics['total_impressions'],
+                        'average_ctr' => $queryAnalytics['average_ctr'],
+                        'average_position' => $queryAnalytics['average_position']
+                    ],
+                    'top_queries' => array_slice($queryAnalytics['rows'], 0, 10),
+                    'top_pages' => array_slice($pageAnalytics['rows'], 0, 10),
+                    'daily_performance' => $dateAnalytics['rows']
+                ],
+                'generated_at' => now()->toISOString()
+            ];
+        } catch (Exception $e) {
+            Log::error("Failed to generate site report for {$siteUrl}: " . $e->getMessage());
+            throw new Exception('Unable to generate site report: ' . $e->getMessage());
         }
     }
 }

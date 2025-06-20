@@ -10,31 +10,25 @@ use App\Http\Controllers\SearchConsoleController;
 |--------------------------------------------------------------------------
 */
 
-
 Route::prefix('search-console')->group(function () {
+    // Connection verification
+    Route::get('/verify-connection', [SearchConsoleController::class, 'verifyConnection']);
 
-    // Get list of sites
+    // Site management
     Route::get('/sites', [SearchConsoleController::class, 'getSites']);
+    Route::post('/site-status', [SearchConsoleController::class, 'getSiteStatus']);
+    Route::post('/site-report', [SearchConsoleController::class, 'getSiteReport']);
 
-    // Get site information
-    Route::get('/site-info', [SearchConsoleController::class, 'getSiteInfo']);
+    // Analytics
+    Route::post('/analytics', [SearchConsoleController::class, 'getSearchAnalytics']);
+    Route::post('/inspect-url', [SearchConsoleController::class, 'inspectUrl']);
 
-    // Get general analytics data
-    Route::post('/analytics', [SearchConsoleController::class, 'getAnalytics']);
-
-    // Get top queries
-    Route::get('/top-queries', [SearchConsoleController::class, 'getTopQueries']);
-
-    // Get top pages
-    Route::get('/top-pages', [SearchConsoleController::class, 'getTopPages']);
-
-    // Get performance summary
-    Route::get('/performance-summary', [SearchConsoleController::class, 'getPerformanceSummary']);
-
-    // Get query specific performance
-    Route::get('/query-performance', [SearchConsoleController::class, 'getQueryPerformance']);
-
+    // Sitemap management
+    Route::post('/sitemaps', [SearchConsoleController::class, 'getSitemaps']);
+    Route::post('/submit-sitemap', [SearchConsoleController::class, 'submitSitemap']);
+    Route::delete('/delete-sitemap', [SearchConsoleController::class, 'deleteSitemap']);
 });
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

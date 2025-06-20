@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\GoogleSearchConsoleService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class SearchConsoleController extends Controller
 {
@@ -17,280 +16,243 @@ class SearchConsoleController extends Controller
     }
 
     /**
-     * Get list of sites
+     * Verify service account connection
      */
-    public function getSites()
+    public function verifyConnection(): JsonResponse
+    {
+        try {
+            $verification = $this->searchConsoleService->verifyConnection();
+
+            return response()->json([
+                'success' => $verification['status'] === 'success',
+                'data' => $verification
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get all sites
+     */
+    public function getSites(): JsonResponse
     {
         try {
             $sites = $this->searchConsoleService->getSites();
 
+            $sitesData = [];
+            foreach ($sites as $site) {
+                $sitesData[] = [
+                    'site_url' => $site->getSiteUrl(),
+                    'permission_level' => $site->getPermissionLevel()
+                ];
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $sites
+                'data' => $sitesData,
+                'count' => count($sitesData)
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch sites: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get search analytics data
+     * Get site status
      */
-    public function getAnalytics(Request $request)
+    public function getSiteStatus(Request $request): JsonResponse
     {
+        $request->validate([
+            'site_url' => 'required|url'
+        ]);
+
         try {
-            $request->validate([
-                'site_url' => 'required|url',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date|after_or_equal:start_date',
-                'dimensions' => 'array',
-                'limit' => 'integer|min:1|max:25000'
+            $status = $this->searchConsoleService->getSiteStatus($request->site_url);
+
+            return response()->json([
+                'success' => true,
+                'data' => $status
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 
-            $siteUrl = $request->input('site_url');
-            $startDate = $request->input('start_date');
-            $endDate = $request->input('end_date');
-            $dimensions = $request->input('dimensions', ['query']);
-            $limit = $request->input('limit', 1000);
+    /**
+     * Get comprehensive site report
+     */
+    public function getSiteReport(Request $request): JsonResponse
+    {
+        $request->validate([
+            'site_url' => 'required|url',
+            'days' => 'nullable|integer|min:1|max:365'
+        ]);
 
-            $rawData = $this->searchConsoleService->getSearchAnalytics(
-                $siteUrl,
-                $startDate,
-                $endDate,
-                [
-                    'dimensions' => $dimensions,
-                    'rowLimit' => $limit
-                ]
+        try {
+            $report = $this->searchConsoleService->getSiteReport(
+                $request->site_url,
+                $request->days ?? 30
             );
 
-            $formattedData = $this->searchConsoleService->formatAnalyticsData($rawData);
-
             return response()->json([
                 'success' => true,
-                'data' => $formattedData,
-                'meta' => [
-                    'site_url' => $siteUrl,
-                    'date_range' => [
-                        'start' => $startDate,
-                        'end' => $endDate
-                    ],
-                    'dimensions' => $dimensions,
-                    'total_rows' => count($formattedData)
-                ]
+                'data' => $report
             ]);
-
         } catch (\Exception $e) {
-            Log::error('Search Console Analytics Error: ' . $e->getMessage());
-
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch analytics data: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get top performing queries
+     * Get search analytics
      */
-    public function getTopQueries(Request $request)
+    public function getSearchAnalytics(Request $request): JsonResponse
     {
+        $request->validate([
+            'site_url' => 'required|url',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'dimensions' => 'nullable|array'
+        ]);
+
         try {
-            $request->validate([
-                'site_url' => 'required|url',
-                'days' => 'integer|min:1|max:90'
-            ]);
-
-            $siteUrl = $request->input('site_url');
-            $days = $request->input('days', 30);
-
-            $endDate = Carbon::now()->format('Y-m-d');
-            $startDate = Carbon::now()->subDays($days)->format('Y-m-d');
-
-            $rawData = $this->searchConsoleService->getTopQueries($siteUrl, $startDate, $endDate, 100);
-            $formattedData = $this->searchConsoleService->formatAnalyticsData($rawData);
+            $analytics = $this->searchConsoleService->getSearchAnalytics(
+                $request->site_url,
+                $request->start_date,
+                $request->end_date,
+                $request->dimensions ?? ['query']
+            );
 
             return response()->json([
                 'success' => true,
-                'data' => $formattedData,
-                'meta' => [
-                    'site_url' => $siteUrl,
-                    'period_days' => $days,
-                    'date_range' => [
-                        'start' => $startDate,
-                        'end' => $endDate
-                    ]
-                ]
+                'data' => $analytics
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch top queries: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get top performing pages
+     * Inspect URL
      */
-    public function getTopPages(Request $request)
+    public function inspectUrl(Request $request): JsonResponse
     {
+        $request->validate([
+            'site_url' => 'required|url',
+            'inspection_url' => 'required|url'
+        ]);
+
         try {
-            $request->validate([
-                'site_url' => 'required|url',
-                'days' => 'integer|min:1|max:90'
-            ]);
-
-            $siteUrl = $request->input('site_url');
-            $days = $request->input('days', 30);
-
-            $endDate = Carbon::now()->format('Y-m-d');
-            $startDate = Carbon::now()->subDays($days)->format('Y-m-d');
-
-            $rawData = $this->searchConsoleService->getTopPages($siteUrl, $startDate, $endDate, 100);
-            $formattedData = $this->searchConsoleService->formatAnalyticsData($rawData);
+            $inspection = $this->searchConsoleService->inspectUrl(
+                $request->site_url,
+                $request->inspection_url
+            );
 
             return response()->json([
                 'success' => true,
-                'data' => $formattedData,
-                'meta' => [
-                    'site_url' => $siteUrl,
-                    'period_days' => $days,
-                    'date_range' => [
-                        'start' => $startDate,
-                        'end' => $endDate
-                    ]
-                ]
+                'data' => $inspection
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch top pages: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get performance summary
+     * Get sitemaps
      */
-    public function getPerformanceSummary(Request $request)
+    public function getSitemaps(Request $request): JsonResponse
     {
+        $request->validate([
+            'site_url' => 'required|url'
+        ]);
+
         try {
-            $request->validate([
-                'site_url' => 'required|url',
-                'days' => 'integer|min:1|max:90'
-            ]);
-
-            $siteUrl = $request->input('site_url');
-            $days = $request->input('days', 30);
-
-            $endDate = Carbon::now()->format('Y-m-d');
-            $startDate = Carbon::now()->subDays($days)->format('Y-m-d');
-
-            // Get aggregated data
-            $summary = $this->searchConsoleService->getAggregatedData($siteUrl, $startDate, $endDate);
-
-            // Get device performance
-            $deviceData = $this->searchConsoleService->getPerformanceByDevice($siteUrl, $startDate, $endDate);
-            $formattedDeviceData = $this->searchConsoleService->formatAnalyticsData($deviceData);
-
-            // Get country performance
-            $countryData = $this->searchConsoleService->getPerformanceByCountry($siteUrl, $startDate, $endDate, 10);
-            $formattedCountryData = $this->searchConsoleService->formatAnalyticsData($countryData);
+            $sitemaps = $this->searchConsoleService->getSitemaps($request->site_url);
 
             return response()->json([
                 'success' => true,
-                'data' => [
-                    'summary' => $summary,
-                    'by_device' => $formattedDeviceData,
-                    'by_country' => $formattedCountryData
-                ],
-                'meta' => [
-                    'site_url' => $siteUrl,
-                    'period_days' => $days,
-                    'date_range' => [
-                        'start' => $startDate,
-                        'end' => $endDate
-                    ]
-                ]
+                'data' => $sitemaps,
+                'count' => count($sitemaps)
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch performance summary: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get query specific performance
+     * Submit sitemap
      */
-    public function getQueryPerformance(Request $request)
+    public function submitSitemap(Request $request): JsonResponse
     {
+        $request->validate([
+            'site_url' => 'required|url',
+            'sitemap_url' => 'required|url'
+        ]);
+
         try {
-            $request->validate([
-                'site_url' => 'required|url',
-                'query' => 'required|string',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date|after_or_equal:start_date'
-            ]);
-
-            $siteUrl = $request->input('site_url');
-            $query = $request->input('query');
-            $startDate = $request->input('start_date');
-            $endDate = $request->input('end_date');
-
-            $rawData = $this->searchConsoleService->getQueryPerformance($siteUrl, $query, $startDate, $endDate);
-            $formattedData = $this->searchConsoleService->formatAnalyticsData($rawData);
+            $result = $this->searchConsoleService->submitSitemap(
+                $request->site_url,
+                $request->sitemap_url
+            );
 
             return response()->json([
                 'success' => true,
-                'data' => $formattedData,
-                'meta' => [
-                    'site_url' => $siteUrl,
-                    'query' => $query,
-                    'date_range' => [
-                        'start' => $startDate,
-                        'end' => $endDate
-                    ]
-                ]
+                'data' => $result
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch query performance: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Get site information
+     * Delete sitemap
      */
-    public function getSiteInfo(Request $request)
+    public function deleteSitemap(Request $request): JsonResponse
     {
-        try {
-            $request->validate([
-                'site_url' => 'required|url'
-            ]);
+        $request->validate([
+            'site_url' => 'required|url',
+            'sitemap_url' => 'required|url'
+        ]);
 
-            $siteUrl = $request->input('site_url');
-            $siteInfo = $this->searchConsoleService->getSiteInfo($siteUrl);
+        try {
+            $result = $this->searchConsoleService->deleteSitemap(
+                $request->site_url,
+                $request->sitemap_url
+            );
 
             return response()->json([
                 'success' => true,
-                'data' => $siteInfo
+                'data' => $result
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch site info: ' . $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }

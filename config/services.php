@@ -18,7 +18,9 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-
+    'google' => [
+        'service_account_key' => env('GOOGLE_SERVICE_ACCOUNT_KEY_PATH'),
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
