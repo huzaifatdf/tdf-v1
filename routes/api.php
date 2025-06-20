@@ -10,24 +10,24 @@ use App\Http\Controllers\SearchConsoleController;
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('search-console')->group(function () {
-    // Connection verification
-    Route::get('/verify-connection', [SearchConsoleController::class, 'verifyConnection']);
+// Route::prefix('search-console')->group(function () {
+//     // Connection verification
+//     Route::get('/verify-connection', [SearchConsoleController::class, 'verifyConnection']);
 
-    // Site management
-    Route::get('/sites', [SearchConsoleController::class, 'getSites']);
-    Route::post('/site-status', [SearchConsoleController::class, 'getSiteStatus']);
-    Route::post('/site-report', [SearchConsoleController::class, 'getSiteReport']);
+//     // Site management
+//     Route::get('/sites', [SearchConsoleController::class, 'getSites']);
+//     Route::post('/site-status', [SearchConsoleController::class, 'getSiteStatus']);
+//     Route::post('/site-report', [SearchConsoleController::class, 'getSiteReport']);
 
-    // Analytics
-    Route::post('/analytics', [SearchConsoleController::class, 'getSearchAnalytics']);
-    Route::post('/inspect-url', [SearchConsoleController::class, 'inspectUrl']);
+//     // Analytics
+//     Route::post('/analytics', [SearchConsoleController::class, 'getSearchAnalytics']);
+//     Route::post('/inspect-url', [SearchConsoleController::class, 'inspectUrl']);
 
-    // Sitemap management
-    Route::post('/sitemaps', [SearchConsoleController::class, 'getSitemaps']);
-    Route::post('/submit-sitemap', [SearchConsoleController::class, 'submitSitemap']);
-    Route::delete('/delete-sitemap', [SearchConsoleController::class, 'deleteSitemap']);
-});
+//     // Sitemap management
+//     Route::post('/sitemaps', [SearchConsoleController::class, 'getSitemaps']);
+//     Route::post('/submit-sitemap', [SearchConsoleController::class, 'submitSitemap']);
+//     Route::delete('/delete-sitemap', [SearchConsoleController::class, 'deleteSitemap']);
+// });
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
