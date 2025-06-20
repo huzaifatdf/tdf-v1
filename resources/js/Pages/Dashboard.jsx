@@ -15,7 +15,7 @@ import SectionSeoScreen from "@/Components/section-seo-screen";
 
 export default function Page() {
     const {stats,report} = usePage().props
-    console.log("stats", JSON.stringify(stats));
+
   return (
    <AuthenticatedLayout>
             <Head title="Profile" />
