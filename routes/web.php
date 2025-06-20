@@ -32,7 +32,16 @@ Route::get('/dashboard', function () {
 //     'date_to' => '2025-12-31'
 // ]);
 // dd($stats);
-    return Inertia::render('Dashboard');
+   if (request()->secure()) {
+          $searchConsoleService = app(\App\Services\GoogleSearchConsoleService::class);
+         $report = $searchConsoleService->getSiteReport("https://thedesignsfirm.com",30);
+    }
+    else {
+        $report = [];
+    }
+    return Inertia::render('Dashboard',[
+        'report' => $report
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
