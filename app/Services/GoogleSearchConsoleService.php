@@ -28,7 +28,7 @@ class GoogleSearchConsoleService
             $this->client = new Client();
 
             // Path to your service account JSON file
-            $credentialsPath = storage_path('app/private/tdf-search-console-api-f2b9a47d2722.json');
+            $credentialsPath = storage_path('app/private/tdf-search-console-api-df4af3a0bc8a.json');
 
             if (!file_exists($credentialsPath)) {
                 throw new Exception('Service account credentials file not found');
