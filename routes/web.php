@@ -26,12 +26,12 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.i
 
 Route::get('/dashboard', function () {
 
-// $visitorService = app(\App\Services\SeoVisitorService::class);
-// $stats = $visitorService->getStatistics([
-//     'date_from' => '2023-01-01',
-//     'date_to' => '2025-12-31'
-// ]);
-// dd($stats);
+$visitorService = app(\App\Services\SeoVisitorService::class);
+$stats = $visitorService->getStatistics([
+    'date_from' =>  Carbon\Carbon::now()->subDays(30)->format('Y-m-d'),
+    'date_to' => Carbon\Carbon::now()->format('Y-m-d'),
+]);
+
    if (request()->secure()) {
           $searchConsoleService = app(\App\Services\GoogleSearchConsoleService::class);
          $report = $searchConsoleService->getSiteReport("https://thedesignsfirm.com",30);
@@ -40,7 +40,8 @@ Route::get('/dashboard', function () {
         $report = [];
     }
     return Inertia::render('Dashboard',[
-        'report' => $report
+        'report' => $report,
+        'stats' => $stats,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
