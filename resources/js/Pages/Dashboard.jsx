@@ -3,7 +3,7 @@ import { Head, usePage } from "@inertiajs/react";
 
 
 import { useEffect } from "react";
-import { SectionSeoScreen } from "@/Components/section-seo-screen";
+
 import GoogleSearchConsoleTable from "@/Components/GoogleSearchConsoleTable";
 import {
   Tabs,
@@ -11,6 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import SectionSeoScreen from "@/Components/section-seo-screen";
 
 export default function Page() {
     const {stats,report} = usePage().props
@@ -39,7 +40,7 @@ export default function Page() {
                         )}
     </TabsContent>
      <TabsContent value="seo">
-            <SectionSeoScreen/>
+            <SectionSeoScreen data={stats} />
      </TabsContent>
     </Tabs>
                     </div>
