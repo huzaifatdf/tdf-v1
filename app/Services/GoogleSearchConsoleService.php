@@ -7,16 +7,18 @@ use Google\Service\SearchConsole;
 use Google\Service\SearchConsole\SearchAnalyticsQueryRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 class GoogleSearchConsoleService
 {
     private $client;
     private $service;
     private $siteUrl;
+    private $isInitialized = false;
 
     public function __construct()
     {
-        $this->initializeClient();
+        // Lazy initialization - only initialize when needed
     }
 
     /**
@@ -24,14 +26,19 @@ class GoogleSearchConsoleService
      */
     private function initializeClient()
     {
+        if ($this->isInitialized) {
+            return;
+        }
+
         try {
             $this->client = new Client();
 
-            // Path to your service account JSON file
-            $credentialsPath = storage_path('app/private/tdf-search-console-api-df4af3a0bc8a.json');
+            // Get credentials path from config
+            $credentialsPath = config('services.google.search_console.credentials_path')
+                ?? storage_path('app/private/google-search-console-credentials.json');
 
             if (!file_exists($credentialsPath)) {
-                throw new Exception('Service account credentials file not found');
+                throw new Exception("Service account credentials file not found at: {$credentialsPath}");
             }
 
             // Set the credentials
@@ -45,10 +52,44 @@ class GoogleSearchConsoleService
 
             // Initialize the Search Console service
             $this->service = new SearchConsole($this->client);
+            $this->isInitialized = true;
 
         } catch (Exception $e) {
-            Log::error('Failed to initialize Google Search Console client: ' . $e->getMessage());
+            Log::error('Failed to initialize Google Search Console client', [
+                'error' => $e->getMessage(),
+                'credentials_path' => $credentialsPath ?? 'not_set'
+            ]);
             throw $e;
+        }
+    }
+
+    /**
+     * Ensure client is initialized before API calls
+     */
+    private function ensureInitialized()
+    {
+        if (!$this->isInitialized) {
+            $this->initializeClient();
+        }
+    }
+
+    /**
+     * Validate date format
+     */
+    private function validateDate($date, $paramName)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new InvalidArgumentException("{$paramName} must be in YYYY-MM-DD format");
+        }
+    }
+
+    /**
+     * Validate site URL format
+     */
+    private function validateSiteUrl($siteUrl)
+    {
+        if (!filter_var($siteUrl, FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException("Invalid site URL format: {$siteUrl}");
         }
     }
 
@@ -57,6 +98,7 @@ class GoogleSearchConsoleService
      */
     public function setSiteUrl($siteUrl)
     {
+        $this->validateSiteUrl($siteUrl);
         $this->siteUrl = $siteUrl;
         return $this;
     }
@@ -67,20 +109,28 @@ class GoogleSearchConsoleService
     public function getSites()
     {
         try {
+            $this->ensureInitialized();
             $sites = $this->service->sites->listSites();
             return $sites->getSiteEntry();
         } catch (Exception $e) {
-            Log::error('Failed to get sites: ' . $e->getMessage());
+            Log::error('Failed to get sites from Search Console', [
+                'error' => $e->getMessage()
+            ]);
             throw $e;
         }
     }
 
     /**
-     * Get search analytics data
+     * Get search analytics data with improved validation
      */
     public function getSearchAnalytics($siteUrl, $startDate, $endDate, $options = [])
     {
         try {
+            $this->ensureInitialized();
+            $this->validateSiteUrl($siteUrl);
+            $this->validateDate($startDate, 'startDate');
+            $this->validateDate($endDate, 'endDate');
+
             $request = new SearchAnalyticsQueryRequest();
 
             // Set date range
@@ -95,13 +145,19 @@ class GoogleSearchConsoleService
             $searchType = $options['searchType'] ?? 'web';
             $request->setSearchType($searchType);
 
-            // Set row limit
+            // Set row limit with bounds checking
             $rowLimit = $options['rowLimit'] ?? 1000;
+            $rowLimit = min(max($rowLimit, 1), 25000); // API limits
             $request->setRowLimit($rowLimit);
 
             // Set start row for pagination
             if (isset($options['startRow'])) {
-                $request->setStartRow($options['startRow']);
+                $request->setStartRow(max(0, (int)$options['startRow']));
+            }
+
+            // Add filters if provided
+            if (isset($options['filters'])) {
+                $request->setDimensionFilterGroups($options['filters']);
             }
 
             // Execute the query
@@ -110,7 +166,13 @@ class GoogleSearchConsoleService
             return $response->getRows();
 
         } catch (Exception $e) {
-            Log::error('Failed to get search analytics: ' . $e->getMessage());
+            Log::error('Failed to get search analytics', [
+                'error' => $e->getMessage(),
+                'site_url' => $siteUrl,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'options' => $options
+            ]);
             throw $e;
         }
     }
@@ -176,6 +238,11 @@ class GoogleSearchConsoleService
     public function getQueryPerformance($siteUrl, $query, $startDate, $endDate)
     {
         try {
+            $this->ensureInitialized();
+            $this->validateSiteUrl($siteUrl);
+            $this->validateDate($startDate, 'startDate');
+            $this->validateDate($endDate, 'endDate');
+
             $request = new SearchAnalyticsQueryRequest();
             $request->setStartDate($startDate);
             $request->setEndDate($endDate);
@@ -197,7 +264,13 @@ class GoogleSearchConsoleService
             return $response->getRows();
 
         } catch (Exception $e) {
-            Log::error('Failed to get query performance: ' . $e->getMessage());
+            Log::error('Failed to get query performance', [
+                'error' => $e->getMessage(),
+                'site_url' => $siteUrl,
+                'query' => $query,
+                'start_date' => $startDate,
+                'end_date' => $endDate
+            ]);
             throw $e;
         }
     }
@@ -208,26 +281,14 @@ class GoogleSearchConsoleService
     public function getSiteInfo($siteUrl)
     {
         try {
+            $this->ensureInitialized();
+            $this->validateSiteUrl($siteUrl);
             return $this->service->sites->get($siteUrl);
         } catch (Exception $e) {
-            Log::error('Failed to get site info: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
-    /**
-     * Submit URL for indexing
-     */
-    public function submitUrl($url)
-    {
-        try {
-            // Note: This requires the Indexing API, which is separate from Search Console API
-            // You'll need to enable the Indexing API and add the scope
-            Log::info('URL submission requested for: ' . $url);
-            // Implementation would go here for Indexing API
-            return true;
-        } catch (Exception $e) {
-            Log::error('Failed to submit URL: ' . $e->getMessage());
+            Log::error('Failed to get site info', [
+                'error' => $e->getMessage(),
+                'site_url' => $siteUrl
+            ]);
             throw $e;
         }
     }
@@ -262,6 +323,11 @@ class GoogleSearchConsoleService
     public function getAggregatedData($siteUrl, $startDate, $endDate)
     {
         try {
+            $this->ensureInitialized();
+            $this->validateSiteUrl($siteUrl);
+            $this->validateDate($startDate, 'startDate');
+            $this->validateDate($endDate, 'endDate');
+
             $request = new SearchAnalyticsQueryRequest();
             $request->setStartDate($startDate);
             $request->setEndDate($endDate);
@@ -283,8 +349,29 @@ class GoogleSearchConsoleService
             return null;
 
         } catch (Exception $e) {
-            Log::error('Failed to get aggregated data: ' . $e->getMessage());
+            Log::error('Failed to get aggregated data', [
+                'error' => $e->getMessage(),
+                'site_url' => $siteUrl,
+                'start_date' => $startDate,
+                'end_date' => $endDate
+            ]);
             throw $e;
         }
+    }
+
+    /**
+     * Create a dimension filter for advanced queries
+     */
+    public function createDimensionFilter($dimension, $operator, $expression)
+    {
+        $filter = new \Google\Service\SearchConsole\ApiDimensionFilter();
+        $filter->setDimension($dimension);
+        $filter->setOperator($operator);
+        $filter->setExpression($expression);
+
+        $filterGroup = new \Google\Service\SearchConsole\ApiDimensionFilterGroup();
+        $filterGroup->setFilters([$filter]);
+
+        return $filterGroup;
     }
 }
