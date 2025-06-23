@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+
 class FormSubmission extends Model
 {
     /** @use HasFactory<\Database\Factories\FormSubmissionFactory> */
     use HasFactory;
     use SoftDeletes;
+    use \Illuminate\Notifications\Notifiable;
+
 
     protected $table = 'form_submissions';
 
