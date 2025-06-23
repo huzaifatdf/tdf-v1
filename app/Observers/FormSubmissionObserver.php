@@ -27,7 +27,7 @@ class FormSubmissionObserver
         }
 
         // Send notification to all admin users (users with admin role)
-        $adminUsers = User::where('role', 'admin')->get();
+        $adminUsers = User::get();
         if ($adminUsers->isNotEmpty()) {
             Notification::send($adminUsers, new FormSubmissionNotification($formSubmission));
         }
