@@ -326,13 +326,16 @@ class GoogleTagManagerService
 /**
  * Get container versions
  */
+/**
+ * Get container versions
+ */
 public function getContainerVersions($accountId, $containerId)
 {
     try {
         $containerPath = "accounts/{$accountId}/containers/{$containerId}";
 
-        // Corrected method call
-        $versions = $this->service->accounts_containers->versions->list($containerPath);
+        // CORRECTED LINE: Use the 'list' method on the 'accounts_containers_versions' resource.
+        $versions = $this->service->accounts_containers_versions->list($containerPath);
 
         $versionList = $versions->getContainerVersion() ?: [];
 
