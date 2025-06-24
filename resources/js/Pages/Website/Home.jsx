@@ -23,176 +23,131 @@ gsap.registerPlugin(ScrollTrigger);
 // Using the slim version for better compatibility
 
 function ThreeModelOverlay() {
-    // ThreeModelOverlay component code remains unchanged
-    const mountRef = useRef(null);
-    const modelRef = useRef(null); // To store reference to the loaded model
+   const mountRef = useRef(null);
+    const videoRef = useRef(null);
 
     useEffect(() => {
-        // ThreeModelOverlay effect code remains unchanged
-        let isModelActive = false;
+        let isVideoActive = false;
+
         const handleMouseMove = (event) => {
-        if (!isModelActive || !modelRef.current) return;
-
-        const bounds = mount.getBoundingClientRect();
-        const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-        const y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
-
-        // Example movement (update model rotation based on cursor)
-        modelRef.current.rotation.x = y * 0.5;
-        modelRef.current.rotation.y = x * 0.5;
+            if (!isVideoActive || !videoRef.current) return;
+            // Optional: Add any mouse interaction effects here if needed
         };
+
         window.addEventListener('mousemove', handleMouseMove);
+
         ScrollTrigger.create({
-        trigger: "#scroll-zoom-section",
-        start: "top top",
-        end: "bottom top",
-        onEnter: () => { isModelActive = true; },
-        onLeave: () => { isModelActive = false; },
-        onEnterBack: () => { isModelActive = true; },
-        onLeaveBack: () => { isModelActive = false; },
-        });
-
-
-        const mount = mountRef.current;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(55, mount.clientWidth / mount.clientHeight, 0.9, 1000);
-        camera.position.z = 9;
-
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(mount.clientWidth, mount.clientHeight);
-        mount.appendChild(renderer.domElement);
-
-        // Lights
-        const light = new THREE.DirectionalLight(0xffffff, 1.5);
-        light.position.set(1, 1, 1).normalize();
-        scene.add(light);
-
-     // Spot Light from above
-        const spotLight = new THREE.SpotLight(0xffffff, 2);
-        spotLight.position.set(0, 5, 5); // above and in front
-        spotLight.angle = Math.PI / 6;
-        spotLight.penumbra = 0.3;
-        spotLight.decay = 2;
-        spotLight.distance = 20;
-        spotLight.castShadow = true;
-
-        // Target the spotlight to look at origin or model position
-        spotLight.target.position.set(0, 0, 0);
-        scene.add(spotLight.target); // ✅ This is required
-        scene.add(spotLight);        // Don't forget this (you already had it)
-
-
-        // Raycaster and mouse
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-
-        // Load GLB Model
-        const loader = new GLTFLoader();
-        loader.load('/images/ball.glb', gltf => {
-            const model = gltf.scene;
-            model.scale.set(0.5, 0.5, 0.5);
-            model.position.set(0, -0.5, 0);
-            model.name = 'BallModel'; // Optional: useful for identifying in raycasting
-            scene.add(model);
-            modelRef.current = model;
-        });
-
-        // Animation
-        const animate = () => {
-            requestAnimationFrame(animate);
-            if (modelRef.current) modelRef.current.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        };
-        animate();
-
-        // Scroll Zoom
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Scroll-triggered zoom in
-        gsap.to(camera.position, {
-        z: 1, // Zoom in more (was 3)
-        ease: "none",
-        scrollTrigger: {
             trigger: "#scroll-zoom-section",
             start: "top top",
             end: "bottom top",
-            scrub: true,
-        },
-        onUpdate: () => {
-            console.log("Camera Z:", camera.position.z);
-
-
-            camera.position.z = Math.max(1, Math.min(9, camera.position.z)); // updated bounds
-            renderer.render(scene, camera);
-            //element state fade out after Camera Z 2.857022
-
-        }
+            onEnter: () => {
+                isVideoActive = true;
+                if (videoRef.current) {
+                    videoRef.current.play();
+                }
+            },
+            onLeave: () => {
+                isVideoActive = false;
+                if (videoRef.current) {
+                    videoRef.current.pause();
+                }
+            },
+            onEnterBack: () => {
+                isVideoActive = true;
+                if (videoRef.current) {
+                    videoRef.current.play();
+                }
+            },
+            onLeaveBack: () => {
+                isVideoActive = false;
+                if (videoRef.current) {
+                    videoRef.current.pause();
+                }
+            },
         });
 
+        const mount = mountRef.current;
 
+        // Create video element
+        const video = document.createElement('video');
+        video.src = '/images/objectvideo.webm'; // Replace with your WebM file path
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.style.width = '12vw';
+        video.style.height = '12vh';
+        video.style.objectFit = 'contain';
+        video.style.position = 'absolute';
+        video.style.top = '50%';
+        video.style.left = '50%';
+        video.style.transform = ''; // Start larger
+        video.style.transformOrigin = 'center center';
+
+        mount.appendChild(video);
+        videoRef.current = video;
+
+        // Scroll Zoom Effect
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll-triggered zoom in
+        gsap.fromTo(video,
+            {
+                scale: 1.5, // Start scale
+                x: '-50%',
+                y: '-50%'
+            },
+            {
+                scale: 4, // End scale - zoom in more
+                x: '-50%',
+                y: '-50%',
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#scroll-zoom-section",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                },
+                onUpdate: () => {
+                    console.log("Video scale:", video.style.transform);
+                }
+            }
+        );
+
+        // Fade out effect
         gsap.to(mount, {
             autoAlpha: 0,
-            ease: "power4.inOut",         // starts slow, accelerates in middle, smooth end
-            duration: 2,                  // just in case fallback is needed
+            ease: "power4.inOut",
+            duration: 2,
             scrollTrigger: {
                 trigger: "#scroll-zoom-section",
-                start: "bottom bottom",   // starts fading as soon as bottom of section hits bottom of viewport
-                end: "bottom top-=500",   // longer range to make fade-out slower
+                start: "bottom bottom",
+                end: "bottom top-=500",
                 scrub: true,
-                onUpdate: () => {
-                    renderer.render(scene, camera);
-                }
             }
         });
 
-        // Fade out after the section is scrolled past
-        // gsap.to(mount, {
-        //     autoAlpha: 0,              // fade out and disable interaction
-        //     ease: "power2.out",        // smooth transition
-        //     duration: 1.5,             // fade duration in seconds
-        //     scrollTrigger: {
-        //         trigger: "#scroll-zoom-section",
-        //         start: "bottom top",     // when section scrolls out of view
-        //         end: "bottom top+=300",  // longer scroll range for slower fade
-        //         scrub: true,
-        //         onUpdate: () => {
-        //         renderer.render(scene, camera);
-        //         }
-        //     }
-        // });
-
-
-        // Click handler
+        // Click handler (optional)
         const handleClick = (event) => {
-            // Calculate mouse position in normalized device coordinates
-            const bounds = mount.getBoundingClientRect();
-            mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-            mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, camera);
-
-            // if (modelRef.current) {
-            //     const intersects = raycaster.intersectObject(modelRef.current, true);
-            //     if (intersects.length > 0) {
-            //         alert("You clicked on the 3D model!");
-            //     }
-            // }
+            console.log("Video clicked");
+            // Add any click functionality here
         };
 
         mount.addEventListener('click', handleClick);
 
         // Resize handler
         const handleResize = () => {
-            camera.aspect = mount.clientWidth / mount.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(mount.clientWidth, mount.clientHeight);
+            // Video will automatically resize due to 100% width/height
         };
         window.addEventListener('resize', handleResize);
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
             mount.removeEventListener('click', handleClick);
+            if (videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.src = '';
+            }
             mount.innerHTML = '';
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
@@ -203,9 +158,11 @@ function ThreeModelOverlay() {
             ref={mountRef}
             className="fixed top-0 start-0 w-100"
             style={{
-                height: '100vh',       // full-screen coverage
+                height: '100vh',
                 pointerEvents: 'auto',
-                cursor: 'pointer',          // ensure it's on top
+                cursor: 'pointer',
+                backgroundColor: 'transparent', // No background
+                overflow: 'hidden'
             }}
         />
     );

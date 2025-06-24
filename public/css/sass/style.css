@@ -9113,8 +9113,9 @@ header nav.pn ul li ul li ul {
 
 .side-menu ul li {
   text-align: right;
-  padding: 10px 0px 16px 0px;
+  padding: 15px 0px 15px 0px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1294117647);
+  margin: 0 !important;
 }
 
 .side-menu ul li:last-child {
@@ -9476,6 +9477,11 @@ form textarea {
     height: 500px;
   }
 }
+.text-stroke {
+  -webkit-text-stroke: 1.5px #9FFF00; /* neon green */
+  text-stroke: 1.5px #9FFF00;
+}
+
 footer {
   position: relative;
 }

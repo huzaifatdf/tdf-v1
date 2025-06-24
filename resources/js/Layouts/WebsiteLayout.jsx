@@ -166,7 +166,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                                 href={item.href}
                                                 className="flex items-center gap-3 text-white"
                                             >
-                                                <img src={item.icon} alt={item.label} width="50" />
+                                                <img src={item.icon} alt={item.label} width="45" />
                                                 <span>{item.label}</span>
                                             </a>
                                             </li>

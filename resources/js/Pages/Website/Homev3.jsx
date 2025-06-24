@@ -169,6 +169,69 @@ function ThreeModelOverlay() {
 }
 
 
+// Rest of your component code remains the same...
+const services = [
+  {
+    title: "Brand Communication",
+    subtitle: "shaping how the world sees you",
+    image: "/images/ser1.png",
+  },
+  {
+    title: "Web & Mobile Apps",
+    subtitle: "designed to grow and shift with your audience",
+    image: "/images/ser2.png",
+  },
+  {
+    title: "Digital Marketing Services",
+    subtitle: "measurable, malleable, memorable",
+    image: "/images/ser3.png",
+  },
+  {
+    title: "UI/UX Design",
+    subtitle: "thoughtfully created journeys for your users",
+    image: "/images/ser4.png",
+  },
+  {
+    title: "UI/UX Design",
+    subtitle: "thoughtfully created journeys for your users",
+    image: "/images/ser3.png",
+  },
+];
+
+const clientsRow1 = [
+  "ibm", "pg", "bok", "bankak", "time", "authentik", "rbs", "christou", "saeed", "metro", "rayan", "payfast"
+];
+const clientsRow2 = [
+  "sosafe", "sunrise", "ziauddin", "bok2", "nift", "radiant", "alliend", "idem", "askari", "blinkq", "bluebird", "zafra"
+];
+
+const imageMap = {
+  ibm: "ibm.png",
+  pg: "pg.png",
+  bok: "bok.png",
+  bankak: "bankak.png",
+  time: "time.png",
+  authentik: "authentik.png",
+  christou: "christou.png",
+  saeed: "saeed.png",
+  metro: "metro.png",
+  rayan: "rayan.png",
+  payfast: "payfast.png",
+  rbs: "rbs.png",
+  sosafe: "sosafe.png",
+  sunrise: "sunrise.png",
+  ziauddin: "ziauddin.png",
+  bok2: "bok2.png",
+  nift: "nift.png",
+  radiant: "radiant.png",
+  alliend: "alliend.png",
+  idem: "idem.png",
+  askari: "askari.png",
+  blinkq: "blinkq.png",
+  bluebird: "bluebird.png",
+  zafra: "zafra.png",
+};
+
 const ImageZoomSection = () => {
     const imageWrapperRef = useRef(null);
 
@@ -365,51 +428,88 @@ const ImageZoomSection = () => {
 };
 
 
-const HorizontalScroll = () => {
-  const containerRef = useRef();
-  const contentRef = useRef();
+const AnimatedIconText = ({ id, iconSrc, words }) => {
+  const [text, setText] = useState("");
+  const iconRef = useRef(null);
+  const textRef = useRef(null);
+  const getInitialDelay = () => {
+    switch (id) {
+      case "one":
+        return 0;
+      case "two":
+        return 1.5;
+      case "three":
+        return 3;
+      default:
+        return 0;
+    }
+  };
+    useEffect(() => {
+    const delay = getInitialDelay();
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5, delay });
 
-  useEffect(() => {
-  const ctx = gsap.context(() => {
-    gsap.to(contentRef.current, {
-      x: () => `-${contentRef.current.scrollWidth - window.innerWidth}px`,
-      ease: "power1.out", // smoother easing than "none"
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: () => `+=${contentRef.current.scrollWidth}`,
-        scrub: 0.5, // adds smooth delay instead of instant jump
-        pin: true,
-      },
+    // Set initial styles
+    gsap.set(iconRef.current, { opacity: 1, scale: 1 });
+    gsap.set(textRef.current, { opacity: 0, rotateX: -90, transformPerspective: 1000 });
+
+    // Hide icon
+    tl.to(iconRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.6,
     });
-  }, containerRef);
 
-  return () => ctx.revert();
-}, []);
+    // Animate through each word
+    words.forEach((word) => {
+        tl.call(() => setText(word)); // Set new word
+        tl.fromTo(
+        textRef.current,
+        { opacity: 0, rotateX: -90 },
+        {
+            opacity: 1,
+            rotateX: 0,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            transformPerspective: 1000,
+        }
+        );
+        tl.to(textRef.current, {
+        opacity: 0,
+        rotateX: 90,
+        duration: 0.6,
+        delay: 0.8,
+        ease: "power2.in",
+        transformPerspective: 1000,
+        });
+    });
 
-  return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden">
-      {/* HORIZONTAL SCROLLING TEXT */}
-      <div className="h-screen flex items-center justify-start">
-        <div
-          ref={contentRef}
-          className="whitespace-nowrap pl-[10vw] pr-[10vw] flex items-center"
-        >
-          <h1 className="text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight">
-            Strategy - Creativity - Technology
-          </h1>
+    // Show icon again
+    tl.to(iconRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+    });
+    }, [id]);
+
+    return (
+    <>
+    <div className="text-center text-lime-400 relative min-w-[350px] h-[100px]">
+        <div className="w-full h-full relative flex items-center justify-center">
+            <div ref={iconRef} className="absolute inset-0 flex items-center justify-center">
+            <img src={iconSrc} alt="icon" className="w-16" />
+            </div>
+            <h2
+            ref={textRef}
+            className="text-[34px] tracking-wide absolute inset-0 flex items-center justify-center"
+            style={{ opacity: 0 }}
+            >
+            {text}
+            </h2>
         </div>
-      </div>
-
-      {/* FIXED PARAGRAPH UNDERNEATH */}
-      <p className="absolute bottom-80 left-1/2 transform -translate-x-1/2 text-[22px] fc-primary text-center">
-        Aligned in perfect sync always adjusting, always forward
-      </p>
     </div>
+    </>
   );
 };
-
-
 
 
 function Section() {
@@ -420,11 +520,12 @@ function Section() {
                 <div className="sticky top-0 h-screen flex justify-center items-center z-30">
                     <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]}>
                     <div className="text-center">
-                        <h1 className="text-[40px] mb-2 fc-primary">Look at this dot</h1>
+                        <h1 className="text-[40px] mb-5 fc-primary">Look at this dot</h1>
                         <p className="text-[30px] mb-0 fc-primary">
-                        It’s like a planet in the vast universe
+                        it's like a planet in the vast universe <br />
+                        At a distance, it seems like nothing
                         <br />
-                        {/* <span className="font-weight-bold">But zoom in</span> */}
+                        <span className="font-weight-bold">But zoom in</span>
                         </p>
                     </div>
                     </Parallax>
@@ -435,7 +536,7 @@ function Section() {
                     <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">
-                        Full of life, movement, and possibilities
+                        and you'll find life, movement, possibilities…
                         </p>
                     </div>
                     </Parallax>
@@ -446,7 +547,9 @@ function Section() {
                     <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">
-                        In the digital universe, each dot is a potential idea
+                        Just like the universe, the digital world is infinite
+                        <br />
+                        Multiple ideas with untapped potential floating around
                         </p>
                     </div>
                     </Parallax>
@@ -494,6 +597,31 @@ export default function Home() {
     };
 
 
+    const sectionRef = useRef(null);
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+        if (!sectionRef.current) return;
+        gsap.fromTo(
+            sectionRef.current,
+            { scale: 0.2, opacity: 0 },
+            {
+            scale: 1,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top center',
+                end: 'top center',
+                toggleActions: 'play none none reverse',
+            },
+            }
+        );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
+
     return (
         <ParallaxProvider>
             <WebsiteLayout title="Home | TDF Agency" description="Welcome to TDF Agency - Your trusted digital partner.">
@@ -505,7 +633,29 @@ export default function Home() {
                     >
                     <ParticleCanvas />
                     <div className="relative z-10">
-                        <HorizontalScroll />
+                        <div ref={sectionRef} className="min-h-screen flex flex-col justify-center items-center text-center gap-y-20">
+                            <div className="flex justify-center items-center gap-20">
+                                <AnimatedIconText
+                                id="one"
+                                iconSrc="/images/icon1.svg"
+                                words={["Strategy", "Creativity", "Technology"]}
+                                />
+                                <AnimatedIconText
+                                id="two"
+                                iconSrc="/images/icon1.svg"
+                                words={["Creativity", "Technology", "Strategy"]}
+                                />
+                                <AnimatedIconText
+                                id="three"
+                                iconSrc="/images/icon1.svg"
+                                words={["Technology", "Strategy", "Creativity"]}
+                                />
+                            </div>
+
+                            <p className="text-[22px] fc-primary">
+                                aligned in perfect sync — Always adjusting, always forward
+                            </p>
+                        </div>
                         <SmartToolsSlider />
                         <ClientSlider />
                         <ServiceSlider />
