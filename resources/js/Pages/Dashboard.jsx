@@ -12,6 +12,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import SectionSeoScreen from "@/Components/section-seo-screen";
+import GtmDashboardPage from "@/Components/GtmDashboardPage";
 
 export default function Page() {
     const {stats,report} = usePage().props
@@ -26,9 +27,10 @@ export default function Page() {
                 <div className="border-b bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
                     <div className="px-6 py-4">
                               <Tabs defaultValue="console" className="w-full">
-        <TabsList className="grid grid-cols-2 w-full">
+        <TabsList className="grid grid-cols-3 w-full">
           <TabsTrigger value="console">Google Search Console</TabsTrigger>
-          <TabsTrigger value="seo">Website SEO Analysis</TabsTrigger>
+          <TabsTrigger value="gtm">Google Tag Manager</TabsTrigger>
+              <TabsTrigger value="seo">Website SEO Analysis</TabsTrigger>
         </TabsList>
            <TabsContent value="console">
                         {report.length !== 0  ? (
@@ -42,7 +44,15 @@ export default function Page() {
      <TabsContent value="seo">
             <SectionSeoScreen data={stats} />
      </TabsContent>
+         <TabsContent value="gtm">
+            <GtmDashboardPage/>
+     </TabsContent>
     </Tabs>
+
+
+
+
+
                     </div>
                 </div>
             </div>
