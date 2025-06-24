@@ -4,8 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePage, Link } from "@inertiajs/react";
 import axios from "axios";
 
-
-
 function parseTitles(data) {
   return Object.keys(data).map(key => {
     const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
@@ -13,15 +11,14 @@ function parseTitles(data) {
   });
 }
 
-
-
-
 function SmoothCaseStudiesSection() {
   const { appUrl } = usePage().props;
   const [data, setData] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
   const sectionRef = useRef(null);
   const sectionsRefs = useRef({});
+  const navRef = useRef(null); // Reference for the navigation container
+  const navItemRefs = useRef({}); // References for individual nav items
   const [sections, setSections] = useState([]);
 
   // Fetch data and update sections
@@ -34,23 +31,23 @@ function SmoothCaseStudiesSection() {
 
         // Transform the data into sections format
         const newSections = fetchedData.map((item, index) => {
-        const jsonData = JSON.parse(item.data);
-        const services = parseTitles(jsonData["Service"]);
-        return({
-          id: String(index + 1).padStart(2, '0'),
-          title: item.title,
-          slug: item.slug,
-          subtitle: item.description.length > 10
-            ? item.description.split(' ').slice(0, 10).join(' ') + '...'
-            : item.description,
-        //   logo: '/images/logo.svg',
-          mainImage: item.image ? `${appUrl}/${item.image}` : '/images/case4.png',
-          features:services.length > 0 ? services.map(service =>{
-            if(service.key === 'title'){
-              return service.value
-            }
-          }) : [],
-        })});
+          const jsonData = JSON.parse(item.data);
+          const services = parseTitles(jsonData["Service"]);
+          return({
+            id: String(index + 1).padStart(2, '0'),
+            title: item.title,
+            slug: item.slug,
+            subtitle: item.description.length > 10
+              ? item.description.split(' ').slice(0, 10).join(' ') + '...'
+              : item.description,
+            mainImage: item.image ? `${appUrl}/${item.image}` : '/images/case4.png',
+            features: services.length > 0 ? services.map(service => {
+              if(service.key === 'title'){
+                return service.value
+              }
+            }).filter(Boolean) : [],
+          })
+        });
 
         setSections(newSections);
         setActiveSection(newSections.length > 0 ? newSections[0].id : null);
@@ -59,6 +56,32 @@ function SmoothCaseStudiesSection() {
         console.error('Error fetching case studies:', error);
       });
   }, [appUrl]);
+
+  // Auto-scroll navigation when active section changes
+  useEffect(() => {
+    if (!activeSection || !navRef.current || !navItemRefs.current[activeSection]) return;
+
+    const navContainer = navRef.current;
+    const activeNavItem = navItemRefs.current[activeSection];
+
+    // Get the position of the active nav item relative to the nav container
+    const navContainerRect = navContainer.getBoundingClientRect();
+    const activeItemRect = activeNavItem.getBoundingClientRect();
+
+    // Calculate the scroll position to center the active item
+    const navContainerHeight = navContainer.clientHeight;
+    const activeItemHeight = activeItemRect.height;
+    const activeItemOffsetTop = activeNavItem.offsetTop;
+
+    // Calculate scroll position to center the active item
+    const scrollTop = activeItemOffsetTop - (navContainerHeight / 2) + (activeItemHeight / 2);
+
+    // Smooth scroll the navigation
+    navContainer.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth'
+    });
+  }, [activeSection]);
 
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
@@ -138,11 +161,17 @@ function SmoothCaseStudiesSection() {
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">
             <nav
+              ref={navRef}
               className="space-y-8 pl-6 h-[600px] overflow-y-auto custom-scrollbar custom-mobile-height"
               style={{ direction: 'rtl' }}
             >
               {sections.map((section) => (
-                <div key={section.id} className="relative group" style={{ direction: 'ltr' }}>
+                <div
+                  key={section.id}
+                  ref={el => navItemRefs.current[section.id] = el}
+                  className="relative group"
+                  style={{ direction: 'ltr' }}
+                >
                   <button
                     onClick={() => handleSectionClick(section.id)}
                     className={`text-left w-full transition-all duration-500 ${
@@ -185,12 +214,6 @@ function SmoothCaseStudiesSection() {
               className="min-h-screen flex items-center"
             >
               <div className="animate-fadeIn">
-                {/* <img
-                  src={section.logo}
-                  alt={`${section.title} logo`}
-                  className="w-32 h-auto mb-4"
-                /> */}
-
                 <img
                   src={section.mainImage}
                   alt={`${section.title} main image`}
