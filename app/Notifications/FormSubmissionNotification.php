@@ -8,15 +8,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FormSubmissionNotification extends Notification implements ShouldQueue
+class FormSubmissionNotification extends Notification
 {
-    use Queueable;
+
 
     protected $formSubmission;
 
     public function __construct(FormSubmission $formSubmission)
     {
-        $this->formSubmission = $formSubmission;
+       $this->formSubmission = $formSubmission;
+    
+    // Load the form relationship if not already loaded
+    if (!$this->formSubmission->relationLoaded('form')) {
+        $this->formSubmission->load('form');
+    }
+  
     }
 
     /**
@@ -24,7 +30,8 @@ class FormSubmissionNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable): array
     {
-        return ['database', 'mail'];
+     
+        return ['database'];
     }
 
     /**
@@ -33,10 +40,10 @@ class FormSubmissionNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New Form Submission: ' . $this->formSubmission->form->name)
+                    ->subject('New Form Submission: ' . ($this->formSubmission->form->name ?? 'Unknown Form'))
                     ->greeting('Hello!')
                     ->line('You have received a new form submission.')
-                    ->line('Form: ' . $this->formSubmission->form->name)
+                    ->line('Form: ' . ($this->formSubmission->form->name ?? 'Unknown Form'))
                     ->line('Submitted at: ' . $this->formSubmission->created_at->format('M d, Y H:i:s'))
                     ->action('View Submission', url('/admin/form-submissions/' . $this->formSubmission->id))
                     ->line('Thank you for using our application!');
@@ -47,15 +54,18 @@ class FormSubmissionNotification extends Notification implements ShouldQueue
      */
     public function toDatabase($notifiable): array
     {
+       
         return [
             'type' => 'form_submission',
             'title' => 'New Form Submission',
-            'message' => 'New submission received for form: ' . $this->formSubmission->form->name,
+            'message' => 'New submission received for form: ' . ($this->formSubmission->form->name ?? 'Unknown Form'),
             'form_submission_id' => $this->formSubmission->id,
-            'form_name' => $this->formSubmission->form->name,
-            'submitter_ip' => $this->formSubmission->ip_address,
-            'submitted_at' => $this->formSubmission->created_at->toISOString(),
-            'data' => $this->formSubmission->data,
+            'form_name' => $this->formSubmission->form->name ?? 'Unknown Form',
+            'submitter_ip' => $this->formSubmission->ip_address ?? null,
+            'submitted_at' => $this->formSubmission->created_at->format('Y-m-d H:i:s'),
+            'url' => url('/admin/form-submissions/' . $this->formSubmission->id),
+            // Only include data if it's not too large for database storage
+            'has_data' => !empty($this->formSubmission->data),
         ];
     }
 

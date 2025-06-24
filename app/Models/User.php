@@ -57,4 +57,12 @@ class User extends Authenticatable
     {
         return $this->roles->first()?->name ?? 'No Role';
     }
+
+    //get superadmin only
+    public function scopeSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('name', 'superadmin');
+        });
+    }
 }
