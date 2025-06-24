@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoogleTagManagerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,12 @@ use App\Http\Controllers\SearchConsoleController;
 //     Route::post('/submit-sitemap', [SearchConsoleController::class, 'submitSitemap']);
 //     Route::delete('/delete-sitemap', [SearchConsoleController::class, 'deleteSitemap']);
 // });
+
+
+ Route::prefix('google-tag-manager')->group(function () {
+  // Connection verification
+     Route::get('/verify-connection', [GoogleTagManagerController::class, 'verifyConnection']);
+ });
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
