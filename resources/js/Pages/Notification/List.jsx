@@ -4,6 +4,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, usePage } from '@inertiajs/react';
 
+
 const NotificationsPage = ({ notifications: initialNotifications, stats, filters }) => {
 
      const { props } = usePage();
@@ -56,22 +57,14 @@ const NotificationsPage = ({ notifications: initialNotifications, stats, filters
   const markAsRead = async (id) => {
     try {
       setLoading(true);
-      const response = await fetch(route('notifications.mark-read', id), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
+      router.post(route('notifications.mark-read', id), {}, {
+        preserveScroll: true,
       });
-
-      if (response.ok) {
         setNotifications(notifications.map(notification =>
-          notification.id === id ? { ...notification, read: true } : notification
+            notification.id === id ? { ...notification, read: true } : notification
         ));
+    router.reload();
 
-        // Refresh the page to update stats
-        router.reload();
-      }
     } catch (error) {
       console.error('Error marking notification as read:', error);
     } finally {
@@ -82,17 +75,12 @@ const NotificationsPage = ({ notifications: initialNotifications, stats, filters
   const markAllAsRead = async () => {
     try {
       setLoading(true);
-      const response = await fetch(route('notifications.mark-all-read'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
+      router.post(route('notifications.mark-all-read'), {}, {
+        preserveScroll: true,
       });
-
-      if (response.ok) {
-        router.reload();
-      }
+      setNotifications(notifications.map(notification => ({ ...notification, read: true })));
+      // Refresh the page to update stats
+      router.reload();
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
     } finally {
@@ -103,18 +91,12 @@ const NotificationsPage = ({ notifications: initialNotifications, stats, filters
   const deleteNotification = async (id) => {
     try {
       setLoading(true);
-      const response = await fetch(route('notifications.delete', id), {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
+       router.delete(route('notifications.delete', id), {
+        preserveScroll: true,
       });
-
-      if (response.ok) {
-        setNotifications(notifications.filter(notification => notification.id !== id));
-        router.reload();
-      }
+      setNotifications(notifications.filter(notification => notification.id !== id));
+      router.reload();
+       setLoading(false);
     } catch (error) {
       console.error('Error deleting notification:', error);
     } finally {
@@ -196,7 +178,7 @@ const NotificationsPage = ({ notifications: initialNotifications, stats, filters
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
-                          <h3 className={`font-semibold ${!notification.read ? 'text-slate-900' : 'text-slate-600'}`}>
+                          <h3 onClick={() => router.get(route('form.submission.show', [notification.user, notification.data.form_submission_id]))} className={`font-semibold ${!notification.read ? 'text-slate-900' : 'text-slate-600'}`}>
                             {notification.title}
                           </h3>
                           {!notification.read && (

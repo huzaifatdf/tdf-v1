@@ -84,15 +84,15 @@ class NotificationController extends Controller
      */
     public function markAsRead(Request $request, $id)
     {
-        $user = Auth::user();
         $notification = DatabaseNotification::find($id);
 
         if ($notification) {
             $notification->markAsRead();
-            return response()->json(['success' => true]);
+            session()->flash('success', 'Notification marked as read successfully.');
+             return back();
         }
-
-        return response()->json(['success' => false], 404);
+        session()->flash('error', 'Notification not found.');
+         return back();
     }
 
     /**
@@ -100,9 +100,10 @@ class NotificationController extends Controller
      */
     public function markAllAsRead(Request $request)
     {
-          DatabaseNotification::where('read_at', null)->markAsRead();
-
-        return response()->json(['success' => true]);
+        DatabaseNotification::where('read_at', null)
+            ->update(['read_at' => now()]);
+        session()->flash('success', 'All notifications marked as read.');
+        return back();
     }
 
     /**
@@ -110,15 +111,15 @@ class NotificationController extends Controller
      */
     public function delete(Request $request, $id)
     {
-        $user = Auth::user();
         $notification = DatabaseNotification::find($id);
 
         if ($notification) {
             $notification->delete();
-            return response()->json(['success' => true]);
+            session()->flash('success', 'Notification deleted successfully.');
+            return back();
         }
-
-        return response()->json(['success' => false], 404);
+        session()->flash('error', 'Notification not found.');
+        return back();
     }
 
     /**
