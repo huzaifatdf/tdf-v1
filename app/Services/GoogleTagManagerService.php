@@ -487,7 +487,7 @@ public function getContainerVersions($accountId, $containerId)
             }
 
             $workspaces = $this->getWorkspaces($accountId, $containerId);
-            $versions = $this->getContainerVersions($accountId, $containerId);
+            // $versions = $this->getContainerVersions($accountId, $containerId);
 
             // Get summary from default workspace if available
             $defaultWorkspace = collect($workspaces)->firstWhere('name', 'Default Workspace');
@@ -509,7 +509,7 @@ public function getContainerVersions($accountId, $containerId)
             return [
                 'container_info' => $containerInfo,
                 'workspaces_count' => count($workspaces),
-                'versions_count' => count($versions),
+
                 'content_summary' => $summary,
                 'generated_at' => now()->toISOString()
             ];
