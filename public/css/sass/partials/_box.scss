@@ -39,4 +39,46 @@
             }
         }
     }
+
+    &.begining-section {
+        color: $theme-primary;
+        font-size: 18px;
+        p {
+            color: $theme-primary;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0px;
+            li {
+                list-style: circle;
+                margin-bottom: 5px;
+                padding: 0;
+                font-size: 18px;
+                color: $theme-primary;
+            }
+        }
+    }
+
+    &.designing-section {
+        color: $theme-primary;
+        font-size: 18px;
+        p {
+            color: $theme-primary;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0px;
+            li {
+                list-style: circle;
+                margin-bottom: 5px;
+                padding: 0;
+                font-size: 18px;
+                color: $theme-primary;
+            }
+        }
+    }
 }

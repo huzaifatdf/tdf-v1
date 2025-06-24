@@ -21,32 +21,26 @@ import ParticleCanvas from "@/components/Space";
 // Register GSAP plugins only once at the top level
 gsap.registerPlugin(ScrollTrigger);
 
+
 function ThreeModelOverlay() {
     const mountRef = useRef(null);
     const modelRef = useRef(null);
-
     useEffect(() => {
         // Store cleanup functions
         const cleanupFunctions = [];
-
         let isModelActive = false;
         const handleMouseMove = (event) => {
             if (!isModelActive || !modelRef.current) return;
-
             const mount = mountRef.current;
             if (!mount) return;
-
             const bounds = mount.getBoundingClientRect();
             const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
             const y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
-
             modelRef.current.rotation.x = y * 0.5;
             modelRef.current.rotation.y = x * 0.5;
         };
-
         window.addEventListener('mousemove', handleMouseMove);
         cleanupFunctions.push(() => window.removeEventListener('mousemove', handleMouseMove));
-
         // Create ScrollTrigger with proper cleanup
         const scrollTrigger = ScrollTrigger.create({
             trigger: "#scroll-zoom-section",
@@ -58,23 +52,18 @@ function ThreeModelOverlay() {
             onLeaveBack: () => { isModelActive = false; },
         });
         cleanupFunctions.push(() => scrollTrigger.kill());
-
         const mount = mountRef.current;
         if (!mount) return;
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(55, mount.clientWidth / mount.clientHeight, 0.9, 1000);
         camera.position.z = 9;
-
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(mount.clientWidth, mount.clientHeight);
         mount.appendChild(renderer.domElement);
-
         // Lights
         const light = new THREE.DirectionalLight(0xffffff, 1.5);
         light.position.set(1, 1, 1).normalize();
         scene.add(light);
-
         const spotLight = new THREE.SpotLight(0xffffff, 2);
         spotLight.position.set(0, 5, 5);
         spotLight.angle = Math.PI / 6;
@@ -85,11 +74,9 @@ function ThreeModelOverlay() {
         spotLight.target.position.set(0, 0, 0);
         scene.add(spotLight.target);
         scene.add(spotLight);
-
         // Raycaster and mouse
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-
         // Load GLB Model
         const loader = new GLTFLoader();
         loader.load('/images/ball.glb', gltf => {
@@ -100,7 +87,6 @@ function ThreeModelOverlay() {
             scene.add(model);
             modelRef.current = model;
         });
-
         // Animation loop
         let animationId;
         const animate = () => {
@@ -112,7 +98,6 @@ function ThreeModelOverlay() {
         cleanupFunctions.push(() => {
             if (animationId) cancelAnimationFrame(animationId);
         });
-
         // GSAP ScrollTrigger animations
         const cameraAnimation = gsap.to(camera.position, {
             z: 1,
@@ -128,7 +113,6 @@ function ThreeModelOverlay() {
                 }
             },
         });
-
         const fadeAnimation = gsap.to(mount, {
             autoAlpha: 0,
             ease: "power4.inOut",
@@ -143,7 +127,6 @@ function ThreeModelOverlay() {
                 }
             }
         });
-
         // Click handler
         const handleClick = (event) => {
             const bounds = mount.getBoundingClientRect();
@@ -151,10 +134,8 @@ function ThreeModelOverlay() {
             mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
         };
-
         mount.addEventListener('click', handleClick);
         cleanupFunctions.push(() => mount.removeEventListener('click', handleClick));
-
         // Resize handler
         const handleResize = () => {
             if (!mount) return;
@@ -164,7 +145,6 @@ function ThreeModelOverlay() {
         };
         window.addEventListener('resize', handleResize);
         cleanupFunctions.push(() => window.removeEventListener('resize', handleResize));
-
         // Cleanup function
         return () => {
             cleanupFunctions.forEach(cleanup => cleanup());
@@ -175,7 +155,6 @@ function ThreeModelOverlay() {
             scene.clear();
         };
     }, []);
-
     return (
         <div
             ref={mountRef}
@@ -188,6 +167,7 @@ function ThreeModelOverlay() {
         />
     );
 }
+
 
 // Rest of your component code remains the same...
 const services = [

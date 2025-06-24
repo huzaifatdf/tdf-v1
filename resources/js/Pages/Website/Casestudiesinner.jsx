@@ -48,13 +48,13 @@ export default function Casestudiesinner(props) {
             <div className="">
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
-                    <h1 className="text-[32px] fc-secondary leading-tight mb-6">
+                    <h1 className="text-[34px] fc-secondary leading-tight mb-6">
                         {casestudy.title} { jsonData.subtitle === '' && <> - <br className="hidden md:block" />{jsonData.subtitle}</> }
                     </h1>
                 </div>
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
-                    <p className="text-[16px] fc-primary leading-relaxed mb-6">
+                    <p className="text-[20px] fc-primary leading-relaxed mb-6">
                          <div dangerouslySetInnerHTML={{ __html: casestudy.description || '' }} />
                     </p>
 
@@ -260,7 +260,7 @@ function Beginning(props) {
     <div className="container-fluid">
 
         <hr className="border-white mb-8"/>
-        <div className="sec-padding">
+        <div className="sec-padding box begining-section">
         <div className="grid lg:grid-cols-2 gap-12 align-items-center">
           {/* Left side - Image */}
           <div className="relative">
@@ -276,7 +276,7 @@ function Beginning(props) {
           {/* Right side - Content */}
           <div className="lg:pl-8">
             {jsonData["Detail"]?.the_beginning && <>
-            <h2 className="text-[30px] fc-secondary font-bold mb-3">
+            <h2 className="text-[28px] fc-secondary font-bold mb-3">
               The Beginning - Understanding the Need
             </h2>
 
@@ -411,7 +411,7 @@ function SmoothExperienceSection(props) {
 
   return data &&  (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen">
+      <section ref={sectionRef} className="container-fluid min-h-screen box designing-section">
         {/* Main Content Area */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
@@ -438,14 +438,14 @@ function SmoothExperienceSection(props) {
                           : 'hover:opacity-70'
                       }`}
                     >
-                      <h5 className={`text-[20px] font-bold mb-0 transition-all duration-500 ${
+                      <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
                         activeSection === section.id
-                          ? 'fc-secondary'
+                          ? 'fc-purple'
                           : 'fc-white'
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[24px] font-bold mb-2 transition-all duration-500 ${
+                      <h3 className={`text-[20px] transition-all duration-500 ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -502,9 +502,9 @@ function SmoothExperienceSection(props) {
                     </h2> */}
 
                     {/* Subtitle */}
-                    <p className="text-[22px] fc-primary mb-8 leading-relaxed">
+                    {/* <p className="text-[22px] fc-primary mb-8 leading-relaxed"> */}
                       {parse(section?.subtitle || '')}
-                    </p>
+                    {/* </p> */}
 
                     {/* Features */}
                     {/* <div className="space-y-4 mb-10">

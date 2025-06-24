@@ -9036,6 +9036,46 @@ header nav.pn ul li ul li ul {
 .box.services:hover .text-inner {
   display: none;
 }
+.box.begining-section {
+  color: #91A7BA;
+  font-size: 18px;
+}
+.box.begining-section p {
+  color: #91A7BA;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.box.begining-section ul {
+  padding-left: 20px;
+  margin: 10px 0px;
+}
+.box.begining-section ul li {
+  list-style: circle;
+  margin-bottom: 5px;
+  padding: 0;
+  font-size: 18px;
+  color: #91A7BA;
+}
+.box.designing-section {
+  color: #91A7BA;
+  font-size: 18px;
+}
+.box.designing-section p {
+  color: #91A7BA;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.box.designing-section ul {
+  padding-left: 20px;
+  margin: 10px 0px;
+}
+.box.designing-section ul li {
+  list-style: circle;
+  margin-bottom: 5px;
+  padding: 0;
+  font-size: 18px;
+  color: #91A7BA;
+}
 
 /* Burger Menu */
 .side-menu {

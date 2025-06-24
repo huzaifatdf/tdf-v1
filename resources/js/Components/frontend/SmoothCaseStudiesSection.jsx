@@ -138,7 +138,7 @@ function SmoothCaseStudiesSection() {
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">
             <nav
-              className="space-y-8 pl-6 h-[650px] overflow-y-auto custom-scrollbar custom-mobile-height"
+              className="space-y-8 pl-6 h-[600px] overflow-y-auto custom-scrollbar custom-mobile-height"
               style={{ direction: 'rtl' }}
             >
               {sections.map((section) => (
@@ -153,7 +153,7 @@ function SmoothCaseStudiesSection() {
                   >
                     <h5 className={`text-[18px] mb-0 transition-all duration-500 ${
                       activeSection === section.id
-                        ? 'fc-secondary'
+                        ? 'fc-purple'
                         : 'fc-white'
                     }`}>
                       {section.id}
@@ -197,7 +197,12 @@ function SmoothCaseStudiesSection() {
                   className="w-full h-auto mb-6"
                 />
 
-                <p className="text-[18px] fc-primary mb-4 leading-relaxed">
+                {/* Title */}
+                <h2 className="text-[26px] text-white mb-0">
+                    {section.title}
+                </h2>
+
+                <p className="text-[20px] fc-primary mb-3 leading-relaxed">
                   {section.subtitle}
                 </p>
 
@@ -214,7 +219,7 @@ function SmoothCaseStudiesSection() {
                     }
                     return (
                       <div key={featureIndex} className="flex items-start">
-                        <span className="fc-primary text-[16px] leading-relaxed">
+                        <span className="fc-primary text-[18px] leading-relaxed">
                           {feature}
                         </span>
                       </div>
