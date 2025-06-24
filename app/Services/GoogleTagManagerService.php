@@ -445,15 +445,13 @@ public function getContainerVersions($accountId, $containerId)
                 }
 
                 // Get container versions
-                $versions = $this->getContainerVersions($accountId, $containerId);
+
 
                 $containerDetails[] = [
                     'container_info' => $container,
                     'workspaces' => $workspaceDetails,
-                    'versions' => $versions,
                     'summary' => [
                         'workspaces_count' => count($workspaces),
-                        'versions_count' => count($versions)
                     ]
                 ];
             }
