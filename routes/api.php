@@ -34,7 +34,9 @@ use App\Http\Controllers\SearchConsoleController;
  Route::prefix('google-tag-manager')->group(function () {
   // Connection verification
      Route::get('/verify-connection', [GoogleTagManagerController::class, 'verifyConnection']);
- });
+    Route::get('/get-accounts', [GoogleTagManagerController::class, 'getAccounts']);
+});
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
