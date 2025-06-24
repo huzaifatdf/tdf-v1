@@ -32,9 +32,11 @@ use App\Http\Controllers\SearchConsoleController;
 
 
  Route::prefix('google-tag-manager')->group(function () {
-  // Connection verification
      Route::get('/verify-connection', [GoogleTagManagerController::class, 'verifyConnection']);
     Route::get('/get-accounts', [GoogleTagManagerController::class, 'getAccounts']);
+    Route::get('/get-containers/{accountId}', [GoogleTagManagerController::class, 'getContainers']);
+    Route::get('/get-account-report/{accountId}', [GoogleTagManagerController::class, 'getAccountReport']);
+    Route::get('/get-container-summary/{accountId}/{containerId}', [GoogleTagManagerController::class, 'getContainerSummary']);
 });
 
 
