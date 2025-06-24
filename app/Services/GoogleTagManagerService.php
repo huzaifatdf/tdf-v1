@@ -323,34 +323,38 @@ class GoogleTagManagerService
     /**
      * Get container versions
      */
-    public function getContainerVersions($accountId, $containerId)
-    {
-        try {
-            $containerPath = "accounts/{$accountId}/containers/{$containerId}";
-            $versions = $this->service->accounts_containers_versions->listAccountsContainersVersions($containerPath);
-            $versionList = $versions->getContainerVersion() ?: [];
+   /**
+ * Get container versions
+ */
+public function getContainerVersions($accountId, $containerId)
+{
+    try {
+        $containerPath = "accounts/{$accountId}/containers/{$containerId}";
+        // Changed from listAccountsContainersVersions() to list()
+        $versions = $this->service->accounts_containers_versions->list($containerPath);
+        $versionList = $versions->getContainerVersion() ?: [];
 
-            $result = [];
-            foreach ($versionList as $version) {
-                $result[] = [
-                    'container_version_id' => $version->getContainerVersionId(),
-                    'name' => $version->getName(),
-                    'path' => $version->getPath(),
-                    'description' => $version->getDescription(),
-                    'deleted' => $version->getDeleted(),
-                    'tag_manager_url' => $version->getTagManagerUrl(),
-                    'fingerprint' => $version->getFingerprint()
-                ];
-            }
-
-            Log::info("Retrieved " . count($result) . " versions for container {$containerId}");
-            return $result;
-
-        } catch (Exception $e) {
-            Log::error("Failed to get container versions for {$containerId}: " . $e->getMessage());
-            throw new Exception('Unable to fetch container versions: ' . $e->getMessage());
+        $result = [];
+        foreach ($versionList as $version) {
+            $result[] = [
+                'container_version_id' => $version->getContainerVersionId(),
+                'name' => $version->getName(),
+                'path' => $version->getPath(),
+                'description' => $version->getDescription(),
+                'deleted' => $version->getDeleted(),
+                'tag_manager_url' => $version->getTagManagerUrl(),
+                'fingerprint' => $version->getFingerprint()
+            ];
         }
+
+        Log::info("Retrieved " . count($result) . " versions for container {$containerId}");
+        return $result;
+
+    } catch (Exception $e) {
+        Log::error("Failed to get container versions for {$containerId}: " . $e->getMessage());
+        throw new Exception('Unable to fetch container versions: ' . $e->getMessage());
     }
+}
 
     /**
      * Create a new workspace
