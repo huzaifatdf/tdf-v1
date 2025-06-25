@@ -17,6 +17,7 @@ import ServiceSlider from '@/Components/frontend/ServiceSlider';
 import SmartToolsSlider from '@/Components/frontend/SmartToolsSlider';
 import TestimonialsSection from '@/Components/frontend/TestimonialsSection';
 import ParticleCanvas from "@/components/Space";
+import { Space } from 'lucide-react';
 
 // Register GSAP plugins only once at the top level
 gsap.registerPlugin(ScrollTrigger);
@@ -378,14 +379,14 @@ const HorizontalScroll = () => {
         trigger: containerRef.current,
         start: "top top",
         end: () => `+=${contentRef.current.scrollWidth}`,
-        scrub: 0.5, // adds smooth delay instead of instant jump
+        scrub: 0.9, // adds smooth delay instead of instant jump
         pin: true,
       },
     });
   }, containerRef);
 
-  return () => ctx.revert();
-}, []);
+    return () => ctx.revert();
+    }, []);
 
   return (
     <div ref={containerRef} className="relative h-screen overflow-hidden">
@@ -395,9 +396,9 @@ const HorizontalScroll = () => {
           ref={contentRef}
           className="whitespace-nowrap pl-[10vw] pr-[10vw] flex items-center"
         >
-          <h1 className="text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight">
-            Strategy - Creativity - Technology
-          </h1>
+          <h1 className="text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight animate-fill">
+                Strategy - Creativity - Technology
+            </h1>
         </div>
       </div>
 
@@ -505,12 +506,20 @@ export default function Home() {
                     >
                     <ParticleCanvas />
                     <div className="relative z-10">
-                        <HorizontalScroll />
-                        <SmartToolsSlider />
-                        <ClientSlider />
-                        <ServiceSlider />
-                        <TestimonialsSection />
-                    </div>
+                        {/* Fixed Background */}
+                        <Space />
+
+                        {/* Foreground Content */}
+                        <div className="relative z-10 isolate">
+                            <div className="min-h-screen" id="space-section">
+                            <HorizontalScroll />
+                            <SmartToolsSlider />
+                            <ClientSlider />
+                            <ServiceSlider />
+                            <TestimonialsSection />
+                            </div>
+                        </div>
+                        </div>
                 </div>
             </WebsiteLayout>
         </ParallaxProvider>

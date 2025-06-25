@@ -395,7 +395,20 @@ form {
 }
 
 
-  .text-stroke {
-    -webkit-text-stroke: 1.5px #9FFF00; /* neon green */
-    text-stroke: 1.5px #9FFF00;
+.text-stroke {
+    -webkit-text-stroke: 1.5px $theme-secondary;
+    text-stroke: 1.5px $theme-secondary;
+  }
+
+  @keyframes fillPulse {
+    0%, 100% {
+      color: transparent;
+    }
+    50% {
+      color: $theme-secondary;
+    }
+  }
+
+  .animate-fill {
+    animation: fillPulse 3s infinite ease-in-out;
   }

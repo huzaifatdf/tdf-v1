@@ -9478,8 +9478,20 @@ form textarea {
   }
 }
 .text-stroke {
-  -webkit-text-stroke: 1.5px #9FFF00; /* neon green */
-  text-stroke: 1.5px #9FFF00;
+  -webkit-text-stroke: 1.5px #9BE500;
+  text-stroke: 1.5px #9BE500;
+}
+
+@keyframes fillPulse {
+  0%, 100% {
+    color: transparent;
+  }
+  50% {
+    color: #9BE500;
+  }
+}
+.animate-fill {
+  animation: fillPulse 3s infinite ease-in-out;
 }
 
 footer {
