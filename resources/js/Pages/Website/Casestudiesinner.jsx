@@ -598,7 +598,7 @@ function Components(props) {
     </div>
   ) :   <div className="container-fluid relative">
       <div className="sec-padding pt-0">
-        {conclusion && <p className="text-[18px] fc-primary">{conclusion.description}</p>}
+        {conclusion && <p className="text-[18px] fc-primary">{parse(conclusion.description)}</p>}
       </div>
     </div> ;
 };

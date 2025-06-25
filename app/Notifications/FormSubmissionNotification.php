@@ -17,12 +17,12 @@ class FormSubmissionNotification extends Notification
     public function __construct(FormSubmission $formSubmission)
     {
        $this->formSubmission = $formSubmission;
-    
+
     // Load the form relationship if not already loaded
     if (!$this->formSubmission->relationLoaded('form')) {
         $this->formSubmission->load('form');
     }
-  
+
     }
 
     /**
@@ -30,7 +30,7 @@ class FormSubmissionNotification extends Notification
      */
     public function via($notifiable): array
     {
-     
+
         return ['database'];
     }
 
@@ -54,13 +54,14 @@ class FormSubmissionNotification extends Notification
      */
     public function toDatabase($notifiable): array
     {
-       
+
         return [
             'type' => 'form_submission',
             'title' => 'New Form Submission',
             'message' => 'New submission received for form: ' . ($this->formSubmission->form->name ?? 'Unknown Form'),
             'form_submission_id' => $this->formSubmission->id,
             'form_name' => $this->formSubmission->form->name ?? 'Unknown Form',
+            'form_slug' => $this->formSubmission->form->slug ?? 'Unknown slug',
             'submitter_ip' => $this->formSubmission->ip_address ?? null,
             'submitted_at' => $this->formSubmission->created_at->format('Y-m-d H:i:s'),
             'url' => url('/admin/form-submissions/' . $this->formSubmission->id),
