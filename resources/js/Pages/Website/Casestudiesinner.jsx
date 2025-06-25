@@ -55,7 +55,7 @@ export default function Casestudiesinner(props) {
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
                     <p className="text-[20px] fc-primary leading-relaxed mb-6">
-                         <div dangerouslySetInnerHTML={{ __html: casestudy.description || '' }} />
+                         { casestudy?.description && parse(casestudy.description )}
                     </p>
 
                     </div>
@@ -382,14 +382,14 @@ function SmoothExperienceSection(props) {
 
   // GSAP entrance animation
   useEffect(() => {
-    const section = sectionRef.current;
+    const section1 = sectionRef.current;
 
-    gsap.from(section, {
+    gsap.from(section1, {
       y: 50,
       opacity: 0,
       duration: 1,
       scrollTrigger: {
-        trigger: section,
+        trigger: section1,
         start: "top 80%",
         end: "bottom center",
         toggleActions: "play none none reverse"
@@ -489,6 +489,7 @@ function SmoothExperienceSection(props) {
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
             {sections.map((section, index) => (
+                console.log("smooo",section),
               <div
                 key={section.id}
                 ref={el => sectionsRefs.current[section.id] = el}
@@ -503,7 +504,7 @@ function SmoothExperienceSection(props) {
 
                     {/* Subtitle */}
                     {/* <p className="text-[22px] fc-primary mb-8 leading-relaxed"> */}
-                      {parse(section?.subtitle || '')}
+                      {section?.subtitle && parse(section?.subtitle)}
                     {/* </p> */}
 
                     {/* Features */}
@@ -575,6 +576,7 @@ function transformDataComp(data) {
 function Components(props) {
     const { data,conclusion } = props;
    const parseCom = data && transformDataComp(data);
+
   return data  ? (
 
     <div className="container-fluid relative">
@@ -593,7 +595,7 @@ function Components(props) {
     </div>
   ) :   <div className="container-fluid relative">
       <div className="sec-padding pt-0">
-        {conclusion && <p className="text-[18px] fc-primary">{conclusion}</p>}
+        {conclusion && <p className="text-[18px] fc-primary">{conclusion.description}</p>}
       </div>
     </div> ;
 };
