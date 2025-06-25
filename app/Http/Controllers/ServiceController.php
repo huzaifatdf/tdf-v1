@@ -49,6 +49,18 @@ class ServiceController extends Controller
     public function create()
     {
          $additionalDataStructure = [
+            'techstack' => [
+                'image_1' => ['type' => 'text', 'label' => 'Image 1', 'required' => false],
+                'image_2' => ['type' => 'text', 'label' => 'Image 2', 'required' => false],
+                'image_3' => ['type' => 'text', 'label' => 'Image 3', 'required' => false],
+                'image_4' => ['type' => 'text', 'label' => 'Image 4', 'required' => false],
+                'image_5' => ['type' => 'text', 'label' => 'Image 5', 'required' => false],
+                'image_6' => ['type' => 'text', 'label' => 'Image 6', 'required' => false],
+                'image_7' => ['type' => 'text', 'label' => 'Image 7', 'required' => false],
+                'image_8' => ['type' => 'text', 'label' => 'Image 8', 'required' => false],
+                'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
+                'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
+            ],
 
             'seo' => [
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
@@ -104,7 +116,18 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
          $additionalDataStructure = [
-
+        'techstack' => [
+                        'image_1' => ['type' => 'text', 'label' => 'Image 1', 'required' => false],
+                        'image_2' => ['type' => 'text', 'label' => 'Image 2', 'required' => false],
+                        'image_3' => ['type' => 'text', 'label' => 'Image 3', 'required' => false],
+                        'image_4' => ['type' => 'text', 'label' => 'Image 4', 'required' => false],
+                        'image_5' => ['type' => 'text', 'label' => 'Image 5', 'required' => false],
+                        'image_6' => ['type' => 'text', 'label' => 'Image 6', 'required' => false],
+                        'image_7' => ['type' => 'text', 'label' => 'Image 7', 'required' => false],
+                        'image_8' => ['type' => 'text', 'label' => 'Image 8', 'required' => false],
+                        'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
+                        'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
+        ],
         'seo' => [
             'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
             'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
