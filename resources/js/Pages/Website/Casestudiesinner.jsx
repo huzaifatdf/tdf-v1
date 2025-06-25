@@ -21,9 +21,10 @@ function parseTitles(data) {
 export default function Casestudiesinner(props) {
   const introRef = useRef(null);
   const {casestudy} = props;
-  console.log(casestudy);
+  const {appUrl} = usePage().props;
+
   const jsonData = JSON.parse(casestudy.data);
-    console.log(jsonData);
+
   useEffect(() => {
     const intro = introRef.current;
 
@@ -39,7 +40,7 @@ export default function Casestudiesinner(props) {
       }
     });
   }, []);
-  console.log("json",jsonData);
+
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="flex items-center relative overflow-hidden">
@@ -62,7 +63,7 @@ export default function Casestudiesinner(props) {
                 </div>
                 </div>
                 <img
-                    src="/images/case.png"
+                    src={ `${appUrl}/${casestudy?.image}`}
                     alt="HabibMetro Bank Project Overview"
                     className="w-full h-[50vh] object-cover mt-5 mb-5"
                 />
