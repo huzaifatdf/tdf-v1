@@ -179,7 +179,7 @@ const NotificationsPage = ({ notifications: initialNotifications, stats, filters
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
-                          <h3 onClick={() => router.get(route('form.submission.show', [notification.form_slug, notification.data.form_submission_id]))} className={`font-semibold ${!notification.read ? 'text-slate-900' : 'text-slate-600'}`}>
+                          <h3 onClick={() => router.get(route('form.submission.show', [notification.data.form_slug, notification.data.form_submission_id]))} className={`font-semibold ${!notification.read ? 'text-slate-900' : 'text-slate-600'}`}>
                             {notification.title}
                           </h3>
                           {!notification.read && (
