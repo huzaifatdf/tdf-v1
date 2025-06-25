@@ -60,6 +60,7 @@ class ServiceController extends Controller
                 'image_8' => ['type' => 'text', 'label' => 'Image 8', 'required' => false],
                 'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
                 'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
+                  'image_11' => ['type' => 'text', 'label' => 'Image 11', 'required' => false],
             ],
 
             'seo' => [
@@ -127,6 +128,8 @@ class ServiceController extends Controller
                         'image_8' => ['type' => 'text', 'label' => 'Image 8', 'required' => false],
                         'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
                         'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
+                        'image_11' => ['type' => 'text', 'label' => 'Image 11', 'required' => false],
+
         ],
         'seo' => [
             'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],

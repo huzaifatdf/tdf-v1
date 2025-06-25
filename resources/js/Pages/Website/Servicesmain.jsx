@@ -7,6 +7,17 @@ import SmoothExperienceSection from "@/Components/frontend/SmoothExperienceSecti
 
 gsap.registerPlugin(ScrollTrigger);
 
+
+
+function parseTitles(data) {
+  return Object.keys(data).map(key => {
+    const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
+    return { key: cleanedKey, value: data[key] };
+  });
+}
+
+
+
 export default function Casestudiesmain() {
   const introRef = useRef(null);
 
