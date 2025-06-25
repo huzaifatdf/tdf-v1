@@ -574,8 +574,8 @@ function transformDataComp(data) {
 // Table Section //
 function Components(props) {
     const { data,conclusion } = props;
-   const parseCom = transformDataComp(data);
-  return data ? (
+   const parseCom = data && transformDataComp(data);
+  return data  ? (
 
     <div className="container-fluid relative">
       <div className="sec-padding pt-0">
