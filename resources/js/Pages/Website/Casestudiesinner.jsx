@@ -252,6 +252,8 @@ function Beginning(props) {
     }
   }, []);
 
+  const {appUrl} = usePage().props;
+
   return (
     <section
       ref={sectionRef}
@@ -267,7 +269,7 @@ function Beginning(props) {
           <div className="relative">
             <div className="overflow-hidden shadow-2xl">
               <img
-                src="/images/begi.png"
+                src={ jsonData["Detail"]?.the_beginning_image ? `${appUrl}/${jsonData["Detail"]?.the_beginning_image}` : "/images/begi.png"}
                 alt="Team collaboration in modern office"
                 className="w-full object-cover"
               />
