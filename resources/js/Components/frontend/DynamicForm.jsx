@@ -108,7 +108,6 @@ function DynamicForm(props) {
         try {
             // Create FormData for file uploads
             const submitData = new FormData();
-            console.log(formData);
             // Add all form fields to FormData
             Object.keys(formData).forEach(key => {
                 if (Array.isArray(formData[key])) {
@@ -145,17 +144,23 @@ function DynamicForm(props) {
 
             // Handle success
             // alert(form.success_message || 'Form submitted successfully!');
-
             // Reset form
-            const initialData = {};
+            let initialData = {};
+
             form.fields.forEach(field => {
-                if (field.type === 'checkbox' && field.options) {
+                if (field.type === 'radio' && field.options) {
+                    const previousSelectedValue = tabStates?.[field.name];
+                    const selectedOption = field.options?.[previousSelectedValue] || '';
+                    initialData[field.name] = selectedOption;
+                } else if (field.type === 'checkbox' && field.options) {
                     initialData[field.name] = [];
                 } else {
                     initialData[field.name] = '';
                 }
             });
+
             setFormData(initialData);
+
             setFiles({});
             setIsExpanded(false); // Close the form after successful submission
 

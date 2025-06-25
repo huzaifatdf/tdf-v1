@@ -131,14 +131,20 @@ function ProductForm(props) {
             // alert(form.success_message || 'Form submitted successfully!');
 
             // Reset form
-            const initialData = {};
+              let initialData = {};
+
             form.fields.forEach(field => {
-                if (field.type === 'checkbox' && field.options) {
+                if (field.type === 'radio' && field.options) {
+                    const previousSelectedValue = tabStates?.[field.name];
+                    const selectedOption = field.options?.[previousSelectedValue] || '';
+                    initialData[field.name] = selectedOption;
+                } else if (field.type === 'checkbox' && field.options) {
                     initialData[field.name] = [];
                 } else {
                     initialData[field.name] = '';
                 }
             });
+
             setFormData(initialData);
             setFiles({});
             setIsExpanded(false); // Close the form after successful submission
