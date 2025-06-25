@@ -135,11 +135,11 @@ function Strategic() {
   const sections = [
     {
       id: '01',
-      title: 'For Teachers',
-      subtitle: 'Academic Scheduling',
-      description: 'The Problem: Timetables often clash, teachers get overloaded, or free periods aren’t used well.',
+      title: 'Above Horizon',
+      subtitle: 'Saudi Arabia',
+      description: 'Yasser Shamma <br> Chief Operations Officer',
       features: [
-        'EDUMAN’s Solution: Smart, automated scheduling ensures teachers get well-balanced workloads with no conflicts.',
+        'yasser.shamma@thedesignsfirm.com <br> Riyadh, Saudi Arabia – Al Malaz',
       ],
       Image: '/images/partner.png',
       stats: {
@@ -150,8 +150,8 @@ function Strategic() {
     },
     {
       id: '02',
-      title: 'For Parents',
-      subtitle: 'Paperwork & Tracking',
+      title: 'E&E Business Solutions',
+      subtitle: 'Oman',
       description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
       features: [
         'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
@@ -165,8 +165,8 @@ function Strategic() {
     },
     {
       id: '03',
-      title: 'For School Admins & Management',
-      subtitle: 'Paperwork & Tracking',
+      title: 'HIGH PHAL',
+      subtitle: 'Oman',
       description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
       features: [
         'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
@@ -273,14 +273,14 @@ function Strategic() {
                           : 'hover:opacity-70'
                       }`}
                     >
-                      <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
+                      <h5 className={`text-[18px] mb-0 transition-all duration-500 ${
                         activeSection === section.id
-                          ? 'fc-secondary'
+                          ? 'fc-purple'
                           : 'fc-white'
                       }`}>
-                        {section.id}
+                        {section.subtitle}
                       </h5>
-                      <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
+                      <h3 className={`text-[20px] transition-all duration-500  ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -342,12 +342,12 @@ function Strategic() {
                             />
 
                             {/* Subtitle */}
-                            <p className="text-[20px] fc-primary mb-2 leading-relaxed">
-                                {section.subtitle}
+                            <p className="text-[22px] font-bold fc-primary mb-2 leading-relaxed">
+                                {section.title}
                             </p>
 
-                            <p className="text-[16px] fc-primary mb-2 leading-relaxed">
-                                {section.description}
+                            <p className="text-[20px] fc-primary leading-relaxed mb-0">
+                                {parse(section.description)}
                             </p>
 
                             {/* Features */}
@@ -358,8 +358,8 @@ function Strategic() {
                                 className="flex items-start"
                                 >
                                 {/* <div className="w-2 h-2 bg-blue-500 rounded-full mr-4 mt-2 flex-shrink-0"></div> */}
-                                <span className="fc-primary text-[16px] leading-relaxed">
-                                    {feature}
+                                <span className="text-[20px] fc-primary leading-relaxed">
+                                    {parse(feature)}
                                 </span>
                                 </div>
                             ))}
