@@ -63,7 +63,7 @@ export default function Casestudiesinner(props) {
                 </div>
                 </div>
                 <img
-                    src={ `${appUrl}/${casestudy?.image}`}
+                    src={ `${appUrl}/${casestudy?.thumbnail}`}
                     alt="HabibMetro Bank Project Overview"
                     className="w-full h-[50vh] object-cover mt-5 mb-5"
                 />
