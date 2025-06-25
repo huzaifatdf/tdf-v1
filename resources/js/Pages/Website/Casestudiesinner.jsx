@@ -40,7 +40,7 @@ export default function Casestudiesinner(props) {
       }
     });
   }, []);
-
+  console.log("jsonData service",jsonData["Service"]);
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="flex items-center relative overflow-hidden">
@@ -67,7 +67,7 @@ export default function Casestudiesinner(props) {
                     alt="HabibMetro Bank Project Overview"
                     className="w-full h-[50vh] object-cover mt-5 mb-5"
                 />
-                {jsonData["Service"] && <>
+                {jsonData["Service"]["image_1"] && <>
                 <p className="text-[32px] font-bold fc-secondary leading-tight">Services Provided</p>
                 <hr className="border-white mb-8"/>
                 </>
@@ -214,6 +214,7 @@ function Capabilities(props) {
 
   return (
     <div className="relative">
+
       {projects.map((project, index) => (
         <WebsiteShowcase
           key={index}
