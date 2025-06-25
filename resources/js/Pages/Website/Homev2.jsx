@@ -207,73 +207,6 @@ const ImageZoomSection = () => {
         return () => ctx.revert();
     }, []);
 
-    const creativityRef = useRef(null);
-    const strategyRef = useRef(null);
-    const technologyRef = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            const spheres = [
-                { ref: creativityRef, delay: 0 },
-                { ref: strategyRef, delay: 0.2 },
-                { ref: technologyRef, delay: 0.4 },
-            ];
-
-            spheres.forEach(({ ref, delay }) => {
-                gsap.fromTo(
-                    ref.current,
-                    { y: 60, opacity: 0, scale: 0.8 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 3.8,
-                        ease: 'power3.out',
-                        delay,
-                        scrollTrigger: {
-                            trigger: ref.current,
-                            start: 'top 80%',
-                        },
-                    }
-                );
-
-                gsap.to(ref.current, {
-                    y: '-=10',
-                    duration: 3.8,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut',
-                    delay: delay + 1.2,
-                });
-            });
-        });
-
-        return () => ctx.revert();
-    }, []);
-
-    const textRef = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                textRef.current.querySelectorAll('p'),
-                { opacity: 0, y: 30 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.4,
-                    ease: 'power3.out',
-                    stagger: 0.3,
-                    scrollTrigger: {
-                        trigger: textRef.current,
-                        start: 'top 85%',
-                    },
-                }
-            );
-        });
-
-        return () => ctx.revert();
-    }, []);
-
     return (
         <>
             <div className="container-fluid relative w-full h-screen overflow-hidden">
@@ -288,124 +221,65 @@ const ImageZoomSection = () => {
 
                 <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
                     <p className="text-[30px] mb-0 fc-primary">
-                        We find the dots, draw the lines, and shape experiences
+                        We connect relevant ideas to shape complete experiences
                     </p>
                 </div>
-            </div>
-
-            <div className="relative px-4 ">
-                <div className="relative z-10 w-full max-w-4xl mx-auto mb-11 py-16">
-                    <div ref={creativityRef} className="absolute top-1 left-1/2 ">
-                        <div className="relative group">
-                            <img
-                                src="/images/creat.svg"
-                                alt="Creativity"
-                                className="w-[260px] h-[260px] object-contain hover:scale-110 transition-transform duration-300"
-                            />
-                        </div>
-                    </div>
-
-                    <div ref={strategyRef} className="absolute top-20 left-40">
-                        <div className="relative group">
-                            <img
-                                src="/images/strat.svg"
-                                alt="Strategy"
-                                className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
-                            />
-                        </div>
-                    </div>
-
-                    <div ref={technologyRef} className="absolute top-[130%] left-[40%] ">
-                        <div className="relative group">
-                            <img
-                                src="/images/tech.svg"
-                                alt="Technology"
-                                className="w-[300px] h-[300px] object-contain hover:scale-110 transition-transform duration-300"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className='flex flex-col items-center justify-center '>
-                <div ref={textRef} className="relative z-10 mt-80 text-center max-w-2xl">
-                    <p className="text-[20px] leading-relaxed mb-2 fc-primary">
-                        Strategy, creativity, technology - aligned in perfect sync
-                    </p>
-                    <p className="text-[20px] leading-relaxed mb-2 fc-primary">
-                        Always adjusting, always forward
-                    </p>
-                </div>
-
-                <style jsx>{`
-                    @keyframes float {
-                        0%, 100% { transform: translateY(0px) translateX(-50%); }
-                        50% { transform: translateY(-10px) translateX(-50%); }
-                    }
-                    @keyframes floatLeft {
-                        0%, 100% { transform: translateY(0px); }
-                        50% { transform: translateY(-8px); }
-                    }
-                    @keyframes floatRight {
-                        0%, 100% { transform: translateY(0px); }
-                        50% { transform: translateY(-12px); }
-                    }
-                    .absolute:nth-child(1) > div {
-                        animation: float 6s ease-in-out infinite;
-                    }
-                    .absolute:nth-child(2) > div {
-                        animation: floatLeft 8s ease-in-out infinite 2s;
-                    }
-                    .absolute:nth-child(3) > div {
-                        animation: floatRight 7s ease-in-out infinite 1s;
-                    }
-                `}</style>
             </div>
         </>
     );
 };
 
 
+const layers = [
+  { text: "Strategy", className: "" },
+  { text: "Creativity", className: "" },
+  { text: "Technology", className: "" },
+  {
+    text: "Aligned in perfect sync always adjusting, always forward",
+    className: "text-[30px] font-medium text-center",
+  },
+];
+
 const HorizontalScroll = () => {
   const containerRef = useRef();
-  const contentRef = useRef();
+  const sectionRef = useRef();
 
   useEffect(() => {
-  const ctx = gsap.context(() => {
-    gsap.to(contentRef.current, {
-      x: () => `-${contentRef.current.scrollWidth - window.innerWidth}px`,
-      ease: "power1.out", // smoother easing than "none"
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: () => `+=${contentRef.current.scrollWidth}`,
-        scrub: 0.9, // adds smooth delay instead of instant jump
-        pin: true,
-      },
-    });
-  }, containerRef);
+    const ctx = gsap.context(() => {
+      const panels = gsap.utils.toArray(".panel");
+
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: () => "+=" + containerRef.current.offsetWidth,
+          scrub: 1,
+          snap: 1 / (panels.length - 1),
+          pin: true,
+        },
+      });
+    }, containerRef);
 
     return () => ctx.revert();
-    }, []);
+  }, []);
 
   return (
     <div ref={containerRef} className="relative h-screen overflow-hidden">
-      {/* HORIZONTAL SCROLLING TEXT */}
-      <div className="h-screen flex items-center justify-start">
-        <div
-          ref={contentRef}
-          className="whitespace-nowrap pl-[10vw] pr-[10vw] flex items-center"
-        >
-          <h1 className="text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight animate-fill">
-                Strategy - Creativity - Technology
-            </h1>
-        </div>
+      <div
+        ref={sectionRef}
+        className="flex w-[400vw] h-screen" // dynamically wide enough for all panels
+      >
+        {layers.map((layer, index) => (
+          <div
+            key={index}
+            className={`panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
+          >
+            {layer.text}
+          </div>
+        ))}
       </div>
-
-      {/* FIXED PARAGRAPH UNDERNEATH */}
-      <p className="absolute bottom-60 left-1/2 transform -translate-x-1/2 text-[22px] fc-primary text-center">
-        Aligned in perfect sync always adjusting, always forward
-      </p>
     </div>
   );
 };
@@ -512,6 +386,7 @@ export default function Home() {
                         {/* Foreground Content */}
                         <div className="relative z-10 isolate">
                             <div className="min-h-screen" id="space-section">
+                                <ImageZoomSection />
                                 <HorizontalScroll />
                                 <SmartToolsSlider />
                                 <ClientSlider />

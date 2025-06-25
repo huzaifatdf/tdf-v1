@@ -126,7 +126,7 @@ const Space = () => {
         zIndex: 0,
         opacity: visible ? 1 : 0,
         transition: "opacity 0.5s ease",
-        backgroundImage: "linear-gradient(25deg, rgb(0, 20, 27) 0%, #5b3579 100%, #5b3579 100%)",
+        backgroundImage: "linear-gradient(25deg, rgb(0, 20, 27) 0%, #412c5e 100%, #412c5e 100%)",
         // backgroundImage: "url('https://www.nhm.ac.uk/content/dam/nhm-www/discover/space-junk/space-debris-full-width.jpg.thumb.1024.1024.png')",
         // backgroundSize: "cover",
       }}

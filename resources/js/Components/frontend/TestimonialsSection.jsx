@@ -88,7 +88,7 @@ function TestimonialsSection() {
   return (
     <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
       {/* Background Network Pattern */}
-      <div className="absolute inset-0 opacity-20">
+      {/* <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" viewBox="0 0 1000 1000">
           <defs>
             <pattern id="network" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
@@ -99,7 +99,7 @@ function TestimonialsSection() {
           </defs>
           <rect width="100%" height="100%" fill="url(#network)"/>
         </svg>
-      </div>
+      </div> */}
 
       <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding --large px-8">
         {/* Floating Avatars */}
