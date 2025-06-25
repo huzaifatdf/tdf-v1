@@ -248,10 +248,18 @@ function SmoothExperienceSection() {
                     </p>
 
                     {/* Techstack */}
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {titles.map((obj, index) => (
-                        <img src={ `${appUrl}/${obj.value}`} height="100px" width="100px" />
-                      ))}
+                    <h2 className="text-[26px] text-white mt-5 mb-5">
+                        Technology Stack
+                        </h2>
+                    <div className="grid grid-cols-4 gap-10 mt-4">
+                        {titles.map((obj, index) => (
+                            <img
+                            key={index}
+                            src={`${appUrl}/${obj.value}`}
+                            className=""
+                            alt={`Tech logo ${index}`}
+                            />
+                        ))}
                     </div>
                   </div>
                 </div>
