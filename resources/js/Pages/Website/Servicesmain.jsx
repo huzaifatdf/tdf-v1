@@ -9,14 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 
-function parseTitles(data) {
-  return Object.keys(data).map(key => {
-    const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
-    return { key: cleanedKey, value: data[key] };
-  });
-}
-
-
 
 export default function Casestudiesmain() {
   const introRef = useRef(null);
@@ -36,6 +28,7 @@ export default function Casestudiesmain() {
       }
     });
   }, []);
+
 
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">

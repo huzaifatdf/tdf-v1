@@ -197,7 +197,7 @@ function transformData(data) {
 function Capabilities(props) {
   const { data,jsonData } = props;
   const {appUrl} = usePage().props;
-  console.log(jsonData["Service"]);
+
   const services = jsonData && jsonData["Service"] ? transformData(parseTitles(jsonData["Service"])) : [];
   const projects =
    services

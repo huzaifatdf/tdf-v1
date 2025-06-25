@@ -5,6 +5,16 @@ import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import parse from 'html-react-parser';
 
+
+function parseTitles(data) {
+  return Object.keys(data).map(key => {
+    const cleanedKey = key.replace(/_\d+$/, ''); // Remove trailing underscore + digits
+    return { key: cleanedKey, value: data[key] };
+  });
+}
+
+
+
 function SmoothExperienceSection() {
   const [activeSection, setActiveSection] = useState('text-to-text');
   const sectionRef = useRef(null);
@@ -155,7 +165,10 @@ function SmoothExperienceSection() {
                 className="space-y-8 pl-6 h-[600px] overflow-y-auto custom-scrollbar custom-mobile-height"
                 style={{ direction: 'rtl' }}
               >
-                {sections.map((section, index) => (
+                {sections.map((section, index) => {
+
+
+                    return(
                   <div
                     key={section.id}
                     ref={el => navItemRefs.current[section.section_no] = el}
@@ -190,14 +203,26 @@ function SmoothExperienceSection() {
                       <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
                     )}
                   </div>
-                ))}
+                )})}
               </nav>
             </div>
           </div>
 
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
-            {sections.map((section, index) => (
+            {sections.map((section, index) => {
+                             const techstackRaw = section?.data?.techstack;
+
+    let titles = [];
+    if (techstackRaw) {
+        try {
+            const jsonDataTechStack = JSON.parse(techstackRaw);
+            titles = parseTitles(jsonDataTechStack);
+        } catch (err) {
+            console.error("Failed to parse techstack JSON:", err);
+        }
+    }
+                return(
               <div
                 key={section.section_no}
                 ref={el => sectionsRefs.current[section.section_no] = el}
@@ -221,10 +246,17 @@ function SmoothExperienceSection() {
                     <p className="text-[18px] fc-primary leading-relaxed">
                       {parse(section.description)}
                     </p>
+
+                    {/* Techstack */}
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {titles.map((obj, index) => (
+                        <img src={ `${appUrl}/${obj.value}`} />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
           <hr className="border-white mb-8"/>
         </div>
