@@ -67,8 +67,11 @@ export default function Casestudiesinner(props) {
                     alt="HabibMetro Bank Project Overview"
                     className="w-full h-[50vh] object-cover mt-5 mb-5"
                 />
+                {jsonData["Service"] && <>
                 <p className="text-[32px] font-bold fc-secondary leading-tight">Services Provided</p>
                 <hr className="border-white mb-8"/>
+                </>
+                }
             </div>
         </div>
       </section>
