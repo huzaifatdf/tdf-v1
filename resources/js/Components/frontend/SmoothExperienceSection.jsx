@@ -211,17 +211,17 @@ function SmoothExperienceSection() {
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
             {sections.map((section, index) => {
-                             const techstackRaw = section?.data?.techstack;
-
+                             const techstackRaw = section?.data && JSON.parse(section?.data);
     let titles = [];
-    if (techstackRaw) {
+    if (techstackRaw && techstackRaw["techstack"]) {
         try {
-            const jsonDataTechStack = JSON.parse(techstackRaw);
+            const jsonDataTechStack = techstackRaw["techstack"];
             titles = parseTitles(jsonDataTechStack);
         } catch (err) {
             console.error("Failed to parse techstack JSON:", err);
         }
     }
+    console.log("Titles:", titles);
                 return(
               <div
                 key={section.section_no}
@@ -250,7 +250,7 @@ function SmoothExperienceSection() {
                     {/* Techstack */}
                     <div className="flex flex-wrap gap-2 mt-4">
                       {titles.map((obj, index) => (
-                        <img src={ `${appUrl}/${obj.value}`} />
+                        <img src={ `${appUrl}/${obj.value}`} height="100px" width="100px" />
                       ))}
                     </div>
                   </div>
