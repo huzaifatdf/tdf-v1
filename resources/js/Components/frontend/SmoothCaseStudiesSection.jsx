@@ -156,7 +156,7 @@ function SmoothCaseStudiesSection() {
 
   return (
     <section ref={sectionRef} className="container-fluid min-h-screen">
-      <div className="flex sec-padding pt-0">
+      <div className="flex sec-padding pt-0 pb-0">
         {/* Left Side - Navigation */}
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">

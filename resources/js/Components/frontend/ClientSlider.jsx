@@ -35,7 +35,7 @@ function ClientSlider() {
     <div className="pb-4">
         <div className="container-fluid relative">
             <p className="text-[30px] mb-6 fc-secondary">Our Clients</p>
-            {/* <hr class="border-white mb-8"></hr> */}
+            <hr class="border-white mb-8"></hr>
            <div className="space-y-12">
             <div className="overflow-hidden  pb-5 mt-5">
             <Marquee gradient={false} speed={40} direction="right" pauseOnHover={false}>

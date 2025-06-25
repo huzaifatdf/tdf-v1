@@ -41,12 +41,12 @@ export default function About() {
                             </div>
                             <div className="lg:col-span-6 space-y-6">
                                 <div className="prose prose-lg prose-invert">
-                                <h2 className="mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight">
-                                   Unlocking Growth Through Strategic Alliances
-                                </h2>
-                                <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
-                                    Our strategic partners are an extension of our business and help us provide engaging customer experiences that benefit our customers' bottom lines.
-                                </p>
+                                    <h2 className="mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight">
+                                    Strategic Partnerships Fuel Meaningful Progress
+                                    </h2>
+                                    <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                                        Our strategic partners are an extension of our business and help us provide engaging customer experiences that benefit our customers' bottom lines.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -74,18 +74,49 @@ const PartnerForm = () => {
       <div className="container-fluid grid lg:grid-cols-12 gap-12">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">
-          <h3 className="text-[22px] font-bold fc-primary leading-tight mb-3">Let’s get in touch!</h3>
-          <p className="text-[16px] fc-primary leading-tight mb-0">
-            We team up with organizations that care about more than the bottom line. If you're working to create measurable impact, let’s build something powerful together.
-          </p>
+            <h2 className="mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight">
+                Why You Should Become Our Partner
+            </h2>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                Collaboration is powerful, and we believe it. When you partner with TDF, you join a network that delivers innovative, scalable, and sustainable solutions. Here’s what you get:
+            </p>
 
-            <div className="space-y-8 mt-5">
-                </div>
-            </div>
+            <h3 className="text-[22px] font-bold fc-primary leading-tight mb-1 mt-4">Business Growth:</h3>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                 Explore untapped markets and increase your service offerings.
+            </p>
+
+            <h3 className="text-[22px] font-bold fc-primary leading-tight mb-1 mt-4">Collaborative Innovation:</h3>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                Co-create digital solutions to address complex challenges.
+            </p>
+
+            <h3 className="text-[22px] font-bold fc-primary leading-tight mb-1 mt-4">Shared Success:</h3>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                Align with our vision for long-term, mutually beneficial relationships.
+            </p>
+
+            <h3 className="text-[22px] font-bold fc-primary leading-tight mb-1 mt-4">Marketing and Branding Support:</h3>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                Increase visibility through joint marketing initiatives.
+            </p>
+
+            <h3 className="text-[22px] font-bold fc-primary leading-tight mb-1 mt-4">Knowledge Sharing:</h3>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                Access technical resources, tools, and ongoing training.
+            </p>
+
+            <div className="space-y-8 mt-5"></div>
+        </div>
 
         {/* Right Column: Form */}
         <div className="lg:col-span-6">
-          <h3 className="text-[30px] fc-secondary mb-9">Uncover the Benefits Now!</h3>
+          <h2 className="mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight">
+                Uncover the Benefits Now!
+            </h2>
+            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                There are so many ways we can work together to create exponential digital impact. Let’s get in touch!
+            </p>
 
            <DynamicForm formSlug="partner-form"/>
         </div>
@@ -212,7 +243,7 @@ function Strategic() {
 
     <div className="container-fluid">
         <div className='relative'>
-            <h3 className='text-[30px] fc-secondary'>Strategic Partners</h3>
+            <h3 className='mobile-banner-sub-heading text-[30px] font-bold fc-secondary leading-tight'>Our Strategic Partners</h3>
             <hr className='border-white mb-8'/>
         </div>
     </div>

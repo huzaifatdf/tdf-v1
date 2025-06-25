@@ -5,6 +5,8 @@ import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import { ChevronDown } from 'lucide-react';
 import { Link } from "@inertiajs/react";
 import SmoothCaseStudiesSection from "@/Components/frontend/SmoothCaseStudiesSection";
+import TestimonialsSection from "@/Components/frontend/TestimonialsSection";
+import ClientSlider from "@/Components/frontend/ClientSlider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,6 +54,7 @@ export default function Casestudiesmain(props) {
       </section>
       <FiltersWithSearch />
       <SmoothCaseStudiesSection/>
+      <ClientSlider />
     </WebsiteLayout>
   );
 }

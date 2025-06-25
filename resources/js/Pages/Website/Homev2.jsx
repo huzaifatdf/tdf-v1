@@ -403,7 +403,7 @@ const HorizontalScroll = () => {
       </div>
 
       {/* FIXED PARAGRAPH UNDERNEATH */}
-      <p className="absolute bottom-80 left-1/2 transform -translate-x-1/2 text-[22px] fc-primary text-center">
+      <p className="absolute bottom-60 left-1/2 transform -translate-x-1/2 text-[22px] fc-primary text-center">
         Aligned in perfect sync always adjusting, always forward
       </p>
     </div>
@@ -512,14 +512,14 @@ export default function Home() {
                         {/* Foreground Content */}
                         <div className="relative z-10 isolate">
                             <div className="min-h-screen" id="space-section">
-                            <HorizontalScroll />
-                            <SmartToolsSlider />
-                            <ClientSlider />
-                            <ServiceSlider />
-                            <TestimonialsSection />
+                                <HorizontalScroll />
+                                <SmartToolsSlider />
+                                <ClientSlider />
+                                <ServiceSlider />
+                                <TestimonialsSection />
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </WebsiteLayout>
         </ParallaxProvider>
