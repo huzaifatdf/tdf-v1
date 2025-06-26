@@ -9447,6 +9447,16 @@ form textarea {
   animation: fillPulse 3s infinite ease-in-out;
 }
 
+.mobile-screens ul {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.mobile-screens ul li {
+  list-style: circle;
+  font-size: 18px;
+  color: #91A7BA;
+}
+
 @media (max-width: 600px) {
   .banner-inner-page .flex.flex-col.md\:flex-row.items-center {
     align-items: baseline;
@@ -9491,7 +9501,7 @@ form textarea {
     margin: 0;
   }
   .mobile-banner-sub-heading {
-    font-size: 25px;
+    font-size: 20px;
   }
   .side-menu {
     right: 10px;
@@ -9522,12 +9532,48 @@ form textarea {
   .mobile-screens a {
     font-size: 16px;
   }
+  .mobile-screens button {
+    font-size: 16px;
+  }
+  .mobile-screens ul li {
+    font-size: 16px;
+  }
   .mobile-screens .flex.sec-padding.pt-0.pb-0 {
     gap: 25px;
+  }
+  .mobile-screens .tech-logo {
+    gap: 20px;
+    margin-top: 0 !important;
+  }
+  .mobile-screens h2.text-\[26px\].text-white.mt-5.mb-5 {
+    margin-bottom: 20px !important;
   }
   .mobile-screens .absolute.bottom-0.left-0.h-1.w-10.bg-\[\#9BE500\].transition-all.duration-500 {
     height: 2px;
     bottom: -5px !important;
+  }
+  .banner-inner-page .container-fluid.relative.mt-\[150px\].mb-\[30px\] {
+    margin-top: 115px !important;
+    margin-bottom: 0 !important;
+  }
+  .banner-inner-page p.text-\[32px\].font-bold.fc-secondary.leading-tight {
+    margin-top: 50px;
+    font-size: 20px;
+  }
+  .banner-inner-page hr {
+    margin-bottom: 0 !important;
+  }
+  .banner-inner-page img {
+    margin: 0 !important;
+  }
+  .banner-inner-page .container-fluid.relative.mt-\[150px\] {
+    margin-top: 115px !important;
+  }
+  .banner-inner-page .relative.mt-\[120px\].mb-\[80px\] {
+    margin-bottom: 50px;
+  }
+  .industtry-page h1 {
+    font-size: 30px;
   }
 }
 footer {

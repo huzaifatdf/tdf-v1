@@ -28,8 +28,7 @@ export default function Productinner() {
 
   return (
     <WebsiteLayout title="Industries | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-        <section ref={introRef} className="flex relative overflow-hidden">
-            <div className="absolute inset-0 opacity-50" />
+        <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="container-fluid relative mt-[150px]">
                 <div className="">
                     <div className="grid md:grid-cols-12 items-center justify-center pb-[20px]">
@@ -60,7 +59,7 @@ export default function Productinner() {
         </section>
       <IndustrySection/>
 
-      <div className="container-fluid relative mb-9">
+      <div className="industtry-page container-fluid relative mb-9">
         <h1 className="text-[60px] fc-secondary text-center mb-0 leading-quote">Your needs are unique,<br/>So is our approach</h1>
       </div>
     </WebsiteLayout>

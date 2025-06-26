@@ -32,7 +32,7 @@ export default function Casestudiesmain() {
 
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-      <section ref={introRef} className="min-h-[40vh] flex items-center relative overflow-hidden">
+      <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px] mb-[30px]">
                 <div className="">
@@ -166,7 +166,7 @@ function FiltersWithSearch() {
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent border-none outline-none text-white placeholder-gray-400 ml-4 min-w-[180px]"
+                className="mobilehide bg-transparent border-none outline-none text-white placeholder-gray-400 ml-4 min-w-[180px]"
             />
             </div>
     </div>

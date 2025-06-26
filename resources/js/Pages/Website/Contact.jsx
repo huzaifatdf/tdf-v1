@@ -29,7 +29,7 @@ export default function About() {
 
   return (
     <WebsiteLayout title="Contact | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-        <section ref={introRef} className="min-h-[40vh] flex items-center relative overflow-hidden">
+        <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid ">
                 <div className="relative mt-[120px] mb-[80px]">
@@ -65,7 +65,7 @@ const ContactSection = () => {
   const tabs = ['Business development', 'Support', 'Others'];
 
   return (
-    <div className="relative sec-padding pt-0">
+    <div className="mobile-screens relative sec-padding pt-0">
       <div className="container-fluid grid lg:grid-cols-12 gap-20">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">

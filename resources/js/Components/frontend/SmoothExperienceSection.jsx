@@ -155,7 +155,7 @@ function SmoothExperienceSection() {
 
   return (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen service-main">
+      <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
@@ -251,7 +251,7 @@ function SmoothExperienceSection() {
                     <h2 className="text-[26px] text-white mt-5 mb-5">
                         Technology Stack
                         </h2>
-                    <div className="grid grid-cols-4 gap-10 mt-4 align-items-center">
+                    <div className="tech-logo grid grid-cols-4 gap-10 mt-4 align-items-center">
                         {titles.map((obj, index) => (
                             <img
                             key={index}
