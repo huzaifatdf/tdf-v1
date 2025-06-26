@@ -29,7 +29,7 @@ export default function About() {
 
   return (
     <WebsiteLayout title="Contact | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-        <section ref={introRef} className="flex relative overflow-hidden">
+        <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">
                     <div className="">
@@ -70,7 +70,7 @@ const PartnerForm = () => {
   const tabs = ['Become a Partner', 'For Services'];
 
   return (
-    <div className="relative sec-padding">
+    <div className="banner-inner-page relative sec-padding">
       <div className="container-fluid grid lg:grid-cols-12 gap-12">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">
@@ -139,7 +139,7 @@ function Strategic() {
       subtitle: 'Saudi Arabia',
       description: 'Yasser Shamma <br> Chief Operations Officer',
       features: [
-        'yasser.shamma@thedesignsfirm.com <br> Riyadh, Saudi Arabia – Al Malaz',
+        'yasser.shamma@<br>thedesignsfirm.com <br> Riyadh, Saudi Arabia – Al Malaz',
       ],
       Image: '/images/partner.png',
       stats: {
@@ -152,9 +152,9 @@ function Strategic() {
       id: '02',
       title: 'E&E Business Solutions',
       subtitle: 'Oman',
-      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
+      description: 'Mr. Ali Almarjibi',
       features: [
-        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
+        'Ali.marjibi@e-ebs.com / info@e-ebs.com <br> Riyadh, Muscat, Oman',
       ],
       Image: '/images/partner.png',
       stats: {
@@ -165,11 +165,11 @@ function Strategic() {
     },
     {
       id: '03',
-      title: 'HIGH PHAL',
+      title: 'Elkhidir Abderlasoul',
       subtitle: 'Oman',
-      description: 'The Problem: Maintaining attendance registers, filling out results, and updating progress reports takes too much time.',
+      description: '',
       features: [
-        'EDUMAN’s Solution: Everything is digitised in Eduman, from attendance to grades. Just enter the data, and the system does the rest.'
+        'elkhidir@outlook.com <br> +968 9218 4151 <br> Al Seeb, Way 3451, Muscat, Oman',
       ],
       Image: '/images/partner.png',
       stats: {
@@ -241,13 +241,13 @@ function Strategic() {
   return (
     <>
 
-    <div className="container-fluid">
+    <div className="banner-inner-page container-fluid">
         <div className='relative'>
             <h3 className='mobile-banner-sub-heading text-[30px] fc-secondary leading-tight'>Our Strategic Partners</h3>
             <hr className='border-white mb-8'/>
         </div>
     </div>
-      <section ref={sectionRef} className="container-fluid min-h-screen">
+      <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
         {/* Main Content Area */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}

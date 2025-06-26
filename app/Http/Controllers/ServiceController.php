@@ -61,6 +61,11 @@ class ServiceController extends Controller
                 'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
                 'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
                   'image_11' => ['type' => 'text', 'label' => 'Image 11', 'required' => false],
+                  'image_12' => ['type' => 'text', 'label' => 'Image 12', 'required' => false],
+                  'image_13' => ['type' => 'text', 'label' => 'Image 13', 'required' => false],
+                  'image_14' => ['type' => 'text', 'label' => 'Image 14', 'required' => false],
+                  'image_15' => ['type' => 'text', 'label' => 'Image 15', 'required' => false],
+                  'image_16' => ['type' => 'text', 'label' => 'Image 16', 'required' => false],
             ],
 
             'seo' => [
@@ -129,6 +134,11 @@ class ServiceController extends Controller
                         'image_9' => ['type' => 'text', 'label' => 'Image 9', 'required' => false],
                         'image_10' => ['type' => 'text', 'label' => 'Image 10', 'required' => false],
                         'image_11' => ['type' => 'text', 'label' => 'Image 11', 'required' => false],
+                        'image_12' => ['type' => 'text', 'label' => 'Image 12', 'required' => false],
+                        'image_13' => ['type' => 'text', 'label' => 'Image 13', 'required' => false],
+                        'image_14' => ['type' => 'text', 'label' => 'Image 14', 'required' => false],
+                        'image_15' => ['type' => 'text', 'label' => 'Image 15', 'required' => false],
+                        'image_16' => ['type' => 'text', 'label' => 'Image 16', 'required' => false],
 
         ],
         'seo' => [

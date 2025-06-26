@@ -147,7 +147,7 @@ function SmoothExperienceSection() {
   return (
     <>
       <FiltersWithSearch/>
-      <section ref={sectionRef} className="container-fluid min-h-screen service-main">
+      <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
@@ -355,7 +355,7 @@ function FiltersWithSearch() {
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent border-none outline-none text-white placeholder-gray-400 ml-4 min-w-[180px]"
+                className="mobilehide bg-transparent border-none outline-none text-white placeholder-gray-400 ml-4 min-w-[180px]"
             />
             </div>
     </div>

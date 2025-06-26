@@ -29,7 +29,7 @@ export default function IndustrySection() {
   };
 
   return (
-    <div className="py-16 relative">
+    <div className="mobile-screens py-16 relative">
       <div className="container-fluid">
         {data.length > 0 && data.map((dataItem, index) => {
           const jsonData = JSON.parse(dataItem.data);
