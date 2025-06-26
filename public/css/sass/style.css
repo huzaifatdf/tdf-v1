@@ -9575,6 +9575,30 @@ form textarea {
   .industtry-page h1 {
     font-size: 30px;
   }
+  .mobile-screens .container-fluid.grid.lg\:grid-cols-12.gap-20 {
+    padding-top: 40px;
+  }
+  .banner-inner-page .grid.md\:grid-cols-12.items-center.justify-center.pb-\[60px\] {
+    padding-bottom: 20px;
+  }
+  .about-mobile-screens h2 {
+    font-size: 25px;
+  }
+  .about-mobile-screens h3 {
+    font-size: 25px;
+  }
+  .about-mobile-screens p {
+    font-size: 16px;
+  }
+  .about-mobile-screens ul li {
+    font-size: 16px;
+  }
+  .about-mobile-screens .grid.grid-cols-1.lg\:grid-cols-12.gap-8.items-center {
+    gap: 0;
+  }
+  .banner-inner-page .flex {
+    gap: 20px;
+  }
 }
 footer {
   position: relative;

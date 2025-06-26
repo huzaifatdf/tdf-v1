@@ -124,7 +124,7 @@ const ContactSection = () => {
 // Map Section //
 const MapSection = () => {
   return (
-    <div className="container-fluid">
+    <div className="mobile-screens container-fluid">
         <hr class="border-white mb-8"></hr>
         <div className=" sec-padding relative">
             <h4 className='text-[30px] mb-2 fc-secondary'>Delivering trusted solutions<br></br>on a global scale</h4>

@@ -29,7 +29,7 @@ export default function About() {
 
   return (
     <WebsiteLayout title="About | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-        <section ref={introRef} className="flex relative overflow-hidden">
+        <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">
                     <div className="">
@@ -68,7 +68,7 @@ export default function About() {
 
 function AboutSection() {
   return (
-    <section className="relative sec-padding">
+    <section className="about-mobile-screens relative sec-padding">
       <div className="container-fluid">
         <h2 className="fc-secondary text-[30px] mb-6">
           Creative Thinkers. Strategic Doers
@@ -123,7 +123,7 @@ function StatsSection() {
   ];
 
   return (
-    <section className="relative bg-[#040404] sec-padding">
+    <section className="about-mobile-screens relative bg-[#040404] sec-padding">
       <div className="container-fluid">
         <h2 className="fc-secondary text-[32px] mb-5">Numbers Don’t Lie</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -149,7 +149,7 @@ function StatsSection() {
 
 function Trusted () {
     return (
-        <div className="container-fluid">
+        <div className="about-mobile-screens container-fluid">
             <div className="sec-padding relative">
                 <div className="grid md:grid-cols-12 gap-12 items-center">
                     {/* Left Column - Main Content */}
@@ -239,55 +239,111 @@ const TimelineSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="container-fluid">
-      <div className="relative sec-padding">
-        <div className="flex overflow-x-auto no-scrollbar h-[650px] space-x-4">
-          {timelineData.map((item, idx) => {
-            const isActive = activeIndex === idx;
-            return (
-              <div
-                key={item.id}
-                onClick={() => setActiveIndex(idx)}
-                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
-                  isActive
-                    ? "w-[650px] lg:w-[630px] h-full"
-                    : "w-[100px] lg:w-[100px] h-full flex flex-col items-center justify-center text-center"
-                }`}
-              >
-                {!isActive && (
-                  <div className="flex flex-col items-center justify-between h-full rotate-180">
-                    <div className="for-padd  transform -rotate-90 whitespace-nowrap">
-                      <p className="text-[20px] fc-primary mb-0 text-left">{item.id}</p>
-                      <p className="fc-secondary text-[30px] mb-0 text-right">{item.range}</p>
+    <section className="about-mobile-screens container-fluid">
+        <div className="relative sec-padding">
+            {/* Desktop Version - Horizontal Timeline */}
+            <div className="hidden lg:flex overflow-x-auto no-scrollbar h-[650px] space-x-4">
+            {timelineData.map((item, idx) => {
+                const isActive = activeIndex === idx;
+                return (
+                <div
+                    key={item.id}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
+                    isActive
+                        ? "w-[650px] lg:w-[630px] h-full"
+                        : "w-[100px] lg:w-[100px] h-full flex flex-col items-center justify-center text-center"
+                    }`}
+                >
+                    {!isActive && (
+                    <div className="flex flex-col items-center justify-between h-full rotate-180">
+                        <div className="for-padd transform -rotate-90 whitespace-nowrap">
+                        <p className="text-[20px] fc-primary mb-0 text-left">{item.id}</p>
+                        <p className="fc-secondary text-[30px] mb-0 text-right">{item.range}</p>
+                        </div>
+                        <div className="rotate-180 text-[32px] fc-secondary">+</div>
                     </div>
-                    <div className="rotate-180 text-[32px] fc-secondary">+</div>
-                  </div>
-                )}
+                    )}
 
-                {isActive && (
-                  <div className="p-6 flex flex-col justify-between h-full">
-                    <div>
-                      <p className="fc-primary text-[18px] mb-0">{item.id}</p>
-                      <p className="fc-secondary text-[30px] mb-0">{item.range}</p>
-                      <p className="fc-primary text-[18px] mb-0 leading-relaxed">
-                        {item.description}
-                      </p>
+                    {isActive && (
+                    <div className="p-6 flex flex-col justify-between h-full">
+                        <div>
+                        <p className="fc-primary text-[18px] mb-0">{item.id}</p>
+                        <p className="fc-secondary text-[30px] mb-0">{item.range}</p>
+                        <p className="fc-primary text-[18px] mb-0 leading-relaxed">
+                            {item.description}
+                        </p>
+                        </div>
+                        <div className="">
+                        <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full object-cover mb-6 h-[350px]"
+                        />
+                        </div>
                     </div>
-                    <div className="">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full object-cover mb-6 h-[350px]"
-                      />
+                    )}
+                </div>
+                );
+            })}
+            </div>
+
+            {/* Mobile Version - Accordion */}
+            <div className="lg:hidden space-y-2">
+            {timelineData.map((item, idx) => {
+                const isActive = activeIndex === idx;
+                return (
+                <div
+                    key={item.id}
+                    className="border border-gray-700 rounded-lg overflow-hidden"
+                >
+                    {/* Accordion Header */}
+                    <div
+                    onClick={() => setActiveIndex(isActive ? -1 : idx)}
+                    className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800 transition-colors duration-200"
+                    >
+                    <div className="flex items-center space-x-3">
+                        <div>
+                        <p className="text-[16px] fc-primary mb-0 font-medium">{item.id}</p>
+                        <p className="fc-secondary text-[20px] mb-0">{item.range}</p>
+                        </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                    <div
+                        className={`text-[24px] fc-secondary transition-transform duration-300 ${
+                        isActive ? 'rotate-45' : 'rotate-0'
+                        }`}
+                    >
+                        +
+                    </div>
+                    </div>
+
+                    {/* Accordion Content */}
+                    <div
+                    className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                        isActive ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                    >
+                    <div className="p-4 pt-0 border-t border-gray-700">
+                        <div className="mb-4">
+                        <p className="fc-primary text-[16px] mb-0 leading-relaxed">
+                            {item.description}
+                        </p>
+                        </div>
+                        <div className="mb-0">
+                        <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full object-cover rounded-lg h-[250px]"
+                        />
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                );
+            })}
+            </div>
         </div>
-      </div>
-      <hr className="border-white mb-8"/>
+        <hr className="border-white mb-8"/>
     </section>
   );
 };
@@ -295,7 +351,7 @@ const TimelineSection = () => {
 
 function WhatDrivesUs () {
   return (
-    <div className='container-fluid'>
+    <div className='about-mobile-screens container-fluid'>
         <div className="relative flex flex-col lg:flex-row items-center sec-padding">
             {/* Left Side Content */}
             <div className="lg:w-1/2">
@@ -329,7 +385,7 @@ function WhatDrivesUs () {
 // Mission Vision //
 const MissionVisionProposition = () => {
   return (
-    <div className="container-fluid">
+    <div className="about-mobile-screens container-fluid">
         <div className="sec-padding relative">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Image - 5 columns */}
@@ -411,42 +467,41 @@ const MeetTheMissfits = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="container-fluid">
-      <div className="relative sec-padding">
-        <h3 className="text-[32px] fc-secondary mb-0">Meet the Misfits</h3>
-        <p className='fc-primary text-[18px] mb-6 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
-        <hr className="border-white mb-8" />
-        <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
-          {missfits.map((item, idx) => {
-            const isActive = activeIndex === idx;
-            return (
-              <div
-                key={item.id}
-                onClick={() => setActiveIndex(idx)}
-                className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
-                  isActive
-                    ? "w-[650px] lg:w-[900px] h-full"
-                    : "w-[100px] lg:w-[350px] h-full flex flex-col items-center justify-center text-center"
-                }`}
-              >
-                {!isActive && (
-                  <div className="flex flex-col items-center justify-between h-full">
+    <section className="about-mobile-screens container-fluid">
+        <div className="relative sec-padding">
+            <h3 className="text-[32px] fc-secondary mb-0">Meet the Misfits</h3>
+            <p className='fc-primary text-[18px] mb-6 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
+            <hr className="border-white mb-8" />
 
-                    <div className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary">+</div>
+            {/* Desktop Version - Your Original Code */}
+            <div className="hidden lg:flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
+            {missfits.map((item, idx) => {
+                const isActive = activeIndex === idx;
+                return (
+                <div
+                    key={item.id}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
+                    isActive
+                        ? "w-[650px] lg:w-[900px] h-full"
+                        : "w-[100px] lg:w-[350px] h-full flex flex-col items-center justify-center text-center"
+                    }`}
+                >
+                    {!isActive && (
+                    <div className="flex flex-col items-center justify-between h-full">
+                        <div className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary">+</div>
                         <div className="p-6">
-                            <img src={item.image} alt="" />
-                            <p className="text-[20px] fc-primary mb-0 text-left">{item.range}</p>
-                            <p className="fc-secondary text-[30px] mb-0 text-left">{item.title}</p>
+                        <img src={item.image} alt="" />
+                        <p className="text-[20px] fc-primary mb-0 text-left">{item.range}</p>
+                        <p className="fc-secondary text-[30px] mb-0 text-left">{item.title}</p>
                         </div>
                     </div>
-                )}
+                    )}
 
-                {isActive && (
+                    {isActive && (
                     <div className="p-6 h-full relative">
                         {/* Minus icon on the top-right */}
-                        <div
-                        className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary"
-                        >
+                        <div className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary">
                         −
                         </div>
 
@@ -471,13 +526,71 @@ const MeetTheMissfits = () => {
                         </div>
                     </div>
                     )}
-              </div>
-            );
-          })}
+                </div>
+                );
+            })}
+            </div>
+
+            {/* Mobile Version - Accordion */}
+            <div className="lg:hidden space-y-2">
+            {missfits.map((item, idx) => {
+                const isActive = activeIndex === idx;
+                return (
+                <div
+                    key={item.id}
+                    className="border border-gray-700 rounded-lg overflow-hidden"
+                >
+                    {/* Accordion Header */}
+                    <div
+                    onClick={() => setActiveIndex(isActive ? -1 : idx)}
+                    className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800 transition-colors duration-200"
+                    >
+                    <div className="flex items-center space-x-3">
+                        <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-12 h-12 object-cover rounded-full"
+                        />
+                        <div>
+                        <p className="text-[16px] fc-secondary mb-0 font-medium">{item.title}</p>
+                        <p className="fc-primary text-[14px] mb-0">{item.range}</p>
+                        </div>
+                    </div>
+                    <div
+                        className={`text-[24px] fc-secondary transition-transform duration-300 ${
+                        isActive ? 'rotate-45' : 'rotate-0'
+                        }`}
+                    >
+                        +
+                    </div>
+                    </div>
+
+                    {/* Accordion Content */}
+                    <div
+                    className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                        isActive ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                    >
+                    <div className="p-4 pt-0 border-t border-gray-700">
+                        <div className="mb-4">
+                        <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full object-cover rounded-lg h-[320px] mb-4"
+                        />
+                        <p className="fc-primary text-[16px] mb-0 leading-relaxed">
+                            {parse(item.description)}
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                );
+            })}
+            </div>
         </div>
-      </div>
-      <hr className="border-white mb-8"/>
-    </section>
+        <hr className="border-white mb-8"/>
+        </section>
   );
 };
 
@@ -485,7 +598,7 @@ const MeetTheMissfits = () => {
 // 20 + Years //
 const Experience = () => {
     return (
-        <div className="relative sec-padding">
+        <div className="about-mobile-screens  relative sec-padding">
             <div className="container-fluid">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left Heading */}
