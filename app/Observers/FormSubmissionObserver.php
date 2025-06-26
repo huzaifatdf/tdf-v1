@@ -37,11 +37,7 @@ class FormSubmissionObserver
         }
 
         //broadcast notification
-        try{
-               $broadcast = broadcast(new FormSubmissionCreated($formSubmission))->toOthers();
-        } catch (\Exception $e) {
-            \Log::error('Broadcasting error: ' . $e->getMessage());
-        }
+        broadcast(new FormSubmissionCreated($formSubmission))->toOthers();
 
 
 

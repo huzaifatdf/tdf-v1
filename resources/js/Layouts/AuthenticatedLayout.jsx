@@ -73,23 +73,38 @@ export default function AuthenticatedLayout({ header, children }) {
 
 
 
- useEffect(() => {
-// Enhanced Echo listener with better error handling and debugging
-        console.log("Listening for messages...");
-
-            const chatChannel = window.Echo.channel('chat');
-
-            chatChannel.listen('.NewChatMessage', (e) => {
-                console.log("Received event:", e);
-
+useEffect(() => {
+    console.log("Listening for messages...");
+    let chatChannel;
+    try {
+        chatChannel = window.Echo.channel('admin-notifications');
+        console.log("Chat channel created:", chatChannel);
+        chatChannel.subscribed(() => {
+            console.log("Successfully subscribed to admin-notifications channel");
+        });
+        chatChannel.listen('.NewNotification', (e) => {
+            console.log("Received event:", e);
+            toast({
+                title: "New Message",
+                description: e.message || "No message content",
+                variant: "default",
             });
+        });
+        chatChannel.error((err) => {
+            console.error("Channel subscription error:", err);
+        });
+    } catch (error) {
+        console.error("Error setting up Echo listener:", error);
+    }
 
-            return () => {
-                console.log("Leaving channel...");
-                chatChannel.stopListening('.NewChatMessage');
-                window.Echo.leaveChannel('chat');
-            };
-        }, []);
+    return () => {
+        console.log("Leaving channel...");
+        if (chatChannel) {
+            chatChannel.stopListening('.NewNotification');
+            window.Echo.leaveChannel('admin-notifications');
+        }
+    };
+}, [toast]);
 
 
     return (

@@ -25,20 +25,38 @@ class FormSubmissionCreated implements ShouldBroadcast
         $this->formSubmission = $formSubmission;
     }
 
-
     /**
      * Get the channels the event should broadcast on.
      */
     public function broadcastOn()
     {
-        return new Channel('chat'); // Ensure this matches frontend
+      
+        return new Channel('admin-notifications');
+            // You can also use presence channel if you want to track who's online
+            // new PresenceChannel('admin-dashboard'),
+        ;
     }
 
     /**
-     * Set the event name
+     * The event's broadcast name.
      */
     public function broadcastAs()
     {
-        return 'NewChatMessage';
+        return 'NewNotification';
+    }
+
+    /**
+     * Get the data to broadcast.
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'id' => $this->formSubmission->id,
+            'form_name' => $this->formSubmission->form->name,
+            'submitter_name' => $this->formSubmission->name ?? 'Anonymous',
+            'submitter_email' => $this->formSubmission->email,
+            'created_at' => $this->formSubmission->created_at->toISOString(),
+            'message' => "New form submission received for {$this->formSubmission->form->name}",
+        ];
     }
 }

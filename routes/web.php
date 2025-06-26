@@ -21,7 +21,10 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.i
 
 
 
-
+// Route::get('/run-test-bd', function () {
+//     $channel = broadcast(new \App\Events\ChatMessageSent('Test message from broadcast'))->toOthers();
+//     dd($channel);
+// });
 
 
 Route::get('/dashboard', function () {
