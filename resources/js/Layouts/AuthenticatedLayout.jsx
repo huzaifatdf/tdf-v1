@@ -3,7 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { AppSidebar } from "@/components/app-sidebar"
 
@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ header, children }) {
       const { auth, flash } = usePage().props;
     const user = usePage().props.auth.user;
     const { toast } = useToast()
-
+ const echoChannelRef = useRef(null);
 
     //useEffect for session flash toast
    useEffect(() => {
@@ -71,6 +71,25 @@ export default function AuthenticatedLayout({ header, children }) {
         }
     }, [flash, toast]);
 
+
+
+ useEffect(() => {
+// Enhanced Echo listener with better error handling and debugging
+        console.log("Listening for messages...");
+
+            const chatChannel = window.Echo.channel('chat');
+
+            chatChannel.listen('.NewChatMessage', (e) => {
+                console.log("Received event:", e);
+
+            });
+
+            return () => {
+                console.log("Leaving channel...");
+                chatChannel.stopListening('.NewChatMessage');
+                window.Echo.leaveChannel('chat');
+            };
+        }, []);
 
 
     return (

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\FormSubmissionCreated;
 use App\Models\FormSubmission;
 use App\Models\User;
 use App\Notifications\FormSubmissionNotification;
@@ -28,13 +29,21 @@ class FormSubmissionObserver
 
         // Send notification to all admin users (users with admin role)
         $superadmin = User::role('superadmin')->first();
-        
+
         //database notification
-      
+
         if ($superadmin) {
             $superadmin->notify(new FormSubmissionNotification($formSubmission));
         }
-        
+
+        //broadcast notification
+        try{
+               $broadcast = broadcast(new FormSubmissionCreated($formSubmission))->toOthers();
+        } catch (\Exception $e) {
+            \Log::error('Broadcasting error: ' . $e->getMessage());
+        }
+
+
 
         // Alternative: Send to specific user by ID if you have a specific admin
         // $adminUser = User::find(1); // Replace with your admin user ID
