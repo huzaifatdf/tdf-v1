@@ -155,14 +155,14 @@ function SmoothCaseStudiesSection() {
   }
 
   return (
-    <section ref={sectionRef} className="container-fluid min-h-screen">
+    <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
       <div className="flex sec-padding pt-0 pb-0">
         {/* Left Side - Navigation */}
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">
             <nav
               ref={navRef}
-              className="space-y-8 pl-6 h-[500px] overflow-y-auto custom-scrollbar custom-mobile-height"
+              className="space-y-8 pl-6 h-[550px] overflow-y-auto custom-scrollbar custom-mobile-height"
               style={{ direction: 'rtl' }}
             >
               {sections.map((section) => (

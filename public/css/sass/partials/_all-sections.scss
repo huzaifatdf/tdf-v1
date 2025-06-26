@@ -342,14 +342,38 @@ form {
 .for-padd {
     padding: 0px 170px 0px 0;
 }
+.text-stroke {
+    -webkit-text-stroke: 1.5px $theme-secondary;
+    text-stroke: 1.5px $theme-secondary;
+  }
+
+  @keyframes fillPulse {
+    0%, 100% {
+      color: transparent;
+    }
+    50% {
+      color: $theme-secondary;
+    }
+  }
+
+  .animate-fill {
+    animation: fillPulse 3s infinite ease-in-out;
+  }
+
+
+
+
 // Responsive Start Here //
 @media(max-width: 600px) {
+    .banner-inner-page .flex.flex-col.md\:flex-row.items-center {
+        align-items: baseline;
+    }
     .container-fluid {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     .navbar {
-        padding: 0.5rem 0.5rem;
+        padding: 0.5rem 1rem;
     }
     .box.hero-section .hero-content h1 {
         font-size: 25px;
@@ -377,9 +401,9 @@ form {
     .mobile-banner-heading {
         font-size: 30px;
     }
-    // .mobile-banner-para {
-    //     font-size: 14px;
-    // }
+    .mobile-banner-para {
+        font-size: 16px;
+    }
     .mar-mob-0 {
         margin: 0;
     }
@@ -390,25 +414,39 @@ form {
         right: 10px;
     }
     .custom-mobile-height {
-        height: 500px;
+        // height: 500px;
+        padding-left: 10px;
+    }
+    .mobilehide {
+        display: none;
+    }
+    .mobile-screens h5 {
+        font-size: 14px;
+    }
+    .mobile-screens h3 {
+        font-size: 17px;
+        margin: 0;
+    }
+    .mobile-screens h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .mobile-screens p {
+        font-size: 16px;
+    }
+    .mobile-screens span {
+        font-size: 16px;
+    }
+    .mobile-screens a {
+        font-size: 16px;
+    }
+    .mobile-screens .flex.sec-padding.pt-0.pb-0 {
+        gap: 25px;
+    }
+    .mobile-screens .absolute.bottom-0.left-0.h-1.w-10.bg-\[\#9BE500\].transition-all.duration-500 {
+        height: 2px;
+        bottom: -5px !important;
     }
 }
 
 
-.text-stroke {
-    -webkit-text-stroke: 1.5px $theme-secondary;
-    text-stroke: 1.5px $theme-secondary;
-  }
-
-  @keyframes fillPulse {
-    0%, 100% {
-      color: transparent;
-    }
-    50% {
-      color: $theme-secondary;
-    }
-  }
-
-  .animate-fill {
-    animation: fillPulse 3s infinite ease-in-out;
-  }
