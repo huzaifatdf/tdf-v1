@@ -162,7 +162,7 @@ function SmoothExperienceSection() {
             <div className="max-w-lg">
               <nav
                 ref={navRef}
-                className="space-y-8 pl-6 h-[600px] overflow-y-auto custom-scrollbar custom-mobile-height"
+                className="space-y-8 pl-6 h-[500px] overflow-y-auto custom-scrollbar custom-mobile-height"
                 style={{ direction: 'rtl' }}
               >
                 {sections.map((section, index) => {
@@ -211,17 +211,17 @@ function SmoothExperienceSection() {
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
             {sections.map((section, index) => {
-                             const techstackRaw = section?.data && JSON.parse(section?.data);
-    let titles = [];
-    if (techstackRaw && techstackRaw["techstack"]) {
-        try {
-            const jsonDataTechStack = techstackRaw["techstack"];
-            titles = parseTitles(jsonDataTechStack);
-        } catch (err) {
-            console.error("Failed to parse techstack JSON:", err);
-        }
-    }
-    console.log("Titles:", titles);
+                const techstackRaw = section?.data && JSON.parse(section?.data);
+                    let titles = [];
+                    if (techstackRaw && techstackRaw["techstack"]) {
+                        try {
+                            const jsonDataTechStack = techstackRaw["techstack"];
+                            titles = parseTitles(jsonDataTechStack);
+                        } catch (err) {
+                            console.error("Failed to parse techstack JSON:", err);
+                        }
+                    }
+                    console.log("Titles:", titles);
                 return(
               <div
                 key={section.section_no}
@@ -251,7 +251,7 @@ function SmoothExperienceSection() {
                     <h2 className="text-[26px] text-white mt-5 mb-5">
                         Technology Stack
                         </h2>
-                    <div className="grid grid-cols-4 gap-10 mt-4">
+                    <div className="grid grid-cols-4 gap-10 mt-4 align-items-center">
                         {titles.map((obj, index) => (
                             <img
                             key={index}
@@ -261,12 +261,12 @@ function SmoothExperienceSection() {
                             />
                         ))}
                     </div>
+                    <hr className="border-white mb-8"/>
                   </div>
                 </div>
               </div>
             )})}
           </div>
-          <hr className="border-white mb-8"/>
         </div>
       </section>
     </>

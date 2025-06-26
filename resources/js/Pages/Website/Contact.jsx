@@ -32,18 +32,18 @@ export default function About() {
         <section ref={introRef} className="min-h-[40vh] flex items-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid ">
-                <div className="relative mt-[100px] mb-[30px]">
+                <div className="relative mt-[120px] mb-[80px]">
                     <div className="flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2">
-                            <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
+                            <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
                                 Contact Us & Support
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
                                 Have a project?
                             </p>
-                            <p className="mobile-banner-para text-[16px] fc-primary leading-tight mb-0">
+                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
                                 Let’s make it happen together.
                             </p>
                         </div>
@@ -66,11 +66,11 @@ const ContactSection = () => {
 
   return (
     <div className="relative sec-padding pt-0">
-      <div className="container-fluid grid lg:grid-cols-12">
+      <div className="container-fluid grid lg:grid-cols-12 gap-20">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">
           <h3 className="text-[22px] fc-primary leading-tight mb-3">Tell us about your vision:</h3>
-          <p className="text-[16px] fc-primary leading-tight mb-0">
+          <p className="text-[18px] fc-primary mb-0">
             Which challenges are you facing? What are your goals and expectations? What would success look like and how much are you planning to spend to get there?
           </p>
 
@@ -79,8 +79,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/email.svg" alt="Email Icon" />
                     <div>
-                    <span className="text-[16px] fc-primary leading-tight block">Email</span>
-                    <a href="mailto:info@thedesignfirm.com" className="text-[16px] text-white block">
+                    <span className="text-[18px] fc-primary leading-tight block">Email</span>
+                    <a href="mailto:info@thedesignfirm.com" className="text-[18px] text-white block">
                         Info@thedesignfirm.com
                     </a>
                     </div>
@@ -90,8 +90,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/phone.svg" alt="Phone Icon" />
                     <div>
-                    <span className="text-[16px] fc-primary leading-tight block">Phone number</span>
-                    <span className="text-[16px] text-white block">+123 456 7890</span>
+                    <span className="text-[18px] fc-primary leading-tight block">Phone number</span>
+                    <span className="text-[18px] text-white block">+123 456 7890</span>
                     </div>
                 </div>
 
@@ -99,8 +99,8 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/home.svg" alt="Address Icon" />
                     <div>
-                    <span className="text-[16px] fc-primary leading-tight block">Address</span>
-                    <span className="text-[16px] text-white block">
+                    <span className="text-[18px] fc-primary leading-tight block">Address</span>
+                    <span className="text-[18px] text-white block">
                         123 Business Road, City, Country
                     </span>
                     </div>

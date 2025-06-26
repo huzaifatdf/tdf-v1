@@ -43,7 +43,7 @@ export default function IndustrySection() {
                   {dataItem.title || ''}
                 </h2>
 
-                <p className="text-[16px] fc-primary leading-relaxed">
+                <p className="text-[18px] fc-primary leading-relaxed">
                   {dataItem.description || ''}
                 </p>
 
@@ -71,7 +71,7 @@ export default function IndustrySection() {
                 </h3>
 
                 <div className="space-y-3 pb-[60px]">
-                  <div className="text-[16px] fc-primary leading-relaxed">
+                  <div className="text-[18px] fc-primary leading-relaxed">
                     {parse(jsonData["Our Work"]["description"] || '')}
                   </div>
 

@@ -32,9 +32,9 @@ export default function Productinner() {
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px]">
                 <div className="">
-                    <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
+                    <div className="grid md:grid-cols-12 items-center justify-center pb-[20px]">
                         <div className="lg:col-span-5 space-y-6">
-                            <h1 className="mobile-banner-heading text-[60px] fc-white leading-[1.1]">
+                            <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
                                 Industries We Serve
                             </h1>
                         </div>
@@ -49,11 +49,20 @@ export default function Productinner() {
                             </div>
                         </div>
                     </div>
+                    <img
+                        src={"/images/industries.png"}
+                        alt="HabibMetro Bank Project Overview"
+                        className="w-full h-[50vh] object-cover mt-5 mb-5"
+                    />
                     <hr class="border-white mb-8"></hr>
                 </div>
             </div>
         </section>
       <IndustrySection/>
+
+      <div className="container-fluid relative mb-9">
+        <h1 className="text-[60px] fc-secondary text-center mb-0 leading-quote">Your needs are unique,<br/>So is our approach</h1>
+      </div>
     </WebsiteLayout>
   );
 }

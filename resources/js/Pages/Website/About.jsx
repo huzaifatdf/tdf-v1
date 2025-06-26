@@ -35,7 +35,7 @@ export default function About() {
                     <div className="">
                         <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
                             <div className="lg:col-span-6 space-y-6">
-                                <h1 className="mobile-banner-heading text-[50px] fc-white leading-[1.1]">
+                                <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
                                     About Us - TDF
                                 </h1>
                             </div>
@@ -73,13 +73,13 @@ function AboutSection() {
         <h2 className="fc-secondary text-[30px] mb-6">
           Creative Thinkers. Strategic Doers
         </h2>
-        <p className="fc-primary text-[16px]">
+        <p className="fc-primary text-[18px]">
           With a history dating back to 2002, The Design Firm has been a trusted partner for several startups and organizations when it comes to marketing, technology and innovation.
         </p>
-        <p className="fc-primary text-[16px]">
+        <p className="fc-primary text-[18px]">
           From startups to legacy organizations, we've worked with clients from all industries to help them scale and engage meaningfully with their audiences.
         </p>
-        <p className="fc-primary text-[16px]">
+        <p className="fc-primary text-[18px]">
           With over 300+ impactful websites and 600+ custom digital assets in our portfolio, we bring a rare mix of experience and agility to every project we touch.
         </p>
       </div>
@@ -125,7 +125,7 @@ function StatsSection() {
   return (
     <section className="relative bg-[#040404] sec-padding">
       <div className="container-fluid">
-        <h2 className="fc-secondary text-[30px] mb-9">Numbers Don’t Lie</h2>
+        <h2 className="fc-secondary text-[32px] mb-5">Numbers Don’t Lie</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {stats.map((stat, index) => (
                 <div key={index} className="flex items-center space-x-4">
@@ -154,11 +154,11 @@ function Trusted () {
                 <div className="grid md:grid-cols-12 gap-12 items-center">
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-7 space-y-6">
-                        <h2 className="fc-secondary text-[30px] mb-4">
+                        <h2 className="fc-secondary text-[32px] mb-4">
                             Industries Who Trust Us
                         </h2>
 
-                        <p className="text-[16px] fc-primary leading-relaxed">
+                        <p className="text-[18px] fc-primary leading-relaxed">
                             Finance & Banking | Technology | Logistics | Energy Sector | MNCs | Retail | Manufacturing | Real Estate | Health | Payment Industry | Water Industry | Associations
                         </p>
                     </div>
@@ -269,7 +269,7 @@ const TimelineSection = () => {
                     <div>
                       <p className="fc-primary text-[18px] mb-0">{item.id}</p>
                       <p className="fc-secondary text-[30px] mb-0">{item.range}</p>
-                      <p className="fc-primary text-[16px] mb-0 leading-relaxed">
+                      <p className="fc-primary text-[18px] mb-0 leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -299,11 +299,11 @@ function WhatDrivesUs () {
         <div className="relative flex flex-col lg:flex-row items-center sec-padding">
             {/* Left Side Content */}
             <div className="lg:w-1/2">
-                <h2 className="text-[30px] fc-secondary mb-2">What Drives Us</h2>
-                <p className="fc-primary text-[16px] leading-relaxed mb-4">
+                <h2 className="text-[32px] fc-secondary mb-2">What Drives Us</h2>
+                <p className="fc-primary text-[18px] leading-relaxed mb-4">
                 We’re driven by the belief that digital isn’t just a platform,  it’s a playground for ideas, creativity, and innovation.
                 </p>
-                <p className="fc-primary text-[16px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
+                <p className="fc-primary text-[18px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
                 <ul className="fc-primary text-[22px] mb-0 leading-relaxed p-0 mt-2 mb-2">
                 <li>Keep it human</li>
                 <li>Make it meaningful</li>
@@ -335,7 +335,7 @@ const MissionVisionProposition = () => {
             {/* Left Image - 5 columns */}
             <div className="lg:col-span-6">
                 <div className="overflow-hidden shadow-2xl">
-                <h3 className="text-[30px] fc-secondary font-bold mb-3">The Why, The How, and The What Next</h3>
+                <h3 className="text-[32px] fc-secondary mb-3">The Why, The How, and The What Next</h3>
                 <img
                     src="/images/begi.png" // Replace with actual image path
                     alt="Team collaboration in modern office"
@@ -347,31 +347,31 @@ const MissionVisionProposition = () => {
             {/* Right Content - 7 columns */}
             <div className="lg:col-span-6">
                 <div className="mb-3">
-                <h3 className="text-[30px] fc-secondary font-bold mb-3">Mission</h3>
-                <p className="fc-primary text-[18px] leading-relaxed mb-1 font-[900]">
+                <h3 className="text-[30px] fc-secondary mb-3">Mission</h3>
+                <p className="fc-primary text-[20px] leading-relaxed mb-1 font-[700]">
                     We connect creativity with technology to build smart, impactful solutions
                 </p>
-                <p className="fc-primary text-[16px] leading-relaxed">
+                <p className="fc-primary text-[18px] leading-relaxed">
                     We approach every project with a sense of curiosity, flexibility, and a fresh perspective, because the best results often come from ideas that break away from the norm.
                 </p>
                 </div>
 
                 <div className="mb-3">
-                <h3 className="text-[30px] fc-secondary font-bold mb-3 mt-8">Vision</h3>
-                <p className="fc-primary text-[18px] leading-relaxed mb-1 font-[900]">
+                <h3 className="text-[30px] fc-secondary mb-3 mt-8">Vision</h3>
+                <p className="fc-primary text-[20px] leading-relaxed mb-1 font-[700]">
                     To be the go-to creative tech partner for bold brands
                 </p>
-                <p className="fc-primary text-[16px] leading-relaxed">
+                <p className="fc-primary text-[18px] leading-relaxed">
                     We’re here to push boundaries, stay ahead, and deliver work that’s not only innovative but truly meaningful.
                 </p>
                 </div>
 
                 <div className="mb-4">
-                <h3 className="text-[30px] fc-secondary font-bold mb-3 mt-8">Key Proposition</h3>
-                <p className="fc-primary text-[18px] leading-relaxed mb-1 font-[900]">
+                <h3 className="text-[30px] fc-secondary mb-3 mt-8">Key Proposition</h3>
+                <p className="fc-primary text-[20px] leading-relaxed mb-1 font-[700]">
                     Helping brands grow louder, sharper, and stronger
                 </p>
-                <p className="fc-primary text-[16px] leading-relaxed mb-2">
+                <p className="fc-primary text-[18px] leading-relaxed mb-2">
                     We help brands connect with the right people in the right places, through strategies that grow and adapt with the world around them.
                 </p>
                 </div>
@@ -413,8 +413,8 @@ const MeetTheMissfits = () => {
   return (
     <section className="container-fluid">
       <div className="relative sec-padding">
-        <h3 className="text-[30px] fc-secondary font-bold mb-0">Meet the Misfits</h3>
-        <p className='fc-primary text-[16px] mb-0 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
+        <h3 className="text-[32px] fc-secondary mb-0">Meet the Misfits</h3>
+        <p className='fc-primary text-[18px] mb-6 leading-relaxed'>The Visionaries Behind Every Perfect Fit</p>
         <hr className="border-white mb-8" />
         <div className="flex overflow-x-auto no-scrollbar h-[600px] space-x-4">
           {missfits.map((item, idx) => {
@@ -425,14 +425,14 @@ const MeetTheMissfits = () => {
                 onClick={() => setActiveIndex(idx)}
                 className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
                   isActive
-                    ? "w-[650px] lg:w-[910px] h-full"
+                    ? "w-[650px] lg:w-[900px] h-full"
                     : "w-[100px] lg:w-[350px] h-full flex flex-col items-center justify-center text-center"
                 }`}
               >
                 {!isActive && (
                   <div className="flex flex-col items-center justify-between h-full">
 
-                    <div className="rotate-180 text-[32px] fc-secondary">+</div>
+                    <div className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary">+</div>
                         <div className="p-6">
                             <img src={item.image} alt="" />
                             <p className="text-[20px] fc-primary mb-0 text-left">{item.range}</p>
@@ -442,28 +442,35 @@ const MeetTheMissfits = () => {
                 )}
 
                 {isActive && (
-                  <div className="p-6 h-full">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center h-full">
-                            {/* Image - 4 columns */}
-                            <div className="lg:col-span-5">
-                            <img
-                                src={item.image}
-                                alt={item.title}
-                                className="w-full object-cover mb-6 h-[600px]"
-                            />
-                            </div>
+                    <div className="p-6 h-full relative">
+                        {/* Minus icon on the top-right */}
+                        <div
+                        className="absolute top-0 right-20 text-[32px] rotate-180 fc-secondary"
+                        >
+                        −
+                        </div>
 
-                            {/* Text - 8 columns */}
-                            <div className="lg:col-span-7">
-                                <p className="fc-secondary text-[30px] mb-0">{item.title}</p>
-                                <p className="fc-primary text-[18px] mb-4 font-bold">{item.range}</p>
-                                <p className="fc-primary text-[16px] mb-0 leading-relaxed">
-                                    {parse(item.description)}
-                                </p>
-                            </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center h-full">
+                        {/* Image - 4 columns */}
+                        <div className="lg:col-span-5">
+                            <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full object-cover mb-6 h-[600px]"
+                            />
+                        </div>
+
+                        {/* Text - 8 columns */}
+                        <div className="lg:col-span-7">
+                            <p className="fc-secondary text-[30px] mb-0">{item.title}</p>
+                            <p className="fc-primary text-[20px] mb-4 font-[700]">{item.range}</p>
+                            <p className="fc-primary text-[18px] mb-0 leading-relaxed">
+                            {parse(item.description)}
+                            </p>
+                        </div>
                         </div>
                     </div>
-                )}
+                    )}
               </div>
             );
           })}
@@ -483,17 +490,17 @@ const Experience = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left Heading */}
                 <div className="lg:col-span-6">
-                    <h2 className="text-[50px] leading-[1.1] fc-secondary">
+                    <h2 className="text-[60px] leading-[1.1] fc-secondary">
                     20+ Years in, <br className="hidden lg:block" /> and We’re Still Just Getting Started
                     </h2>
                 </div>
 
                 {/* Right Text */}
                 <div className="lg:col-span-6">
-                    <p className="fc-primary text-[16px] mb-0 leading-relaxed">
+                    <p className="fc-primary text-[18px] mb-0 leading-relaxed">
                         We’re proud to have spent over two decades helping brands grow through thoughtful strategy, creative thinking, and consistent results.
                     </p>
-                    <p className="fc-primary text-[16px] mb-0 leading-relaxed font-bold mt-3">
+                    <p className="fc-primary text-[18px] mb-0 leading-relaxed font-bold mt-3">
                         Impressed By Our Legacy?
                     </p>
                 </div>

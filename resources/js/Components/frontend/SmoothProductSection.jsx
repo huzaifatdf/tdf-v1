@@ -154,7 +154,7 @@ function SmoothExperienceSection() {
             <div className="max-w-lg">
               <nav
                 ref={navRef}
-                className="space-y-8 pl-6 h-[600px] overflow-y-auto custom-scrollbar custom-mobile-height"
+                className="space-y-8 pl-6 h-[500px] overflow-y-auto custom-scrollbar custom-mobile-height"
                 style={{ direction: 'rtl' }}
               >
                 {sections.map((section, index) => (
@@ -224,11 +224,11 @@ function SmoothExperienceSection() {
                       {parse(section.description)}
                     </p>
                   </div>
+                    <hr className="border-white mb-8"/>
                 </div>
               </div>
             ))}
           </div>
-          <hr className="border-white mb-8"/>
         </div>
       </section>
 

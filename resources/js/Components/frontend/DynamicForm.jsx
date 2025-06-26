@@ -282,8 +282,8 @@ function DynamicForm(props) {
                                         >
                                             <span className="fc-primary">0{idx + 1}</span>
                                             <span
-                                                className={`relative text-[18px] ${
-                                                    activeTab === value ? 'text-lime-400' : 'text-white'
+                                                className={`relative text-[22px] ${
+                                                    activeTab === value ? 'fc-secondary' : 'text-white'
                                                 }`}
                                             >
                                                 {label}
@@ -365,7 +365,7 @@ function DynamicForm(props) {
                                             <span className="fc-primary">0{idx + 1}</span>
                                             <span
                                                 className={`relative text-[18px] ${
-                                                    activeTab === value ? 'text-lime-400' : 'text-white'
+                                                    activeTab === value ? 'fc-secondary' : 'text-white'
                                                 }`}
                                             >
                                                 {label}
