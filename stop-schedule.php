@@ -1,27 +1,22 @@
 <?php
-// Check if Reverb is already running to prevent multiple instances
-$check_command = "pgrep -f 'artisan reverb:stop'";
-exec($check_command, $check_output, $check_return);
+// Check for any Reverb processes running
+$check_command = "pgrep -f 'artisan reverb:start'";
+exec($check_command, $pids, $check_return);
 
-if (empty($check_output)) {
-    // Reverb is not running, start it
-    $command = 'cd ' . __DIR__ . ' && nohup php artisan reverb:stop ' ;
+if (!empty($pids)) {
+    // Kill all found processes
+    foreach ($pids as $pid) {
+        exec("kill -9 " . escapeshellarg($pid));
+    }
 
-    $output = [];
-    $return_var = 0;
-    exec($command, $output, $return_var);
+    echo "✅ All Reverb processes stopped. Killed PIDs: " . implode(', ', $pids);
 
-    if ($return_var !== 0) {
-        echo "Error starting reverb: " . implode("\n", $output);
-        exit(1);
-    } else {
-        $pid = trim(implode('', $output));
-        echo "Reverb Stopped successfully. PID: " . $pid;
-
-        // Save PID for future reference
-        file_put_contents(__DIR__ . '/storage/app/reverb.pid', $pid);
+    // Optionally delete saved PID file
+    $pid_file = __DIR__ . '/storage/app/reverb.pid';
+    if (file_exists($pid_file)) {
+        unlink($pid_file);
     }
 } else {
-    echo "Reverb is s. PID(s): " . implode(', ', $check_output);
+    echo "ℹ️ No Reverb process is running.";
 }
 ?>
