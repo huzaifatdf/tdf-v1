@@ -17,12 +17,6 @@ import GtmDashboardPage from "@/Components/GtmDashboardPage";
 export default function Page() {
     const {stats,report} = usePage().props
 
-    console.log('Reverb Echo initialized with the following configuration:');
-console.log('Key:', import.meta.env.VITE_REVERB_APP_KEY);
-console.log('Host:', import.meta.env.VITE_REVERB_HOST ?? window.location.hostname);
-console.log('Port:', import.meta.env.VITE_REVERB_PORT ?? 80);
-console.log('Using WebSocket:', window.Echo.connector.pusher.config.useTLS ? 'wss' : 'ws');
-
   return (
    <AuthenticatedLayout>
             <Head title="Profile" />
