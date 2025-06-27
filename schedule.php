@@ -1,7 +1,5 @@
 <?php
-
-//run start-reverb.sh
-$command = 'bash start-reverb.sh';
+$command = 'php artisan reverb:start > storage/logs/reverb.log 2>&1 &';
 $output = [];
 $return_var = 0;
 exec($command, $output, $return_var);
