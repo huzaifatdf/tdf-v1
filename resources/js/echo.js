@@ -13,6 +13,8 @@ window.Echo = new Echo({
     enabledTransports: ['ws'],
 });
 
+
+
 window.Echo.connector.pusher.connection.bind('connected', () => {
     console.log('WebSocket connected successfully!');
 });
