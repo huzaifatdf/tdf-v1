@@ -7,8 +7,7 @@ if (empty($check_output)) {
     // Reverb is not running, start it
     $command = 'cd ' . __DIR__ . ' && nohup php artisan reverb:start ' .
                '--host=0.0.0.0 ' .
-               '--port=8080 ' .
-               '--hostname=thedesignsfirm.tdfclient.com ' .
+               '--port=443 ' . // ✅ Use 443 for HTTPS (wss://)
                '--no-interaction ' .
                '> storage/logs/reverb.log 2>&1 & echo $!';
 
