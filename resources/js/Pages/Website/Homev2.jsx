@@ -26,10 +26,14 @@ gsap.registerPlugin(ScrollTrigger);
 function ThreeModelOverlay() {
     const mountRef = useRef(null);
     const modelRef = useRef(null);
+
     useEffect(() => {
+        const clock = new THREE.Clock();
+        let mixer = null;
         // Store cleanup functions
         const cleanupFunctions = [];
         let isModelActive = false;
+
         const handleMouseMove = (event) => {
             if (!isModelActive || !modelRef.current) return;
             const mount = mountRef.current;
@@ -40,94 +44,180 @@ function ThreeModelOverlay() {
             modelRef.current.rotation.x = y * 0.5;
             modelRef.current.rotation.y = x * 0.5;
         };
+
         window.addEventListener('mousemove', handleMouseMove);
         cleanupFunctions.push(() => window.removeEventListener('mousemove', handleMouseMove));
-        // Create ScrollTrigger with proper cleanup
-        const scrollTrigger = ScrollTrigger.create({
-            trigger: "#scroll-zoom-section",
-            start: "top top",
-            end: "bottom top",
-            onEnter: () => { isModelActive = true; },
-            onLeave: () => { isModelActive = false; },
-            onEnterBack: () => { isModelActive = true; },
-            onLeaveBack: () => { isModelActive = false; },
-        });
-        cleanupFunctions.push(() => scrollTrigger.kill());
+
+        // Create ScrollTrigger with proper cleanup (assuming GSAP is available)
+        if (typeof ScrollTrigger !== 'undefined') {
+            const scrollTrigger = ScrollTrigger.create({
+                trigger: "#scroll-zoom-section",
+                start: "top top",
+                end: "bottom top",
+                onEnter: () => { isModelActive = true; },
+                onLeave: () => { isModelActive = false; },
+                onEnterBack: () => { isModelActive = true; },
+                onLeaveBack: () => { isModelActive = false; },
+            });
+            cleanupFunctions.push(() => scrollTrigger.kill());
+        }
+
         const mount = mountRef.current;
         if (!mount) return;
+
         const scene = new THREE.Scene();
+        const rotatingGroup = new THREE.Group();
+        scene.add(rotatingGroup);
         const camera = new THREE.PerspectiveCamera(55, mount.clientWidth / mount.clientHeight, 0.9, 1000);
         camera.position.z = 9;
+
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(mount.clientWidth, mount.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.5;
+        renderer.outputEncoding = THREE.sRGBEncoding;
         mount.appendChild(renderer.domElement);
-        // Lights
-        const light = new THREE.DirectionalLight(0xffffff, 1.5);
-        light.position.set(1, 1, 1).normalize();
-        scene.add(light);
-        const spotLight = new THREE.SpotLight(0xffffff, 2);
-        spotLight.position.set(0, 5, 5);
-        spotLight.angle = Math.PI / 6;
+
+        // Enhanced lighting setup for silver metallic appearance
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+
+        // Main key light - brighter and better positioned
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+        directionalLight.position.set(5, 5, 5);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
+
+        // Fill light from opposite side
+        const fillLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        fillLight.position.set(-5, 3, 2);
+        scene.add(fillLight);
+
+        // Top light for additional illumination
+        const topLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        topLight.position.set(0, 5, 0);
+        scene.add(topLight);
+
+        // Spot light for focused illumination
+        const spotLight = new THREE.SpotLight(0xffffff, 2.5);
+        spotLight.position.set(0, 8, 5);
+        spotLight.angle = Math.PI / 3;
         spotLight.penumbra = 0.3;
-        spotLight.decay = 2;
-        spotLight.distance = 20;
+        spotLight.decay = 1;
+        spotLight.distance = 25;
         spotLight.castShadow = true;
-        spotLight.target.position.set(0, 0, 0);
-        scene.add(spotLight.target);
         scene.add(spotLight);
+
+        // Additional point lights for metallic highlights
+        const pointLight1 = new THREE.PointLight(0xffffff, 1.0, 20);
+        pointLight1.position.set(4, 4, 4);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0xffffff, 0.8, 20);
+        pointLight2.position.set(-4, -2, 4);
+        scene.add(pointLight2);
+
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.6, 15);
+        pointLight3.position.set(0, -4, 2);
+        scene.add(pointLight3);
+
         // Raycaster and mouse
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
+
         // Load GLB Model
         const loader = new GLTFLoader();
-        loader.load('/images/ball.glb', gltf => {
-            const model = gltf.scene;
-            model.scale.set(0.5, 0.5, 0.5);
-            model.position.set(0, -0.5, 0);
-            model.name = 'BallModel';
-            scene.add(model);
-            modelRef.current = model;
+        loader.load('/images/stone2.glb', gltf => {
+        const model = gltf.scene;
+        model.scale.set(1, 1, 1);
+        model.position.set(0, -0.5, 0);
+        model.name = 'BallModel';
+
+        // Apply silver material
+        model.traverse((child) => {
+            if (child.isMesh) {
+                const silverMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xf0f0f0,
+                    roughness: 0.15,
+                    metalness: 0.9,
+                    transparent: false,
+                    opacity: 1.0,
+                    envMapIntensity: 1.5,
+                });
+                child.material = silverMaterial;
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
         });
+
+        // Setup animation mixer
+        if (gltf.animations && gltf.animations.length > 0) {
+            mixer = new THREE.AnimationMixer(model);
+            gltf.animations.forEach((clip) => {
+                mixer.clipAction(clip).play();
+            });
+        }
+
+       rotatingGroup.add(model);
+        modelRef.current = model;
+    }, undefined, (error) => {
+        console.error('Error loading model:', error);
+    });
+
+
         // Animation loop
         let animationId;
         const animate = () => {
             animationId = requestAnimationFrame(animate);
-            if (modelRef.current) modelRef.current.rotation.y += 0.01;
+            const delta = clock.getDelta();
+            if (mixer) mixer.update(delta);
+            rotatingGroup.rotation.y += 0.005; // smooth 360° spin
             renderer.render(scene, camera);
         };
+
         animate();
+
         cleanupFunctions.push(() => {
             if (animationId) cancelAnimationFrame(animationId);
         });
-        // GSAP ScrollTrigger animations
-        const cameraAnimation = gsap.to(camera.position, {
-            z: 1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#scroll-zoom-section",
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
-                onUpdate: () => {
-                    camera.position.z = Math.max(1, Math.min(9, camera.position.z));
-                    renderer.render(scene, camera);
+
+        // GSAP ScrollTrigger animations (if GSAP is available)
+        if (typeof gsap !== 'undefined') {
+            const cameraAnimation = gsap.to(camera.position, {
+                z: 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#scroll-zoom-section",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                    onUpdate: () => {
+                        camera.position.z = Math.max(1, Math.min(9, camera.position.z));
+                        renderer.render(scene, camera);
+                    }
+                },
+            });
+
+            const fadeAnimation = gsap.to(mount, {
+                autoAlpha: 0,
+                ease: "power4.inOut",
+                duration: 2,
+                scrollTrigger: {
+                    trigger: "#scroll-zoom-section",
+                    start: "bottom bottom",
+                    end: "bottom top-=80",
+                    scrub: true,
+                    onUpdate: () => {
+                        renderer.render(scene, camera);
+                    }
                 }
-            },
-        });
-        const fadeAnimation = gsap.to(mount, {
-            autoAlpha: 0,
-            ease: "power4.inOut",
-            duration: 2,
-            scrollTrigger: {
-                trigger: "#scroll-zoom-section",
-                start: "bottom bottom",
-                end: "bottom top-=80",
-                scrub: true,
-                onUpdate: () => {
-                    renderer.render(scene, camera);
-                }
-            }
-        });
+            });
+        }
+
         // Click handler
         const handleClick = (event) => {
             const bounds = mount.getBoundingClientRect();
@@ -135,8 +225,10 @@ function ThreeModelOverlay() {
             mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
         };
+
         mount.addEventListener('click', handleClick);
         cleanupFunctions.push(() => mount.removeEventListener('click', handleClick));
+
         // Resize handler
         const handleResize = () => {
             if (!mount) return;
@@ -144,8 +236,10 @@ function ThreeModelOverlay() {
             camera.updateProjectionMatrix();
             renderer.setSize(mount.clientWidth, mount.clientHeight);
         };
+
         window.addEventListener('resize', handleResize);
         cleanupFunctions.push(() => window.removeEventListener('resize', handleResize));
+
         // Cleanup function
         return () => {
             cleanupFunctions.forEach(cleanup => cleanup());
@@ -156,6 +250,7 @@ function ThreeModelOverlay() {
             scene.clear();
         };
     }, []);
+
     return (
         <div
             ref={mountRef}

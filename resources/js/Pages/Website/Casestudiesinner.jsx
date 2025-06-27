@@ -43,8 +43,7 @@ export default function Casestudiesinner(props) {
 
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
-      <section ref={introRef} className="flex items-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-50" />
+      <section ref={introRef} className="banner-inner-page flex items-center relative overflow-hidden">
         <div className="container-fluid relative mt-[150px]">
             <div className="">
                 <div className="flex flex-col md:flex-row gap-12 items-start">
@@ -55,7 +54,7 @@ export default function Casestudiesinner(props) {
                 </div>
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
-                    <p className="text-[20px] fc-primary leading-relaxed mb-6">
+                    <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-6">
                          { casestudy?.description && parse(casestudy.description )}
                     </p>
 
@@ -418,7 +417,7 @@ function SmoothExperienceSection(props) {
 
   return data &&  (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen box designing-section">
+      <section ref={sectionRef} className="container-fluid min-h-screen box designing-section mobile-screens">
         {/* Main Content Area */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}

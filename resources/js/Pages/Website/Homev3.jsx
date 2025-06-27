@@ -79,7 +79,7 @@ function ThreeModelOverlay() {
         const mouse = new THREE.Vector2();
         // Load GLB Model
         const loader = new GLTFLoader();
-        loader.load('/images/stone.glb', gltf => {
+        loader.load('/images/ball.glb', gltf => {
             const model = gltf.scene;
             model.scale.set(0.5, 0.5, 0.5);
             model.position.set(0, -0.5, 0);
