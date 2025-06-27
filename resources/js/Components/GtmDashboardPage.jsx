@@ -1,71 +1,5 @@
-import React, { useState, useMemo } from 'react';
-
-// Mock Data based on the provided API responses
-// In a real Inertia app, this data would be passed as props from your Laravel controller.
-const mockApiData = {
-    accounts: {
-        "success": true,
-        "data": [
-            { "account_id": "6209496184", "name": "The Design Firm" },
-            { "account_id": "1234567890", "name": "Another Cool Client" }
-        ],
-        "count": 2,
-        "message": "Accounts retrieved successfully"
-    },
-    reports: {
-        "6209496184": {
-            "success": true,
-            "data": {
-                "account_info": { "account_id": "6209496184", "name": "The Design Firm", "path": "accounts/6209496184" },
-                "containers": [
-                    {
-                        "container_info": { "container_id": "173254724", "name": "thedesignsfirm.com", "public_id": "GTM-WB65WTFQ", "usage_context": ["web"] },
-                        "workspaces": [
-                            {
-                                "workspace_info": { "workspace_id": "2", "name": "Default Workspace" },
-                                "summary": { "tags_count": 2, "triggers_count": 3, "variables_count": 4, "built_in_variables_count": 5 },
-                                "tags": [
-                                    { "name": "Google Analytics 4", "type": "gaawe" },
-                                    { "name": "Facebook Pixel", "type": "fbp" }
-                                ],
-                                "triggers": [
-                                    { "name": "All Pages", "type": "pageview" },
-                                    { "name": "Button Click", "type": "click" },
-                                    { "name": "Form Submission", "type": "formSubmission" }
-                                ],
-                                "variables": [
-                                    { "name": "GA4 Measurement ID", "type": "constant" },
-                                    { "name": "Debug Mode", "type": "debugMode" },
-                                    { "name": "Click Text", "type": "clickText" },
-                                     { "name": "Error Message", "type": "autoEventVariable" }
-                                ],
-                                "built_in_variables": [
-                                    { "name": "Page URL", "type": "pageUrl" },
-                                    { "name": "Page Hostname", "type": "pageHostname" },
-                                    { "name": "Page Path", "type": "pagePath" },
-                                    { "name": "Referrer", "type": "referrer" },
-                                    { "name": "Event", "type": "event" }
-                                ]
-                            }
-                        ],
-                        "summary": { "workspaces_count": 1 }
-                    }
-                ],
-                "summary": { "containers_count": 1, "total_workspaces": 1, "total_versions": 0 },
-                "generated_at": "2025-06-24T11:14:12.292595Z"
-            }
-        },
-        "1234567890": {
-            "success": true,
-            "data": {
-                "account_info": { "account_id": "1234567890", "name": "Another Cool Client", "path": "accounts/1234567890" },
-                "containers": [],
-                "summary": { "containers_count": 0, "total_workspaces": 0, "total_versions": 0 },
-                "generated_at": "2025-06-24T12:00:00.000000Z"
-            }
-        }
-    }
-};
+import React, { useState, useEffect } from 'react';
+import { router } from '@inertiajs/react';
 
 // Helper Icon Components (emulating lucide-react)
 const ChevronDown = ({ className }) => (
@@ -91,6 +25,11 @@ const VariableIcon = ({ className }) => (
     </svg>
 );
 
+const AlertCircle = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
+    </svg>
+);
 
 // Shadcn-style UI Components (built with Tailwind CSS)
 const Card = ({ children, className = '' }) => (
@@ -116,13 +55,24 @@ const Badge = ({ children, variant = 'default', className = '' }) => {
     );
 };
 
+const Alert = ({ children, className = '' }) => (
+    <div className={`relative w-full rounded-lg border border-red-200 dark:border-red-800 p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-red-600 dark:[&>svg]:text-red-400 bg-red-50 dark:bg-red-950/50 ${className}`}>
+        {children}
+    </div>
+);
+
+const AlertDescription = ({ children, className = '' }) => (
+    <div className={`text-sm text-red-700 dark:text-red-300 [&_p]:leading-relaxed ${className}`}>
+        {children}
+    </div>
+);
+
 const Table = ({ children, className = '' }) => <div className={`w-full text-sm ${className}`}><table className="w-full caption-bottom">{children}</table></div>;
 const TableHeader = ({ children, className = '' }) => <thead className={`[&_tr]:border-b [&_tr]:border-gray-200 dark:[&_tr]:border-gray-800 ${className}`}>{children}</thead>;
 const TableBody = ({ children, className = '' }) => <tbody className={`[&_tr:last-child]:border-0 ${className}`}>{children}</tbody>;
 const TableRow = ({ children, className = '' }) => <tr className={`border-b border-gray-200 dark:border-gray-800 transition-colors hover:bg-gray-100/50 dark:hover:bg-gray-800/50 ${className}`}>{children}</tr>;
 const TableHead = ({ children, className = '' }) => <th className={`h-12 px-4 text-left align-middle font-medium text-gray-500 dark:text-gray-400 ${className}`}>{children}</th>;
 const TableCell = ({ children, className = '' }) => <td className={`p-4 align-middle text-gray-800 dark:text-gray-200 ${className}`}>{children}</td>;
-
 
 const AccordionContext = React.createContext({});
 const Accordion = ({ children, defaultValue }) => {
@@ -154,7 +104,6 @@ const AccordionContent = ({ children, value }) => {
     return <div className={`overflow-hidden text-sm transition-all ${isOpen ? 'max-h-[1000px] opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>{children}</div>;
 };
 
-
 const TabsContext = React.createContext({});
 const Tabs = ({ children, defaultValue }) => {
     const [activeTab, setActiveTab] = useState(defaultValue);
@@ -178,28 +127,118 @@ const TabsContent = ({ children, value }) => {
     return activeTab === value ? <div className="mt-4 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">{children}</div> : null;
 };
 
+// API Service Functions
+const apiService = {
+    async getAccounts() {
+        try {
+            const response = await fetch('/api/google-tag-manager/get-accounts');
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch accounts');
+            }
+            return data;
+        } catch (error) {
+            console.error('Error fetching accounts:', error);
+            throw error;
+        }
+    },
+
+    async getAccountReport(accountId) {
+        try {
+            const response = await fetch(`/api/google-tag-manager/get-account-report/${accountId}`);
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch account report');
+            }
+            return data;
+        } catch (error) {
+            console.error('Error fetching account report:', error);
+            throw error;
+        }
+    },
+
+    async getContainers(accountId) {
+        try {
+            const response = await fetch(`/api/google-tag-manager/get-containers/${accountId}`);
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch containers');
+            }
+            return data;
+        } catch (error) {
+            console.error('Error fetching containers:', error);
+            throw error;
+        }
+    },
+
+    async getContainerSummary(accountId, containerId) {
+        try {
+            const response = await fetch(`/api/google-tag-manager/get-container-summary/${accountId}/${containerId}`);
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch container summary');
+            }
+            return data;
+        } catch (error) {
+            console.error('Error fetching container summary:', error);
+            throw error;
+        }
+    }
+};
 
 // Main Application Component
-export default function GtmDashboardPage({ accounts: initialAccounts, initialReport }) {
-    // In a real app, `initialAccounts` and `initialReport` would come from Inertia props.
-    // We use mock data here for demonstration.
-    const [accounts, setAccounts] = useState(mockApiData.accounts.data);
-    const [selectedAccountId, setSelectedAccountId] = useState(mockApiData.accounts.data[0]?.account_id);
-    const [reportData, setReportData] = useState(mockApiData.reports[mockApiData.accounts.data[0]?.account_id]?.data);
+export default function GtmDashboardPage() {
+    const [accounts, setAccounts] = useState([]);
+    const [selectedAccountId, setSelectedAccountId] = useState(null);
+    const [reportData, setReportData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const handleAccountChange = (accountId) => {
-        setIsLoading(true);
-        setSelectedAccountId(accountId);
+    // Load accounts on component mount
+    useEffect(() => {
+        loadAccounts();
+    }, []);
 
-        // --- API Call Simulation ---
-        // In a real app, you might use Inertia.visit() or an axios call here
-        // to fetch the new report data from your Laravel backend.
-        console.log(`Fetching report for account: ${accountId}`);
-        setTimeout(() => {
-            setReportData(mockApiData.reports[accountId]?.data);
+    const loadAccounts = async () => {
+        try {
+            setIsInitialLoading(true);
+            setError(null);
+            const accountsData = await apiService.getAccounts();
+            setAccounts(accountsData.data);
+
+            // Auto-select first account if available
+            if (accountsData.data.length > 0) {
+                const firstAccountId = accountsData.data[0].account_id;
+                setSelectedAccountId(firstAccountId);
+                await loadAccountReport(firstAccountId);
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsInitialLoading(false);
+        }
+    };
+
+    const loadAccountReport = async (accountId) => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const reportResponse = await apiService.getAccountReport(accountId);
+            setReportData(reportResponse.data);
+        } catch (err) {
+            setError(err.message);
+            setReportData(null);
+        } finally {
             setIsLoading(false);
-        }, 500); // Simulate network delay
+        }
+    };
+
+    const handleAccountChange = async (accountId) => {
+        if (accountId === selectedAccountId) return;
+
+        setSelectedAccountId(accountId);
+        await loadAccountReport(accountId);
     };
 
     const WorkspaceTabs = ({ workspace }) => (
@@ -229,8 +268,8 @@ export default function GtmDashboardPage({ accounts: initialAccounts, initialRep
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {items.map((item) => (
-                                <TableRow key={item.name}>
+                            {items.map((item, index) => (
+                                <TableRow key={item.name || index}>
                                     <TableCell className="font-medium flex items-center">{icon} {item.name}</TableCell>
                                     <TableCell><Badge>{item.type}</Badge></TableCell>
                                 </TableRow>
@@ -246,6 +285,17 @@ export default function GtmDashboardPage({ accounts: initialAccounts, initialRep
         </TabsContent>
     );
 
+    if (isInitialLoading) {
+        return (
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-4"></div>
+                    <p className="text-gray-600 dark:text-gray-400">Loading GTM Dashboard...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans">
             <div className="container mx-auto p-4 md:p-8">
@@ -254,31 +304,61 @@ export default function GtmDashboardPage({ accounts: initialAccounts, initialRep
                     <p className="text-gray-500 dark:text-gray-400">Select an account to view its detailed report.</p>
                 </header>
 
+                {error && (
+                    <Alert className="mb-6">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                            {error}
+                        </AlertDescription>
+                    </Alert>
+                )}
+
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Left Sidebar - Account Selection */}
                     <aside className="lg:col-span-1">
                         <h2 className="text-lg font-semibold mb-4 px-2">GTM Accounts</h2>
-                        <div className="space-y-1">
-                            {accounts.map(account => (
+                        {accounts.length > 0 ? (
+                            <div className="space-y-1">
+                                {accounts.map(account => (
+                                    <button
+                                        key={account.account_id}
+                                        onClick={() => handleAccountChange(account.account_id)}
+                                        disabled={isLoading}
+                                        className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            selectedAccountId === account.account_id
+                                                ? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                                                : 'hover:bg-gray-200/50 dark:hover:bg-gray-800/50'
+                                        }`}
+                                    >
+                                        {account.name}
+                                    </button>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                                <p>No accounts found</p>
                                 <button
-                                    key={account.account_id}
-                                    onClick={() => handleAccountChange(account.account_id)}
-                                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${selectedAccountId === account.account_id ? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'hover:bg-gray-200/50 dark:hover:bg-gray-800/50'}`}
+                                    onClick={loadAccounts}
+                                    className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline"
                                 >
-                                    {account.name}
+                                    Retry
                                 </button>
-                            ))}
-                        </div>
+                            </div>
+                        )}
                     </aside>
 
                     {/* Right Content - Report */}
                     <main className="lg:col-span-3">
                         {isLoading ? (
                             <div className="flex items-center justify-center h-96">
-                                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 dark:border-gray-100"></div>
+                                <div className="text-center">
+                                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-4"></div>
+                                    <p className="text-gray-600 dark:text-gray-400">Loading report...</p>
+                                </div>
                             </div>
                         ) : reportData ? (
                             <div className="space-y-6">
+                                {/* Account Summary Card */}
                                 <Card>
                                     <CardHeader>
                                         <CardTitle>{reportData.account_info.name}</CardTitle>
@@ -295,6 +375,10 @@ export default function GtmDashboardPage({ accounts: initialAccounts, initialRep
                                                 <p className="font-semibold text-lg">{reportData.summary.total_workspaces}</p>
                                             </div>
                                             <div className="space-y-1">
+                                                <p className="text-gray-500 dark:text-gray-400">Versions</p>
+                                                <p className="font-semibold text-lg">{reportData.summary.total_versions}</p>
+                                            </div>
+                                            <div className="space-y-1">
                                                 <p className="text-gray-500 dark:text-gray-400">Generated</p>
                                                 <p className="font-semibold">{new Date(reportData.generated_at).toLocaleDateString()}</p>
                                             </div>
@@ -302,47 +386,65 @@ export default function GtmDashboardPage({ accounts: initialAccounts, initialRep
                                     </CardContent>
                                 </Card>
 
-                                <Accordion type="single" collapsible className="w-full" defaultValue={reportData.containers?.[0]?.container_info.container_id}>
-                                    {reportData.containers && reportData.containers.map(container => (
-                                        <AccordionItem key={container.container_info.container_id} value={container.container_info.container_id}>
-                                            <Card>
-                                                <CardHeader className="p-0">
-                                                     <AccordionTrigger>
-                                                         <div className="p-6 text-left">
-                                                            <CardTitle>{container.container_info.name}</CardTitle>
-                                                            <CardDescription className="mt-1">
-                                                                {container.container_info.public_id}
-                                                                <Badge variant="primary" className="ml-2">{container.container_info.usage_context.join(', ')}</Badge>
-                                                            </CardDescription>
-                                                         </div>
-                                                     </AccordionTrigger>
-                                                </CardHeader>
-                                                <AccordionContent>
-                                                    <div className="px-6 pb-6">
-                                                    {container.workspaces.map(workspace => (
-                                                        <Card key={workspace.workspace_info.workspace_id} className="bg-gray-50 dark:bg-gray-900/50">
-                                                            <CardHeader>
-                                                                <CardTitle className="text-lg">{workspace.workspace_info.name}</CardTitle>
-                                                                <CardDescription>Workspace ID: {workspace.workspace_info.workspace_id}</CardDescription>
-                                                            </CardHeader>
-                                                            <CardContent>
-                                                                <WorkspaceTabs workspace={workspace} />
-                                                            </CardContent>
-                                                        </Card>
-                                                    ))}
-                                                    </div>
-                                                </AccordionContent>
-                                            </Card>
-                                        </AccordionItem>
-                                    ))}
-                                </Accordion>
+                                {/* Containers Accordion */}
+                                {reportData.containers && reportData.containers.length > 0 ? (
+                                    <Accordion type="single" collapsible className="w-full" defaultValue={reportData.containers[0]?.container_info.container_id}>
+                                        {reportData.containers.map(container => (
+                                            <AccordionItem key={container.container_info.container_id} value={container.container_info.container_id}>
+                                                <Card>
+                                                    <CardHeader className="p-0">
+                                                         <AccordionTrigger>
+                                                             <div className="p-6 text-left">
+                                                                <CardTitle>{container.container_info.name}</CardTitle>
+                                                                <CardDescription className="mt-1">
+                                                                    {container.container_info.public_id}
+                                                                    <Badge variant="primary" className="ml-2">{container.container_info.usage_context.join(', ')}</Badge>
+                                                                </CardDescription>
+                                                             </div>
+                                                         </AccordionTrigger>
+                                                    </CardHeader>
+                                                    <AccordionContent>
+                                                        <div className="px-6 pb-6">
+                                                            {container.workspaces && container.workspaces.length > 0 ? (
+                                                                container.workspaces.map(workspace => (
+                                                                    <Card key={workspace.workspace_info.workspace_id} className="bg-gray-50 dark:bg-gray-900/50">
+                                                                        <CardHeader>
+                                                                            <CardTitle className="text-lg">{workspace.workspace_info.name}</CardTitle>
+                                                                            <CardDescription>Workspace ID: {workspace.workspace_info.workspace_id}</CardDescription>
+                                                                        </CardHeader>
+                                                                        <CardContent>
+                                                                            <WorkspaceTabs workspace={workspace} />
+                                                                        </CardContent>
+                                                                    </Card>
+                                                                ))
+                                                            ) : (
+                                                                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                                                                    No workspaces found in this container.
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </AccordionContent>
+                                                </Card>
+                                            </AccordionItem>
+                                        ))}
+                                    </Accordion>
+                                ) : (
+                                    <Card>
+                                        <CardContent className="py-12">
+                                            <div className="text-center text-gray-500 dark:text-gray-400">
+                                                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">No Containers Found</h3>
+                                                <p>This account doesn't have any containers set up yet.</p>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                )}
 
                             </div>
                         ) : (
                              <div className="flex items-center justify-center h-96 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl">
                                 <div className="text-center">
                                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">No Report Data</h3>
-                                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Select an account to view its report or the data is unavailable.</p>
+                                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Select an account to view its report.</p>
                                  </div>
                             </div>
                         )}
