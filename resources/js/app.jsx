@@ -9,11 +9,6 @@ import { configureEcho } from '@laravel/echo-react';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-configureEcho({
-    broadcaster: 'reverb',
-});
-
-
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
