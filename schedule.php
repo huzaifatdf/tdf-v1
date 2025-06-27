@@ -20,7 +20,7 @@ if (empty($check_output)) {
         exit(1);
     } else {
         $pid = trim(implode('', $output));
-        echo "Reverb started successfully. PID: " . $pid;
+        echo "Updated Reverb started successfully. PID: " . $pid;
 
         // Save PID for future reference
         file_put_contents(__DIR__ . '/storage/app/reverb.pid', $pid);
