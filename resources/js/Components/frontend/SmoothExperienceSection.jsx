@@ -248,9 +248,12 @@ function SmoothExperienceSection() {
                     </p>
 
                     {/* Techstack */}
-                    <h2 className="text-[26px] text-white mt-5 mb-5">
+                     {titles.length > 0 && (<>
+                         <h2 className="text-[26px] text-white mt-5 mb-5">
                         Technology Stack
                         </h2>
+
+
                     <div className="tech-logo grid grid-cols-4 gap-10 mt-4 align-items-center">
                         {titles.map((obj, index) => (
                             <img
@@ -261,6 +264,7 @@ function SmoothExperienceSection() {
                             />
                         ))}
                     </div>
+                      </>)}
                     <hr className="border-white mb-8"/>
                   </div>
                 </div>
