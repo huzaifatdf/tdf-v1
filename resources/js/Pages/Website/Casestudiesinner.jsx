@@ -77,7 +77,7 @@ export default function Casestudiesinner(props) {
 
       {jsonData["Service"] &&  <Capabilities data={casestudy} jsonData={jsonData}/>}
       <Beginning data={casestudy} jsonData={jsonData} />
-      <SmoothExperienceSection data={casestudy} jsonData={jsonData}/>
+      <BoxExperienceSection data={casestudy} jsonData={jsonData}/>
       <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/>
     </WebsiteLayout>
   );
@@ -506,6 +506,125 @@ function SmoothExperienceSection(props) {
 }
 
 
+function BoxExperienceSection(props) {
+  const [activeSection, setActiveSection] = useState('text-to-text');
+  const sectionRef = useRef(null);
+  const sectionsRefs = useRef({});
+  const { data , jsonData } = props;
+
+    const experience = jsonData["Experience"]  && transformDataExperience(parseTitles(jsonData["Experience"] || {})) || [];
+
+  const [sections, setSections] = useState(
+     experience
+        ? experience.map((item, index) => ({
+
+      id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
+      title: item?.label || '',
+      subtitle: item?.description || '',
+      }))
+   : []);
+
+
+  // Scroll observer to update active section based on scroll position
+  useEffect(() => {
+    const observers = [];
+
+    sections.forEach((section) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(section.id);
+          }
+        },
+        {
+          threshold: 0.6,
+          rootMargin: '-20% 0px -20% 0px'
+        }
+      );
+
+      const element = sectionsRefs.current[section.id];
+      if (element) {
+        observer.observe(element);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [sections]);
+
+  // GSAP entrance animation
+  useEffect(() => {
+    const section1 = sectionRef.current;
+
+    gsap.from(section1, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: section1,
+        start: "top 80%",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, []);
+
+  const handleSectionClick = (sectionId) => {
+    const element = sectionsRefs.current[sectionId];
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+  const currentSection = sections.find(s => s.id === activeSection);
+
+  return data &&  (
+    <>
+<section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
+  {/* Main Content Area */}
+  <div className="flex sec-padding ">
+    <div className="w-full">
+      {/* Grid container with 3 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {sections.map((section, index) => (
+          <div
+            key={section.id}
+            ref={el => sectionsRefs.current[section.id] = el}
+            className="flex items-center p-6 bg-white/10 rounded-lg" // Added card-like styling
+          >
+            <div className="max-w-xl">
+              <div className="animate-fadeIn">
+                {/* Title */}
+                <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
+                  {section.id}
+                </h5>
+                <h3 className={`text-[20px] transition-all duration-500 fc-white`}>
+                  {section?.title || ''}
+                </h3>
+
+                {section?.subtitle && parse(section?.subtitle)}
+
+
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+  </div>
+    <hr className="border-white mt-8"/>
+</section>
+    </>
+  );
+}
+
 
 function transformDataComp(data) {
   const result = [];
@@ -535,7 +654,7 @@ function Components(props) {
 
   return data  ? (
 
-    <div className="container-fluid relative">
+    <div className="container-fluid relative ">
       <div className="sec-padding pt-0">
         <div className="grid grid-cols-2 ">
 
