@@ -378,7 +378,17 @@ form {
         }
     }
 }
-
+.banner-inner-page {
+    ul {
+        padding-left: 20px;
+        margin-top: 20px;
+        li {
+            list-style: circle;
+            font-size: 18px;
+            color: $theme-primary;
+        }
+    }
+}
 .last-scroll {
     -webkit-text-stroke: unset;
     color: #9BE500;

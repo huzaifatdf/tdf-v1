@@ -9462,6 +9462,16 @@ form textarea {
   color: #ffffff;
 }
 
+.banner-inner-page ul {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.banner-inner-page ul li {
+  list-style: circle;
+  font-size: 18px;
+  color: #ffffff;
+}
+
 .last-scroll {
   -webkit-text-stroke: unset;
   color: #9BE500;
