@@ -253,7 +253,7 @@ function SmoothCaseStudiesSection() {
               <Link
   className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"
   href={route('casestudy.show', section.slug)}
-  preserveScroll={false} // Ensures scroll resets on navigation
+onBefore={() => window.scrollTo(0, 0)} // Ensures scroll resets on navigation
 >
   Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
 </Link>
