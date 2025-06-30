@@ -24,7 +24,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 function ThreeModelOverlay() {
-    const [loading, setLoading] = useState(true);
     const mountRef = useRef(null);
     const modelRef = useRef(null);
 
@@ -165,7 +164,6 @@ function ThreeModelOverlay() {
 
        rotatingGroup.add(model);
         modelRef.current = model;
-        setLoading(false);
     }, undefined, (error) => {
         console.error('Error loading model:', error);
     });
@@ -255,13 +253,6 @@ function ThreeModelOverlay() {
 
     return (
         <>
-        <div>
-            {loading && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center ">
-                <p className="text-white text-lg animate-pulse">Loading 3D Model...</p>
-            </div>
-            )}
-        </div>
 
         <div
             ref={mountRef}
