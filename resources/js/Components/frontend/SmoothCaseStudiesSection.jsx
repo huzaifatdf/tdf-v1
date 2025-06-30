@@ -253,6 +253,7 @@ function SmoothCaseStudiesSection() {
                 <Link
                   className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"
                   href={route('casestudy.show', section.slug)}
+                   scroll={true}
                 >
                   Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                 </Link>
