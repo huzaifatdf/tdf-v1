@@ -267,7 +267,7 @@ function Beginning(props) {
 
         <hr className="border-white mb-8"/>
         <div className="sec-padding box begining-section">
-        <div className="grid lg:grid-cols-2 gap-12 align-items-center">
+        <div className="grid lg:grid-cols-2 gap-12 align-items-centerssss">
           {/* Left side - Image */}
           <div className="relative">
             <div className="overflow-hidden shadow-2xl">
@@ -282,7 +282,7 @@ function Beginning(props) {
           {/* Right side - Content */}
           <div className="lg:pl-8">
             {jsonData["Detail"]?.the_beginning && <>
-            <h2 className="text-[28px] fc-secondary font-bold mb-3">
+            <h2 className="text-[30px] fc-secondary mb-3">
               The Beginning - Understanding the Need
             </h2>
 
@@ -292,7 +292,7 @@ function Beginning(props) {
             </>}
              {jsonData["Approach"]?.description && <>
             <div>
-              <h3 className="text-lime-400 text-2xl lg:text-3xl font-bold mb-2">
+              <h3 className="text-lime-400 text-[30px] fc-secondary mb-3">
                 Our Approach
               </h3>
 
@@ -635,42 +635,42 @@ function BoxExperienceSection(props) {
 
   return data &&  (
     <>
-<section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
-  {/* Main Content Area */}
-  <div className="flex sec-padding --small">
-    <div className="w-full">
-      {/* Grid container with 3 columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {sections.map((section, index) => (
-          <div
-            key={section.id}
-            ref={el => sectionsRefs.current[section.id] = el}
-            className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
-          >
-            <div className="max-w-xl">
-              <div className="animate-fadeIn">
-                {/* Title */}
-                <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
-                  {section.id}
-                </h5>
-                <h3 className={`text-[20px] transition-all duration-500 fc-white`}>
-                  {section?.title || ''}
-                </h3>
+        <section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
+            {/* Main Content Area */}
+            <div className="flex sec-padding --small">
+                <div className="w-full">
+                {/* Grid container with 3 columns */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {sections.map((section, index) => (
+                    <div
+                        key={section.id}
+                        ref={el => sectionsRefs.current[section.id] = el}
+                        className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
+                    >
+                        <div className="max-w-xl">
+                        <div className="animate-fadeIn">
+                            {/* Title */}
+                            <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
+                            {section.id}
+                            </h5>
+                            <h3 className={`text-[24px] transition-all duration-500 fc-secondary`}>
+                            {section?.title || ''}
+                            </h3>
 
-                {section?.subtitle && parse(section?.subtitle)}
+                            {section?.subtitle && parse(section?.subtitle)}
 
 
-              </div>
+                        </div>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+
+                </div>
+
             </div>
-          </div>
-        ))}
-      </div>
-
-    </div>
-
-  </div>
-    <hr className="border-white mt-8"/>
-</section>
+                <hr className="border-white mt-8"/>
+        </section>
     </>
   );
 }

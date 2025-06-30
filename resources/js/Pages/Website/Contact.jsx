@@ -35,7 +35,7 @@ export default function About() {
                 <div className="relative mt-[120px] mb-[80px]">
                     <div className="flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2">
-                            <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
+                            <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                 Contact Us
                             </h1>
                         </div>

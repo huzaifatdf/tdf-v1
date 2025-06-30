@@ -33,13 +33,13 @@ export default function Productinner() {
                 <div className="">
                     <div className="grid md:grid-cols-12 items-center justify-center pb-[20px]">
                         <div className="lg:col-span-5 space-y-6">
-                            <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
+                            <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                 Industries We Serve
                             </h1>
                         </div>
                         <div className="lg:col-span-5 space-y-6">
                             <div className="prose prose-lg prose-invert">
-                            <h2 className="mobile-banner-sub-heading text-[30px] fc-secondary leading-tight">
+                            <h2 className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
                                 Delivering Impact in Every Industry<br />Industries Powered by Our Expertise
                             </h2>
                             <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">

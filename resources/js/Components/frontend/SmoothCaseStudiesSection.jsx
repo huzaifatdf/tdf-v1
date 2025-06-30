@@ -221,7 +221,7 @@ function SmoothCaseStudiesSection() {
                 />
 
                 {/* Title */}
-                <h2 className="text-[26px] text-white mb-0">
+                <h2 className="text-[26px] fc-secondary mb-2">
                     {section.title}
                 </h2>
 
