@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import parse from 'html-react-parser';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import ProductForm from "@/Components/ProductForm";
@@ -11,9 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Productinner() {
   const introRef = useRef(null);
-  const {product,appUrl} = usePage().props;
+  const {product,appUrl,previousSlug,nextSlug} = usePage().props;
   const jsonParseData = JSON.parse(product.data);
-  console.log(jsonParseData);
+
 
   useEffect(() => {
     const intro = introRef.current;
@@ -120,7 +120,7 @@ export default function Productinner() {
             />
         </div>
         </section>
-        <FloatIcon />
+        <FloatIcon preSlug={previousSlug} nextSlug={nextSlug} />
         </WebsiteLayout>
   );
 }
@@ -458,28 +458,33 @@ function WhatProblem(props) {
 
 
 // Float Icon //
-const FloatIcon = () => {
+const FloatIcon = ({preSlug,nextSlug}) => {
   return (
     <>
+    {nextSlug && (
     <div className="fixed top-0 bottom-0 right-[-25px] flex items-center">
-      <a href="#">
+      <Link  href={route('web.product.show', { slug: nextSlug })} >
         <img
             src="/images/right.svg"
             alt="Float Icon"
             className="w-24 h-24"
         />
-      </a>
+      </Link>
     </div>
+    ) }
 
+    {preSlug && (
     <div className="fixed top-0 bottom-0 left-[-25px] flex items-center">
-      <a href="#">
+      <Link href={route('web.product.show', { slug: preSlug })}>
         <img
             src="/images/left.svg"
             alt="Float Icon"
             className="w-24 h-24"
         />
-      </a>
+
+      </Link>
     </div>
+    )}
     </>
   );
 };

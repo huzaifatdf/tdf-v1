@@ -20,7 +20,6 @@ function SmoothExperienceSection() {
   React.useEffect(() => {
     axios.get('/api/v1/products')
       .then(response => {
-        console.log(response.data);
         setSection(response.data);
         // Set initial active section
         if (response.data.length > 0) {

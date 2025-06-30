@@ -53,10 +53,28 @@ class WebSiteController extends Controller
         ]);
     }
 
-    public function showProduct(Request $request, $slug) {
-        $product = Product::where('slug', $slug)->published()->first();
-        return Inertia::render('Website/Productinner', [
-            'product' => $product
-        ]);
-    }
+   public function showProduct(Request $request, $slug)
+{
+    $product = Product::where('slug', $slug)
+        ->published()
+        ->firstOrFail();  // Fail early if product not found
+
+    // Get ONLY the slug of previous product
+    $previousSlug = Product::where('priority', '<', $product->priority)
+        ->published()
+        ->orderBy('priority', 'desc')
+        ->value('slug');  // Retrieves only the slug value
+
+    // Get ONLY the slug of next product
+    $nextSlug = Product::where('priority', '>', $product->priority)
+        ->published()
+        ->orderBy('priority', 'asc')
+        ->value('slug');  // Retrieves only the slug value
+
+    return Inertia::render('Website/Productinner', [
+        'product' => $product,
+        'previousSlug' => $previousSlug,
+        'nextSlug' => $nextSlug,
+    ]);
+}
 }
