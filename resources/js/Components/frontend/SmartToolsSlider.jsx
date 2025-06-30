@@ -3,8 +3,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/pagination';
+import axios from 'axios';
+import { Link, usePage } from '@inertiajs/react';
+import parse from 'html-react-parser';
 
 const SmartToolsSlider = () => {
+
+  const [sections , setSection] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('/api/v1/products')
+      .then(response => {
+        console.log(response.data);
+        setSection(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+    const { appUrl } = usePage().props;
+
   return (
     <div className="container-fluid relative">
       <div className='sec-padding pb-4'>
@@ -27,13 +46,13 @@ const SmartToolsSlider = () => {
             slidesPerView={1}
             className="w-full custom-swiper"
           >
-            {[1, 2, 3].map((_, index) => (
+            {sections.map((section, index) => (
               <SwiperSlide key={index}>
                 <div className="flex flex-col md:flex-row">
                   {/* Left Side Image */}
                   <div className="md:w-5/12 w-full">
                     <img
-                      src="/images/slider.png"
+                      src={`${appUrl}/${section.thumbnail}`}
                       alt="Students in a smart classroom"
                       className="w-full h-[500px] object-cover"
                     />
@@ -42,32 +61,30 @@ const SmartToolsSlider = () => {
                   {/* Right Side Content */}
                   <div className="md:w-7/12 w-full flex flex-col justify-between pt-4 pl-4 pb-0">
                     <div>
-                      <h3 className="text-[30px] font-light fc-secondary mb-2">Eduman</h3>
-                      <p className="text-[24px] fc-primary mb-2">
+                      <h3 className="text-[30px] font-light fc-secondary mb-2"> {section.title}</h3>
+                      {/* <p className="text-[24px] fc-primary mb-2">
                         For Control, Clarity, & Campus-Wide Confidence
-                      </p>
-                      <p className="text-[18px] fc-primary mb-2 w-[70%]">
-                        Eduman is a cloud-based, SaaS (Software as a Service) system
-                        that simplifies the academic, administrative, and communication
-                        workflows for modern schools.
+                      </p> */}
+                      <p className="text-[18px] fc-primary mb-2 w-[70%] line-clamp-3">
+                        {parse(section.description)}
                       </p>
                     </div>
-                    <button className="group text-left text-[18px] fc-primary mb-2 flex items-center">
+                    <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary mb-2 flex items-center">
                       <span className="inline-block border-b-2 border-transparent group-hover:border-current transition-all duration-200">
                         Click to Explore
                       </span>
                       <span className="ml-3 fc-secondary transform transition-transform duration-200 group-hover:scale-125">
                         &rarr;
                       </span>
-                    </button>
+                    </Link>
 
                     <div className="flex items-end justify-between">
-                      <a
-                        href="#"
+                      <Link
+                        href={'Productmain'}
                         className="inline-block text-left text-[18px] fc-purple font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
                       >
                         View All Products
-                      </a>
+                      </Link>
 
                       <img
                         src="/images/slider2.png"
