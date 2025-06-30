@@ -398,7 +398,7 @@ const layers = [
   { text: "Technology", className: "" },
   {
     text: "Aligned in perfect sync always adjusting, always forward",
-    className: "text-[30px] font-medium text-center",
+    className: "last-scroll text-[40px] font-medium text-center",
   },
 ];
 
@@ -436,7 +436,7 @@ const HorizontalScroll = () => {
         {layers.map((layer, index) => (
           <div
             key={index}
-            className={`panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[120px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
+            className={`panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[150px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
           >
             {layer.text}
           </div>

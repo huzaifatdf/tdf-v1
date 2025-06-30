@@ -133,10 +133,10 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                 fill="#000"
                                 onClick={toggleMenu}
                                 style={{ cursor: 'pointer' }}
-                            >
-                                <rect className="bar bar1" width="130" height="8" />
-                                <rect className="bar bar2" y="30" width="130" height="8" />
-                                <rect className="bar bar3" y="60" width="130" height="8" />
+                                >
+                                <rect className="bar bar1" x="0" y="0" width="100" height="8" rx="4" />
+                                <rect className="bar bar2" x="0" y="30" width="100" height="8" rx="4" />
+                                <rect className="bar bar3" x="0" y="60" width="100" height="8" rx="4" />
                             </svg>
 
                             {/* Side Menu */}

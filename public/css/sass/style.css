@@ -9140,9 +9140,9 @@ header nav.pn ul li ul li ul {
   transform-origin: center;
 }
 
-/* Open state (X icon) */
 .burger.open .bar1 {
-  transform: rotate(45deg) translate(20px, 20px);
+  transform: rotate(45deg);
+  y: 35; /* Move to center vertically */
 }
 
 .burger.open .bar2 {
@@ -9150,7 +9150,8 @@ header nav.pn ul li ul li ul {
 }
 
 .burger.open .bar3 {
-  transform: rotate(-45deg) translate(20px, -20px);
+  transform: rotate(-45deg);
+  y: 30; /* Move to center vertically */
 }
 
 body {
@@ -9401,7 +9402,7 @@ form textarea {
 }
 
 .swiper-pagination-custom {
-  top: 30% !important;
+  top: 0% !important;
   height: -moz-max-content;
   height: max-content;
 }
@@ -9455,6 +9456,12 @@ form textarea {
   list-style: circle;
   font-size: 18px;
   color: #ffffff;
+}
+
+.last-scroll {
+  -webkit-text-stroke: unset;
+  color: #9BE500;
+  font-size: 40px;
 }
 
 @media (max-width: 600px) {
