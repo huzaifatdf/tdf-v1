@@ -587,7 +587,7 @@ function BoxExperienceSection(props) {
     <>
 <section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
   {/* Main Content Area */}
-  <div className="flex sec-padding ">
+  <div className="flex sec-padding --small">
     <div className="w-full">
       {/* Grid container with 3 columns */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -595,7 +595,7 @@ function BoxExperienceSection(props) {
           <div
             key={section.id}
             ref={el => sectionsRefs.current[section.id] = el}
-            className="flex items-center p-6 bg-white/10 rounded-lg" // Added card-like styling
+            className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
           >
             <div className="max-w-xl">
               <div className="animate-fadeIn">
@@ -669,7 +669,7 @@ function Components(props) {
       </div>
     </div>
   ) :   <div className="container-fluid relative">
-      <div className="sec-padding pt-0">
+      <div className="sec-padding --xsmall">
         {conclusion && <p className="text-[18px] fc-primary">{parse(conclusion.description)}</p>}
       </div>
     </div> ;
