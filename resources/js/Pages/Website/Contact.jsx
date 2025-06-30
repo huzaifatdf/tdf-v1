@@ -36,7 +36,7 @@ export default function About() {
                     <div className="flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
-                                Contact Us & Support
+                                Contact Us
                             </h1>
                         </div>
                         <div className="md:w-1/2">
