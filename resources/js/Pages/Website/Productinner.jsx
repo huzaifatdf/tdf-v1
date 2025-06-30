@@ -98,7 +98,7 @@ export default function Productinner() {
             <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
             {jsonParseData["Our Work"]["title"]}
             </h2>
-            <p className="text-[18px] text-gray-400 leading-relaxed">
+            <p className="text-[18px] text-white leading-relaxed">
             {/* Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
             <span className="text-lime-400 font-medium">Book a Demo</span> today! */}
             {parse(jsonParseData["Our Work"]["description"])}
@@ -245,19 +245,14 @@ function parseData(data) {
 
 // What PRoblem //
 function WhatProblem(props) {
-  const [activeSection, setActiveSection] = useState(() => {
-    const sections = parseData();
-    return sections.length > 0 ? sections[0].id : 'text-to-text';
-  });
+  const [activeSection, setActiveSection] = useState('text-to-text');
   const sectionRef = useRef(null);
-  const contentRef = useRef(null);
-const { problem, solutions } = props;
+  const sectionsRefs = useRef({});
+  const { problem, solutions } = props;
   const sections = parseData(solutions);
-
   // Scroll observer to update active section based on scroll position
   useEffect(() => {
     const observers = [];
-
     sections.forEach((section) => {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -270,23 +265,19 @@ const { problem, solutions } = props;
           rootMargin: '-20% 0px -20% 0px'
         }
       );
-
       const element = sectionsRefs.current[section.id];
       if (element) {
         observer.observe(element);
         observers.push(observer);
       }
     });
-
     return () => {
       observers.forEach(observer => observer.disconnect());
     };
   }, [sections]);
-
   // GSAP entrance animation
   useEffect(() => {
     const section = sectionRef.current;
-
     gsap.from(section, {
       y: 50,
       opacity: 0,
@@ -299,7 +290,6 @@ const { problem, solutions } = props;
       }
     });
   }, []);
-
   const handleSectionClick = (sectionId) => {
     const element = sectionsRefs.current[sectionId];
     if (element) {
@@ -309,26 +299,23 @@ const { problem, solutions } = props;
       });
     }
   };
-
   const currentSection = sections.find(s => s.id === activeSection);
-
   return (
     <>
-      <section ref={sectionRef} className="container-fluid min-h-screen content-style">
+      <section ref={sectionRef} className="container-fluid min-h-screen content-style mobile-screens">
         {/* Main Content Area */}
         <div className="flex">
           {/* Left Side - Fixed Navigation */}
           <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
             <div className="max-w-lg">
               <div className="mb-12">
-                <h1 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+                <h1 className="text-[32px] fc-secondary leading-tight mb-6">
                   {problem?.problem || 'What Problem?'}
                 </h1>
-                <p className="text-[16px] fc-primary leading-relaxed">
+                <p className="text-[18px] fc-primary leading-relaxed">
                     {problem?.problem_description ? parse(problem?.problem_description) : '...'}
                 </p>
               </div>
-
               <nav className="space-y-8">
                 {sections.map((section, index) => (
                   <div key={section.id} className="relative group">
@@ -340,14 +327,14 @@ const { problem, solutions } = props;
                           : 'hover:opacity-70'
                       }`}
                     >
-                      <h5 className={`text-[18px] mb-0 transition-all duration-500 fc-secondary ${
+                      <h5 className={`text-[18px] mb-0 transition-all duration-500 ${
                         activeSection === section.id
-                          ? 'fc-secondary'
+                          ? 'fc-purple'
                           : 'fc-white'
                       }`}>
                         {section.id}
                       </h5>
-                      <h3 className={`text-[20px] transition-all duration-500  fc-secondary ${
+                      <h3 className={`text-[20px] transition-all duration-500 ${
                         activeSection === section.id
                           ? 'fc-secondary'
                           : 'fc-white'
@@ -362,16 +349,13 @@ const { problem, solutions } = props;
                         {section.subtitle}
                       </p> */}
                     </button>
-
                     {/* Active indicator */}
                     {activeSection === section.id && (
                       <div className="absolute bottom-0 left-0 h-1 w-10 bg-[#9BE500] transition-all duration-500"></div>
-
                     )}
                   </div>
                 ))}
               </nav>
-
               {/* Progress indicator */}
               {/* <div className="mt-12 flex items-center space-x-2">
                 {sections.map((section, index) => (
@@ -387,7 +371,6 @@ const { problem, solutions } = props;
               </div> */}
             </div>
           </div>
-
           {/* Right Side - Scrollable Content */}
           <div className="w-1/2">
             {sections.map((section, index) => (
@@ -402,16 +385,13 @@ const { problem, solutions } = props;
                         {/* <h2 className="text-[36px] font-bold text-white mb-3">
                         {section.title}
                         </h2> */}
-
                         {/* Subtitle */}
                         {/* <p className="text-[20px] fc-primary mb-8 leading-relaxed">
                         {section.subtitle}
                         </p> */}
-
                         <p className="text-[16px] fc-primary mb-8 leading-relaxed">
                         {parse(section.description)}
                         </p>
-
                         {/* Features */}
                         {/* <div className="space-y-4 mb-10">
                         {section.features.map((feature, featureIndex) => (
@@ -445,7 +425,6 @@ const { problem, solutions } = props;
             transform: translateY(0);
           }
         }
-
         .animate-fadeIn {
           animation: fadeIn 0.8s ease-out forwards;
         }
@@ -453,7 +432,6 @@ const { problem, solutions } = props;
     </>
   );
 }
-
 
 // Ready TO See Demo//
 
