@@ -226,8 +226,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     <Link href="/" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Home</Link>
                                     <Link href={"/About"} className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
                                     <Link href="/Servicesmain" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Services</Link>
-                                    <a href="#" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Insights</a>
-                                    <a href="#" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
+                                    {/* <a href="#" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Insights</a> */}
+                                    <a href="https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
                                 </div>
 
                                 <div className="items-center space-x-4">
