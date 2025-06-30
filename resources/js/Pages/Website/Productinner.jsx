@@ -98,7 +98,7 @@ export default function Productinner() {
             <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
             {jsonParseData["Our Work"]["title"]}
             </h2>
-            <p className="text-[18px] text-gray-400 leading-relaxed">
+            <p className="text-[18px] text-white leading-relaxed">
             {/* Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
             <span className="text-lime-400 font-medium">Book a Demo</span> today! */}
             {parse(jsonParseData["Our Work"]["description"])}
