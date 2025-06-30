@@ -150,13 +150,13 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     <div className="flex-1 flex items-center justify-center">
                                     <ul className="space-y-4 w-[80%] px-6 m-0">
                                         {[
-                                            { href: "/casestudiesmain", label: "Case Studies", icon: "/images/home.svg" },
-                                            { href: "/Servicesmain", label: "Services", icon: "/images/home.svg" },
-                                            { href: "/Productmain", label: "Product", icon: "/images/home.svg" },
-                                            { href: "/Industriesmain", label: "Industries", icon: "/images/home.svg" },
-                                            { href: "/Contact", label: "Contact", icon: "/images/home.svg" },
-                                            { href: "/About", label: "About Us", icon: "/images/home.svg" },
-                                            { href: "/partners", label: "Partners", icon: "/images/home.svg" },
+                                            { href: "/casestudiesmain", label: "Case Studies", icon: "/images/case.svg" },
+                                            { href: "/Servicesmain", label: "Services", icon: "/images/services.svg" },
+                                            { href: "/Productmain", label: "Product", icon: "/images/products.svg" },
+                                            { href: "/Industriesmain", label: "Industries", icon: "/images/industries.svg" },
+                                            { href: "/Contact", label: "Contact", icon: "/images/contact.svg" },
+                                            { href: "/About", label: "About Us", icon: "/images/about.svg" },
+                                            { href: "/partners", label: "Partners", icon: "/images/partner.svg" },
                                         ].map((item, index) => (
                                             <li
                                             key={index}
@@ -166,7 +166,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                                 href={item.href}
                                                 className="flex items-center gap-3 text-white"
                                             >
-                                                <img src={item.icon} alt={item.label} width="45" />
+                                                <img src={item.icon} alt={item.label} width="40" height="40"/>
                                                 <span>{item.label}</span>
                                             </a>
                                             </li>

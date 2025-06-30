@@ -35,13 +35,13 @@ export default function About() {
                     <div className="">
                         <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
                             <div className="lg:col-span-6 space-y-6">
-                                <h1 className="mobile-banner-heading text-[60px] fc-white leading-tight mb-0">
+                                <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                     About Us - TDF
                                 </h1>
                             </div>
                             <div className="lg:col-span-6 space-y-6">
                                 <div className="prose prose-lg prose-invert">
-                                <h2 className="mobile-banner-sub-heading text-[30px] fc-secondary leading-tight">
+                                <h2 className="mobile-banner-sub-heading text-[30px] fc-primary leading-tight">
                                     Curiosity Brought You Here,<br />Now Let’s Show You What We’re All About.
                                 </h2>
                                 </div>
