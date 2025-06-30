@@ -87,61 +87,11 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const content = contentRef.current;
-
-    if (isLast) {
-      // For the last section, use different ScrollTrigger settings
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "bottom top",
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            // Fade out the content as we scroll past
-            gsap.set(content, { opacity: 1 - self.progress });
-          }
-        }
-      });
-
-      tl.from(content, {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-      });
-    } else {
-      // Regular sections
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=100%",
-          pin: true,
-          pinSpacing: false,
-          scrub: 1,
-        }
-      });
-
-      tl.from(content, {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-      });
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  }, [isLast]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen bg-dark-950 text-white flex items-center"
+      className="relative sec-padding --small bg-dark-950 text-white flex items-center"
       style={{ zIndex: 100 - index }}
     >
       <div className="absolute inset-0 opacity-50" />
