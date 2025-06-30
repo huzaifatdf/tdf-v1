@@ -324,7 +324,7 @@ function WhatProblem(props) {
                   {problem?.problem || 'What Problem?'}
                 </h1>
                 <p className="text-[16px] fc-primary leading-relaxed">
-                    {problem?.problem_description || '...'}
+                    {problem?.problem_description ? parse(problem?.problem_description) : '...'}
                 </p>
               </div>
 
