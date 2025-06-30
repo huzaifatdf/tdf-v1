@@ -81,7 +81,7 @@ function ThreeModelOverlay() {
         renderer.outputEncoding = THREE.sRGBEncoding;
         mount.appendChild(renderer.domElement);
 
-        // Enhanced lighting setup for silver metallic appearance
+        // Enhanced lighting setup for metallic appearance
         const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
         scene.add(ambientLight);
 
@@ -132,24 +132,24 @@ function ThreeModelOverlay() {
 
         // Load GLB Model
         const loader = new GLTFLoader();
-        loader.load('/images/stone2.glb', gltf => {
+        loader.load('/images/stone.glb', gltf => {
         const model = gltf.scene;
         model.scale.set(1, 1, 1);
         model.position.set(0, -0.5, 0);
         model.name = 'BallModel';
 
-        // Apply silver material
+        // Apply blue metallic material to match first image
         model.traverse((child) => {
             if (child.isMesh) {
-                const silverMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xf0f0f0,
-                    roughness: 0.15,
-                    metalness: 0.9,
+                const blueMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xc0c0c0, // Blue color similar to first image
+                    roughness: 0.3,
+                    metalness: 0.7,
                     transparent: false,
                     opacity: 1.0,
-                    envMapIntensity: 1.5,
+                    envMapIntensity: 1.2,
                 });
-                child.material = silverMaterial;
+                child.material = blueMaterial;
                 child.castShadow = true;
                 child.receiveShadow = true;
             }
@@ -277,56 +277,111 @@ function ThreeModelOverlay() {
 }
 
 
+
 const ImageZoomSection = () => {
     const imageWrapperRef = useRef(null);
+    const textContentRef = useRef(null);
+    const [visible, setVisible] = useState(false);
+
+    // Track if the section is visible (using the same ID as Space component)
+    useEffect(() => {
+        const section = document.getElementById("space-section");
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+        if (section) observer.observe(section);
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.to(imageWrapperRef.current, {
-                y: 20,
-                duration: 2,
-                ease: "power1.inOut",
-                yoyo: true,
-                repeat: -1,
-                repeatDelay: 0.5,
-            });
+            if (visible) {
+                // Apply floating animation to the image wrapper
+                gsap.to(imageWrapperRef.current, {
+                    y: 20,
+                    duration: 2,
+                    ease: "power1.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    repeatDelay: 0.5,
+                });
 
-            gsap.fromTo(
-                imageWrapperRef.current,
-                {
+                // Apply scale/fade animation to image
+                gsap.fromTo(
+                    imageWrapperRef.current,
+                    {
+                        scale: 1.9,
+                        opacity: 0,
+                    },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        duration: 1.8,
+                        ease: "power3.out",
+                        delay: 0.2,
+                    }
+                );
+
+                // Apply fade-in animation to text content
+                gsap.fromTo(
+                    textContentRef.current,
+                    {
+                        opacity: 0,
+                        y: 30,
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        delay: 2, // Start after image animation is well underway
+                    }
+                );
+            } else {
+                // Kill all animations when not visible
+                gsap.killTweensOf([imageWrapperRef.current, textContentRef.current]);
+                // Reset to hidden state
+                gsap.set(imageWrapperRef.current, {
                     scale: 1.9,
                     opacity: 0,
-                },
-                {
-                    scale: 1,
-                    opacity: 1,
-                    duration: 3.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: imageWrapperRef.current,
-                        start: "top 80%",
-                        toggleActions: "play none none none",
-                    },
-                }
-            );
+                    y: 0,
+                });
+                gsap.set(textContentRef.current, {
+                    opacity: 0,
+                    y: 30,
+                });
+            }
         });
 
         return () => ctx.revert();
-    }, []);
+    }, [visible]);
 
     return (
         <>
-            <div className="container-fluid relative w-full h-screen overflow-hidden">
+            <div
+                className="container-fluid relative w-full h-screen overflow-hidden"
+            >
                 <div
                     ref={imageWrapperRef}
                     className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover mb-[80px]"
                     style={{
                         transformOrigin: "center center",
                         backgroundImage: `url('/images/backhome.png')`,
+                        opacity: visible ? 1 : 0,
+                        transition: "opacity 0.5s ease",
                     }}
                 />
 
-                <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
+                <div
+                    ref={textContentRef}
+                    className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4"
+                    style={{
+                        opacity: 0, // Start hidden
+                    }}
+                >
                     <p className="text-[30px] mb-0 fc-primary">
                         We connect relevant ideas to shape complete experiences
                     </p>
@@ -493,7 +548,9 @@ export default function Home() {
                         {/* Foreground Content */}
                         <div className="relative z-10 isolate">
                             <div className="min-h-screen" id="space-section">
-                                <ImageZoomSection />
+                                <div id="image-zoom-section">
+                                    <ImageZoomSection />
+                                </div>
                                 <HorizontalScroll />
                                 <SmartToolsSlider />
                                 <ClientSlider />
