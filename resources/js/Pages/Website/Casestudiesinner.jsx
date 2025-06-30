@@ -86,15 +86,9 @@ export default function Casestudiesinner(props) {
 const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
-  const imageRef = useRef(null);
-  const textRef = useRef(null);
-
   useEffect(() => {
     const section = sectionRef.current;
     const content = contentRef.current;
-    const imageElement = imageRef.current;
-    const textElement = textRef.current;
-
     if (isLast) {
       // For the last section, use different ScrollTrigger settings
       const tl = gsap.timeline({
@@ -106,34 +100,18 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
           pinSpacing: true,
           scrub: 1,
           onUpdate: (self) => {
-            const progress = self.progress;
-
-            // Parallax effect for image
-            gsap.set(imageElement, {
-              y: progress * -80,
-              scale: 1 + progress * 0.1,
-              opacity: 1 - progress * 0.4
-            });
-
-            // Parallax effect for text
-            gsap.set(textElement, {
-              y: progress * -120,
-              opacity: 1 - progress * 0.6
-            });
-
             // Fade out the content as we scroll past
-            gsap.set(content, { opacity: 1 - progress });
+            gsap.set(content, { opacity: 1 - self.progress });
           }
         }
       });
-
       tl.from(content, {
         y: 100,
         opacity: 0,
         duration: 1,
       });
     } else {
-      // Regular sections with parallax effects
+      // Regular sections
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -142,36 +120,18 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
           pin: true,
           pinSpacing: false,
           scrub: 1,
-          onUpdate: (self) => {
-            const progress = self.progress;
-
-            // Parallax effect for image
-            gsap.set(imageElement, {
-              y: progress * -60,
-              scale: 1 + progress * 0.05
-            });
-
-            // Parallax effect for text
-            gsap.set(textElement, {
-              y: progress * -90,
-              opacity: 1 - progress * 0.2
-            });
-          }
         }
       });
-
       tl.from(content, {
         y: 100,
         opacity: 0,
         duration: 1,
       });
     }
-
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [isLast]);
-
   return (
     <section
       ref={sectionRef}
@@ -181,30 +141,37 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
       <div className="absolute inset-0 opacity-50" />
       <div className="container-fluid relative z-10">
         <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
-          <div ref={textRef} className="md:col-span-5 flex flex-col justify-between h-full">
-            <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
-            >
-              {link}
-            </a>
-          </div>
-          <div ref={imageRef} className="md:col-span-7 relative group">
-            <div className="absolute inset-0 transform transition-transform duration-500" />
-            <img
-              src={image}
-              alt={title}
-              className="w-full transform transition-all duration-500"
-            />
-          </div>
+            <div className="md:col-span-5 flex flex-col justify-between h-full">
+                <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
+                <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
+                >
+                {link}
+                </a>
+            </div>
+            <div className="md:col-span-7 relative group">
+                <div className="absolute inset-0 transform transition-transform duration-500 " />
+                <img
+                src={image}
+                alt={title}
+                className="w-full transform transition-all duration-500"
+                />
+            </div>
         </div>
       </div>
     </section>
   );
 };
+
+
+
+
+
+
+
 
 function transformData(data) {
   const result = [];
