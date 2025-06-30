@@ -87,23 +87,16 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
   const imageRef = useRef(null);
-  const titleRef = useRef(null);
-  const linkRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const content = contentRef.current;
-    const img = imageRef.current;
-    const titleEl = titleRef.current;
-    const linkEl = linkRef.current;
-
-    // Set initial state - everything invisible
-    gsap.set([content, img, titleEl, linkEl], {
-      opacity: 0
-    });
+    const imageElement = imageRef.current;
+    const textElement = textRef.current;
 
     if (isLast) {
-      // Last section animations
+      // For the last section, use different ScrollTrigger settings
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -113,30 +106,34 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
           pinSpacing: true,
           scrub: 1,
           onUpdate: (self) => {
-            // Fade out everything as we scroll past
-            const fadeProgress = 1 - self.progress;
-            gsap.set([content, img, titleEl, linkEl], {
-              opacity: fadeProgress * fadeProgress // Quadratic fade for smoother effect
+            const progress = self.progress;
+
+            // Parallax effect for image
+            gsap.set(imageElement, {
+              y: progress * -80,
+              scale: 1 + progress * 0.1,
+              opacity: 1 - progress * 0.4
             });
+
+            // Parallax effect for text
+            gsap.set(textElement, {
+              y: progress * -120,
+              opacity: 1 - progress * 0.6
+            });
+
+            // Fade out the content as we scroll past
+            gsap.set(content, { opacity: 1 - progress });
           }
         }
       });
 
-      // Fade in animation when section comes into view
-      tl.to([titleEl, linkEl], {
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out"
-      })
-      .to(img, {
-        opacity: 1,
+      tl.from(content, {
+        y: 100,
+        opacity: 0,
         duration: 1,
-        ease: "power2.out"
-      }, "-=0.5");
-
+      });
     } else {
-      // Regular sections
+      // Regular sections with parallax effects
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -146,65 +143,32 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
           pinSpacing: false,
           scrub: 1,
           onUpdate: (self) => {
-            // Fade out as we scroll to next section
-            if (self.progress > 0.8) {
-              const fadeOut = (self.progress - 0.8) / 0.2;
-              gsap.set([content, img, titleEl, linkEl], {
-                opacity: 1 - fadeOut
-              });
-            }
+            const progress = self.progress;
+
+            // Parallax effect for image
+            gsap.set(imageElement, {
+              y: progress * -60,
+              scale: 1 + progress * 0.05
+            });
+
+            // Parallax effect for text
+            gsap.set(textElement, {
+              y: progress * -90,
+              opacity: 1 - progress * 0.2
+            });
           }
         }
       });
 
-      // Staggered fade in animation
-      tl.to(titleEl, {
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out"
-      })
-      .to(linkEl, {
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out"
-      }, "-=0.3")
-      .to(img, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out"
-      }, "-=0.4");
-    }
-
-    // Intersection Observer for initial fade in when section enters viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Trigger the fade in animation
-            gsap.to([titleEl, linkEl], {
-              opacity: 0.9,
-              duration: 1,
-              stagger: 0.1,
-              ease: "power2.out"
-            });
-            gsap.to(img, {
-              opacity: 0.9,
-              duration: 1.2,
-              ease: "power2.out"
-            });
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (section) {
-      observer.observe(section);
+      tl.from(content, {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+      });
     }
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
-      observer.disconnect();
     };
   }, [isLast]);
 
@@ -217,30 +181,23 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
       <div className="absolute inset-0 opacity-50" />
       <div className="container-fluid relative z-10">
         <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
-          <div className="md:col-span-5 flex flex-col justify-between h-full">
-            <h2
-              ref={titleRef}
-              className="text-[30px] text-lime-400 mb-6 transition-all duration-300"
-            >
-              {title}
-            </h2>
+          <div ref={textRef} className="md:col-span-5 flex flex-col justify-between h-full">
+            <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
             <a
-              ref={linkRef}
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-all duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA] hover:scale-105"
+              className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
             >
               {link}
             </a>
           </div>
-          <div className="md:col-span-7 relative group">
+          <div ref={imageRef} className="md:col-span-7 relative group">
             <div className="absolute inset-0 transform transition-transform duration-500" />
             <img
-              ref={imageRef}
               src={image}
               alt={title}
-              className="w-full transform transition-all duration-500 hover:scale-105"
+              className="w-full transform transition-all duration-500"
             />
           </div>
         </div>
