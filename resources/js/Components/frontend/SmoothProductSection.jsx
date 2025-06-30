@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import axios from "axios";
 import parse from 'html-react-parser';
 import { ChevronDown } from 'lucide-react';
@@ -222,6 +222,15 @@ function SmoothExperienceSection() {
                     <p className="text-[18px] fc-primary leading-relaxed">
                       {parse(section.description)}
                     </p>
+
+                       <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary mb-2 flex items-center">
+                      <span className="inline-block border-b-2 border-transparent group-hover:border-current transition-all duration-200">
+                        Click to Explore
+                      </span>
+                      <span className="ml-3 fc-secondary transform transition-transform duration-200 group-hover:scale-125">
+                        &rarr;
+                      </span>
+                    </Link>
                   </div>
                     <hr className="border-white mb-8"/>
                 </div>

@@ -4,41 +4,42 @@ function TestimonialsSection() {
   const [selected, setSelected] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [testimonials, setTestimonials] = useState([
+   {
+    id: 1,
+    name: "Shahzaib Mehmood",
+    rating: 5,
+    title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
+    image: "",
+  },
     {
-      id: 1,
-      name: "Becky Nelson",
-      rating: 4,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-    },
-    {
-      id: 2,
-      name: "John Brown",
-      rating: 5,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/men/45.jpg",
-    },
-    {
-      id: 3,
-      name: "Hannah Thompson",
-      rating: 3,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/women/50.jpg",
-    },
-    {
-      id: 4,
-      name: "Chris King",
-      rating: 5,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/men/55.jpg",
-    },
-    {
-      id: 5,
-      name: "Sarah Lopez",
-      rating: 4,
-      title: "Strategy, creativity, technology - aligned in perfect sync Always adjusting, always forward",
-      image: "https://randomuser.me/api/portraits/women/60.jpg",
-    },
+    id: 2,
+    name: "Mahwish Saad Khan",
+    rating: 5,
+    title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
+    image: "",
+  },
+  {
+    id: 3,
+    name: "Arsalan Farid",
+    rating: 5,
+    title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
+    image: "",
+  },
+  {
+    id: 4,
+    name: "Aamir Basrai",
+    rating: 5,
+    title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
+    image: "",
+  },
+  {
+  id: 5,
+  name: "Dr. Nadia Alwasiah",
+  rating: 5,
+  title: "I want to offer my thanks to TDF. With their expertise, they developed an exceptional website that perfectly represents my practice. Highly recommended!",
+  image: "", // Placeholder image
+}
+
   ]);
 
   // Keep track of original testimonials for proper dot mapping
@@ -113,6 +114,7 @@ function TestimonialsSection() {
 
           {/* Dynamic floating avatars */}
           {[1, 2, 3, 4].map((index, i) => (
+            testimonials[index].image !== '' ? (
             <img
               key={index}
               className={`circle-avatar absolute w-12 h-12 rounded-full cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
@@ -131,6 +133,26 @@ function TestimonialsSection() {
                   : { top: "5%", right: "15%" }
               }
             />
+            ) : (
+            <div
+              key={index}
+              className={`circle-avatar absolute w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
+                isTransitioning ? 'scale-110 animate-pulse' : ''
+              }`}
+              onClick={() => handleSwapWithCenter(index)}
+              style={
+                i === 0
+                  ? { top: "15%", left: "25%" }
+                  : i === 1
+                  ? { top: "35%", left: "30%" }
+                  : i === 2
+                  ? { top: "15%", right: "25%" }
+                  : { top: "5%", right: "15%" }
+              }
+            >
+              {testimonials[index].name.charAt(0).toUpperCase()}
+            </div>
+            )
           ))}
 
           <div
@@ -158,6 +180,7 @@ function TestimonialsSection() {
           isTransitioning ? 'transform scale-95 opacity-70' : 'transform scale-100 opacity-100'
         }`}>
           <div className="relative mb-8">
+            {testimonials[0].image !== '' ? (
             <img
               src={testimonials[0].image}
               alt="user"
@@ -165,6 +188,13 @@ function TestimonialsSection() {
                 isTransitioning ? 'transform scale-90 blur-sm' : 'transform scale-100 blur-0'
               }`}
             />
+            ) : (
+            <div className="w-32 h-32 rounded-full bg-gray-300 mx-auto flex items-center justify-center shadow-2xl">
+              <span className="text-3xl font-bold text-gray-700">
+                {testimonials[0].name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+            )}
           </div>
 
           <div className={`stars transition-all duration-300 ${
