@@ -86,5 +86,9 @@ Route::get('/product/{slug}', [WebSiteController::class, 'showProduct'])
     ->name('web.product.show');
 });
 
+//dynamicPage
+Route::get('/{slug}', [WebSiteController::class, 'dynamicPage'])
+    ->name('dynamicpage.show');
+
 
 

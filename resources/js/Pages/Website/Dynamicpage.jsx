@@ -10,11 +10,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Pre-define your component imports to avoid dynamic import issues
 const componentMap = {
-    'Contact': lazy(() => import('@/Components/frontend/Contact.jsx')),
     'ClientSlider' : lazy(() => import('@/Components/frontend/ClientSlider.jsx')),
+    'Contact': lazy(() => import('@/Components/frontend/Contact.jsx')),
+    'DynamicForm': lazy(() => import('@/Components/frontend/DynamicForm.jsx')),
+    'IndustrySection': lazy(() => import('@/Components/frontend/IndustrySection.jsx')),
     'ServiceSlider' : lazy(() => import('@/Components/frontend/ServiceSlider.jsx')),
-
-    // Add more components as needed
+    'SmartToolsSlider': lazy(() => import('@/Components/frontend/SmartToolsSlider.jsx')),
+    'SmoothCaseStudiesSection': lazy(() => import('@/Components/frontend/SmoothCaseStudiesSection.jsx')),
+    'SmoothExperienceSection': lazy(() => import('@/Components/frontend/SmoothExperienceSection.jsx')),
+    'SmoothProductSection': lazy(() => import('@/Components/frontend/SmoothProductSection.jsx')),
+    'TestimonialsSection': lazy(() => import('@/Components/frontend/TestimonialsSection.jsx')),
 };
 
 
