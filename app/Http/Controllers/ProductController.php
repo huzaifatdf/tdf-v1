@@ -54,7 +54,9 @@ class ProductController extends Controller
                 'detail_overview' => ['type' => 'text', 'label' => 'Detail Overview', 'required' => false],
 
             ],
-
+            'Video' => [
+                'video_path' => ['type' => 'text', 'label' => 'Video Path', 'required' => false],
+            ],
              'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
@@ -175,8 +177,11 @@ class ProductController extends Controller
 public function edit(Product $product)
 {
     $additionalDataStructure = [
-         'Detail' => [
+            'Detail' => [
                 'detail_overview' => ['type' => 'summernote', 'label' => 'Detail Overview', 'required' => false],
+            ],
+            'Video' => [
+                'video_path' => ['type' => 'text', 'label' => 'Video Path', 'required' => false],
             ],
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],

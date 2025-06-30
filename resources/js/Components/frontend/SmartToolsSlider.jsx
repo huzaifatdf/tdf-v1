@@ -46,7 +46,11 @@ const SmartToolsSlider = () => {
             slidesPerView={1}
             className="w-full custom-swiper"
           >
-            {sections.map((section, index) => (
+            {sections.map((section, index) => {
+
+                const jsonData = section.data ? JSON.parse(section.data) : {};
+
+              return (
               <SwiperSlide key={index}>
                 <div className="flex flex-col md:flex-row">
                   {/* Left Side Image */}
@@ -85,17 +89,25 @@ const SmartToolsSlider = () => {
                       >
                         View All Products
                       </Link>
-
-                      <img
-                        src="/images/slider2.png"
-                        alt="Roundabout"
+                        {jsonData["Video"] && jsonData["Video"]["video_path"] && (
+                     <video
+                        width="320"
+                        height="240"
                         className="w-[50%] h-auto rounded"
-                      />
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        >
+                        <source src={appUrl + "/" + jsonData["Video"]["video_path"]} type="video/mp4" />
+                        Your browser does not support the video tag.
+                        </video>
+                    )}
                     </div>
                   </div>
                 </div>
               </SwiperSlide>
-            ))}
+            )})}
             <div className="swiper-pagination-custom absolute flex flex-col gap-2 z-10 align-items-end" />
           </Swiper>
         </div>
