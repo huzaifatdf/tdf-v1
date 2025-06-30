@@ -38,7 +38,7 @@ export default function Productinner() {
             <div className="container-fluid relative mt-[150px]">
                 <div className="flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
-                        <h1 className="text-[30px] fc-secondary leading-tight mb-6">
+                        <h1 className="text-[34px] fc-secondary leading-tight mb-6">
                             {/* Eduman<br className="hidden md:block" />A Saas-Based School Management System */}
                             {product.title}
                         </h1>
@@ -50,7 +50,7 @@ export default function Productinner() {
                     </div>
                     <div className="md:w-1/2">
                         <div className="prose prose-lg prose-invert">
-                        <p className="text-[20px] font-bold fc-primary leading-relaxed  mb-2">
+                        <p className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
                             Quick Highlights
                         </p>
                         {/* <p className="text-[16px] fc-primary leading-relaxed mb-6">
@@ -67,7 +67,7 @@ export default function Productinner() {
                         <p className="text-[16px] fc-primary leading-relaxed">
                             Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
                         </p> */}
-                       <p className="text-[16px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
+                       <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
                         </div>
                     </div>
                 </div>
@@ -77,12 +77,12 @@ export default function Productinner() {
         <BenefitsContactForm product={product.title}/>
           <div className="container-fluid ">
             <div className="py-16 relative">
-                <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+                <h2 className="text-[32px] fc-secondary leading-tight mb-6">
                 Detailed Overview
                 </h2>
 
-                <div className="text-gray-300 leading-relaxed">
-                    <p className="text-[16px] fc-primary leading-relaxed mb-2">
+                <div className="leading-relaxed">
+                    <p className="text-[18px] fc-primary leading-relaxed mb-2">
                         {parse(jsonParseData.Detail.detail_overview)}
                     </p>
 
@@ -98,7 +98,7 @@ export default function Productinner() {
             <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
             {jsonParseData["Our Work"]["title"]}
             </h2>
-            <p className="text-[18px] text-white leading-relaxed">
+            <p className="text-[18px] text-gray-400 leading-relaxed">
             {/* Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
             <span className="text-lime-400 font-medium">Book a Demo</span> today! */}
             {parse(jsonParseData["Our Work"]["description"])}
@@ -134,7 +134,7 @@ function BenefitsContactForm(props) {
   return (
     <div className="relative py-16 bg-[#040404]">
       <div className="container-fluid">
-        <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-9">
+        <h2 className="text-[32px] fc-secondary leading-tight mb-9">
           Uncover the Benefits Now!
         </h2>
 
@@ -245,12 +245,13 @@ function parseData(data) {
 
 // What PRoblem //
 function WhatProblem(props) {
-  const [activeSection, setActiveSection] = useState('text-to-text');
+  const [activeSection, setActiveSection] = useState(() => {
+    const sections = parseData();
+    return sections.length > 0 ? sections[0].id : 'text-to-text';
+  });
   const sectionRef = useRef(null);
-  const sectionsRefs = useRef({});
-
-  const { problem, solutions } = props;
-
+  const contentRef = useRef(null);
+const { problem, solutions } = props;
   const sections = parseData(solutions);
 
   // Scroll observer to update active section based on scroll position
