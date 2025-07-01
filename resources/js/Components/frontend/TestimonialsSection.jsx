@@ -9,28 +9,28 @@ function TestimonialsSection() {
     name: "Shahzaib Mehmood",
     rating: 5,
     title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
-    image: "",
+    image: "images/sosafe.png",
   },
     {
     id: 2,
     name: "Mahwish Saad Khan",
     rating: 5,
     title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
-    image: "",
+    image: "images/DataCheck.png",
   },
   {
     id: 3,
     name: "Arsalan Farid",
     rating: 5,
     title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
-    image: "",
+    image: "images/idem.png",
   },
   {
     id: 4,
     name: "Aamir Basrai",
     rating: 5,
     title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
-    image: "",
+    image: "images/PentaLogo.png",
   },
   {
   id: 5,
@@ -189,7 +189,7 @@ function TestimonialsSection() {
               }`}
             />
             ) : (
-            <div className="w-32 h-32 rounded-full bg-gray-300 mx-auto flex items-center justify-center shadow-2xl">
+            <div className="w-32 h-32 rounded-full bg-gray-300 mx-auto flex items-center justify-center shadow-2xl mobile-size-fix">
               <span className="text-3xl font-bold text-gray-700">
                 {testimonials[0].name.charAt(0).toUpperCase()}
               </span>

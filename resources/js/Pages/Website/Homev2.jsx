@@ -389,7 +389,7 @@ const layers = [
   { text: "Technology", className: "" },
   {
     text: "Aligned in perfect sync always adjusting, always forward",
-    className: "last-scroll text-[40px] font-medium text-center",
+    className: "mobile-font-size-last last-scroll text-[40px] font-medium text-center",
   },
 ];
 
@@ -427,7 +427,7 @@ const HorizontalScroll = () => {
         {layers.map((layer, index) => (
           <div
             key={index}
-            className={`panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[150px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
+            className={`mobile-font-size panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[150px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
           >
             {layer.text}
           </div>
@@ -446,7 +446,7 @@ function Section() {
             <div id="scroll-zoom-section" className="relative h-[300vh] overflow-hidden">
                 {/* Section 1 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-30">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]} className="mobile-hide-zoom">
                     <div className="text-center">
                         <h1 className="text-[40px] mb-2 fc-primary">Look at this dot</h1>
                         <p className="text-[30px] mb-0 fc-primary">
@@ -460,7 +460,7 @@ function Section() {
 
                 {/* Section 2 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-20">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">
                         Full of life, movement, and possibilities
@@ -471,7 +471,7 @@ function Section() {
 
                 {/* Section 3 */}
                 <div className="sticky top-0 h-screen flex justify-center items-center z-10">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]}>
+                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
                     <div className="text-center">
                         <p className="text-[30px] mb-0 fc-primary">
                         In the digital universe, each dot is a potential idea

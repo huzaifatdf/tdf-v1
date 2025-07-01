@@ -229,7 +229,7 @@ function SmoothCaseStudiesSection() {
                   {section.subtitle}
                 </p>
 
-                <div className="mb-10">
+                <ul className="mb-10">
                   {section.features.map((feature, featureIndex) => {
                     if (featureIndex >= 3) {
                       return featureIndex === 3 ? (
@@ -242,13 +242,13 @@ function SmoothCaseStudiesSection() {
                     }
                     return (
                       <div key={featureIndex} className="flex items-start">
-                        <span className="fc-primary text-[18px] leading-relaxed">
+                        <li className="fc-primary text-[18px] leading-relaxed">
                           {feature}
-                        </span>
+                        </li>
                       </div>
                     );
                   })}
-                </div>
+                </ul>
 
               <Link
   className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"

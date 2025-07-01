@@ -211,8 +211,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         <div className="container-fluid">
                             <Contact />
 
-                            <div className="flex flex-col md:flex-row justify-between items-center pt-6 pb-6">
-                                <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                            <div className="flex flex-col md:flex-row justify-between items-center pt-6 pb-6 mobile-footer">
+                                <div className="flex items-center space-x-4 mb-4 md:mb-0 img-margin-mobile">
                                     <a className="navbar-brand d-flex align-items-center fw-bold" href="/">
                                         <img
                                             src="/images/footerlogo.svg"
