@@ -81,7 +81,7 @@ export default function Productinner() {
                 Detailed Overview
                 </h2>
 
-                <div className="leading-relaxed">
+                <div className="leading-relaxed mobile-screens">
                     <p className="text-[18px] fc-primary leading-relaxed mb-2">
                         {parse(jsonParseData.Detail.detail_overview)}
                     </p>
