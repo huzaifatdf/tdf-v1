@@ -31,6 +31,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Success",
                 description: flash.success,
                 variant: "default", // or "success" if you have custom variant
+                 duration: 1000,
             });
         }
 
@@ -40,6 +41,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Error",
                 description: flash.error,
                 variant: "destructive",
+                 duration: 1000,
             });
         }
 
@@ -49,6 +51,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Warning",
                 description: flash.warning,
                 variant: "default", // You might want to create a warning variant
+                 duration: 1000,
             });
         }
 
@@ -58,6 +61,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Information",
                 description: flash.info,
                 variant: "default",
+                 duration: 1000,
             });
         }
 
@@ -67,6 +71,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Notification",
                 description: flash.message,
                 variant: "default",
+                 duration: 1000,
             });
         }
     }, [flash, toast]);
