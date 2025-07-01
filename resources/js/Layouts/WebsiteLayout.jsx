@@ -24,13 +24,15 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
 
     //useEffect for session flash toast
+  //useEffect for session flash toast
    useEffect(() => {
         // Handle success messages
         if (flash?.success) {
             toast({
                 title: "Success",
                 description: flash.success,
-                variant: "default", // or "success" if you have custom variant
+                variant: "default",
+                duration: 1000, // 2 seconds
             });
         }
 
@@ -40,6 +42,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Error",
                 description: flash.error,
                 variant: "destructive",
+                duration: 1000, // 2 seconds
             });
         }
 
@@ -48,7 +51,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
             toast({
                 title: "Warning",
                 description: flash.warning,
-                variant: "default", // You might want to create a warning variant
+                variant: "default",
+                duration: 1000, // 2 seconds
             });
         }
 
@@ -58,15 +62,17 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                 title: "Information",
                 description: flash.info,
                 variant: "default",
+                duration: 1000, // 2 seconds
             });
         }
 
         // Handle generic messages
         if (flash?.message) {
             toast({
-                title: "Notification",
+                title: "Success",
                 description: flash.message,
                 variant: "default",
+                duration: 1000, // 2 seconds
             });
         }
     }, [flash, toast]);
@@ -96,6 +102,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
     return (
         <>
          <Toaster />
+
+
             <Preloader onFinish={() => setLoaded(true)} />
 
 
