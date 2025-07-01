@@ -33,7 +33,7 @@ export default function About() {
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid ">
                 <div className="relative mt-[120px] mb-[80px]">
-                    <div className="flex flex-col md:flex-row items-center">
+                    <div className="flex flex-col md:flex-row items-center gap-12">
                         <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                 Contact Us

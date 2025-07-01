@@ -30,10 +30,9 @@ export default function Productmain() {
   return (
     <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center bg-dark-950 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-50" />
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">
-                <div className="flex flex-col md:flex-row items-center ">
+                <div className="flex flex-col md:flex-row items-center gap-12">
                     <div className="md:w-1/2">
                         <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                             Solutions

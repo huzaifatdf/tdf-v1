@@ -36,7 +36,7 @@ export default function Casestudiesmain() {
         <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px] mb-[30px]">
                 <div className="">
-                    <div className="flex flex-col md:flex-row items-center  mb-[100px] mar-mob-0">
+                    <div className="flex flex-col md:flex-row items-center  mb-[100px] mar-mob-0 gap-12">
                         <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-[1.1]">
                                 From Vision to Reality

@@ -36,7 +36,7 @@ export default function Casestudiesmain(props) {
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">
-                <div className="flex flex-col md:flex-row items-center">
+                <div className="flex flex-col md:flex-row items-center gap-12">
                     <div className="md:w-1/2">
                         <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                             Behind the Work

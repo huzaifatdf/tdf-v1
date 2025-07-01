@@ -33,13 +33,13 @@ export default function About() {
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">
                     <div className="">
-                        <div className="grid md:grid-cols-12 items-center justify-center pb-[60px]">
-                            <div className="lg:col-span-6 space-y-6">
+                        <div className="flex flex-col md:flex-row gap-12 pb-[60px]">
+                            <div className="md:w-1/2">
                                 <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                     About Us - TDF
                                 </h1>
                             </div>
-                            <div className="lg:col-span-6 space-y-6">
+                            <div className="md:w-1/2">
                                 <div className="prose prose-lg prose-invert">
                                 <h2 className="mobile-banner-sub-heading text-[30px] fc-primary leading-tight">
                                     Curiosity Brought You Here,<br />Now Let’s Show You What We’re All About.

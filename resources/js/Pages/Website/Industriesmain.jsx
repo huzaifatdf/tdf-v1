@@ -31,13 +31,13 @@ export default function Productinner() {
         <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="container-fluid relative mt-[150px]">
                 <div className="">
-                    <div className="grid md:grid-cols-12 items-center justify-center pb-[20px]">
-                        <div className="lg:col-span-5 space-y-6">
+                    <div className="flex flex-col md:flex-row gap-12 pb-[20px]">
+                        <div className="md:w-1/2">
                             <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
                                 Industries We Serve
                             </h1>
                         </div>
-                        <div className="lg:col-span-5 space-y-6">
+                        <div className="md:w-1/2">
                             <div className="prose prose-lg prose-invert">
                             <h2 className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
                                 Delivering Impact in Every Industry<br />Industries Powered by Our Expertise
