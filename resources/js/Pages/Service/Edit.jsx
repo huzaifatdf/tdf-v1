@@ -16,6 +16,7 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MediaLibraryModel from "../Media/Model";
+import SummernoteInput from "@/Components/SummernoteInput";
 
 export default function Edit() {
   const { service, additionalDataStructure,appUrl } = usePage().props;
@@ -220,13 +221,20 @@ export default function Edit() {
                     <label htmlFor="description" className="text-sm font-medium">
                       Description *
                     </label>
-                    <Field
+                    {/* <Field
                       as={Textarea}
                       id="description"
                       name="description"
                       placeholder="Enter service description"
                       rows={4}
-                    />
+                    /> */}
+                     <SummernoteInput
+            value={values.description}
+            onChange={(content) => setFieldValue("description", content)}
+            height={200}
+            showToggle={true}
+            defaultMode="simple"
+          />
                     <ErrorMessage
                       name="description"
                       component="div"
