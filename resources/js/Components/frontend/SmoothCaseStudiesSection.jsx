@@ -250,13 +250,13 @@ function SmoothCaseStudiesSection() {
                   })}
                 </ul>
 
-              <Link
+              <a
   className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"
   href={route('casestudy.show', section.slug)}
-onBefore={() => window.scrollTo(0, 0)} // Ensures scroll resets on navigation
+
 >
   Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
-</Link>
+</a>
                 <hr className="border-white mb-8"/>
               </div>
             </div>
