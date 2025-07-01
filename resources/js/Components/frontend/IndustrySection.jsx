@@ -48,7 +48,7 @@ export default function IndustrySection() {
                 </p>
 
                 {isExpanded && (
-                  <p className="text-[16px] fc-primary leading-relaxed">
+                  <p className="text-[18px] fc-primary leading-relaxed">
                     {jsonData["Detail"]["more_detail"] || ''}
                   </p>
                 )}

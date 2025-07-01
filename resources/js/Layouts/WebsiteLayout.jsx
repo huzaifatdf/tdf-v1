@@ -161,7 +161,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                             { href: "/casestudiesmain", label: "Case Studies", icon: "/images/case.svg" },
                                             { href: "/About", label: "About Us", icon: "/images/about.svg" },
                                             { href: "/partners", label: "Partners", icon: "/images/partner.svg" },
-                                            { href: "/partners", label: "Partners", icon: "/images/partner.svg" }, //Careers
+                                            { href: "/https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", label: "Careers", icon: "/images/partner.svg" }, //Careers
                                             { href: "/Contact", label: "Contact", icon: "/images/contact.svg" },
 
 
@@ -174,7 +174,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                                 href={item.href}
                                                 className="flex items-center gap-3 text-white"
                                             >
-                                                <img src={item.icon} alt={item.label} width="40" height="40"/>
+                                                <img src={item.icon} alt={item.label} width="35" height="35"/>
                                                 <span>{item.label}</span>
                                             </a>
                                             </li>
@@ -240,12 +240,15 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     </a>
                                 </div>
 
-                                <div className="flex space-x-6">
-                                    <Link href="/" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Home</Link>
-                                    <Link href={"/About"} className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
+                                <div className="flex space-x-4">
                                     <Link href="/Servicesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Services</Link>
-                                    {/* <a href="#" className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Insights</a> */}
+                                    <Link href="/Productmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Product</Link>
+                                    <Link href="/Industriesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Industries</Link>
+                                    <Link href="/casestudiesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Case Studies</Link>
+                                    <Link href="/About" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
+                                    <Link href="/partners" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Partners</Link>
                                     <a href="https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
+                                    <Link href="/Contact" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Contact</Link>
                                 </div>
 
                                 <div className="items-center space-x-4 social-icons-footer">
