@@ -43,7 +43,7 @@ export default function Productinner() {
                             {product.title}
                         </h1>
                         <img
-                            src={`${appUrl}/${product?.thumbnail}`}
+                            src={`${appUrl}/${product?.image}`}
                             alt="HabibMetro Bank Project Overview"
                             className="w-full h-[50vh] object-cover mt-3 mb-5"
                         />
@@ -114,7 +114,7 @@ export default function Productinner() {
         {/* Right Image */}
         <div className="flex-1">
             <img
-            src={`${appUrl}/${product?.image}`}
+            src={`${appUrl}/${jsonParseData["Our Work"]["image"] || ''}`}
             alt="Eduman Demo Devices"
             className="w-full"
             />

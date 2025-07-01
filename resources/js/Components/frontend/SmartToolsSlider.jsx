@@ -56,7 +56,7 @@ const SmartToolsSlider = () => {
                   {/* Left Side Image */}
                   <div className="md:w-5/12 w-full">
                     <img
-                      src={`${appUrl}/${section.thumbnail}`}
+                      src={`${appUrl}/${section.image}`}
                       alt="Students in a smart classroom"
                       className="w-full h-[500px] object-cover"
                     />
