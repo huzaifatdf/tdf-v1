@@ -556,13 +556,15 @@ function Contact() {
                             </div>
 
                             <div className="mt-4 col-md-6  p-0" >
-                                <p className="text-[20px] fc-primary mb-0">USA:</p>
-                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>+12393565070</a>
+                                <p className="text-[20px] fc-primary mb-0">Contact:</p>
+                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+923030808833'>PAK: +92 303 080 8833</a><br />
+                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+966543435768'>KSA: +966 54 343 5768</a><br />
+                                <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+12393565070'>USA: +1 239 356 5070</a>
                             </div>
-                            <div className="mt-4  p-0">
+                            {/* <div className="mt-4  p-0">
                                 <p className="text-[20px] fc-primary mb-0">Pakistan:</p>
                                 <a className="inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200" href='tel:+92 303 080 8833'>+92 303 080 8833</a>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Dynamic Form */}

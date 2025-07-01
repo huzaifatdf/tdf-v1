@@ -7,6 +7,7 @@ function TestimonialsSection() {
    {
     id: 1,
     name: "Shahzaib Mehmood",
+    designation: "Director",
     rating: 5,
     title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
     image: "images/sosafe.png",
@@ -14,6 +15,7 @@ function TestimonialsSection() {
     {
     id: 2,
     name: "Mahwish Saad Khan",
+    designation: "Executive Commercial Head",
     rating: 5,
     title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
     image: "images/DataCheck.png",
@@ -21,6 +23,7 @@ function TestimonialsSection() {
   {
     id: 3,
     name: "Arsalan Farid",
+    designation: "Deputy Sales Manager-Key Accounts",
     rating: 5,
     title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
     image: "images/idem.png",
@@ -28,6 +31,7 @@ function TestimonialsSection() {
   {
     id: 4,
     name: "Aamir Basrai",
+    designation: "CEO",
     rating: 5,
     title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
     image: "images/PentaLogo.png",
@@ -35,6 +39,7 @@ function TestimonialsSection() {
   {
   id: 5,
   name: "Dr. Nadia Alwasiah",
+  designation: "Physiatrist & Physician",
   rating: 5,
   title: "I want to offer my thanks to TDF. With their expertise, they developed an exceptional website that perfectly represents my practice. Highly recommended!",
   image: "", // Placeholder image
@@ -212,6 +217,12 @@ function TestimonialsSection() {
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].name}
+          </h3>
+
+          <h3 className={`text-[20px] fc-primary font-bold transition-all duration-500 ${
+            isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
+          }`}>
+            {testimonials[0].designation}
           </h3>
 
           <p className={`text-[16px] fc-primary leading-relaxed mb-8 transition-all duration-500 ${

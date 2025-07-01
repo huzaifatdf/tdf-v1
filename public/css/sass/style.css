@@ -9259,8 +9259,8 @@ body {
 
 .circle-avatar {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   background-color: #ccc;
   color: #444;
@@ -9288,13 +9288,13 @@ body {
 
 .circle-avatar img,
 .circle-avatar {
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .circle-avatar[src] {
   border: none;
-  background-color: transparent;
+  background-color: #ccc;
 }
 
 .center-profile {
@@ -9764,6 +9764,14 @@ form textarea {
 .loader span:nth-child(4) {
   bottom: 0;
   right: 0;
+}
+
+.social-icons-footer a {
+  margin: 3px;
+}
+.social-icons-footer a:hover svg path {
+  fill: #9747FF;
+  color: white;
 }
 
 footer {
