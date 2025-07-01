@@ -16,10 +16,10 @@ function Contact() {
     // Load reCAPTCHA v2 script
     useEffect(() => {
         // Check if reCAPTCHA is already loaded
-        if (window.grecaptcha) {
-            setRecaptchaLoaded(true);
-            return;
-        }
+        // if (window.grecaptcha) {
+        //     setRecaptchaLoaded(true);
+        //     return;
+        // }
 
         const script = document.createElement('script');
         script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
@@ -35,26 +35,26 @@ function Contact() {
 
         return () => {
             // Cleanup
-            if (document.head.contains(script)) {
-                document.head.removeChild(script);
-            }
-            delete window.onRecaptchaLoad;
+            // if (document.head.contains(script)) {
+            //     document.head.removeChild(script);
+            // }
+            // delete window.onRecaptchaLoad;
         };
     }, []);
 
     // Render reCAPTCHA when loaded and form is expanded
     useEffect(() => {
-        if (recaptchaLoaded && isExpanded && window.grecaptcha) {
+        if ( window.grecaptcha) {
             // Clear the container first
             const container = document.getElementById('recaptcha-container');
-            if (container) {
-                container.innerHTML = '';
-            }
+            // if (container) {
+            //     container.innerHTML = '';
+            // }
 
             // Reset the widget ID
-            if (recaptchaWidgetId !== null) {
-                setRecaptchaWidgetId(null);
-            }
+            // if (recaptchaWidgetId !== null) {
+            //     setRecaptchaWidgetId(null);
+            // }
 
             // Small delay to ensure container is cleared
             const timer = setTimeout(() => {
