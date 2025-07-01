@@ -5,6 +5,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { usePage } from '@inertiajs/react';
 import axios from 'axios';
+import { Link } from '@inertiajs/react';
+import parse from 'html-react-parser';
 
 function ServiceSlider() {
   const { appUrl } = usePage().props;
@@ -56,7 +58,7 @@ function ServiceSlider() {
                     />
                     <div className="absolute inset-0 bg-[#00141b]/80 flex flex-col justify-center items-center text-center px-8 text-inner">
                         <h3 className="text-[22px] fc-secondary mb-2">{service.title}</h3>
-                        <p className="text-[14px] fc-white">{service.short_description}</p>
+                        <p className="text-[14px] fc-white">{parse(service.short_description)}</p>
                     </div>
                 </div>
             </SwiperSlide>
