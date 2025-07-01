@@ -242,64 +242,44 @@ function parseData(data) {
     }));
 }
 
-
-// What PRoblem //
+// What Problem //
 function WhatProblem(props) {
-  const [activeSection, setActiveSection] = useState('text-to-text');
+  const [activeSection, setActiveSection] = useState('01'); // Set default to first section
   const sectionRef = useRef(null);
-  const sectionsRefs = useRef({});
   const { problem, solutions } = props;
   const sections = parseData(solutions);
-  // Scroll observer to update active section based on scroll position
+
+  // Set default active section to first section if sections exist
   useEffect(() => {
-    const observers = [];
-    sections.forEach((section) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(section.id);
-          }
-        },
-        {
-          threshold: 0.6,
-          rootMargin: '-20% 0px -20% 0px'
-        }
-      );
-      const element = sectionsRefs.current[section.id];
-      if (element) {
-        observer.observe(element);
-        observers.push(observer);
-      }
-    });
-    return () => {
-      observers.forEach(observer => observer.disconnect());
-    };
+    if (sections.length > 0 && !sections.find(s => s.id === activeSection)) {
+      setActiveSection(sections[0].id);
+    }
   }, [sections]);
+
   // GSAP entrance animation
   useEffect(() => {
     const section = sectionRef.current;
-    gsap.from(section, {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      scrollTrigger: {
-        trigger: section,
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play none none reverse"
-      }
-    });
-  }, []);
-  const handleSectionClick = (sectionId) => {
-    const element = sectionsRefs.current[sectionId];
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
+    if (section) {
+      gsap.from(section, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        }
       });
     }
+  }, []);
+
+  const handleSectionClick = (sectionId) => {
+    setActiveSection(sectionId);
   };
+
   const currentSection = sections.find(s => s.id === activeSection);
+
   return (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen content-style mobile-screens">
@@ -313,7 +293,7 @@ function WhatProblem(props) {
                   {problem?.problem || 'What Problem?'}
                 </h1>
                 <p className="text-[18px] fc-primary leading-relaxed">
-                    {problem?.problem_description ? parse(problem?.problem_description) : '...'}
+                  {problem?.problem_description ? parse(problem?.problem_description) : '...'}
                 </p>
               </div>
               <nav className="space-y-8">
@@ -341,13 +321,6 @@ function WhatProblem(props) {
                       }`}>
                         {section.title}
                       </h3>
-                      {/* <p className={`text-[14px] leading-relaxed transition-all duration-500 ${
-                        activeSection === section.id
-                          ? 'text-gray-300'
-                          : 'text-gray-500'
-                      }`}>
-                        {section.subtitle}
-                      </p> */}
                     </button>
                     {/* Active indicator */}
                     {activeSection === section.id && (
@@ -356,63 +329,34 @@ function WhatProblem(props) {
                   </div>
                 ))}
               </nav>
-              {/* Progress indicator */}
-              {/* <div className="mt-12 flex items-center space-x-2">
-                {sections.map((section, index) => (
-                  <div
-                    key={section.id}
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      sections.findIndex(s => s.id === activeSection) >= index
-                        ? 'bg-blue-500 w-8'
-                        : 'bg-gray-700 w-4'
-                    }`}
-                  />
-                ))}
-              </div> */}
             </div>
           </div>
-          {/* Right Side - Scrollable Content */}
-          <div className="w-1/2">
-            {sections.map((section, index) => (
-                <div
-                    key={section.id}
-                    ref={el => sectionsRefs.current[section.id] = el}
-                    className="min-h-screen flex items-center"
-                >
-                    <div className="max-w-xl">
-                    <div className="animate-fadeIn">
-                        {/* Title */}
-                        {/* <h2 className="text-[36px] font-bold text-white mb-3">
-                        {section.title}
-                        </h2> */}
-                        {/* Subtitle */}
-                        {/* <p className="text-[20px] fc-primary mb-8 leading-relaxed">
-                        {section.subtitle}
-                        </p> */}
-                        <p className="text-[16px] fc-primary mb-8 leading-relaxed">
-                        {parse(section.description)}
-                        </p>
-                        {/* Features */}
-                        {/* <div className="space-y-4 mb-10">
-                        {section.features.map((feature, featureIndex) => (
-                            <div
-                            key={featureIndex}
-                            className="flex items-start"
-                            >
-                            <span className="fc-primary text-[16px] leading-relaxed">
-                                {feature}
-                            </span>
-                            </div>
-                        ))}
-                        </div> */}
-                    </div>
-                    <hr className="border-white mb-8"/>
+
+          {/* Right Side - Tab Content */}
+          <div className="w-1/2 flex items-center justify-center min-h-screen">
+            <div className="max-w-xl w-full">
+              {currentSection && (
+                <div className="animate-fadeIn">
+                  <p className="text-[16px] fc-primary mb-8 leading-relaxed">
+                    {parse(currentSection.description)}
+                  </p>
+                  <hr className="border-white mb-8"/>
                 </div>
-              </div>
-            ))}
+              )}
+
+              {/* Show message if no content */}
+              {!currentSection && (
+                <div className="text-center">
+                  <p className="text-[16px] fc-primary">
+                    Select a section to view content
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
+
       {/* Custom CSS for animations */}
       <style jsx>{`
         @keyframes fadeIn {
