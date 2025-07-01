@@ -14,95 +14,95 @@ function Contact() {
     const [recaptchaWidgetId, setRecaptchaWidgetId] = React.useState(null);
 
     // Load reCAPTCHA v2 script
-    useEffect(() => {
-        // Check if reCAPTCHA is already loaded
-        // if (window.grecaptcha) {
-        //     setRecaptchaLoaded(true);
-        //     return;
-        // }
+    // useEffect(() => {
+    //     // Check if reCAPTCHA is already loaded
+    //     // if (window.grecaptcha) {
+    //     //     setRecaptchaLoaded(true);
+    //     //     return;
+    //     // }
 
-        const script = document.createElement('script');
-        script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
-        script.async = true;
-        script.defer = true;
+    //     const script = document.createElement('script');
+    //     script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
+    //     script.async = true;
+    //     script.defer = true;
 
-        // Define global callback for reCAPTCHA load
-        window.onRecaptchaLoad = () => {
-            setRecaptchaLoaded(true);
-        };
+    //     // Define global callback for reCAPTCHA load
+    //     window.onRecaptchaLoad = () => {
+    //         setRecaptchaLoaded(true);
+    //     };
 
-        document.head.appendChild(script);
+    //     document.head.appendChild(script);
 
-        return () => {
-            // Cleanup
-            // if (document.head.contains(script)) {
-            //     document.head.removeChild(script);
-            // }
-            // delete window.onRecaptchaLoad;
-        };
-    }, []);
+    //     return () => {
+    //         // Cleanup
+    //         // if (document.head.contains(script)) {
+    //         //     document.head.removeChild(script);
+    //         // }
+    //         // delete window.onRecaptchaLoad;
+    //     };
+    // }, []);
 
     // Render reCAPTCHA when loaded and form is expanded
-    useEffect(() => {
-        if ( window.grecaptcha) {
-            // Clear the container first
-            const container = document.getElementById('recaptcha-container');
-            // if (container) {
-            //     container.innerHTML = '';
-            // }
+    // useEffect(() => {
+    //     if ( window.grecaptcha) {
+    //         // Clear the container first
+    //         const container = document.getElementById('recaptcha-container');
+    //         // if (container) {
+    //         //     container.innerHTML = '';
+    //         // }
 
-            // Reset the widget ID
-            // if (recaptchaWidgetId !== null) {
-            //     setRecaptchaWidgetId(null);
-            // }
+    //         // Reset the widget ID
+    //         // if (recaptchaWidgetId !== null) {
+    //         //     setRecaptchaWidgetId(null);
+    //         // }
 
-            // Small delay to ensure container is cleared
-            const timer = setTimeout(() => {
-                try {
-                    const widgetId = window.grecaptcha.render('recaptcha-container', {
-                        'sitekey': import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
-                        'callback': (response) => {
-                            console.log('reCAPTCHA completed:', response);
-                        },
-                        'expired-callback': () => {
-                            console.log('reCAPTCHA expired');
-                        },
-                        'error-callback': () => {
-                            console.log('reCAPTCHA error');
-                        }
-                    });
-                    setRecaptchaWidgetId(widgetId);
-                } catch (error) {
-                    console.error('Error rendering reCAPTCHA:', error);
-                }
-            }, 100);
+    //         // Small delay to ensure container is cleared
+    //         const timer = setTimeout(() => {
+    //             try {
+    //                 const widgetId = window.grecaptcha.render('recaptcha-container', {
+    //                     'sitekey': import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+    //                     'callback': (response) => {
+    //                         console.log('reCAPTCHA completed:', response);
+    //                     },
+    //                     'expired-callback': () => {
+    //                         console.log('reCAPTCHA expired');
+    //                     },
+    //                     'error-callback': () => {
+    //                         console.log('reCAPTCHA error');
+    //                     }
+    //                 });
+    //                 setRecaptchaWidgetId(widgetId);
+    //             } catch (error) {
+    //                 console.error('Error rendering reCAPTCHA:', error);
+    //             }
+    //         }, 100);
 
-            return () => {
-                clearTimeout(timer);
-            };
-        }
+    //         return () => {
+    //             clearTimeout(timer);
+    //         };
+    //     }
 
-        // Cleanup when form is collapsed
-        if (!isExpanded && recaptchaWidgetId !== null) {
-            const container = document.getElementById('recaptcha-container');
-            if (container) {
-                container.innerHTML = '';
-            }
-            setRecaptchaWidgetId(null);
-        }
-    }, [recaptchaLoaded, isExpanded]);
+    //     // Cleanup when form is collapsed
+    //     if (!isExpanded && recaptchaWidgetId !== null) {
+    //         const container = document.getElementById('recaptcha-container');
+    //         if (container) {
+    //             container.innerHTML = '';
+    //         }
+    //         setRecaptchaWidgetId(null);
+    //     }
+    // }, [recaptchaLoaded, isExpanded]);
 
         // Cleanup reCAPTCHA on component unmount
-    useEffect(() => {
-        return () => {
-            if (recaptchaWidgetId !== null) {
-                const container = document.getElementById('recaptcha-container');
-                if (container) {
-                    container.innerHTML = '';
-                }
-            }
-        };
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         if (recaptchaWidgetId !== null) {
+    //             const container = document.getElementById('recaptcha-container');
+    //             if (container) {
+    //                 container.innerHTML = '';
+    //             }
+    //         }
+    //     };
+    // }, []);
 
     React.useEffect(() => {
         // Fetch form configuration
@@ -182,18 +182,18 @@ function Contact() {
 
         try {
               // Get reCAPTCHA response
-            let recaptchaResponse = '';
-            if (window.grecaptcha && recaptchaWidgetId !== null) {
-                recaptchaResponse = window.grecaptcha.getResponse(recaptchaWidgetId);
-            }
+            // let recaptchaResponse = '';
+            // if (window.grecaptcha && recaptchaWidgetId !== null) {
+            //     recaptchaResponse = window.grecaptcha.getResponse(recaptchaWidgetId);
+            // }
 
-            if (!recaptchaResponse) {
-                setErrors({
-                    'g-recaptcha-response': ['Please complete the reCAPTCHA verification.']
-                });
-                setIsSubmitting(false);
-                return;
-            }
+            // if (!recaptchaResponse) {
+            //     setErrors({
+            //         'g-recaptcha-response': ['Please complete the reCAPTCHA verification.']
+            //     });
+            //     setIsSubmitting(false);
+            //     return;
+            // }
 
             // Create FormData for file uploads
             const submitData = new FormData();
@@ -226,7 +226,7 @@ function Contact() {
             //form.client.submit
 
             // Add reCAPTCHA response
-            submitData.append('g-recaptcha-response', recaptchaResponse);
+            // submitData.append('g-recaptcha-response', recaptchaResponse);
 
             const response = router.post(route('client.submit.form', form.slug), submitData,  {
                 preserveScroll: true,
@@ -259,17 +259,17 @@ function Contact() {
             setFiles({});
 
             // Reset reCAPTCHA
-            if (window.grecaptcha && recaptchaWidgetId !== null) {
-                window.grecaptcha.reset(recaptchaWidgetId);
-            }
+            // if (window.grecaptcha && recaptchaWidgetId !== null) {
+            //     window.grecaptcha.reset(recaptchaWidgetId);
+            // }
 
             setIsExpanded(false); // Close the form after successful submission
 
         } catch (error) {
             console.error('Form submission error:', error);
-            if (window.grecaptcha && recaptchaWidgetId !== null) {
-                window.grecaptcha.reset(recaptchaWidgetId);
-            }
+            // if (window.grecaptcha && recaptchaWidgetId !== null) {
+            //     window.grecaptcha.reset(recaptchaWidgetId);
+            // }
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
             } else {
@@ -573,7 +573,7 @@ function Contact() {
                             {form.fields.map((field) => renderField(field))}
 
                               {/* reCAPTCHA v2 Checkbox */}
-                            <div className="w-full">
+                            {/* <div className="w-full">
                                 <div id="recaptcha-container" className="flex justify-start"></div>
                                 {errors['g-recaptcha-response'] && (
                                     <p className="text-red-500 text-sm mt-2">
@@ -583,7 +583,7 @@ function Contact() {
                                         }
                                     </p>
                                 )}
-                            </div>
+                            </div> */}
 
 
                             <button
