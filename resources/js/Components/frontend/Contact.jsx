@@ -10,6 +10,20 @@ function Contact() {
     const [loading, setLoading] = React.useState(false);
     const [errors, setErrors] = React.useState({});
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+     const [recaptchaToken, setRecaptchaToken] = React.useState(null);
+
+    // Load reCAPTCHA script
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js?render=' + window.env.GOOGLE_RECAPTCHA_KEY;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
 
     React.useEffect(() => {
         // Fetch form configuration
@@ -81,12 +95,34 @@ function Contact() {
         });
     };
 
+      const executeRecaptcha = async () => {
+        return new Promise((resolve, reject) => {
+            if (window.grecaptcha) {
+                window.grecaptcha.ready(() => {
+                    window.grecaptcha.execute(window.env.GOOGLE_RECAPTCHA_KEY, { action: 'submit' })
+                        .then(token => {
+                            setRecaptchaToken(token);
+                            resolve(token);
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                });
+            } else {
+                reject(new Error('reCAPTCHA not loaded'));
+            }
+        });
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setErrors({});
 
         try {
+             // Get reCAPTCHA token
+            const token = await executeRecaptcha();
             // Create FormData for file uploads
             const submitData = new FormData();
 
@@ -116,6 +152,9 @@ function Contact() {
             //     },
             // });
             //form.client.submit
+            // Add reCAPTCHA token
+            submitData.append('g-recaptcha-response', token);
+            
             const response = router.post(route('client.submit.form', form.slug), submitData,  {
                 preserveScroll: true,
                 preserveState: true,
@@ -437,6 +476,8 @@ function Contact() {
                     {form && form.fields && (
                         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
                             {form.fields.map((field) => renderField(field))}
+
+                             <div className="g-recaptcha" data-sitekey={window.env.GOOGLE_RECAPTCHA_KEY}></div>
 
                             <button
                                 type="submit"
