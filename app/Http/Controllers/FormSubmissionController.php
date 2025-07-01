@@ -223,9 +223,9 @@ public function index(Request $request, $slug)
         }
 
         // ✅ Add reCAPTCHA rule here
-            $rules['g-recaptcha-response'] = ['required', new ReCaptcha];
-            $messages['g-recaptcha-response.required'] = 'Please verify that you are not a robot.';
-            $attributes['g-recaptcha-response'] = 'reCAPTCHA';
+            // $rules['g-recaptcha-response'] = ['required', new ReCaptcha];
+            // $messages['g-recaptcha-response.required'] = 'Please verify that you are not a robot.';
+            // $attributes['g-recaptcha-response'] = 'reCAPTCHA';
 
         // Validate the request
         $validator = Validator::make($request->all(), $rules, $messages, $attributes);
