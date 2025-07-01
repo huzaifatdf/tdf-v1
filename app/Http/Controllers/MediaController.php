@@ -44,13 +44,21 @@ class MediaController extends Controller
 
         $uploadedMedia = [];
 
-        foreach ($request->file('files') as $file) {
-            $mediaItem = MediaItem::create();
-            $media = $mediaItem->addMedia($file)
-                ->toMediaCollection($request->collection ?? 'default');
+       foreach ($request->file('files') as $file) {
+    if ($file && $file->isValid()) {
+        $mediaItem = MediaItem::create(); // Make sure this model can accept media
 
-            $uploadedMedia[] = $this->formatMediaItem($media);
-        }
+        $media = $mediaItem
+            ->addMedia($file)
+            ->toMediaCollection($request->collection ?? 'default');
+
+        $uploadedMedia[] = $this->formatMediaItem($media);
+    } else {
+        // Optional: Log or skip invalid files
+        continue;
+    }
+}
+
 
         session()->flash('success', 'Media items have been uploaded successfully.');
 
