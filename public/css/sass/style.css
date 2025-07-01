@@ -9360,6 +9360,14 @@ body {
   background-color: #ffffff;
 }
 
+.svg-icon-footer:hover {
+  background-color: #9747FF;
+}
+
+.svg-icon-footer:hover svg path {
+  fill: #ffffff;
+}
+
 .rotate-hover img {
   transition: 0.3s ease-in-out;
 }
@@ -9457,6 +9465,9 @@ form textarea {
   list-style: circle;
   font-size: 18px;
   color: #ffffff;
+}
+.mobile-screens ul li ul {
+  margin-top: 0 !important;
 }
 .mobile-screens p b {
   font-size: 18px;

@@ -278,6 +278,12 @@ body {
 .svg-icon-footer {
     background-color: $theme-primary;
 }
+.svg-icon-footer:hover {
+    background-color: $theme-purple;
+}
+.svg-icon-footer:hover svg path{
+    fill: $theme-white;
+}
 .rotate-hover img{
   transition: 0.3s ease-in-out;
 }
@@ -370,6 +376,9 @@ form {
             list-style: circle;
             font-size: 18px;
             color: $theme-primary;
+            ul {
+                margin-top: 0 !important;
+            }
         }
     }
     p {
