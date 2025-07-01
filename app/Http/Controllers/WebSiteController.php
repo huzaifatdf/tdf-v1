@@ -47,7 +47,7 @@ class WebSiteController extends Controller
 
 
      public function dynamicPage(Request $request, $slug) {
-        $page = Page::where('slug', $slug)->with('publishedSections')->first();
+        $page = Page::where('slug', $slug)->where('status', 'published')->with('publishedSections')->first();
         return Inertia::render('Website/Dynamicpage', [
             'page' => $page
         ]);
