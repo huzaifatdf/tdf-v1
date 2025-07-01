@@ -31,7 +31,7 @@ function SmoothCaseStudiesSection() {
 
    const [openDropdown, setOpenDropdown] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
+    const [allData, setAllData] = useState([]);
   function fetchData() {
      axios.get('/api/v1/case')
       .then(response => {
@@ -61,23 +61,30 @@ function SmoothCaseStudiesSection() {
 
         setSections(newSections);
         setActiveSection(newSections.length > 0 ? newSections[0].id : null);
+        setAllData(newSections); // Store all sections data for filtering
+
       })
       .catch(error => {
         console.error('Error fetching case studies:', error);
       });
   }
+   const dynamicFilterElement = document.querySelector('.dynamic-filter');
   useEffect(() => {
 
     //all all record again
-    fetchData();
+    if (searchTerm === "") {
+      setSections(allData);
+      setActiveSection(allData.length > 0 ? allData[0].id : null);
+       if(dynamicFilterElement)  {dynamicFilterElement.style.opacity = 1;}
+      return;
+    }
     //search term effect
-    const filteredSections = sections.filter(section =>
-      section.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      section.features.some(feature =>
-        feature.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    const filteredSections = allData.filter(section =>
+      section.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSections(filteredSections);
+    setActiveSection(filteredSections.length > 0 ? filteredSections[0].id : null);
+      if(dynamicFilterElement)  {dynamicFilterElement.style.opacity = 1;}
 
 
   }, [searchTerm]);
@@ -189,11 +196,7 @@ function SmoothCaseStudiesSection() {
 
   const currentSection = sections.find(s => s.id === activeSection);
 
-  if (sections.length === 0) {
-    return <div className="container-fluid min-h-screen flex items-center justify-center">
-      <p>Loading case studies...</p>
-    </div>;
-  }
+
 
   return (
   <>
@@ -280,7 +283,7 @@ function SmoothCaseStudiesSection() {
             />
             </div>
     </div>
-    <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
+    <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens dynamic-filter">
       <div className="flex sec-padding">
         {/* Left Side - Navigation */}
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
