@@ -10,21 +10,99 @@ function Contact() {
     const [loading, setLoading] = React.useState(false);
     const [errors, setErrors] = React.useState({});
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-     const [recaptchaToken, setRecaptchaToken] = React.useState(null);
+        const [recaptchaLoaded, setRecaptchaLoaded] = React.useState(false);
+    const [recaptchaWidgetId, setRecaptchaWidgetId] = React.useState(null);
 
-    // Load reCAPTCHA script
-    // useEffect(() => {
-    //     console.log(window.env.GOOGLE_RECAPTCHA_KEY);
-    //     const script = document.createElement('script');
-    //     script.src = 'https://www.google.com/recaptcha/api.js?render=' + window.env.GOOGLE_RECAPTCHA_KEY;
-    //     script.async = true;
-    //     script.defer = true;
-    //     document.body.appendChild(script);
+    // Load reCAPTCHA v2 script
+    useEffect(() => {
+        // Check if reCAPTCHA is already loaded
+        if (window.grecaptcha) {
+            setRecaptchaLoaded(true);
+            return;
+        }
 
-    //     return () => {
-    //         document.body.removeChild(script);
-    //     };
-    // }, []);
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
+        script.async = true;
+        script.defer = true;
+
+        // Define global callback for reCAPTCHA load
+        window.onRecaptchaLoad = () => {
+            setRecaptchaLoaded(true);
+        };
+
+        document.head.appendChild(script);
+
+        return () => {
+            // Cleanup
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
+            }
+            delete window.onRecaptchaLoad;
+        };
+    }, []);
+
+    // Render reCAPTCHA when loaded and form is expanded
+    useEffect(() => {
+        if (recaptchaLoaded && isExpanded && window.grecaptcha) {
+            // Clear the container first
+            const container = document.getElementById('recaptcha-container');
+            if (container) {
+                container.innerHTML = '';
+            }
+
+            // Reset the widget ID
+            if (recaptchaWidgetId !== null) {
+                setRecaptchaWidgetId(null);
+            }
+
+            // Small delay to ensure container is cleared
+            const timer = setTimeout(() => {
+                try {
+                    const widgetId = window.grecaptcha.render('recaptcha-container', {
+                        'sitekey': import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+                        'callback': (response) => {
+                            console.log('reCAPTCHA completed:', response);
+                        },
+                        'expired-callback': () => {
+                            console.log('reCAPTCHA expired');
+                        },
+                        'error-callback': () => {
+                            console.log('reCAPTCHA error');
+                        }
+                    });
+                    setRecaptchaWidgetId(widgetId);
+                } catch (error) {
+                    console.error('Error rendering reCAPTCHA:', error);
+                }
+            }, 100);
+
+            return () => {
+                clearTimeout(timer);
+            };
+        }
+
+        // Cleanup when form is collapsed
+        if (!isExpanded && recaptchaWidgetId !== null) {
+            const container = document.getElementById('recaptcha-container');
+            if (container) {
+                container.innerHTML = '';
+            }
+            setRecaptchaWidgetId(null);
+        }
+    }, [recaptchaLoaded, isExpanded]);
+
+        // Cleanup reCAPTCHA on component unmount
+    useEffect(() => {
+        return () => {
+            if (recaptchaWidgetId !== null) {
+                const container = document.getElementById('recaptcha-container');
+                if (container) {
+                    container.innerHTML = '';
+                }
+            }
+        };
+    }, []);
 
     React.useEffect(() => {
         // Fetch form configuration
@@ -96,25 +174,6 @@ function Contact() {
         });
     };
 
-    //   const executeRecaptcha = async () => {
-    //     return new Promise((resolve, reject) => {
-    //         if (window.grecaptcha) {
-    //             window.grecaptcha.ready(() => {
-    //                 window.grecaptcha.execute(window.env.GOOGLE_RECAPTCHA_KEY, { action: 'submit' })
-    //                     .then(token => {
-    //                         setRecaptchaToken(token);
-    //                         resolve(token);
-    //                     })
-    //                     .catch(error => {
-    //                         reject(error);
-    //                     });
-    //             });
-    //         } else {
-    //             reject(new Error('reCAPTCHA not loaded'));
-    //         }
-    //     });
-    // };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,8 +181,20 @@ function Contact() {
         setErrors({});
 
         try {
-             // Get reCAPTCHA token
-            // const token = await executeRecaptcha();
+              // Get reCAPTCHA response
+            let recaptchaResponse = '';
+            if (window.grecaptcha && recaptchaWidgetId !== null) {
+                recaptchaResponse = window.grecaptcha.getResponse(recaptchaWidgetId);
+            }
+
+            if (!recaptchaResponse) {
+                setErrors({
+                    'g-recaptcha-response': ['Please complete the reCAPTCHA verification.']
+                });
+                setIsSubmitting(false);
+                return;
+            }
+
             // Create FormData for file uploads
             const submitData = new FormData();
 
@@ -153,8 +224,9 @@ function Contact() {
             //     },
             // });
             //form.client.submit
-            // Add reCAPTCHA token
-            // submitData.append('g-recaptcha-response', token);
+
+            // Add reCAPTCHA response
+            submitData.append('g-recaptcha-response', recaptchaResponse);
 
             const response = router.post(route('client.submit.form', form.slug), submitData,  {
                 preserveScroll: true,
@@ -185,11 +257,20 @@ function Contact() {
 
             setFormData(initialData);
             setFiles({});
+
+            // Reset reCAPTCHA
+            if (window.grecaptcha && recaptchaWidgetId !== null) {
+                window.grecaptcha.reset(recaptchaWidgetId);
+            }
+
             setIsExpanded(false); // Close the form after successful submission
 
         } catch (error) {
             console.error('Form submission error:', error);
 
+             if (window.grecaptcha && recaptchaWidgetId !== null) {
+                window.grecaptcha.reset(recaptchaWidgetId);
+            }
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
             } else {
@@ -478,7 +559,19 @@ function Contact() {
                         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
                             {form.fields.map((field) => renderField(field))}
 
-                             {/* <div className="g-recaptcha" data-sitekey={window.env.GOOGLE_RECAPTCHA_KEY}></div> */}
+                              {/* reCAPTCHA v2 Checkbox */}
+                            <div className="w-full">
+                                <div id="recaptcha-container" className="flex justify-start"></div>
+                                {errors['g-recaptcha-response'] && (
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {Array.isArray(errors['g-recaptcha-response'])
+                                            ? errors['g-recaptcha-response'][0]
+                                            : errors['g-recaptcha-response']
+                                        }
+                                    </p>
+                                )}
+                            </div>
+
 
                             <button
                                 type="submit"

@@ -2,52 +2,30 @@
 
 namespace App\Rules;
 
-use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Http;
-class ReCaptcha implements ValidationRule
+
+class ReCaptcha implements Rule
 {
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string = null): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
-        //
-    }
-
     public function passes($attribute, $value)
-
     {
+        if (empty($value)) {
+            return false;
+        }
 
-        $response = Http::get("https://www.google.com/recaptcha/api/siteverify",[
-            'secret' => env('GOOGLE_RECAPTCHA_SECRET'),
-            'response' => $value
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $value,
+            'remoteip' => request()->ip()
         ]);
 
+        $result = $response->json();
 
-
-        return $response->json()["success"];
-
+        return $result['success'] ?? false;
     }
 
-    /**
-
-     * Get the validation error message.
-
-     *
-
-     * @return string
-
-     */
-
     public function message()
-
     {
-
-        return 'The google recaptcha is required.';
-
+        return 'reCAPTCHA verification failed. Please try again.';
     }
 }
