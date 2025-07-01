@@ -65,6 +65,16 @@ export default function Home() {
                  <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">
                     {sections?.map((section, index) => {
+                        if (section.type === 'form'){
+                            return (
+                                <DynamicForm
+                                    key={`${section.content}-${section.priority || index}`}
+                                    section={section}
+                                    index={index}
+                                    appUrl={appUrl}
+                                />
+                            );
+                        }
                         if (section.type === 'component' && section.content) {
                             const ComponentToRender = componentMap[section.content];
 
