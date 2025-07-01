@@ -9084,7 +9084,7 @@ header nav.pn ul li ul li ul {
   right: -100%;
   width: 100%;
   max-width: 550px;
-  background: rgba(0, 20, 27, 0.9215686275);
+  background: #00141b;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   padding: 1.5rem 0;
@@ -9113,7 +9113,7 @@ header nav.pn ul li ul li ul {
 
 .side-menu ul li {
   text-align: right;
-  padding: 15px 0px 15px 0px;
+  padding: 12px 0px 12px 0px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1294117647);
   margin: 0 !important;
 }
@@ -9125,7 +9125,6 @@ header nav.pn ul li ul li ul {
 .side-menu ul li a {
   font-size: 18px;
   color: white;
-  letter-spacing: 2px;
 }
 
 .burger {
