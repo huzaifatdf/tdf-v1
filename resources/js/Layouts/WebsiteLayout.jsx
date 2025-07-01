@@ -168,14 +168,14 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                         ].map((item, index) => (
                                             <li
                                             key={index}
-                                            className="transition-transform duration-200 hover:scale-105"
+                                            className="transition-transform duration-200 hover:scale-105 "
                                             >
                                             <a
                                                 href={item.href}
                                                 className="flex items-center gap-3 text-white"
                                             >
                                                 <img src={item.icon} alt={item.label} width="35" height="35"/>
-                                                <span>{item.label}</span>
+                                                <span className=' hover:text-[#9747FF] '>{item.label}</span>
                                             </a>
                                             </li>
                                         ))}
