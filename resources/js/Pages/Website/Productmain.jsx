@@ -47,6 +47,9 @@ export default function Productmain() {
             </div>
         </div>
       </section>
+      <div className="container-fluid">
+        <hr className="border-white mb-8"/>
+      </div>
 
       <SmoothProductSection />
     </WebsiteLayout>

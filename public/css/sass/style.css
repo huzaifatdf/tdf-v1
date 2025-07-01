@@ -9275,6 +9275,11 @@ body {
           user-select: none;
 }
 
+.circle-avatar:hover {
+  background-color: #9747FF;
+  color: white;
+}
+
 .circle-avatar.small {
   width: 60px;
   height: 60px;
@@ -9433,7 +9438,7 @@ form textarea {
 }
 
 .border-testi {
-  border: 2px solid #9BE500;
+  border: 2px solid #9747FF;
 }
 
 .swiper-button-prev, .swiper-button-next {

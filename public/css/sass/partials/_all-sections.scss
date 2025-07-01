@@ -193,7 +193,10 @@ body {
   pointer-events: auto;
   user-select: none;
 }
-
+.circle-avatar:hover {
+    background-color: $theme-purple;
+    color: white;
+}
 .circle-avatar.small {
     width: 60px;
     height: 60px;
@@ -345,7 +348,7 @@ form {
     padding: 0;
 }
 .border-testi {
-    border: 2px solid $theme-secondary;
+    border: 2px solid $theme-purple;
 }
 .swiper-button-prev, .swiper-button-next {
     color: $theme-primary !important;

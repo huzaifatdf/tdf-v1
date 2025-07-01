@@ -51,7 +51,10 @@ export default function Casestudiesmain(props) {
             </div>
         </div>
       </section>
-  
+      <div className="container-fluid">
+        <hr className="border-white mb-8"/>
+      </div>
+
       <SmoothCaseStudiesSection/>
       <ClientSlider />
     </WebsiteLayout>

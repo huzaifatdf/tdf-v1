@@ -200,7 +200,7 @@ function SmoothCaseStudiesSection() {
 
   return (
   <>
-   <div className="container-fluid">
+   <div className="container-fluid d-none">
         <div className="text-white flex items-center justify-between border-t border-b border-[#91A7BA] relative px-4 py-2 bg-dark-950">
             <div className="flex items-center gap-6">
                 {/* Dropdown 1 */}
