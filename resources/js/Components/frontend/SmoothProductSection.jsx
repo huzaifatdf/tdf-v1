@@ -219,7 +219,7 @@ function SmoothExperienceSection() {
                     </h2>
 
                     {/* Subtitle */}
-                    <p className="text-[18px] fc-primary leading-relaxed">
+                    <p className="text-[18px] fc-primary leading-relaxed line-clamp-5">
                       {parse(section.description)}
                     </p>
 
