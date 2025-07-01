@@ -267,8 +267,7 @@ function Contact() {
 
         } catch (error) {
             console.error('Form submission error:', error);
-
-             if (window.grecaptcha && recaptchaWidgetId !== null) {
+            if (window.grecaptcha && recaptchaWidgetId !== null) {
                 window.grecaptcha.reset(recaptchaWidgetId);
             }
             if (error.response && error.response.data && error.response.data.errors) {

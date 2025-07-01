@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 
 function DynamicForm(props) {
-     const [isExpanded, setIsExpanded] = React.useState(false);
+     const [isExpanded, setIsExpanded] = React.useState(true);
     const [form, setForm] = React.useState(null);
     const [formData, setFormData] = React.useState({});
     const [files, setFiles] = React.useState({});
@@ -12,6 +12,10 @@ function DynamicForm(props) {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [tabStates, setTabStates] = React.useState({}); // Store active tab for each field
     const {formSlug} = props;
+
+
+
+
     React.useEffect(() => {
         // Fetch form configuration
         axios.get(`/api/v1/form/${formSlug}`)
@@ -106,6 +110,8 @@ function DynamicForm(props) {
         setErrors({});
 
         try {
+                  // Get reCAPTCHA response
+
             // Create FormData for file uploads
             const submitData = new FormData();
             // Add all form fields to FormData
@@ -133,6 +139,8 @@ function DynamicForm(props) {
             //         'Content-Type': 'multipart/form-data',
             //     },
             // });
+            // Add reCAPTCHA response
+
                 const response = router.post(route('client.submit.form', form.slug), submitData,  {
                                         preserveScroll: true,
                                         preserveState: true,
@@ -162,7 +170,8 @@ function DynamicForm(props) {
             setFormData(initialData);
 
             setFiles({});
-            setIsExpanded(false); // Close the form after successful submission
+
+            // setIsExpanded(false); // Close the form after successful submission
 
         } catch (error) {
             console.error('Form submission error:', error);
@@ -509,6 +518,19 @@ useEffect(() => {
                     <div className='grid grid-cols-1 md:grid-cols-1 gap-6 py-6 transform transition-transform duration-500 ease-in-out'>
                     <div className="flex flex-col md:flex-row md:flex-wrap gap-4 text-white justify-between">
                     {form.fields.map((field) => renderField(field))}
+
+                      {/* reCAPTCHA v2 Checkbox */}
+                            <div className="w-full">
+                                <div id="recaptcha-container" className="flex justify-start"></div>
+                                {errors['g-recaptcha-response'] && (
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {Array.isArray(errors['g-recaptcha-response'])
+                                            ? errors['g-recaptcha-response'][0]
+                                            : errors['g-recaptcha-response']
+                                        }
+                                    </p>
+                                )}
+                            </div>
                     </div>
                     <button
                         type="submit"
