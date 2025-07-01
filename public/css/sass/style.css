@@ -9360,12 +9360,16 @@ body {
   background-color: #ffffff;
 }
 
-.svg-icon-footer:hover {
+.text-color-hover:hover .svg-icon-footer {
   background-color: #9747FF;
 }
 
-.svg-icon-footer:hover svg path {
-  fill: #ffffff;
+.text-color-hover:hover .svg-icon-footer path {
+  color: #ffffff;
+}
+
+.text-color-hover h2:hover {
+  color: #9747FF;
 }
 
 .rotate-hover img {

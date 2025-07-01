@@ -278,11 +278,14 @@ body {
 .svg-icon-footer {
     background-color: $theme-primary;
 }
-.svg-icon-footer:hover {
+.text-color-hover:hover .svg-icon-footer{
     background-color: $theme-purple;
 }
-.svg-icon-footer:hover svg path{
-    fill: $theme-white;
+.text-color-hover:hover .svg-icon-footer path{
+    color: $theme-white;
+}
+.text-color-hover h2:hover {
+    color: $theme-purple;
 }
 .rotate-hover img{
   transition: 0.3s ease-in-out;

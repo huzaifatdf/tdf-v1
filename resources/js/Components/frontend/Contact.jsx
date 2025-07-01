@@ -491,7 +491,7 @@ function Contact() {
 
   return (
    <>
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-700 pb-6 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-700 pb-6 gap-4">
                     {/* Left Text */}
                     <p className="text-[25px] md:text-[50px] fc-primary mb-0">
                         Stay Ahead. Stay Relevant.
@@ -499,16 +499,16 @@ function Contact() {
 
                     {/* Right 'Let's Talk' with Icon */}
                     <div
-                        className="flex items-center cursor-pointer"
+                        className="text-color-hover flex items-center cursor-pointer"
                         onClick={() => setIsExpanded(!isExpanded)}
                     >
                         <h2 className="text-[40px] md:text-[80px] font-[400] fc-primary mr-4 md:mr-6 leading-none">
-                        let's talk
+                            let's talk
                         </h2>
                         <div
-                        className={`w-14 h-14 md:w-20 md:h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${
-                            isExpanded ? 'rotate-180' : ''
-                        }`}
+                            className={`w-14 h-14 md:w-20 md:h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${
+                                isExpanded ? 'rotate-180' : ''
+                            }`}
                         >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
