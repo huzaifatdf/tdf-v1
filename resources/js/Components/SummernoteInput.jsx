@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -340,7 +339,7 @@ const SimpleRichTextEditor = React.memo(({ value, onChange, placeholder, height 
 
 SimpleRichTextEditor.displayName = 'SimpleRichTextEditor';
 
-// Advanced Summernote Editor
+// Advanced Summernote Editor with Font Size
 const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, height = 200 }) => {
   const editorRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
@@ -361,7 +360,7 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
       return;
     }
 
-    // Initialize Summernote with proper configuration
+    // Initialize Summernote with proper configuration including font size
     $editor.summernote({
       placeholder: placeholder || 'Enter content...',
       tabsize: 2,
@@ -370,12 +369,16 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
         ['style', ['style']],
         ['font', ['bold', 'underline', 'clear']],
         ['fontname', ['fontname']],
+        ['fontsize', ['fontsize']], // Added font size option
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['table', ['table']],
         ['insert', ['link', 'picture', 'video']],
         ['view', ['fullscreen', 'codeview', 'help']]
       ],
+      // Font size options
+      fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '32', '36', '48', '64', '72'],
+      fontSizeUnits: ['px', 'pt'],
       // Enhanced list configuration
       styleTags: [
         'p',
@@ -406,6 +409,15 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
             e.preventDefault();
             $editor.summernote('editor.insertOrderedList');
           });
+
+          // Enhance font size dropdown styling
+          const $fontSizeDropdown = $toolbar.find('.note-fontsize .dropdown-menu');
+          if ($fontSizeDropdown.length) {
+            $fontSizeDropdown.css({
+              'max-height': '200px',
+              'overflow-y': 'auto'
+            });
+          }
         },
         onKeydown: function(e) {
           // Handle Enter key in lists for better list behavior
@@ -493,7 +505,7 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
         defaultValue={value || ''}
       />
 
-      {/* Additional CSS for better list styling in Summernote */}
+      {/* Additional CSS for better list styling and font size dropdown in Summernote */}
       <style jsx global>{`
         .note-editable ol {
           list-style-type: decimal !important;
@@ -522,6 +534,38 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
         .note-editable ul ul ul {
           list-style-type: square !important;
         }
+
+        /* Enhanced font size dropdown styling */
+        .note-fontsize .dropdown-menu {
+          max-height: 200px;
+          overflow-y: auto;
+          min-width: 80px;
+        }
+
+        .note-fontsize .dropdown-menu li a {
+          padding: 4px 12px;
+          font-size: 12px;
+          line-height: 1.4;
+        }
+
+        /* Font size preview in dropdown */
+        .note-fontsize .dropdown-menu li[data-value="8"] a { font-size: 8px !important; }
+        .note-fontsize .dropdown-menu li[data-value="9"] a { font-size: 9px !important; }
+        .note-fontsize .dropdown-menu li[data-value="10"] a { font-size: 10px !important; }
+        .note-fontsize .dropdown-menu li[data-value="11"] a { font-size: 11px !important; }
+        .note-fontsize .dropdown-menu li[data-value="12"] a { font-size: 12px !important; }
+        .note-fontsize .dropdown-menu li[data-value="14"] a { font-size: 14px !important; }
+        .note-fontsize .dropdown-menu li[data-value="16"] a { font-size: 16px !important; }
+        .note-fontsize .dropdown-menu li[data-value="18"] a { font-size: 18px !important; }
+        .note-fontsize .dropdown-menu li[data-value="20"] a { font-size: 20px !important; }
+        .note-fontsize .dropdown-menu li[data-value="22"] a { font-size: 22px !important; }
+        .note-fontsize .dropdown-menu li[data-value="24"] a { font-size: 24px !important; }
+        .note-fontsize .dropdown-menu li[data-value="28"] a { font-size: 28px !important; }
+        .note-fontsize .dropdown-menu li[data-value="32"] a { font-size: 32px !important; }
+        .note-fontsize .dropdown-menu li[data-value="36"] a { font-size: 36px !important; }
+        .note-fontsize .dropdown-menu li[data-value="48"] a { font-size: 48px !important; }
+        .note-fontsize .dropdown-menu li[data-value="64"] a { font-size: 64px !important; }
+        .note-fontsize .dropdown-menu li[data-value="72"] a { font-size: 72px !important; }
       `}</style>
     </div>
   );
@@ -606,6 +650,7 @@ const SummernoteInput = ({
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs text-gray-500">
             Editor: {editorMode === 'simple' ? 'Simple' : 'Advanced'}
+            {editorMode === 'advanced' && <span className="text-green-600 ml-1">• Font Size Available</span>}
           </span>
           <Button
             type="button"
@@ -645,5 +690,6 @@ const SummernoteInput = ({
     </div>
   );
 };
+
 
 export default SummernoteInput;
