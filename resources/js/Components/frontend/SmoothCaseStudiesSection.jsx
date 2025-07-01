@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePage, Link } from "@inertiajs/react";
+import { usePage, Link, router } from "@inertiajs/react";
 import axios from "axios";
 import { ChevronDown } from "lucide-react";
 
@@ -32,20 +32,8 @@ function SmoothCaseStudiesSection() {
    const [openDropdown, setOpenDropdown] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Toggle dropdown open/close
-  const toggleDropdown = (name) => {
-    setOpenDropdown((prev) => (prev === name ? null : name));
-  };
-
-  // Filter function for search
-  const filterItems = (items) =>
-    items.filter((item) =>
-      item.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-  // Fetch data and update sections
-  useEffect(() => {
-    axios.get('/api/v1/case')
+  function fetchData() {
+     axios.get('/api/v1/case')
       .then(response => {
         const fetchedData = response.data;
         console.log(fetchedData);
@@ -77,6 +65,37 @@ function SmoothCaseStudiesSection() {
       .catch(error => {
         console.error('Error fetching case studies:', error);
       });
+  }
+  useEffect(() => {
+
+    //all all record again
+    fetchData();
+    //search term effect
+    const filteredSections = sections.filter(section =>
+      section.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      section.features.some(feature =>
+        feature.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+    setSections(filteredSections);
+
+
+  }, [searchTerm]);
+
+  // Toggle dropdown open/close
+  const toggleDropdown = (name) => {
+    setOpenDropdown((prev) => (prev === name ? null : name));
+  };
+
+  // Filter function for search
+  const filterItems = (items) =>
+    items.filter((item) =>
+      item.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  // Fetch data and update sections
+  useEffect(() => {
+    fetchData();
   }, [appUrl]);
 
   // Auto-scroll navigation when active section changes

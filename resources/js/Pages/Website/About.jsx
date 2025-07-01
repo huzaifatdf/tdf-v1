@@ -604,7 +604,7 @@ const Experience = () => {
                 {/* Left Heading */}
                 <div className="lg:col-span-6">
                     <h2 className="text-[60px] leading-[1.1] fc-secondary">
-                    20+ Years in, <br className="hidden lg:block" /> and We’re Still Just Getting Started
+                    20+ Years in, <br className="hidden lg:block" /> and We’re Just Getting Started
                     </h2>
                 </div>
 
