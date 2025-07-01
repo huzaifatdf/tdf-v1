@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import axios from "axios";
 import parse from 'html-react-parser';
 
@@ -265,7 +265,12 @@ function SmoothExperienceSection() {
                         ))}
                     </div>
                       </>)}
-                    <hr className="border-white mb-8"/>
+                        <div className="mt-8">
+                        <Link href={'casestudiesmain'}  className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]">Explore Our Work</Link>
+                        <Link href={'Industriesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">Industries We Serve <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                        </div>
+
+                    {/* <hr className="border-white mb-8"/> */}
                   </div>
                 </div>
               </div>
