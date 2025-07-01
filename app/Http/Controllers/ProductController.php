@@ -60,6 +60,11 @@ class ProductController extends Controller
              'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'text', 'label' => 'description', 'required' => false],
+                'image' => ['type' => 'file', 'label' => 'Image', 'required' => false],
+            ],
+
+            'Mobile' => [
+                'slider_image' => ['type' => 'file', 'label' => 'Mobile Image', 'required' => false],
             ],
 
             'Problem' => [
