@@ -286,10 +286,7 @@ export default function List() {
                         </div>
 
                         <div className="flex items-center justify-end space-x-2 py-4">
-                            <div className="flex-1 text-sm text-muted-foreground">
-                                {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                                {ourclients.total} row(s) selected.
-                            </div>
+
                             <div className="space-x-2">
                                 <Button
                                     variant="outline"
@@ -307,6 +304,10 @@ export default function List() {
                                 >
                                     Next
                                 </Button>
+                            </div>
+                            <div className="flex-1 text-sm text-muted-foreground">
+                                {table.getFilteredSelectedRowModel().rows.length} of{" "}
+                                {ourclients.total} row(s) selected.
                             </div>
                         </div>
                     </div>
