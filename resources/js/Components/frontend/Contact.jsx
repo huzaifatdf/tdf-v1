@@ -509,6 +509,18 @@ function Contact() {
                             className={`w-14 h-14 md:w-20 md:h-20 rounded-full svg-icon-footer flex items-center justify-center transition-transform duration-300 ${
                                 isExpanded ? 'rotate-180' : ''
                             }`}
+                            onClick={()=>{
+
+                               //after 2 sec scroll down
+                               setTimeout(() => {
+                                    const contactForm = document.getElementById('contact-form');
+                                    if (contactForm) {
+                                        contactForm.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                }, 300);
+
+
+                            }}
                         >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -525,7 +537,7 @@ function Contact() {
                 </div>
 
                 {/* Expandable Box with Smooth Animation */}
-                <div
+                <div id='contact-form'
                     className={`overflow-hidden transition-all duration-500 ease-in-out ${
                         isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
                     }`}
