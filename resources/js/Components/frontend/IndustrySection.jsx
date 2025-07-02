@@ -70,15 +70,15 @@ export default function IndustrySection() {
                   {jsonData["Our Work"]["title"] || ''}
                 </h3>
 
-                <div className="space-y-3 pb-[60px]">
-                  <div className="text-[18px] fc-primary leading-relaxed">
+                <div className="space-y-3">
+                  <div className="text-[18px] fc-primary leading-relaxed pb-[30px]">
                     {parse(jsonData["Our Work"]["description"] || '')}
                   </div>
 
                   <Link href={'case-studies'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">View Our Work<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                 </div>
 
-                <Link href={'services'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                <Link href={'services'} className="mt-2 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
               </div>
 
               {/* Right Column */}
