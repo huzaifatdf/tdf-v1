@@ -10,7 +10,7 @@ function TestimonialsSection() {
     designation: "Director",
     rating: 5,
     title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
-    image: "images/sosafe.png",
+    image: "images/sosafetesti.png",
   },
     {
     id: 2,
@@ -18,7 +18,7 @@ function TestimonialsSection() {
     designation: "Executive Commercial Head",
     rating: 5,
     title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
-    image: "images/DataCheck.png",
+    image: "images/datachecktesti.png",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ function TestimonialsSection() {
     designation: "Deputy Sales Manager-Key Accounts",
     rating: 5,
     title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
-    image: "images/idem.png",
+    image: "images/idemtesti.png",
   },
   {
     id: 4,
@@ -34,16 +34,40 @@ function TestimonialsSection() {
     designation: "CEO",
     rating: 5,
     title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
-    image: "images/PentaLogo.png",
+    image: "images/pentatesti.png",
   },
   {
-  id: 5,
-  name: "Dr. Nadia Alwasiah",
-  designation: "Physiatrist & Physician",
-  rating: 5,
-  title: "I want to offer my thanks to TDF. With their expertise, they developed an exceptional website that perfectly represents my practice. Highly recommended!",
-  image: "", // Placeholder image
-}
+    id: 5,
+    name: "Shahzad Qaiser",
+    designation: "Sr. Manager Digital Marketing - MCCD",
+    rating: 5,
+    title: "We are absolutely thrilled with the outstanding work delivered by The Design Firm (TDF) on the development of the new Askari Bank website. From the initial concept to the final launch, TDF demonstrated unparalleled professionalism, creativity, and technical expertise.",
+    image: "images/askaritesti.png", // Placeholder image
+  },
+  {
+    id: 6,
+    name: "Barbara Chanakira",
+    designation: "Eaton Property Consultants",
+    rating: 5,
+    title: "We envisioned holistic branding for our business, and we’re glad we chose TDF as our partner. TDF’s customized branding strategy has significantly enhanced our digital presence, delivering a website that truly represents our business. Their keen eye for detail was evident throughout the project, reflected in the exemplary quality of work we received.",
+    image: "images/eatontesti.png", // Placeholder image
+  },
+  {
+    id: 7,
+    name: "Syed Asif Hasan",
+    designation: "CEO",
+    rating: 5,
+    title: "With TDF I am able to mark a presence of my brand and see how my potential market can be targeted. Since I have collaborated with TDF I can see a significant increase in my reach.",
+    image: "images/blicktesti.png", // Placeholder image
+  },
+  {
+    id: 8,
+    name: "Saira Nasir",
+    designation: "Founder & Owner",
+    rating: 5,
+    title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
+    image: "images/mimistesti.png", // Placeholder image
+  }
 
   ]);
 
@@ -213,19 +237,19 @@ function TestimonialsSection() {
             ))}
           </div>
 
-          <h3 className={`text-[20px] fc-primary font-bold transition-all duration-500 ${
+          <h3 className={`text-[25px] fc-primary font-bold transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].name}
           </h3>
 
-          <h3 className={`text-[20px] fc-primary font-bold transition-all duration-500 ${
+          <h3 className={`text-[20px] fc-secondary font-bold transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].designation}
           </h3>
 
-          <p className={`text-[16px] fc-primary leading-relaxed mb-8 transition-all duration-500 ${
+          <p className={`text-[18px] fc-primary leading-relaxed mb-8 transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`} style={{transitionDelay: '0.1s'}}>
             {testimonials[0].title}

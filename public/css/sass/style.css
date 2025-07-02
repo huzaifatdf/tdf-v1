@@ -9275,6 +9275,7 @@ body {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  padding: 15px;
 }
 
 .circle-avatar:hover {
@@ -9315,7 +9316,8 @@ body {
   display: table;
   margin: auto;
   margin-bottom: 50px;
-  background: #9be500;
+  background: #ccc;
+  padding: 15px;
 }
 
 .stars {

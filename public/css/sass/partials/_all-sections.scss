@@ -191,6 +191,7 @@ body {
   justify-content: center;
   pointer-events: auto;
   user-select: none;
+  padding: 15px;
 }
 .circle-avatar:hover {
     background-color: $theme-purple;
@@ -228,7 +229,8 @@ body {
     display: table;
     margin: auto;
     margin-bottom: 50px;
-    background: #9be500;
+    background: #ccc;
+    padding: 15px;
 }
 
 .stars {
