@@ -242,7 +242,7 @@ const TimelineSection = () => {
     <section className="about-mobile-screens container-fluid">
         <div className="relative sec-padding">
             {/* Desktop Version - Horizontal Timeline */}
-            <div className="hidden lg:flex overflow-x-auto no-scrollbar h-[650px] space-x-4">
+            <div className="hidden lg:flex overflow-x-auto no-scrollbar h-[400px] space-x-4">
             {timelineData.map((item, idx) => {
                 const isActive = activeIndex === idx;
                 return (
@@ -266,7 +266,7 @@ const TimelineSection = () => {
                     )}
 
                     {isActive && (
-                    <div className="p-6 flex flex-col justify-between h-full">
+                    <div className="p-6 flex flex-col justify-center h-full">
                         <div>
                         <p className="fc-primary text-[18px] mb-0">{item.id}</p>
                         <p className="fc-secondary text-[30px] mb-0">{item.range}</p>
@@ -274,13 +274,13 @@ const TimelineSection = () => {
                             {item.description}
                         </p>
                         </div>
-                        <div className="">
+                        {/* <div className="">
                         <img
                             src={item.image}
                             alt={item.title}
                             className="w-full object-cover mb-6 h-[350px]"
                         />
-                        </div>
+                        </div> */}
                     </div>
                     )}
                 </div>
@@ -329,13 +329,13 @@ const TimelineSection = () => {
                             {item.description}
                         </p>
                         </div>
-                        <div className="mb-0">
+                        {/* <div className="mb-0">
                         <img
                             src={item.image}
                             alt={item.title}
                             className="w-full object-cover rounded-lg h-[250px]"
                         />
-                        </div>
+                        </div> */}
                     </div>
                     </div>
                 </div>
@@ -393,7 +393,7 @@ const MissionVisionProposition = () => {
                 <div className="overflow-hidden shadow-2xl">
                 <h3 className="text-[32px] fc-secondary mb-3">The Why, The How, and The What Next</h3>
                 <img
-                    src="/images/begi.png" // Replace with actual image path
+                    src="/images/aboutnew.png" // Replace with actual image path
                     alt="Team collaboration in modern office"
                     className="w-full object-cover"
                 />
