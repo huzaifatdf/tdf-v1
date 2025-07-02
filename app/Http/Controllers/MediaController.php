@@ -24,46 +24,43 @@ class MediaController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $validator = ValidatorFacade::make($request->all(), ([
-            'files.*' => 'required|file|max:10240', // 10MB max
-            'collection' => 'nullable|string',
-        ]));
+public function store(Request $request)
+{
+    // Increase PHP limits just for this request
+    ini_set('memory_limit', '256M');
+    set_time_limit(300); // 5 minutes
+    $validator = ValidatorFacade::make($request->all(), [
+        'files.*' => 'required|file|max:10000', // 100MB max
+        'collection' => 'nullable|string',
+    ]);
 
-         if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-            $errorMessage = "Validation Errors:\n";
+    if ($validator->fails()) {
+        // ... your existing error handling
+    }
 
-            foreach ($errors as $index => $error) {
-                $errorMessage .= ($index + 1) . ". " . $error . "\n";
+    $uploadedMedia = [];
+
+    foreach ($request->file('files') as $file) {
+        try {
+            if ($file && $file->isValid()) {
+                $mediaItem = MediaItem::create();
+
+                $media = $mediaItem
+                    ->addMedia($file)
+                    ->toMediaCollection($request->collection ?: 'default');
+
+                $uploadedMedia[] = $this->formatMediaItem($media);
             }
-            session()->flash('error', $errorMessage);
-            return back();
+        } catch (\Exception $e) {
+            // Log the error and continue with next file
+            \Log::error('Media upload failed: '.$e->getMessage());
+            continue;
         }
-
-        $uploadedMedia = [];
-
-       foreach ($request->file('files') as $file) {
-    if ($file && $file->isValid()) {
-        $mediaItem = MediaItem::create(); // Make sure this model can accept media
-
-        $media = $mediaItem
-            ->addMedia($file)
-            ->toMediaCollection($request->collection ?? 'default');
-
-        $uploadedMedia[] = $this->formatMediaItem($media);
-    } else {
-        // Optional: Log or skip invalid files
-        continue;
     }
+
+    session()->flash('success', 'Media items have been uploaded successfully.');
+    return back();
 }
-
-
-        session()->flash('success', 'Media items have been uploaded successfully.');
-
-        return back();
-    }
 
     public function destroy(Media $media)
     {

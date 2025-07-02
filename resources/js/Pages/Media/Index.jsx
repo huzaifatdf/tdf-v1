@@ -36,6 +36,7 @@ const MediaLibrary = ({ media, filters }) => {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [notification, setNotification] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const { data, setData, post, processing, errors, reset } = useForm({
     files: [],
@@ -61,17 +62,27 @@ const MediaLibrary = ({ media, filters }) => {
 
 
   // Handle file upload
-  const handleFileUpload = (e) => {
-    e.preventDefault();
+const handleFileUpload = (e) => {
+  e.preventDefault();
 
-    post(route('media.upload'), {
-      onSuccess: () => {
-        setShowUploadModal(false);
-        reset();
-        router.reload();
-      },
-    });
-  };
+  setUploadProgress(0);
+
+  post(route('media.upload'), {
+    data,
+    onProgress: (progress) => {
+      setUploadProgress(progress.percentage);
+    },
+    onSuccess: () => {
+      setShowUploadModal(false);
+      reset();
+      router.reload();
+      showNotification('Files uploaded successfully!');
+    },
+    onError: (errors) => {
+      showNotification('Upload failed: ' + Object.values(errors).join(', '), 'error');
+    }
+  });
+};
 
   //showNotification
     const showNotification = (message, type = 'success') => {
@@ -437,6 +448,15 @@ const MediaLibrary = ({ media, filters }) => {
                       ))}
                     </select>
                   </div>
+
+                  {processing && (
+  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+    <div
+      className="bg-gray-600 h-2.5 rounded-full"
+      style={{ width: `${uploadProgress}%` }}
+    ></div>
+  </div>
+)}
 
                   <div className="flex justify-end gap-2">
                     <button

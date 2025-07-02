@@ -191,6 +191,7 @@ public function edit(Product $product)
             'Our Work' => [
                 'title' => ['type' => 'text', 'label' => 'title', 'required' => false],
                 'description' => ['type' => 'summernote', 'label' => 'description', 'required' => false],
+                 'image' => ['type' => 'file', 'label' => 'Image', 'required' => false],
             ],
 
             'Problem' => [
