@@ -48,13 +48,13 @@ export default function Casestudiesinner(props) {
             <div className="">
                 <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="md:w-1/2">
-                    <h1 className="text-[34px] fc-secondary leading-tight mb-6">
+                    <h1 className="text-[40px] fc-secondary leading-tight mb-6">
                         {casestudy.title} { jsonData.subtitle === '' && <> - <br className="hidden md:block" />{jsonData.subtitle}</> }
                     </h1>
                 </div>
                 <div className="md:w-1/2">
                     <div className="prose prose-lg prose-invert">
-                    <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-6">
+                    <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-6">
                          { casestudy?.description && parse(casestudy.description )}
                     </p>
 
@@ -67,7 +67,7 @@ export default function Casestudiesinner(props) {
                     className="w-full h-[50vh] object-cover mt-5 mb-5"
                 />
                 {jsonData["Service"]["image_1"] && <>
-                <p className="text-[32px] font-bold fc-secondary leading-tight">Services Provided</p>
+                <p className="text-[32px] fc-secondary leading-tight">Services Provided</p>
                 <hr className="border-white mb-8"/>
                 </>
                 }
@@ -147,9 +147,9 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]"
+                className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer"
                 >
-                {link}
+                {link}<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                 </a>
             </div>
             <div className="md:col-span-7 relative group">
@@ -266,7 +266,7 @@ function Beginning(props) {
     <div className="container-fluid">
 
         <hr className="border-white mb-8"/>
-        <div className="sec-padding box begining-section">
+        <div className="sec-padding box begining-section mobile-screens">
         <div className="grid lg:grid-cols-2 gap-12 align-items-centerssss">
           {/* Left side - Image */}
           <div className="relative">
@@ -653,7 +653,7 @@ function BoxExperienceSection(props) {
                             <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
                             {section.id}
                             </h5>
-                            <h3 className={`text-[24px] transition-all duration-500 fc-secondary`}>
+                            <h3 className={`text-[25px] transition-all duration-500 fc-secondary`}>
                             {section?.title || ''}
                             </h3>
 

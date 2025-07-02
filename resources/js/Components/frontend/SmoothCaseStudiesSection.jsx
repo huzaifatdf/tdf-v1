@@ -345,7 +345,7 @@ function SmoothCaseStudiesSection() {
                 <img
                   src={section.mainImage}
                   alt={`${section.title} main image`}
-                  className="w-full h-auto mb-6"
+                  className="w-full h-[40vh] object-cover mb-6"
                 />
 
                 {/* Title */}
@@ -353,7 +353,7 @@ function SmoothCaseStudiesSection() {
                     {section.title}
                 </h2>
 
-                <p className="text-[20px] fc-primary mb-3 leading-relaxed">
+                <p className="text-[18px] fc-primary mb-3 leading-relaxed">
                   {section.subtitle}
                 </p>
 
@@ -379,12 +379,12 @@ function SmoothCaseStudiesSection() {
                 </ul>
 
               <a
-  className="group flex items-center gap-2 bg-transparent border-none fc-primary transition-colors duration-300 text-lg font-medium cursor-pointer"
-  href={route('casestudy.show', section.slug)}
+                className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer"
+                href={route('casestudy.show', section.slug)}
 
->
-  Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
-</a>
+                >
+                Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
+                </a>
                 <hr className="border-white mb-8"/>
               </div>
             </div>
