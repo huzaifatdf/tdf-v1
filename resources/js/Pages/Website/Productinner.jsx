@@ -74,7 +74,7 @@ export default function Productinner() {
             </div>
           </section>
 
-        <BenefitsContactForm product={product.title}/>
+        <BenefitsContactForm product={product.title} jsonData={jsonParseData}/>
           <div className="container-fluid ">
             <div className="py-16 relative">
                 <h2 className="text-[32px] fc-secondary leading-tight mb-6">
@@ -127,13 +127,12 @@ export default function Productinner() {
 
 // Form //
 function BenefitsContactForm(props) {
-    const { product} = props;
-
+    const { product,jsonData} = props;
   return (
     <div className="relative py-16 bg-[#040404]">
       <div className="container-fluid">
         <h2 className="text-[32px] fc-secondary leading-tight mb-9">
-          Uncover the Benefits Now!
+            {jsonData["CTA"]["label"] || 'Uncover the Benefits Now!'}
         </h2>
 
         <div className="space-y-8">

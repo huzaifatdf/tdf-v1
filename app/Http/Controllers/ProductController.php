@@ -71,7 +71,9 @@ class ProductController extends Controller
                 'problem' => ['type' => 'text', 'label' => 'Problem Label', 'required' => false],
                 'problem_description' => ['type' => 'text', 'label' => 'Problem Description', 'required' => false],
             ],
-
+            'CTA' => [
+                'label' => ['type' => 'text', 'label' => 'CTA Label', 'required' => false],
+            ],
             'problem Solutions' =>[
 
                 'label_1' => ['type' => 'text', 'label' => '1 Label', 'required' => false],
@@ -197,6 +199,10 @@ public function edit(Product $product)
             'Problem' => [
                 'problem' => ['type' => 'text', 'label' => 'Problem Label', 'required' => false],
                 'problem_description' => ['type' => 'summernote', 'label' => 'Problem Description', 'required' => false],
+            ],
+
+            'CTA' => [
+                'label' => ['type' => 'text', 'label' => 'CTA Label', 'required' => false],
             ],
 
             'problem Solutions' =>[
