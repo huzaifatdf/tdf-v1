@@ -77,8 +77,8 @@ export default function Casestudiesinner(props) {
 
       {jsonData["Service"] &&  <Capabilities data={casestudy} jsonData={jsonData}/>}
       <Beginning data={casestudy} jsonData={jsonData} />
-      <BoxExperienceSection data={casestudy} jsonData={jsonData}/>
-      <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/>
+      {jsonData["Experience"] && <BoxExperienceSection data={casestudy} jsonData={jsonData}/> }
+      { jsonData?.Technology || jsonData?.conclusion && <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/> }
     </WebsiteLayout>
   );
 }
