@@ -86,10 +86,28 @@ export default function Casestudiesinner(props) {
 const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
+
   useEffect(() => {
     const section = sectionRef.current;
     const content = contentRef.current;
-    if (isLast) {
+
+    if (index === 0) {
+      // First slide - show directly without animation, but still make it pinnable
+      gsap.set(content, { y: 0, opacity: 1 }); // Set initial state to visible
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=100%",
+          pin: true,
+          pinSpacing: false,
+          scrub: 1,
+        }
+      });
+      // No animation for first slide, just pin it
+
+    } else if (isLast) {
       // For the last section, use different ScrollTrigger settings
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -111,7 +129,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
         duration: 1,
       });
     } else {
-      // Regular sections
+      // Regular sections (not first, not last)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -128,10 +146,12 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
         duration: 1,
       });
     }
+
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [isLast]);
+  }, [isLast, index]);
+
   return (
     <section
       ref={sectionRef}
@@ -141,7 +161,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
       <div className="absolute inset-0 opacity-50" />
       <div className="container-fluid relative z-10">
         <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
-            <div className="md:col-span-5 flex flex-col justify-between h-full">
+            <div className="md:col-span-5 flex flex-col justify-center h-full">
                 <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
                 <a
                 href={`https://${link}`}
@@ -165,7 +185,6 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
     </section>
   );
 };
-
 
 
 
