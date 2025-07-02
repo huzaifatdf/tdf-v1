@@ -284,7 +284,7 @@ function SmoothCaseStudiesSection() {
             </div>
     </div>
     <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens dynamic-filter">
-      <div className="flex sec-padding">
+      <div className="flex sec-padding --small">
         {/* Left Side - Navigation */}
         <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
           <div className="max-w-lg">
@@ -385,7 +385,7 @@ function SmoothCaseStudiesSection() {
                 >
                 Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                 </a>
-                <hr className="border-white mb-8"/>
+                <hr className="border-white mb-8 mt-8"/>
               </div>
             </div>
           ))}

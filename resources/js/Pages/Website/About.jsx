@@ -36,7 +36,7 @@ export default function About() {
                         <div className="flex flex-col md:flex-row gap-12 pb-[60px]">
                             <div className="md:w-1/2">
                                 <h1 className="mobile-banner-heading text-[50px] fc-secondary leading-tight mb-0">
-                                    About Us - TDF
+                                    About Us
                                 </h1>
                             </div>
                             <div className="md:w-1/2">
@@ -71,7 +71,7 @@ function AboutSection() {
     <section className="about-mobile-screens relative sec-padding">
       <div className="container-fluid">
         <h2 className="fc-secondary text-[32px] mb-6">
-          Creative Thinkers. Strategic Doers
+          Creative Thinkers. Strategic Doers.
         </h2>
         <p className="fc-primary text-[18px]">
           With a history dating back to 2002, The Design Firm has been a trusted partner for several startups and organizations when it comes to marketing, technology and innovation.
@@ -80,7 +80,7 @@ function AboutSection() {
           From startups to legacy organizations, we've worked with clients from all industries to help them scale and engage meaningfully with their audiences.
         </p>
         <p className="fc-primary text-[18px]">
-          With over 300+ impactful websites and 600+ custom digital assets in our portfolio, we bring a rare mix of experience and agility to every project we touch.
+          With over <strong>300+</strong> impactful websites and <strong>600+</strong> custom digital assets in our portfolio, we bring a rare mix of experience and agility to every project we touch.
         </p>
       </div>
     </section>
@@ -135,7 +135,7 @@ function StatsSection() {
                 <div>
                     <p className="fc-white mb-0 text-[18px] ">{stat.label}</p>
                     <h3 className="fc-white text-[32px]">
-                    <CountUp end={stat.value} duration={2.5} /> {stat.suffix}
+                    <CountUp end={stat.value} duration={2.5} />{stat.suffix}
                     </h3>
                 </div>
                 </div>
@@ -159,7 +159,7 @@ function Trusted () {
                         </h2>
 
                         <p className="text-[18px] fc-primary leading-relaxed">
-                            Finance & Banking | Technology | Logistics | Energy Sector | MNCs | Retail | Manufacturing | Real Estate | Health | Payment Industry | Water Industry | Associations
+                            Finance & Banking | Technology | Logistics | Energy Sector | MNCs | Retail | Manufacturing | Real Estate | Health | Payment Industry | Water Industry
                         </p>
                     </div>
 
