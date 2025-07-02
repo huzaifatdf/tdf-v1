@@ -193,13 +193,14 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
     switch (section.type) {
       case 'text':
         return (
-          <SummernoteInput
+             <SummernoteInput
             value={section.content || ''}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder="Enter your text content..."
-            rows={6}
-            className="font-mono text-sm"
+            onChange={(content) => handleContentChange(content)}
+            height={200}
+            showToggle={true}
+            defaultMode="simple"
           />
+
         );
 
       case 'image':
