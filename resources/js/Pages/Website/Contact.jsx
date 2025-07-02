@@ -35,15 +35,15 @@ export default function About() {
                 <div className="relative mt-[120px] mb-[80px]">
                     <div className="flex flex-col md:flex-row items-center gap-12">
                         <div className="md:w-1/2">
-                            <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
+                            <h1 className="mobile-banner-heading text-[50px] fc-secondary leading-tight mb-0">
                                 Contact Us
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
                                 Have a project?
                             </p>
-                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
                                 Let’s make it happen together.
                             </p>
                         </div>

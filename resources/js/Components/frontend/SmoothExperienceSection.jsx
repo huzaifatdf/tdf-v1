@@ -234,7 +234,7 @@ function SmoothExperienceSection() {
                     <img
                       src={`${appUrl}/${section.thumbnail}`}
                       alt={`${section.title} main image`}
-                      className="w-full h-auto mb-6"
+                      className="w-full h-[40vh] object-cover mb-6"
                     />
 
                     {/* Title */}
