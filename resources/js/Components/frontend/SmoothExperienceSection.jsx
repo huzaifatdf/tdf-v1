@@ -238,7 +238,7 @@ function SmoothExperienceSection() {
                     />
 
                     {/* Title */}
-                    <h2 className="text-[26px] text-white mb-2">
+                    <h2 className="text-[26px] fc-secondary mb-2">
                       {section.title}
                     </h2>
 
@@ -266,8 +266,8 @@ function SmoothExperienceSection() {
                     </div>
                       </>)}
                         <div className="mt-8">
-                        <Link href={'casestudiesmain'}  className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]">Explore Our Work</Link>
-                        <Link href={'Industriesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">Industries We Serve <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                        <Link href={'casestudiesmain'}  className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                        <Link href={'Industriesmain'} className="mt-2 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Industries We Serve <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                         </div>
 
                     {/* <hr className="border-white mb-8"/> */}

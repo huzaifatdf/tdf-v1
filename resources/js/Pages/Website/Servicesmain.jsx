@@ -38,17 +38,17 @@ export default function Casestudiesmain() {
                 <div className="">
                     <div className="flex flex-col md:flex-row items-center  mb-[100px] mar-mob-0 gap-12">
                         <div className="md:w-1/2">
-                            <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-[1.1]">
+                            <h1 className="mobile-banner-heading text-[50px] fc-secondary leading-[1.1]">
                                 From Vision to Reality
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
                                 Bold concepts. Strategic execution. Lasting impact. We turn vision into reality—so you can lead your industry.
                             </p>
                         </div>
                     </div>
-                    <p class="text-[32px] font-bold fc-secondary leading-tight">Services</p>
+                    <p class="text-[32px] fc-secondary leading-tight">Services</p>
                     <hr class="border-white mb-8"></hr>
                 </div>
             </div>
