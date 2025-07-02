@@ -28,7 +28,7 @@ export default function Productmain() {
   }, []);
 
   return (
-    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title="Product | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center bg-dark-950 relative overflow-hidden">
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">
