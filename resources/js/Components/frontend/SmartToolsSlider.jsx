@@ -84,7 +84,7 @@ const SmartToolsSlider = () => {
 
                     <div className="flex items-end justify-between">
                       <Link
-                        href={'Productmain'}
+                        href={'products'}
                         className="inline-block text-left text-[18px] fc-purple font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
                       >
                         View All Products
