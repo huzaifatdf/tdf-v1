@@ -161,7 +161,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                             { href: "/case-studies", label: "Case Studies", icon: "/images/case.svg" },
                                             { href: "/about", label: "About Us", icon: "/images/about.svg" },
                                             { href: "/partners", label: "Partners", icon: "/images/partner.svg" },
-                                            { href: "/https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", label: "Careers", icon: "/images/careers.svg" }, //Careers
+                                            { href: "https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", label: "Careers", icon: "/images/careers.svg" }, //Careers
                                             { href: "/contact", label: "Contact", icon: "/images/contact.svg" },
 
 
