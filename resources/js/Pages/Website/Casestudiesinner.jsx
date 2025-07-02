@@ -637,33 +637,35 @@ function BoxExperienceSection(props) {
     <>
         <section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
             {/* Main Content Area */}
-            <div className="flex sec-padding --small">
-                <div className="w-full">
-                {/* Grid container with 3 columns */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {sections.map((section, index) => (
-                    <div
-                        key={section.id}
-                        ref={el => sectionsRefs.current[section.id] = el}
-                        className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
-                    >
-                        <div className="max-w-xl w-full">
-                            <div className="animate-fadeIn">
-                                {/* Title */}
-                                <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
-                                {section.id}
-                                </h5>
-                                <h3 className={`text-[25px] transition-all duration-500 fc-secondary`}>
-                                {section?.title || ''}
-                                </h3>
+            <div className="sec-padding --small">
+                <h4 className="text-[32px] fc-secondary mb-4">What We Did</h4>
+                <div className="flex">
+                    <div className="w-full">
+                        {/* Grid container with 3 columns */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {sections.map((section, index) => (
+                            <div
+                                key={section.id}
+                                ref={el => sectionsRefs.current[section.id] = el}
+                                className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
+                            >
+                                <div className="max-w-xl w-full">
+                                    <div className="animate-fadeIn">
+                                        {/* Title */}
+                                        <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
+                                        {section.id}
+                                        </h5>
+                                        <h3 className={`text-[25px] transition-all duration-500 fc-secondary`}>
+                                        {section?.title || ''}
+                                        </h3>
 
-                                {section?.subtitle && parse(section?.subtitle)}
+                                        {section?.subtitle && parse(section?.subtitle)}
+                                    </div>
+                                </div>
                             </div>
+                            ))}
                         </div>
                     </div>
-                    ))}
-                </div>
-
                 </div>
 
             </div>
