@@ -7,7 +7,7 @@ function TestimonialsSection() {
    {
     id: 1,
     name: "Shahzaib Mehmood",
-    designation: "Director at So~Safe",
+    designation: "Director, So~Safe",
     rating: 5,
     title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
     image: "images/sosafetesti.png",
@@ -15,7 +15,7 @@ function TestimonialsSection() {
     {
     id: 2,
     name: "Mahwish Saad Khan",
-    designation: "Executive Commercial Head – DataCheck",
+    designation: "Executive Commercial Head, DataCheck",
     rating: 5,
     title: "I wanted to take a moment to commend The Design Firm for managing DataCheck's LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
     image: "images/datachecktesti.png",
@@ -23,7 +23,7 @@ function TestimonialsSection() {
   {
     id: 3,
     name: "Arsalan Farid",
-    designation: "Deputy Sales Manager-Key Accounts Idemitsu Pakistan",
+    designation: "Deputy Sales Manager-Key Accounts, Idemitsu Pakistan",
     rating: 5,
     title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
     image: "images/idemtesti.png",
@@ -31,7 +31,7 @@ function TestimonialsSection() {
   {
     id: 4,
     name: "Aamir Basrai",
-    designation: "CEO - PentaExpress",
+    designation: "CEO, PentaExpress",
     rating: 5,
     title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
     image: "images/pentatesti.png",
@@ -39,7 +39,7 @@ function TestimonialsSection() {
   {
     id: 5,
     name: "Shahzad Qaiser",
-    designation: "Sr. Manager Digital Marketing - MCCD",
+    designation: "Sr. Manager Digital Marketing - MCCD, Askari Bank",
     rating: 5,
     title: "We are absolutely thrilled with the outstanding work delivered by The Design Firm (TDF) on the development of the new Askari Bank website. From the initial concept to the final launch, TDF demonstrated unparalleled professionalism, creativity, and technical expertise.",
     image: "images/askaritesti.png", // Placeholder image
@@ -55,7 +55,7 @@ function TestimonialsSection() {
   {
     id: 7,
     name: "Syed Asif Hasan",
-    designation: "CEO",
+    designation: "CEO, Blinq",
     rating: 5,
     title: "With TDF I am able to mark a presence of my brand and see how my potential market can be targeted. Since I have collaborated with TDF I can see a significant increase in my reach.",
     image: "images/blicktesti.png", // Placeholder image
@@ -63,17 +63,17 @@ function TestimonialsSection() {
   {
     id: 8,
     name: "Dr. Nadia Alwasiah",
-    designation: "Physiatrist & Physician",
+    designation: "Physiatrist & Physician, Dr. Nadia Alwasiah ",
     rating: 5,
     title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
-    image: "images/mimistesti.png", // Placeholder image
+    image: "images/nadiatesti.png", // Placeholder image
   },
     {
     id: 9,
-    name: "Tdf Agency",
-    designation: "Founder & Owner",
+    name: "Saira Nasir",
+    designation: "Founder & Owner, Mimi's",
     rating: 5,
-    title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
+    title: "The Design Firm helped me craft a visual identity for my brand 'Mimi's' that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
     image: "images/mimistesti.png", // Placeholder image
   }
 
