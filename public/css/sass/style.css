@@ -9591,8 +9591,11 @@ form textarea {
   .mobile-screens p {
     font-size: 16px;
   }
-  .mobile-screens span {
+  .mobile-screens p span {
     font-size: 16px;
+  }
+  .mobile-screens span {
+    font-size: 16px !important;
   }
   .mobile-screens a {
     font-size: 16px;
