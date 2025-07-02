@@ -77,9 +77,9 @@ export default function Productinner() {
         <BenefitsContactForm product={product.title} jsonData={jsonParseData}/>
           <div className="container-fluid ">
             <div className="py-16 relative">
-                <h2 className="text-[32px] fc-secondary leading-tight mb-6">
+                {/* <h2 className="text-[32px] fc-secondary leading-tight mb-6">
                 Detailed Overview
-                </h2>
+                </h2> */}
 
                 <div className="leading-relaxed mobile-screens">
                     <p className="text-[18px] fc-primary leading-relaxed mb-2">
