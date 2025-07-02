@@ -378,11 +378,27 @@ form {
         padding-left: 20px;
         margin-top: 20px;
         li {
-            list-style: circle;
+            list-style: unset;
             font-size: 18px;
             color: $theme-primary;
+            position: relative;
+            padding-left: 15px;
+            &:before {
+                position: absolute;
+                background-size: cover;
+                background-repeat: no-repeat;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: -20px;
+                top: 7px;
+                background-image: url('/images/liicon.svg');
+            }
             ul {
                 margin-top: 0 !important;
+                li {
+                    list-style-type: disc;
+                }
             }
         }
     }
