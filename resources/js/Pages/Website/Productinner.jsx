@@ -50,9 +50,9 @@ export default function Productinner() {
                     </div>
                     <div className="md:w-1/2">
                         <div className="prose prose-lg prose-invert">
-                        <p className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
+                        {/* <p className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
                             Quick Highlights
-                        </p>
+                        </p> */}
                         {/* <p className="text-[16px] fc-primary leading-relaxed mb-6">
                             100% Cloud-Based: No servers or installations required.
                             Mobile App: Easy to use on smartphones and tablets.

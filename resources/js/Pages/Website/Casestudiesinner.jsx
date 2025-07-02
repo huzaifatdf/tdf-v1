@@ -144,7 +144,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
             <div className="md:col-span-5 flex flex-col justify-between h-full">
                 <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
                 <a
-                href={link}
+                href={`https://${link}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer"

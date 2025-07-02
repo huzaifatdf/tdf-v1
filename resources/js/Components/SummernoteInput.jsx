@@ -377,7 +377,7 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
         ['view', ['fullscreen', 'codeview', 'help']]
       ],
       // Font size options
-      fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24','26', '28', '32', '36', '48', '64', '72'],
+      fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24','26', '28','30', '32', '36', '48', '64', '72'],
       fontSizeUnits: ['px', 'pt'],
       // Enhanced list configuration
       styleTags: [
@@ -562,6 +562,7 @@ const AdvancedSummernoteEditor = React.memo(({ value, onChange, placeholder, hei
         .note-fontsize .dropdown-menu li[data-value="24"] a { font-size: 24px !important; }
         .note-fontsize .dropdown-menu li[data-value="26"] a { font-size: 26px !important; }
         .note-fontsize .dropdown-menu li[data-value="28"] a { font-size: 28px !important; }
+        .note-fontsize .dropdown-menu li[data-value="30"] a { font-size: 30px !important; }
         .note-fontsize .dropdown-menu li[data-value="32"] a { font-size: 32px !important; }
         .note-fontsize .dropdown-menu li[data-value="36"] a { font-size: 36px !important; }
         .note-fontsize .dropdown-menu li[data-value="48"] a { font-size: 48px !important; }
