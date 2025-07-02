@@ -155,14 +155,14 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     <div className="flex-1 flex items-center justify-center">
                                     <ul className="space-y-4 w-[80%] px-6 m-0">
                                         {[
-                                            { href: "/Servicesmain", label: "Services", icon: "/images/services.svg" },
-                                            { href: "/Productmain", label: "Product", icon: "/images/products.svg" },
-                                            { href: "/Industriesmain", label: "Industries", icon: "/images/industries.svg" },
-                                            { href: "/casestudiesmain", label: "Case Studies", icon: "/images/case.svg" },
-                                            { href: "/About", label: "About Us", icon: "/images/about.svg" },
+                                            { href: "/services", label: "Services", icon: "/images/services.svg" },
+                                            { href: "/products", label: "Product", icon: "/images/products.svg" },
+                                            { href: "/industries", label: "Industries", icon: "/images/industries.svg" },
+                                            { href: "/case-studies", label: "Case Studies", icon: "/images/case.svg" },
+                                            { href: "/about", label: "About Us", icon: "/images/about.svg" },
                                             { href: "/partners", label: "Partners", icon: "/images/partner.svg" },
                                             { href: "/https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", label: "Careers", icon: "/images/careers.svg" }, //Careers
-                                            { href: "/Contact", label: "Contact", icon: "/images/contact.svg" },
+                                            { href: "/contact", label: "Contact", icon: "/images/contact.svg" },
 
 
                                         ].map((item, index) => (
@@ -241,14 +241,14 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                 </div>
 
                                 <div className="flex space-x-4 mobile-ffoter-menu">
-                                    <Link href="/Servicesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Services</Link>
-                                    <Link href="/Productmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Product</Link>
-                                    <Link href="/Industriesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Industries</Link>
-                                    <Link href="/casestudiesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Case Studies</Link>
-                                    <Link href="/About" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
+                                    <Link href="/services" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Services</Link>
+                                    <Link href="/products" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Product</Link>
+                                    <Link href="/industries" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Industries</Link>
+                                    <Link href="/case-studies" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Case Studies</Link>
+                                    <Link href="/about" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
                                     <Link href="/partners" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Partners</Link>
                                     <a href="https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
-                                    <Link href="/Contact" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Contact</Link>
+                                    <Link href="/contact" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Contact</Link>
                                 </div>
 
                                 <div className="items-center space-x-4 social-icons-footer">
