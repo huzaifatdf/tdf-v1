@@ -30,7 +30,8 @@ class Page extends Model
         'customscript',
         'customstyle',
         'status',
-        'priority'
+        'priority',
+        'predefine_page',
     ];
 
     protected $casts = [

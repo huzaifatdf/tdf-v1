@@ -16,7 +16,8 @@ class Pagesection extends Model
         'content',
         'status',
         'priority',
-        'properties'
+        'properties',
+        
     ];
 
 

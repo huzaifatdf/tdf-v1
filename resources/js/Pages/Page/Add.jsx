@@ -46,6 +46,7 @@ export default function List() {
     status: Yup.string().required("Status is required"),
     priority: Yup.number().min(0),
     show_in_sitemap: Yup.boolean(),
+    predefine_page: Yup.string().nullable(),
   });
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
@@ -122,6 +123,7 @@ export default function List() {
                 status: "draft",
                 priority: 0,
                 show_in_sitemap: true,
+                predefine_page: "",
               }}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
@@ -198,6 +200,90 @@ export default function List() {
                           />
                           <ErrorMessage
                             name="description"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+
+                         <div className="grid gap-3 mt-6">
+                          <label htmlFor="predefine_page" className="text-sm font-semibold text-gray-700">
+                            Predefine Page
+                            {/* make button to predefine page null */}
+                            <Button
+                              type="button"
+                              variant="link"
+                                className="ml-2 text-red-500 hover:text-red-700"
+                              size="sm"
+                              onClick={() => setFieldValue("predefine_page", "")}
+                            >
+                              Clear
+                            </Button>
+
+
+                          </label>
+                          <Select
+                            name="predefine_page"
+                            value={values.predefine_page}
+                            onValueChange={(value) => setFieldValue("predefine_page", value)}
+                            >
+                            <SelectTrigger className="focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                <SelectValue placeholder="Select a predefine page" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Servicemain">
+                                <div className="flex items-center">
+                                    <div>
+                                    <div className="font-medium">Service</div>
+                                    </div>
+                                </div>
+                                </SelectItem>
+                                <SelectItem value="Productmain">
+                                <div className="flex items-center">
+                                    <div>
+                                    <div className="font-medium">Product</div>
+                                    </div>
+                                </div>
+                                </SelectItem>
+                                <SelectItem value="About">
+                                  <div className="flex items-center">
+                                    <div>
+                                      <div className="font-medium">About</div>
+                                    </div>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="Contact">
+                                  <div className="flex items-center">
+                                    <div>
+                                      <div className="font-medium">Contact</div>
+                                    </div>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="Industriesmain">
+                                  <div className="flex items-center">
+                                    <div>
+                                      <div className="font-medium">Industries</div>
+                                    </div>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="Casestudiesmain">
+                                  <div className="flex items-center">
+                                    <div>
+                                      <div className="font-medium">Case Studies</div>
+                                    </div>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="partners">
+                                  <div className="flex items-center">
+                                    <div>
+                                      <div className="font-medium">Partners</div>
+                                    </div>
+                                  </div>
+                                </SelectItem>
+
+                              </SelectContent>
+                            </Select>
+                          <ErrorMessage
+                            name="predefine_page"
                             component="div"
                             className="text-red-500 text-sm"
                           />
