@@ -9725,6 +9725,9 @@ form textarea {
     position: relative;
     top: -70px;
   }
+  .mobile-height-img {
+    height: 100px !important;
+  }
 }
 @keyframes loader {
   0%, 10%, 100% {
@@ -9819,10 +9822,6 @@ table {
 
 .contact-us-hover:hover span {
   color: #9747FF !important;
-}
-
-.mobile-height-img {
-  height: 100px !important;
 }
 
 footer {

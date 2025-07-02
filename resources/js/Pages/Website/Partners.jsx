@@ -162,21 +162,6 @@ function Strategic() {
         performance: '99.8%',
         latency: '<2s'
       }
-    },
-    {
-      id: '03',
-      title: 'Elkhidir Abderlasoul',
-      subtitle: 'Oman',
-      description: '',
-      features: [
-        'elkhidir@outlook.com <br> +968 9218 4151 <br> Al Seeb, Way 3451, Muscat, Oman',
-      ],
-      Image: '/images/partner.png',
-      stats: {
-        models: '8+',
-        performance: '99.5%',
-        latency: '<5s'
-      }
     }
   ];
 
