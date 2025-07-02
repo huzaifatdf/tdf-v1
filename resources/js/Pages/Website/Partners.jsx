@@ -141,7 +141,7 @@ function Strategic() {
       features: [
         'yasser.shamma@thedesignsfirm.com <br> Riyadh, Saudi Arabia – Al Malaz',
       ],
-      Image: '/images/partner.png',
+      Image: '/images/horizonpartner.png',
       stats: {
         models: '25+',
         performance: '99.9%',
@@ -156,7 +156,7 @@ function Strategic() {
       features: [
         'Ali.marjibi@e-ebs.com / info@e-ebs.com <br> Riyadh, Muscat, Oman',
       ],
-      Image: '/images/partner.png',
+      Image: '/images/businesspartner.png',
       stats: {
         models: '15+',
         performance: '99.8%',
@@ -329,7 +329,7 @@ function Strategic() {
                     ref={el => sectionsRefs.current[section.id] = el}
                     className="min-h-screen flex items-center"
                 >
-                    <div className="">
+                    <div className="w-full">
                         <div className="animate-fadeIn">
                             {/* Title */}
                             {/* <h2 className="text-[36px] font-bold text-white mb-3">
@@ -338,7 +338,7 @@ function Strategic() {
                              <img
                                 src={section.Image}
                                 alt={`${section.title} main image`}
-                                className="w-full h-auto mb-6"
+                                className="w-full h-[40vh] object-cover mb-6"
                             />
 
                             {/* Subtitle */}
