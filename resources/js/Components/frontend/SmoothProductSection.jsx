@@ -210,7 +210,7 @@ function SmoothExperienceSection() {
                     <img
                       src={`${appUrl}/${section.thumbnail}`}
                       alt={`${section.title} main image`}
-                      className="w-full h-auto mb-6"
+                      className="w-full h-[40vh] object-cover mb-6"
                     />
 
                     {/* Title */}
@@ -223,7 +223,7 @@ function SmoothExperienceSection() {
                       {parse(section.description)}
                     </p>
 
-                    <Link className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Click to Explore <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
+                       <Link href={route('web.product.show', { slug: section.slug })}  className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Click to Explore <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                     </Link>
                   </div>
                     <hr className="border-white mb-8"/>

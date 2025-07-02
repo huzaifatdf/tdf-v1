@@ -38,7 +38,7 @@ export default function Productinner() {
             <div className="container-fluid relative mt-[150px]">
                 <div className="banner-inner-page  flex flex-col md:flex-row gap-12 items-start align-items-center">
                     <div className="md:w-1/2">
-                        <h1 className="text-[34px] fc-secondary leading-tight mb-6">
+                        <h1 className="text-[40px] fc-secondary leading-tight mb-6">
                             {/* Eduman<br className="hidden md:block" />A Saas-Based School Management System */}
                             {product.title}
                         </h1>
@@ -67,7 +67,7 @@ export default function Productinner() {
                         <p className="text-[16px] fc-primary leading-relaxed">
                             Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
                         </p> */}
-                       <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
+                       <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ export default function Productinner() {
            <section className="container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
       {/* Left Content */}
         <div className="flex-1">
-            <h2 className="text-[30px] font-bold fc-secondary leading-tight mb-6">
+            <h2 className="text-[32px] fc-secondary leading-tight mb-6">
             {jsonParseData["Our Work"]["title"]}
             </h2>
             <p className="text-[18px] text-white leading-relaxed">
