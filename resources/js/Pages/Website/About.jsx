@@ -35,7 +35,7 @@ export default function About() {
                     <div className="">
                         <div className="flex flex-col md:flex-row gap-12 pb-[60px]">
                             <div className="md:w-1/2">
-                                <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
+                                <h1 className="mobile-banner-heading text-[50px] fc-secondary leading-tight mb-0">
                                     About Us - TDF
                                 </h1>
                             </div>
@@ -70,7 +70,7 @@ function AboutSection() {
   return (
     <section className="about-mobile-screens relative sec-padding">
       <div className="container-fluid">
-        <h2 className="fc-secondary text-[30px] mb-6">
+        <h2 className="fc-secondary text-[32px] mb-6">
           Creative Thinkers. Strategic Doers
         </h2>
         <p className="fc-primary text-[18px]">
@@ -603,7 +603,7 @@ const Experience = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left Heading */}
                 <div className="lg:col-span-6">
-                    <h2 className="text-[60px] leading-[1.1] fc-secondary">
+                    <h2 className="text-[50px] leading-[1.1] fc-secondary">
                     20+ Years in, <br className="hidden lg:block" /> and We’re Just Getting Started
                     </h2>
                 </div>
