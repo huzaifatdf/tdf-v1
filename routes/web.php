@@ -77,7 +77,8 @@ Route::middleware(TrackSeoVisits::class)->group(function () {
 Route::get('/', function () {
     return Inertia::render('Website/Homev2');
 });
-Route::get('/{slug}', [WebSiteController::class, 'showStaticPages']);
+Route::get('/{slug}', [WebSiteController::class, 'dynamicPage'])
+    ->name('dynamicpage.show');
 Route::get('/case-studies/{slug}', [WebSiteController::class, 'showCaseStudy'])
     ->name('casestudy.show');
 
@@ -87,8 +88,7 @@ Route::get('/product/{slug}', [WebSiteController::class, 'showProduct'])
 });
 
 //dynamicPage
-// Route::get('/{slug}', [WebSiteController::class, 'dynamicPage'])
-//     ->name('dynamicpage.show');
+
 
 
 

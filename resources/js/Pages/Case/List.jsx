@@ -132,7 +132,8 @@ export default function List() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => router.get(route('case.edit', caselist.id))} className="cursor-pointer">Edit case</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => window.open(route('case.edit', caselist.id), '_blank')}
+                            className="cursor-pointer">Edit case</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => router.get(route('case.duplicate', caselist.id))} className="cursor-pointer">Duplicate case</DropdownMenuItem>
 
                            <Dialog>

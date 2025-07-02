@@ -47,7 +47,23 @@ class WebSiteController extends Controller
 
 
      public function dynamicPage(Request $request, $slug) {
+
         $page = Page::where('slug', $slug)->where('status', 'published')->with('publishedSections')->first();
+        if($page->predefine_page) {
+            // If the page has a predefined page, we can render it directly
+            $component = 'Website/' . ucfirst($page->predefine_page);
+            $path = resource_path("js/Pages/{$component}.jsx");
+
+            if (!file_exists($path)) {
+                abort(404);
+            }
+
+            return Inertia::render($component, [
+                'page' => $page,
+                'metaTitle' => $page->meta_title ?? $page->title,
+                'metaDescription' => $page->meta_description ?? 'Learn more about our ' . $page->title . ' at TDF Agency.',
+            ]);
+        }
         return Inertia::render('Website/Dynamicpage', [
             'page' => $page
         ]);
