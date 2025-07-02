@@ -28,7 +28,7 @@ export default function About() {
   }, []);
 
   return (
-    <WebsiteLayout title="Contact | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title="Partners | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
         <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">

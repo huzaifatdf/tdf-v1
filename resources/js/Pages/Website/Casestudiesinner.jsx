@@ -42,7 +42,7 @@ export default function Casestudiesinner(props) {
   }, []);
 
   return (
-    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={`${casestudy.title}|Case Studies | TDF Agency`} description="Explore our portfolio of successful digital transformations and client success stories.">
       <section ref={introRef} className="banner-inner-page flex items-center relative overflow-hidden">
         <div className="container-fluid relative mt-[150px]">
             <div className="">
