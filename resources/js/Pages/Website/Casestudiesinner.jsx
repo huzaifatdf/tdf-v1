@@ -267,7 +267,7 @@ function Beginning(props) {
 
         <hr className="border-white mb-8"/>
         <div className="sec-padding box begining-section mobile-screens">
-        <div className="grid lg:grid-cols-2 gap-12 align-items-centerssss">
+        <div className="grid lg:grid-cols-2 gap-12 align-items-center">
           {/* Left side - Image */}
           <div className="relative">
             <div className="overflow-hidden shadow-2xl">

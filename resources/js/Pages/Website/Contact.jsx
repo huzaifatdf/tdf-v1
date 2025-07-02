@@ -40,10 +40,10 @@ export default function About() {
                             </h1>
                         </div>
                         <div className="md:w-1/2">
-                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
-                                Have a project?
+                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
+                                Have A Project?
                             </p>
-                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
                                 Let’s make it happen together.
                             </p>
                         </div>
