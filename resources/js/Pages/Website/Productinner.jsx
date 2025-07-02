@@ -368,10 +368,11 @@ function WhatProblem(props) {
               <div className="mb-12">
                 <h1 className="text-[32px] fc-secondary leading-tight mb-6">
                   {problem?.problem || 'What Problem?'}
-                </h1>
+                </h1>{problem?.problem_description && (
                 <p className="text-[18px] fc-primary leading-relaxed">
                   {problem?.problem_description ? parse(problem?.problem_description) : '...'}
                 </p>
+                )}
               </div>
               <nav className="space-y-8">
                 {sections.map((section, index) => (
