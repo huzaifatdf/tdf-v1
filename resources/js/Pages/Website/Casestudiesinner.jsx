@@ -282,9 +282,9 @@ function Beginning(props) {
           {/* Right side - Content */}
           <div className="lg:pl-8">
             {jsonData["Detail"]?.the_beginning && <>
-            <h2 className="text-[30px] fc-secondary mb-3">
+            {/* <h2 className="text-[30px] fc-secondary mb-3">
               The Beginning - Understanding the Need
-            </h2>
+            </h2> */}
 
             <div className="mb-8">
                 { parse(jsonData["Detail"]["the_beginning"]) }
@@ -292,9 +292,9 @@ function Beginning(props) {
             </>}
              {jsonData["Approach"]?.description && <>
             <div>
-              <h3 className="text-lime-400 text-[30px] fc-secondary mb-3">
+              {/* <h3 className="text-lime-400 text-[30px] fc-secondary mb-3">
                 Our Approach
-              </h3>
+              </h3> */}
 
               { parse(jsonData["Approach"]["description"]) }
             </div>
