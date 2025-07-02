@@ -77,7 +77,7 @@ export default function Casestudiesinner(props) {
 
       {jsonData["Service"] &&  <Capabilities data={casestudy} jsonData={jsonData}/>}
       <Beginning data={casestudy} jsonData={jsonData} />
-      {jsonData["Experience"] && jsonData["Experience"]["description_1"] && <BoxExperienceSection data={casestudy} jsonData={jsonData}/> }
+      {jsonData["Experience"] && <BoxExperienceSection data={casestudy} jsonData={jsonData}/> }
       { jsonData?.Technology || jsonData?.conclusion && <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/> }
     </WebsiteLayout>
   );
@@ -653,7 +653,7 @@ function BoxExperienceSection(props) {
   const currentSection = sections.find(s => s.id === activeSection);
 
   return data &&  (
-    <>
+    <> {sections.length > 0 && (
         <section ref={sectionRef} className="container-fluid box designing-section mobile-screens">
             {/* Main Content Area */}
             <div className="sec-padding --small">
@@ -689,7 +689,7 @@ function BoxExperienceSection(props) {
 
             </div>
                 <hr className="border-white mt-8"/>
-        </section>
+        </section>)}
     </>
   );
 }
