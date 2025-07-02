@@ -7,7 +7,7 @@ function TestimonialsSection() {
    {
     id: 1,
     name: "Shahzaib Mehmood",
-    designation: "Director",
+    designation: "Director at So~Safe",
     rating: 5,
     title: "The team at TDF designed and executed the launch of our So~Safe UAE International website with great professionalism. Their creativity combined with the skills required to implement it produced that wow factor one requires on their website.",
     image: "images/sosafetesti.png",
@@ -15,7 +15,7 @@ function TestimonialsSection() {
     {
     id: 2,
     name: "Mahwish Saad Khan",
-    designation: "Executive Commercial Head",
+    designation: "Executive Commercial Head – DataCheck",
     rating: 5,
     title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
     image: "images/datachecktesti.png",
@@ -23,7 +23,7 @@ function TestimonialsSection() {
   {
     id: 3,
     name: "Arsalan Farid",
-    designation: "Deputy Sales Manager-Key Accounts",
+    designation: "Deputy Sales Manager-Key Accounts Idemitsu Pakistan",
     rating: 5,
     title: "I acknowledge and appreciate the fine and professional attitude of team TDF, who certainly, owns the acumen for understanding the customer needs, conceptualize and execute the strategizes that creates brand pull, follows equity and eventually creating value.",
     image: "images/idemtesti.png",
@@ -31,7 +31,7 @@ function TestimonialsSection() {
   {
     id: 4,
     name: "Aamir Basrai",
-    designation: "CEO",
+    designation: "CEO - PentaExpress",
     rating: 5,
     title: "TDF has helped us elevate our social presence while helping target the market. My journey so far with them has been exceptional.",
     image: "images/pentatesti.png",
@@ -47,7 +47,7 @@ function TestimonialsSection() {
   {
     id: 6,
     name: "Barbara Chanakira",
-    designation: "Eaton Property Consultants",
+    designation: "CEO , Eaton Property Consultants",
     rating: 5,
     title: "We envisioned holistic branding for our business, and we’re glad we chose TDF as our partner. TDF’s customized branding strategy has significantly enhanced our digital presence, delivering a website that truly represents our business. Their keen eye for detail was evident throughout the project, reflected in the exemplary quality of work we received.",
     image: "images/eatontesti.png", // Placeholder image
@@ -62,11 +62,11 @@ function TestimonialsSection() {
   },
   {
     id: 8,
-    name: "Saira Nasir",
-    designation: "Founder & Owner",
+    name: "Dr. Nadia Alwasiah",
+    designation: "Physiatrist & Physician",
     rating: 5,
-    title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
-    image: "images/mimistesti.png", // Placeholder image
+    title: "I want to offer my thanks to TDF. With their expertise, they developed an exceptional website that perfectly represents my practice. Highly recommended!",
+    image: "images/nadiatesti.png", // Placeholder image
   }
 
   ]);
