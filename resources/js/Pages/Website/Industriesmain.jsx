@@ -33,7 +33,7 @@ export default function Productinner() {
                 <div className="">
                     <div className="flex flex-col md:flex-row gap-12 pb-[20px]">
                         <div className="md:w-1/2">
-                            <h1 className="mobile-banner-heading text-[60px] fc-secondary leading-tight mb-0">
+                            <h1 className="mobile-banner-heading text-[50px] fc-secondary leading-tight mb-0">
                                 Industries We Serve
                             </h1>
                         </div>
@@ -42,7 +42,7 @@ export default function Productinner() {
                             <h2 className="mobile-banner-sub-heading text-[30px] fc-white leading-tight">
                                 Delivering Impact in Every Industry<br />Industries Powered by Our Expertise
                             </h2>
-                            <p className="mobile-banner-para text-[20px] fc-primary leading-relaxed mb-0">
+                            <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-0">
                                No matter your field, your challenges are unique - and so are our solutions. TDF helps businesses in every industry reimagine how their brands connect with their audiences.
                             </p>
                             </div>

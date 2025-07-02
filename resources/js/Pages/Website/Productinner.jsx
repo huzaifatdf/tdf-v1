@@ -32,7 +32,7 @@ export default function Productinner() {
   }, []);
 
   return (
-    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={`${product.title} | Product | TDF Agency`} description="Explore our portfolio of successful digital transformations and client success stories.">
           <section ref={introRef} className="flex items-center bg-dark-950 relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px]">
@@ -104,9 +104,7 @@ export default function Productinner() {
             {parse(jsonParseData["Our Work"]["description"])}
             </p>
             <div className="mt-6">
-            <Link href="/casestudiesmain" className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">
-                See Our Work
-                <span class="fc-purple group-hover:translate-x-1 transition-transform">&rarr;</span>
+            <Link href="/casestudiesmain" className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">See Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             </div>
         </div>

@@ -56,7 +56,7 @@ export default function IndustrySection() {
                 <div className="mt-6">
                   <button
                     onClick={() => toggleExpand(index)}
-                    className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer"
+                    className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer"
                   >
                     {isExpanded ? "Read Less" : "Read More"}
                     <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
@@ -75,10 +75,10 @@ export default function IndustrySection() {
                     {parse(jsonData["Our Work"]["description"] || '')}
                   </div>
 
-                  <Link href={'casestudiesmain'} className="text-[18px] inline-flex items-center gap-2 text-purple-400 underline decoration-purple-400 transition-colors duration-300 hover:text-[#91A7BA] hover:decoration-[#91A7BA]">View Our Work</Link>
+                  <Link href={'casestudiesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">View Our Work<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                 </div>
 
-                <Link href={'Servicesmain'} className="group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-green-300 transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                <Link href={'Servicesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
               </div>
 
               {/* Right Column */}
