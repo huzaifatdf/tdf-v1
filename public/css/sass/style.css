@@ -9817,6 +9817,10 @@ table {
   color: black;
 }
 
+.contact-us-hover:hover span {
+  color: #9747FF !important;
+}
+
 footer {
   position: relative;
 }

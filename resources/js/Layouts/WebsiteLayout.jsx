@@ -161,7 +161,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                             { href: "/case-studies", label: "Case Studies", icon: "/images/case.svg" },
                                             { href: "/about", label: "About Us", icon: "/images/about.svg" },
                                             { href: "/partners", label: "Partners", icon: "/images/partner.svg" },
-                                            { href: "https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", label: "Careers", icon: "/images/careers.svg" }, //Careers
+                                            { href: "https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En", target: "_blank", label: "Careers", icon: "/images/careers.svg" }, //Careers
                                             { href: "/contact", label: "Contact", icon: "/images/contact.svg" },
 
 
@@ -247,7 +247,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     <Link href="/case-studies" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Case Studies</Link>
                                     <Link href="/about" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">About Us</Link>
                                     <Link href="/partners" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Partners</Link>
-                                    <a href="https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
+                                    <a href="https://app.myhcm.pk/CareerPortal/Careers?q=lquGlsZPq1NxJlf9S%2B8LjQ%3D%3D&lang=En" target='_blank' className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Career</a>
                                     <Link href="/contact" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Contact</Link>
                                 </div>
 

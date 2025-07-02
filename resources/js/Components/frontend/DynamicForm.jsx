@@ -287,12 +287,12 @@ function DynamicForm(props) {
                                             type="button"
                                             onClick={() => {setActiveTab(field.name, value);handleInputChange(field.name,label);}}
 
-                                            className="flex flex-col items-start pr-6 text-left"
+                                            className="flex flex-col items-start pr-6 text-left contact-us-hover"
                                         >
                                             <span className="fc-primary">0{idx + 1}</span>
                                             <span
                                                 className={`relative text-[22px] ${
-                                                    activeTab === value ? 'fc-secondary' : 'text-white'
+                                                    activeTab === value ? 'capitalize fc-secondary' : 'text-white'
                                                 }`}
                                             >
                                                 {label}

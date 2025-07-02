@@ -739,3 +739,12 @@ table {
     overflow-y: scroll;
     color: black;
 }
+
+
+.contact-us-hover {
+    &:hover {
+        span {
+            color: $theme-purple !important;
+        }
+    }
+}

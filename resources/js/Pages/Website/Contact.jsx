@@ -69,7 +69,7 @@ const ContactSection = () => {
       <div className="container-fluid grid lg:grid-cols-12 gap-20">
         {/* Left Column: Contact Info */}
         <div className="lg:col-span-6">
-          <h3 className="text-[22px] fc-primary leading-tight mb-3">Tell us about your vision:</h3>
+          <h3 className="text-[22px] fc-primary leading-tight mb-3">Tell Us About Your Vision:</h3>
           <p className="text-[18px] fc-primary mb-0">
             Which challenges are you facing? What are your goals and expectations? What would success look like and how much are you planning to spend to get there?
           </p>
@@ -90,8 +90,10 @@ const ContactSection = () => {
                 <div className="flex items-start gap-3 align-items-center">
                     <img style={{width: '60px'}} src="/images/phone.svg" alt="Phone Icon" />
                     <div>
-                    <span className="text-[18px] fc-primary leading-tight block">Phone number</span>
-                    <span className="text-[18px] text-white block">+123 456 7890</span>
+                    <span className="text-[18px] fc-primary leading-tight block mb-2">Phone number</span>
+                    <a href="tel:+923030808833"><span className="text-[18px] text-white block">PAK: +92 303 080 8833</span></a>
+                    <a href="tel:+966543435768"><span className="text-[18px] text-white block">KSA: +966 54 343 5768</span></a>
+                    <a href="tel:+2393565070"><span className="text-[18px] text-white block">USA: +1 239 356 5070</span></a>
                     </div>
                 </div>
 
