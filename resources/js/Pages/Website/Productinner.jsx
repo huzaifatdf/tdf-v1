@@ -67,7 +67,7 @@ export default function Productinner() {
                         <p className="text-[16px] fc-primary leading-relaxed">
                             Provide a few quick details, and we’ll give you access to a full walkthrough + demo video.
                         </p> */}
-                       <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-6"> {parse(product.description)}</p>
+                       <p className="mobile-banner-para text-[18px] fc-primary leading-relaxed mb-6 mobile-screens"> {parse(product.description)}</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export default function Productinner() {
             <h2 className="text-[32px] fc-secondary leading-tight mb-6">
             {jsonParseData["Our Work"]["title"]}
             </h2>
-            <p className="text-[18px] text-white leading-relaxed">
+            <p className="text-[18px] text-white leading-relaxed mobile-screens">
             {/* Let us show you how <strong>EDUMAN</strong> can simplify your school’s operations.<br />
             <span className="text-lime-400 font-medium">Book a Demo</span> today! */}
             {parse(jsonParseData["Our Work"]["description"])}

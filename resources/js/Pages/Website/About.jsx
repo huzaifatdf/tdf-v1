@@ -133,7 +133,7 @@ function StatsSection() {
                     {stat.icon}
                 </div>
                 <div>
-                    <p className="fc-white mb-0 text-[16px] ">{stat.label}</p>
+                    <p className="fc-white mb-0 text-[18px] ">{stat.label}</p>
                     <h3 className="fc-white text-[32px]">
                     <CountUp end={stat.value} duration={2.5} /> {stat.suffix}
                     </h3>
