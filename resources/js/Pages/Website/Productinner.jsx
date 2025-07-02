@@ -132,7 +132,7 @@ function BenefitsContactForm(props) {
     <div className="relative py-16 bg-[#040404]">
       <div className="container-fluid">
         <h2 className="text-[32px] fc-secondary leading-tight mb-9">
-            {jsonData["CTA"]["label"] || 'Uncover the Benefits Now!'}
+            { jsonData["CTA"] ? jsonData["CTA"]["label"] : 'Uncover the Benefits Now!'}
         </h2>
 
         <div className="space-y-8">
@@ -243,9 +243,11 @@ function parseData(data) {
 function WhatProblem(props) {
   const [activeSection, setActiveSection] = useState('01'); // Set default to first section
   const sectionRef = useRef(null);
+  const rightContentRef = useRef(null);
   const { problem, solutions } = props;
   const sections = parseData(solutions);
   const [expandedSections, setExpandedSections] = useState(new Set());
+
   // Set default active section to first section if sections exist
   useEffect(() => {
     if (sections.length > 0 && !sections.find(s => s.id === activeSection)) {
@@ -271,8 +273,49 @@ function WhatProblem(props) {
     }
   }, []);
 
+  // Scroll-based tab navigation
+  useEffect(() => {
+    const rightContent = rightContentRef.current;
+    if (!rightContent || sections.length === 0) return;
+
+    const handleScroll = () => {
+      const scrollTop = rightContent.scrollTop;
+      const containerHeight = rightContent.clientHeight;
+      const totalScrollHeight = rightContent.scrollHeight - containerHeight;
+
+      if (totalScrollHeight <= 0) return;
+
+      // Calculate which section should be active based on scroll position
+      const scrollProgress = scrollTop / totalScrollHeight;
+      const sectionIndex = Math.floor(scrollProgress * sections.length);
+      const clampedIndex = Math.max(0, Math.min(sectionIndex, sections.length - 1));
+
+      const newActiveSection = sections[clampedIndex]?.id;
+      if (newActiveSection && newActiveSection !== activeSection) {
+        setActiveSection(newActiveSection);
+      }
+    };
+
+    rightContent.addEventListener('scroll', handleScroll);
+    return () => rightContent.removeEventListener('scroll', handleScroll);
+  }, [sections, activeSection]);
+
   const handleSectionClick = (sectionId) => {
     setActiveSection(sectionId);
+
+    // Scroll to corresponding position in right content
+    const rightContent = rightContentRef.current;
+    if (rightContent && sections.length > 0) {
+      const sectionIndex = sections.findIndex(s => s.id === sectionId);
+      if (sectionIndex !== -1) {
+        const totalScrollHeight = rightContent.scrollHeight - rightContent.clientHeight;
+        const targetScroll = (sectionIndex / (sections.length - 1)) * totalScrollHeight;
+        rightContent.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        });
+      }
+    }
   };
 
   const toggleReadMore = (sectionId) => {
@@ -284,7 +327,6 @@ function WhatProblem(props) {
     }
     setExpandedSections(newExpanded);
   };
-
 
   const shouldShowReadMore = (text) => {
     // Count approximate lines based on character length
@@ -312,8 +354,6 @@ function WhatProblem(props) {
 
     return truncated;
   };
-
-
 
   const currentSection = sections.find(s => s.id === activeSection);
 
@@ -369,53 +409,48 @@ function WhatProblem(props) {
             </div>
           </div>
 
-          {/* Right Side - Tab Content */}
-          <div className="w-1/2 flex items-center justify-center min-h-screen">
-            <div className="max-w-xl w-full">
-              {currentSection && (
-                <div className="animate-fadeIn">
-                  <p className="text-[18px] fc-primary mb-8 leading-relaxed">
-                     {shouldShowReadMore(currentSection.description) ? (
-                      <>
-                        {expandedSections.has(currentSection.id) ? (
+          {/* Right Side - Scrollable Tab Content */}
+          <div className="w-1/2 h-screen overflow-y-auto" ref={rightContentRef}>
+            <div className="min-h-full">
+              {sections.map((section, index) => (
+                <div key={section.id} className="min-h-screen flex items-center justify-center">
+                  <div className="max-w-xl w-full">
+                    <div className="animate-fadeIn">
+                      <p className="text-[18px] fc-primary mb-8 leading-relaxed">
+                        {shouldShowReadMore(section.description) ? (
                           <>
-                    {parse(currentSection.description)}
-                     <button
-                              onClick={() => toggleReadMore(currentSection.id)}
-                              className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
-                            >
-                              Read Less
-                            </button>
-                            </>
-                        ) : (
-                          <>
-                            {parse(getTruncatedText(currentSection.description))}
-                            <span className="text-gray-500">...</span>
-                            <button
-                              onClick={() => toggleReadMore(currentSection.id)}
-                              className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
-                            >
-                              Read More
-                            </button>
+                            {expandedSections.has(section.id) ? (
+                              <>
+                                {parse(section.description)}
+                                <button
+                                  onClick={() => toggleReadMore(section.id)}
+                                  className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
+                                >
+                                  Read Less
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                {parse(getTruncatedText(section.description))}
+                                <span className="text-gray-500">...</span>
+                                <button
+                                  onClick={() => toggleReadMore(section.id)}
+                                  className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
+                                >
+                                  Read More
+                                </button>
+                              </>
+                            )}
                           </>
+                        ) : (
+                          parse(section.description)
                         )}
-                      </>
-                    ) : (
-                      parse(currentSection.description)
-                    )}
-                  </p>
-                  <hr className="border-white mb-8"/>
+                      </p>
+                      <hr className="border-white mb-8"/>
+                    </div>
+                  </div>
                 </div>
-              )}
-
-              {/* Show message if no content */}
-              {!currentSection && (
-                <div className="text-center">
-                  <p className="text-[16px] fc-primary">
-                    Select a section to view content
-                  </p>
-                </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
