@@ -143,6 +143,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
         <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-5 flex flex-col justify-between h-full">
                 <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
+               {description && <p className="text-[18px] fc-primary leading-relaxed mb-6">{parse(description)}</p>}
                 <a
                 href={`https://${link}`}
                 target="_blank"
@@ -179,12 +180,14 @@ function transformData(data) {
   for (let i = 0; i < data.length; i += 2) {
     const titleObj = data[i];
     const imageObj = data[i + 1];
+    const descObj = data[i + 2];
 
     // Make sure both objects exist and are valid
-    if (titleObj?.key === 'title' && imageObj?.key === 'image') {
+    if (titleObj?.key === 'title' && descObj?.key === 'description' && imageObj?.key === 'image') {
       result.push({
         title: titleObj.value,
-        image: imageObj.value
+        image: imageObj.value,
+        description: descObj.value,
       });
     }
   }
@@ -203,6 +206,7 @@ function Capabilities(props) {
   ? services.map((item, index) => ({
     id: String(index + 1).padStart(2, '0'), // "01", "02", "03", ...,
       title: item?.title,
+      description: item?.description,
       //set description to 10 words max
       description:data?.description || '',
          link: jsonData["Detail"]?.website || '',
