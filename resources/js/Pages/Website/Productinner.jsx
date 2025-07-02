@@ -104,7 +104,7 @@ export default function Productinner() {
             {parse(jsonParseData["Our Work"]["description"])}
             </p>
             <div className="mt-6">
-            <Link href="/casestudiesmain" className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">See Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
+            <Link href="/case-studies" className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">See Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             </div>
         </div>

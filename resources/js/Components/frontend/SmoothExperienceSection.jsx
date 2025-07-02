@@ -266,8 +266,8 @@ function SmoothExperienceSection() {
                     </div>
                       </>)}
                         <div className="mt-8">
-                        <Link href={'casestudiesmain'}  className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
-                        <Link href={'Industriesmain'} className="mt-2 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Industries We Serve <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                        <Link href={'case-studies'}  className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Our Work <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                        <Link href={'industries'} className="mt-2 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Industries We Serve <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                         </div>
 
                     {/* <hr className="border-white mb-8"/> */}

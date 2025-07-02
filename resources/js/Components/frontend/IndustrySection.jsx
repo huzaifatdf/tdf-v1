@@ -75,10 +75,10 @@ export default function IndustrySection() {
                     {parse(jsonData["Our Work"]["description"] || '')}
                   </div>
 
-                  <Link href={'casestudiesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">View Our Work<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                  <Link href={'case-studies'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">View Our Work<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
                 </div>
 
-                <Link href={'Servicesmain'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
+                <Link href={'services'} className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Explore Services<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span></Link>
               </div>
 
               {/* Right Column */}
