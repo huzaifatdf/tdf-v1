@@ -5,6 +5,8 @@ import WebsiteLayout from '@/Layouts/WebsiteLayout';
 import "swiper/css";
 import "swiper/css/pagination";
 import { usePage } from '@inertiajs/react';
+//parse
+import parse from 'html-react-parser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,6 +124,12 @@ export default function Home() {
                                 <iframe width={`${JSON.parse(section.properties).width}%`||"auto"} style={{height:`${JSON.parse(section.properties).height}vh`}} src={section.content} title="YouTube video player"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             );
                          }
+
+                          if (section.type === 'text' && section.content) {
+                            return (
+                               parse(section.content)
+                            );
+                          }
                         return null;
                     })}
                 </div>
