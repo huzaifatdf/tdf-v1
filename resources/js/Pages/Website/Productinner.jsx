@@ -375,7 +375,7 @@ function WhatProblem(props) {
             <div className="max-w-xl w-full">
               {currentSection && (
                 <div className="animate-fadeIn">
-                  <p className="text-[16px] fc-primary mb-8 leading-relaxed">
+                  <p className="text-[18px] fc-primary mb-8 leading-relaxed">
                      {shouldShowReadMore(currentSection.description) ? (
                       <>
                         {expandedSections.has(currentSection.id) ? (
