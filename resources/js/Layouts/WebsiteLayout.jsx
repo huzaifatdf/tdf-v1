@@ -240,7 +240,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                                     </a>
                                 </div>
 
-                                <div className="flex space-x-4">
+                                <div className="flex space-x-4 mobile-ffoter-menu">
                                     <Link href="/Servicesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Services</Link>
                                     <Link href="/Productmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Product</Link>
                                     <Link href="/Industriesmain" className="hover:text-[#9747FF] inline-block text-[16px] fc-primary mb-0 border-b-2 border-transparent hover:border-current transition-all duration-200">Industries</Link>

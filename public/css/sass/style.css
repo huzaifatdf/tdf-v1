@@ -9070,7 +9070,8 @@ header nav.pn ul li ul li ul {
   margin: 10px 0px;
 }
 .box.designing-section ul li {
-  list-style: circle;
+  list-style: disc;
+  padding-left: 15px;
   margin-bottom: 5px;
   padding: 0;
   font-size: 18px;
@@ -9493,6 +9494,9 @@ form textarea {
 .mobile-screens ul li ul li {
   list-style-type: disc;
 }
+.mobile-screens ul li ul li:before {
+  content: unset;
+}
 .mobile-screens p b {
   font-size: 18px;
   color: #ffffff;
@@ -9706,6 +9710,16 @@ form textarea {
   }
   .mobile-footer .img-margin-mobile {
     margin-bottom: 0 !important;
+  }
+  .mobile-ffoter-menu {
+    display: unset;
+  }
+  .mobile-ffoter-menu a {
+    margin: 5px !important;
+  }
+  .center-image {
+    position: relative;
+    top: -70px;
   }
 }
 @keyframes loader {

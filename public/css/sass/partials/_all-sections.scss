@@ -398,6 +398,9 @@ form {
                 margin-top: 0 !important;
                 li {
                     list-style-type: disc;
+                    &:before {
+                        content: unset;
+                    }
                 }
             }
         }
@@ -620,6 +623,16 @@ form {
         .img-margin-mobile {
             margin-bottom: 0 !important;
         }
+    }
+    .mobile-ffoter-menu {
+        display: unset;
+        a {
+            margin: 5px !important;
+        }
+    }
+    .center-image {
+        position: relative;
+    top: -70px;
     }
 }
 

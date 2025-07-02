@@ -42,6 +42,7 @@ function ServiceSlider() {
             }}
             speed={3000} // smooth speed for transition
             breakpoints={{
+                0: { slidesPerView: 1 },
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 4 },
             }}
