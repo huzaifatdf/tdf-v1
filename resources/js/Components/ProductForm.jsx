@@ -1,6 +1,7 @@
 import { router } from '@inertiajs/react';
 import axios from 'axios';
 import React from 'react'
+import * as Yup from 'yup';
 
 function ProductForm(props) {
      const [isExpanded, setIsExpanded] = React.useState(false);
@@ -11,12 +12,126 @@ function ProductForm(props) {
     const [errors, setErrors] = React.useState({});
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const {product} = props;
+    const [validationSchema, setValidationSchema] = React.useState(null);
+
+           const createValidationSchema = (fields) => {
+                const schemaFields = {};
+
+                //ignore on field_product
+                if (fields.some(field => field.name === 'field_product')) {
+                    fields = fields.filter(field => field.name !== 'field_product');
+                }
+
+                fields.forEach(field => {
+                    let fieldSchema;
+
+                    switch (field.type) {
+                        case 'email':
+                            fieldSchema = Yup.string().email('Please enter a valid email address');
+                            break;
+                        case 'url':
+                            fieldSchema = Yup.string().url('Please enter a valid URL');
+                            break;
+                        case 'tel':
+                            fieldSchema = Yup.string().matches(
+                                /^[\+]?[1-9][\d]{0,15}$/,
+                                'Please enter a valid phone number'
+                            );
+                            break;
+                        case 'number':
+                            fieldSchema = Yup.number().typeError('Please enter a valid number');
+                            if (field.min !== undefined) {
+                                fieldSchema = fieldSchema.min(field.min, `Minimum value is ${field.min}`);
+                            }
+                            if (field.max !== undefined) {
+                                fieldSchema = fieldSchema.max(field.max, `Maximum value is ${field.max}`);
+                            }
+                            break;
+                        case 'date':
+                            fieldSchema = Yup.date().typeError('Please enter a valid date');
+                            break;
+                        case 'checkbox':
+                            if (field.options && Object.keys(field.options).length > 1) {
+                                // Multiple checkboxes
+                                fieldSchema = Yup.array();
+                                if (field.required) {
+                                    fieldSchema = fieldSchema.min(1, `Please select at least one ${field.label.toLowerCase()}`);
+                                }
+                            } else {
+                                // Single checkbox
+                                fieldSchema = Yup.boolean();
+                                if (field.required) {
+                                    fieldSchema = fieldSchema.oneOf([true], `${field.label} is required`);
+                                }
+                            }
+                            break;
+                        case 'radio':
+                            fieldSchema = Yup.string();
+                            break;
+                        case 'select':
+                            fieldSchema = Yup.string();
+                            break;
+                        case 'file':
+                            fieldSchema = Yup.mixed();
+                            if (field.required) {
+                                fieldSchema = fieldSchema.required(`${field.label} is required`);
+                            }
+                            // File size validation (if specified in field options)
+                            if (field.options?.max_size) {
+                                fieldSchema = fieldSchema.test(
+                                    'fileSize',
+                                    `File size must be less than ${field.options.max_size}MB`,
+                                    value => !value || (value && value.size <= field.options.max_size * 1024 * 1024)
+                                );
+                            }
+                            // File type validation
+                            if (field.options?.accept) {
+                                const acceptedTypes = field.options.accept.split(',').map(type => type.trim());
+                                fieldSchema = fieldSchema.test(
+                                    'fileType',
+                                    `File type must be one of: ${acceptedTypes.join(', ')}`,
+                                    value => !value || acceptedTypes.some(type =>
+                                        type === '*' || value.type.includes(type.replace('*', ''))
+                                    )
+                                );
+                            }
+                            break;
+                        case 'textarea':
+                        case 'text':
+                        default:
+                            fieldSchema = Yup.string();
+                            break;
+                    }
+
+                    // Add common validations
+                    if (field.required && field.type !== 'checkbox' && field.type !== 'file') {
+                        fieldSchema = fieldSchema.required(`${field.label} is required`);
+                    }
+
+                    // Length validations
+                    if (field.min_length && (field.type === 'text' || field.type === 'textarea')) {
+                        fieldSchema = fieldSchema.min(field.min_length, `${field.label} must be at least ${field.min_length} characters`);
+                    }
+                    if (field.max_length && (field.type === 'text' || field.type === 'textarea')) {
+                        fieldSchema = fieldSchema.max(field.max_length, `${field.label} must be no more than ${field.max_length} characters`);
+                    }
+
+                    schemaFields[field.name] = fieldSchema;
+                });
+
+                return Yup.object().shape(schemaFields);
+            };
+
     React.useEffect(() => {
         // Fetch form configuration
         axios.get('/api/v1/form/product-form')
             .then(response => {
                 console.log(response.data);
                 setForm(response.data.form);
+
+                  // Create validation schema
+                const schema = createValidationSchema(response.data.fields);
+                setValidationSchema(schema);
 
                 // Initialize form data based on form fields
                 const initialData = {};
@@ -36,6 +151,25 @@ function ProductForm(props) {
             });
     }, []);
 
+       const validateField = async (fieldName, value) => {
+        if (!validationSchema) return;
+
+        try {
+            await validationSchema.validateAt(fieldName, { [fieldName]: value });
+            // Clear error if validation passes
+            setErrors(prev => ({
+                ...prev,
+                [fieldName]: null
+            }));
+        } catch (error) {
+            // Set error if validation fails
+            setErrors(prev => ({
+                ...prev,
+                [fieldName]: error.message
+            }));
+        }
+    };
+
     const handleInputChange = (fieldName, value) => {
         setFormData(prev => ({
             ...prev,
@@ -49,6 +183,8 @@ function ProductForm(props) {
                 [fieldName]: null
             }));
         }
+          // Validate field on change
+        validateField(fieldName, value);
     };
 
     const handleFileChange = (fieldName, file) => {
@@ -62,6 +198,8 @@ function ProductForm(props) {
                 [fieldName]: file.name
             }));
         }
+          // Validate field on change
+        validateField(fieldName, value);
     };
 
     const handleCheckboxChange = (fieldName, value, checked) => {
@@ -79,6 +217,8 @@ function ProductForm(props) {
                 };
             }
         });
+          // Validate field on change
+        validateField(fieldName, value);
     };
 
     const handleSubmit = async (e) => {
@@ -87,6 +227,21 @@ function ProductForm(props) {
         setErrors({});
 
         try {
+            //ignore validation on field_product
+                // Validate entire form with Yup
+            if (validationSchema) {
+                // Exclude the product field from validation
+                // Prepare data for validation (including files)
+                const dataToValidate = { ...formData };
+                Object.keys(files).forEach(key => {
+                    if (files[key]) {
+                        dataToValidate[key] = files[key];
+                    }
+                });
+
+                await validationSchema.validate(dataToValidate, { abortEarly: false });
+            }
+
             // Create FormData for file uploads
             const submitData = new FormData();
             console.log(formData);
@@ -152,10 +307,23 @@ function ProductForm(props) {
         } catch (error) {
             console.error('Form submission error:', error);
 
-            if (error.response && error.response.data && error.response.data.errors) {
-                setErrors(error.response.data.errors);
+             if (error.name === 'ValidationError') {
+                // Handle Yup validation errors
+                const validationErrors = {};
+                error.inner.forEach(err => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
             } else {
-                alert('There was an error submitting the form. Please try again.');
+                // Handle server errors
+                // if (window.grecaptcha && recaptchaWidgetId !== null) {
+                //     window.grecaptcha.reset(recaptchaWidgetId);
+                // }
+                if (error.response && error.response.data && error.response.data.errors) {
+                    setErrors(error.response.data.errors);
+                } else {
+                    alert('There was an error submitting the form. Please try again.');
+                }
             }
         } finally {
             setIsSubmitting(false);
