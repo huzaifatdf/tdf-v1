@@ -647,7 +647,7 @@ function BoxExperienceSection(props) {
                         ref={el => sectionsRefs.current[section.id] = el}
                         className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
                     >
-                        <div className="max-w-xl">
+                        <div className="max-w-xl w-full">
                         <div className="animate-fadeIn">
                             {/* Title */}
                             <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
