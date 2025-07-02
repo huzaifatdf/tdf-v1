@@ -62,6 +62,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import MediaLibraryModel from "../Media/Model";
+import SummernoteInput from "@/Components/SummernoteInput";
 
 // Section type configurations
 const SECTION_TYPES = {
@@ -192,7 +193,7 @@ const SectionEditor = ({ section, onUpdate, onDelete, onMove }) => {
     switch (section.type) {
       case 'text':
         return (
-          <Textarea
+          <SummernoteInput
             value={section.content || ''}
             onChange={(e) => handleContentChange(e.target.value)}
             placeholder="Enter your text content..."
