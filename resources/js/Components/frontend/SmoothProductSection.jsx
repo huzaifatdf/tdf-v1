@@ -214,7 +214,7 @@ function SmoothExperienceSection() {
                     />
 
                     {/* Title */}
-                    <h2 className="text-[26px] text-white mb-2">
+                    <h2 className="text-[26px] fc-secondary mb-2">
                       {section.title}
                     </h2>
 
@@ -223,13 +223,7 @@ function SmoothExperienceSection() {
                       {parse(section.description)}
                     </p>
 
-                       <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary mb-2 flex items-center">
-                      <span className="inline-block border-b-2 border-transparent group-hover:border-current transition-all duration-200">
-                        Click to Explore
-                      </span>
-                      <span className="ml-3 fc-secondary transform transition-transform duration-200 group-hover:scale-125">
-                        &rarr;
-                      </span>
+                    <Link className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Click to Explore <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                     </Link>
                   </div>
                     <hr className="border-white mb-8"/>
