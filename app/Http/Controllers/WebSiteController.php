@@ -48,7 +48,13 @@ class WebSiteController extends Controller
 
      public function dynamicPage(Request $request, $slug) {
 
-        $page = Page::where('slug', $slug)->where('status', 'published')->with('publishedSections')->first();
+        $page = Page::where('slug', $slug)->with('publishedSections')->first();
+        if (!$page) {
+            abort(404);
+        }
+        if($page->status !== 'published') {
+            abort(403, 'This page is not published.');
+        }
         if($page->predefine_page) {
             // If the page has a predefined page, we can render it directly
             $component = 'Website/' . ucfirst($page->predefine_page);
