@@ -17,7 +17,7 @@ function TestimonialsSection() {
     name: "Mahwish Saad Khan",
     designation: "Executive Commercial Head",
     rating: 5,
-    title: "I wanted to take a moment to commend The Design Firm for managing DataCheck’s LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
+    title: "I wanted to take a moment to commend The Design Firm for managing DataCheck's LinkedIn presence so well. Their strategic approach and engaging content have driven brand awareness, follower growth, and valuable connections. We highly recommend them!",
     image: "images/datachecktesti.png",
   },
   {
@@ -49,7 +49,7 @@ function TestimonialsSection() {
     name: "Barbara Chanakira",
     designation: "Eaton Property Consultants",
     rating: 5,
-    title: "We envisioned holistic branding for our business, and we’re glad we chose TDF as our partner. TDF’s customized branding strategy has significantly enhanced our digital presence, delivering a website that truly represents our business. Their keen eye for detail was evident throughout the project, reflected in the exemplary quality of work we received.",
+    title: "We envisioned holistic branding for our business, and we're glad we chose TDF as our partner. TDF's customized branding strategy has significantly enhanced our digital presence, delivering a website that truly represents our business. Their keen eye for detail was evident throughout the project, reflected in the exemplary quality of work we received.",
     image: "images/eatontesti.png", // Placeholder image
   },
   {
@@ -63,6 +63,14 @@ function TestimonialsSection() {
   {
     id: 8,
     name: "Saira Nasir",
+    designation: "Founder & Owner",
+    rating: 5,
+    title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
+    image: "images/mimistesti.png", // Placeholder image
+  },
+    {
+    id: 9,
+    name: "Tdf Agency",
     designation: "Founder & Owner",
     rating: 5,
     title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
@@ -115,93 +123,55 @@ function TestimonialsSection() {
     return originalTestimonials.findIndex(t => t.id === centerTestimonial.id);
   };
 
+  // Define floating avatar positions
+  const floatingPositions = [
+    { top: "5%", left: "15%" },
+    { top: "15%", left: "25%" },
+    { top: "35%", left: "30%" },
+    { top: "35%", left: "17%" },
+    { top: "15%", right: "25%" },
+    { top: "5%", right: "15%" },
+    { top: "35%", right: "30%" },
+    { top: "35%", right: "17%" }
+  ];
+
   return (
     <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
-      {/* Background Network Pattern */}
-      {/* <div className="absolute inset-0 opacity-20">
-        <svg className="w-full h-full" viewBox="0 0 1000 1000">
-          <defs>
-            <pattern id="network" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <circle cx="50" cy="50" r="1" fill="#60a5fa" opacity="0.5"/>
-              <line x1="50" y1="50" x2="100" y2="0" stroke="#60a5fa" strokeWidth="0.5" opacity="0.3"/>
-              <line x1="50" y1="50" x2="100" y2="100" stroke="#60a5fa" strokeWidth="0.5" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#network)"/>
-        </svg>
-      </div> */}
-
       <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding --large px-8">
         {/* Floating Avatars */}
         <div className="floating-avatars absolute inset-0">
-          <div
-            className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "5%", left: "15%" }}
-          >
-            CK
-          </div>
-
-          {/* Dynamic floating avatars */}
-          {[1, 2, 3, 4].map((index, i) => (
-            testimonials[index].image !== '' ? (
-            <img
-              key={index}
-              className={`circle-avatar absolute w-12 h-12 rounded-full cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
-                isTransitioning ? 'scale-110 animate-pulse' : ''
-              }`}
-              src={testimonials[index].image}
-              onClick={() => handleSwapWithCenter(index)}
-              alt=""
-              style={
-                i === 0
-                  ? { top: "15%", left: "25%" }
-                  : i === 1
-                  ? { top: "35%", left: "30%" }
-                  : i === 2
-                  ? { top: "15%", right: "25%" }
-                  : { top: "5%", right: "15%" }
-              }
-            />
+          {/* Dynamic floating avatars - skip index 0 as it's the center testimonial */}
+          {testimonials.slice(1, 9).map((testimonial, i) => (
+            testimonial.image !== '' ? (
+              <img
+                key={testimonial.id}
+                className={`circle-avatar absolute ${
+                  i < 4 ? 'w-12 h-12' : 'w-16 h-16'
+                } rounded-full cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
+                  isTransitioning ? 'scale-110 animate-pulse' : ''
+                }`}
+                src={testimonial.image}
+                onClick={() => handleSwapWithCenter(i + 1)}
+                alt={testimonial.name}
+                style={floatingPositions[i]}
+              />
             ) : (
-            <div
-              key={index}
-              className={`circle-avatar absolute w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
-                isTransitioning ? 'scale-110 animate-pulse' : ''
-              }`}
-              onClick={() => handleSwapWithCenter(index)}
-              style={
-                i === 0
-                  ? { top: "15%", left: "25%" }
-                  : i === 1
-                  ? { top: "35%", left: "30%" }
-                  : i === 2
-                  ? { top: "15%", right: "25%" }
-                  : { top: "5%", right: "15%" }
-              }
-            >
-              {testimonials[index].name.charAt(0).toUpperCase()}
-            </div>
+              <div
+                key={testimonial.id}
+                className={`circle-avatar absolute ${
+                  i < 4 ? 'w-12 h-12' : 'w-16 h-16'
+                } bg-gray-200 rounded-full flex items-center justify-center ${
+                  i < 4 ? 'text-sm' : 'text-lg'
+                } font-bold text-gray-700 cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
+                  isTransitioning ? 'scale-110 animate-pulse' : ''
+                }`}
+                onClick={() => handleSwapWithCenter(i + 1)}
+                style={floatingPositions[i]}
+              >
+                {testimonial.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+              </div>
             )
           ))}
-
-          <div
-            className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "35%", left: "17%" }}
-          >
-            JB
-          </div>
-          <div
-            className="circle-avatar absolute w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "35%", right: "30%" }}
-          >
-            HT
-          </div>
-          <div
-            className="circle-avatar absolute w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-lg font-bold text-gray-700 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{ top: "35%", right: "17%" }}
-          >
-            JB
-          </div>
         </div>
 
         {/* Centered Testimonial */}
@@ -311,6 +281,9 @@ function TestimonialsSection() {
         .circle-avatar:nth-child(4) { animation-delay: -3s; }
         .circle-avatar:nth-child(5) { animation-delay: -4s; }
         .circle-avatar:nth-child(6) { animation-delay: -5s; }
+        .circle-avatar:nth-child(7) { animation-delay: -6s; }
+        .circle-avatar:nth-child(8) { animation-delay: -7s; }
+        .circle-avatar:nth-child(9) { animation-delay: -8s; }
       `}</style>
     </div>
   );
