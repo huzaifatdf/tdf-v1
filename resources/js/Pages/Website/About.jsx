@@ -351,7 +351,7 @@ const TimelineSection = () => {
 
 function WhatDrivesUs () {
   return (
-    <div className='about-mobile-screens container-fluid'>
+    <div className='about-mobile-screens container-fluid mobile-screens'>
         <div className="relative flex flex-col lg:flex-row items-center sec-padding">
             {/* Left Side Content */}
             <div className="lg:w-1/2">
@@ -360,7 +360,7 @@ function WhatDrivesUs () {
                 We’re driven by the belief that digital isn’t just a platform,  it’s a playground for ideas, creativity, and innovation.
                 </p>
                 <p className="fc-primary text-[18px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
-                <ul className="fc-primary text-[22px] mb-0 leading-relaxed p-0 mt-2 mb-2">
+                <ul className="fc-primary text-[18px] mb-0 leading-relaxed mt-2 mb-2">
                 <li>Keep it human</li>
                 <li>Make it meaningful</li>
                 <li>Never phone it in</li>
@@ -448,7 +448,7 @@ const missfits = [
     range: 'Founder & Chief Executive Officer (CEO)',
     title: 'Naumeena Suhail',
     description:
-      `Naumeena Suhail, founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br></br><i>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”
+      `Naumeena Suhail, Founder & CEO - doesn’t just lead with vision, she leads with intent. With over two decades in the creative industry, she has shaped The Design Firm not just into an agency, but into a mindset that digital experiences should be meaningful, human, and never superficial.<br></br><i>“My aim is to provide creative, innovative solutions to our clients by strategically using the latest technology to fuel the businesses towards the achievement of their goals.”
 </i>`,
     image: '/images/Maam.png',
   },
@@ -481,7 +481,7 @@ const MeetTheMissfits = () => {
                 <div
                     key={item.id}
                     onClick={() => setActiveIndex(idx)}
-                    className={`transition-all duration-500 ease-in-out flex-shrink-0 border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
+                    className={`transition-all duration-500 ease-in-out border-l border-gray-700 cursor-pointer overflow-hidden relative m-0 ${
                     isActive
                         ? "w-[650px] lg:w-[900px] h-full"
                         : "w-[100px] lg:w-[350px] h-full flex flex-col items-center justify-center text-center"
