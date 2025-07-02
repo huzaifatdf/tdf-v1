@@ -9807,6 +9807,16 @@ form textarea {
   color: white;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+  display: table;
+  background: white;
+  height: 400px;
+  overflow-y: scroll;
+  color: black;
+}
+
 footer {
   position: relative;
 }

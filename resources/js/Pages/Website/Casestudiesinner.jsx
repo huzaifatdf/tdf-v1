@@ -648,19 +648,17 @@ function BoxExperienceSection(props) {
                         className="flex p-6 bg-white/10 rounded-lg" // Added card-like styling
                     >
                         <div className="max-w-xl w-full">
-                        <div className="animate-fadeIn">
-                            {/* Title */}
-                            <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
-                            {section.id}
-                            </h5>
-                            <h3 className={`text-[25px] transition-all duration-500 fc-secondary`}>
-                            {section?.title || ''}
-                            </h3>
+                            <div className="animate-fadeIn">
+                                {/* Title */}
+                                <h5 className={`text-[25px] mb-2 transition-all duration-500 fc-secondary `}>
+                                {section.id}
+                                </h5>
+                                <h3 className={`text-[25px] transition-all duration-500 fc-secondary`}>
+                                {section?.title || ''}
+                                </h3>
 
-                            {section?.subtitle && parse(section?.subtitle)}
-
-
-                        </div>
+                                {section?.subtitle && parse(section?.subtitle)}
+                            </div>
                         </div>
                     </div>
                     ))}
