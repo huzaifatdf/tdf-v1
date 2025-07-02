@@ -717,8 +717,8 @@ function Components(props) {
       </div>
     </div>
   ) :   <div className="container-fluid relative">
-      <div className="sec-padding --xsmall">
-        {conclusion && <p className="text-[18px] fc-primary">{parse(conclusion.description)}</p>}
+      <div className="sec-padding pb-4">
+        {conclusion && <p className="text-[18px] fc-primary w-[80%] ">{parse(conclusion.description)}</p>}
       </div>
     </div> ;
 };
