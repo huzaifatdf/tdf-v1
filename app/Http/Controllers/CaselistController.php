@@ -241,30 +241,39 @@ class CaselistController extends Controller
             'Service' =>[
 
                 'title_1' => ['type' => 'text', 'label' => '1 Title', 'required' => false],
+                'description_1' => ['type' => 'summernote', 'label' => '1 Description', 'required' => false],
                 'image_1' => ['type' => 'text', 'label' => '1 Image', 'required' => false],
 
                 'title_2' => ['type' => 'text', 'label' => '2 Title', 'required' => false],
+                'description_2' => ['type' => 'summernote', 'label' => '2 Description', 'required' => false],
                 'image_2' => ['type' => 'text', 'label' => '2 Image', 'required' => false],
 
                 'title_3' => ['type' => 'text', 'label' => '3 Title', 'required' => false],
+                'description_3' => ['type' => 'summernote', 'label' => '3 Description', 'required' => false],
                 'image_3' => ['type' => 'text', 'label' => '3 Image', 'required' => false],
 
                 'title_4' => ['type' => 'text', 'label' => '4 Title', 'required' => false],
+                'description_4' => ['type' => 'summernote', 'label' => '4 Description', 'required' => false],
                 'image_4' => ['type' => 'text', 'label' => '4 Image', 'required' => false],
 
                 'title_5' => ['type' => 'text', 'label' => '5 Title', 'required' => false],
+                'description_5' => ['type' => 'summernote', 'label' => '5 Description', 'required' => false],
                 'image_5' => ['type' => 'text', 'label' => '5 Image', 'required' => false],
 
                 'title_6' => ['type' => 'text', 'label' => '6 Title', 'required' => false],
+                'description_6' => ['type' => 'summernote', 'label' => '6 Description', 'required' => false],
                 'image_6' => ['type' => 'text', 'label' => '6 Image', 'required' => false],
 
                 'title_7' => ['type' => 'text', 'label' => '7 Title', 'required' => false],
+                'description_7' => ['type' => 'summernote', 'label' => '7 Description', 'required' => false],
                 'image_7' => ['type' => 'text', 'label' => '7 Image', 'required' => false],
 
                 'title_8' => ['type' => 'text', 'label' => '8 Title', 'required' => false],
+                'description_8' => ['type' => 'summernote', 'label' => '8 Description', 'required' => false],
                 'image_8' => ['type' => 'text', 'label' => '8 Image', 'required' => false],
 
                 'title_9' => ['type' => 'text', 'label' => '9 Title', 'required' => false],
+                'description_9' => ['type' => 'summernote', 'label' => '9 Description', 'required' => false],
                 'image_9' => ['type' => 'text', 'label' => '9 Image', 'required' => false],
 
             ],
