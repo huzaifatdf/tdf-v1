@@ -230,7 +230,7 @@ export default function List() {
                                 <SelectValue placeholder="Select a predefine page" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Servicemain">
+                                <SelectItem value="Servicesmain">
                                 <div className="flex items-center">
                                     <div>
                                     <div className="font-medium">Service</div>
