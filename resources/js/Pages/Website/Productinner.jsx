@@ -92,7 +92,7 @@ export default function Productinner() {
                 <hr className="border-white mb-8"/>
             </div>
         <WhatProblem problem={jsonParseData.Problem} solutions={jsonParseData["problem Solutions"]} />
-           <section className="container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
+           <section className="py-5 container-fluid flex flex-col md:flex-row items-center justify-between gap-10 relative">
       {/* Left Content */}
         <div className="flex-1">
             <h2 className="text-[32px] fc-secondary leading-tight mb-6">
