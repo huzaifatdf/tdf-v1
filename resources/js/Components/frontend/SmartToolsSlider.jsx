@@ -74,20 +74,23 @@ const SmartToolsSlider = () => {
                       </p>
                     </div>
                     <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary mb-2 flex items-center">
-                      <span className="inline-block border-b-2 border-transparent group-hover:border-current transition-all duration-200">
+                      <span className="inline-block border-b-2 border-transparent  hover:text-[#9747FF] transition-all duration-200">
                         Click to Explore
                       </span>
-                      <span className="ml-3 fc-secondary transform transition-transform duration-200 group-hover:scale-125">
-                        &rarr;
+                      <span className="ml-3 fc-purple hover:text-[#9747FF] transform transition-transform duration-200 group-hover:scale-125">
+                        →
                       </span>
                     </Link>
 
                     <div className="flex items-end justify-between">
                       <Link
                         href={'products'}
-                        className="inline-block text-left text-[18px] fc-purple font-light border-b-2 border-transparent hover:border-current transition-all duration-200"
+                        className="inline-block text-left text-[18px] fc-white font-light border-b-2 border-transparent hover:text-[#9747FF] transition-all duration-200"
                       >
                         View All Products
+                        <span className="ml-3 fc-purple hover:text-[#9747FF] transform transition-transform duration-200 group-hover:scale-125">
+                        →
+                      </span>
                       </Link>
                         {jsonData["Video"] && jsonData["Video"]["video_path"] && (
                      <video
