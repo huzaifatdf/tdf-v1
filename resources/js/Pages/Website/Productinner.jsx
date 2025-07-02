@@ -246,7 +246,7 @@ function WhatProblem(props) {
   const sectionRef = useRef(null);
   const { problem, solutions } = props;
   const sections = parseData(solutions);
-
+  const [expandedSections, setExpandedSections] = useState(new Set());
   // Set default active section to first section if sections exist
   useEffect(() => {
     if (sections.length > 0 && !sections.find(s => s.id === activeSection)) {
@@ -275,6 +275,46 @@ function WhatProblem(props) {
   const handleSectionClick = (sectionId) => {
     setActiveSection(sectionId);
   };
+
+  const toggleReadMore = (sectionId) => {
+    const newExpanded = new Set(expandedSections);
+    if (newExpanded.has(sectionId)) {
+      newExpanded.delete(sectionId);
+    } else {
+      newExpanded.add(sectionId);
+    }
+    setExpandedSections(newExpanded);
+  };
+
+
+  const shouldShowReadMore = (text) => {
+    // Count approximate lines based on character length
+    // Assuming roughly 80-100 characters per line for responsive design
+    const avgCharsPerLine = 90;
+    const estimatedLines = Math.ceil(text.length / avgCharsPerLine);
+    return estimatedLines > 6;
+  };
+
+  const getTruncatedText = (text) => {
+    // Truncate to approximately 6 lines worth of text
+    const maxChars = 90 * 6; // 6 lines * avg chars per line
+    if (text.length <= maxChars) return text;
+
+    // Find the last complete sentence or word before the cutoff
+    const truncated = text.substring(0, maxChars);
+    const lastSentence = truncated.lastIndexOf('.');
+    const lastSpace = truncated.lastIndexOf(' ');
+
+    if (lastSentence > maxChars * 0.8) {
+      return text.substring(0, lastSentence + 1);
+    } else if (lastSpace > maxChars * 0.8) {
+      return text.substring(0, lastSpace);
+    }
+
+    return truncated;
+  };
+
+
 
   const currentSection = sections.find(s => s.id === activeSection);
 
@@ -336,7 +376,34 @@ function WhatProblem(props) {
               {currentSection && (
                 <div className="animate-fadeIn">
                   <p className="text-[16px] fc-primary mb-8 leading-relaxed">
+                     {shouldShowReadMore(currentSection.description) ? (
+                      <>
+                        {expandedSections.has(currentSection.id) ? (
+                          <>
                     {parse(currentSection.description)}
+                     <button
+                              onClick={() => toggleReadMore(currentSection.id)}
+                              className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
+                            >
+                              Read Less
+                            </button>
+                            </>
+                        ) : (
+                          <>
+                            {parse(getTruncatedText(currentSection.description))}
+                            <span className="text-gray-500">...</span>
+                            <button
+                              onClick={() => toggleReadMore(currentSection.id)}
+                              className="block mt-4 text-purple-400 hover:text-purple-300 transition-colors duration-300 font-medium"
+                            >
+                              Read More
+                            </button>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      parse(currentSection.description)
+                    )}
                   </p>
                   <hr className="border-white mb-8"/>
                 </div>
