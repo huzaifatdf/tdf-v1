@@ -160,6 +160,7 @@ class CaselistController extends Controller
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
                 'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
+                'meta_script' => ['type' => 'text', 'label' => 'Meta Script', 'required' => false],
             ]
     ];
 
@@ -335,6 +336,7 @@ class CaselistController extends Controller
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
                 'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
+                'meta_script' => ['type' => 'text', 'label' => 'Meta Script', 'required' => false],
             ]
     ];
 
