@@ -241,6 +241,8 @@ const TimelineSection = () => {
   return (
     <section className="about-mobile-screens container-fluid">
         <div className="relative sec-padding">
+            <h3 className="text-[32px] fc-secondary mb-1">Timeline</h3>
+            <p className='fc-primary text-[18px] leading-relaxed mb-6'>From pixels to partnerships – evolving since 2002 into a global, AI-powered creative force.</p>
             {/* Desktop Version - Horizontal Timeline */}
             <div className="hidden lg:flex overflow-x-auto no-scrollbar h-[400px] space-x-4">
             {timelineData.map((item, idx) => {
@@ -361,9 +363,9 @@ function WhatDrivesUs () {
                 </p>
                 <p className="fc-primary text-[18px] mb-0 leading-relaxed">Our work is guided by three simple rules:</p>
                 <ul className="fc-primary text-[18px] mb-0 leading-relaxed mt-2 mb-2">
-                <li>Keep it human</li>
-                <li>Make it meaningful</li>
-                <li>Never phone it in</li>
+                <li>Keep It Human</li>
+                <li>Make It Meaningful</li>
+                <li>Never Phone It in</li>
                 </ul>
             </div>
 

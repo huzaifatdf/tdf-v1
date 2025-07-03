@@ -9302,8 +9302,12 @@ body {
 
 .center-profile {
   text-align: center;
-  z-index: 1;
+  z-index: -11111;
   max-width: 600px;
+}
+
+.only-li ul li {
+  padding-top: 2px;
 }
 
 .center-image {
@@ -9522,6 +9526,16 @@ form textarea {
   font-size: 40px;
 }
 
+.sticky-menu {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .mobile-height-img {
+    height: 25vh;
+  }
+}
 @media (max-width: 600px) {
   .banner-inner-page .flex.flex-col.md\:flex-row.items-center {
     align-items: baseline;

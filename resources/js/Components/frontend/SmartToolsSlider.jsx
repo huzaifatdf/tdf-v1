@@ -38,7 +38,7 @@ const SmartToolsSlider = () => {
             modules={[Pagination, Autoplay]}
             pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
             autoplay={{
-              delay: 4000,
+              delay: 12000,
               disableOnInteraction: false,
             }}
             speed={1000} // transition duration in ms
@@ -69,11 +69,13 @@ const SmartToolsSlider = () => {
                       {/* <p className="text-[24px] fc-primary mb-2">
                         For Control, Clarity, & Campus-Wide Confidence
                       </p> */}
-                      <p className="text-[18px] fc-primary mb-2 w-[70%] line-clamp-3">
+                      <p className="text-[18px] fc-primary mb-2 w-[70%] line-clamp-6 mobile-screens only-li">
                         {parse(section.description)}
                       </p>
                     </div>
-                    <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary mb-2 flex items-center">
+
+                    <div className="flex items-end justify-between">
+                        <Link href={route('web.product.show', { slug: section.slug })}  className="group text-left text-[18px] fc-primary flex items-center">
                       <span className="inline-block border-b-2 border-transparent  hover:text-[#9747FF] transition-all duration-200">
                         Click to Explore
                       </span>
@@ -81,8 +83,6 @@ const SmartToolsSlider = () => {
                         →
                       </span>
                     </Link>
-
-                    <div className="flex items-end justify-between">
                       <Link
                         href={'products'}
                         className="inline-block text-left text-[18px] fc-white font-light border-b-2 border-transparent hover:text-[#9747FF] transition-all duration-200"
@@ -96,7 +96,7 @@ const SmartToolsSlider = () => {
                      <video
                         width="320"
                         height="240"
-                        className="w-[50%] h-auto rounded"
+                        className="w-[45%] h-auto rounded"
                         autoPlay
                         loop
                         muted

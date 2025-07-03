@@ -359,8 +359,8 @@ function SmoothCaseStudiesSection() {
 
                 <ul className="mb-10">
                   {section.features.map((feature, featureIndex) => {
-                    if (featureIndex >= 3) {
-                      return featureIndex === 3 ? (
+                    if (featureIndex >= 9) {
+                      return featureIndex === 9 ? (
                         <div key={featureIndex} className="flex items-start">
                           <span className="fc-primary text-[18px] leading-relaxed mt-2">
                             and more...

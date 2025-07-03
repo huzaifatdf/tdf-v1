@@ -44,7 +44,7 @@ function ClientSlider() {
                     key={index}
                     src={`${appUrl}/${client.image}`}
                     alt={client}
-                    className="mx-6 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
+                    className="mx-6 h-20 object-contain transition duration-300"
                 />
                 ))}
             </Marquee>
