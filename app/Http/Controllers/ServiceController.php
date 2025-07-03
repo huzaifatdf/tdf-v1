@@ -72,7 +72,7 @@ class ServiceController extends Controller
                 'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
                 'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
-                'meta_script' => ['type' => 'text', 'label' => 'Meta Script', 'required' => false],
+                'meta_script' => ['type' => 'textarea', 'label' => 'Meta Script', 'required' => false],
             ]
         ];
         return Inertia::render('Service/Add', [
@@ -146,7 +146,7 @@ class ServiceController extends Controller
             'meta_title' => ['type' => 'text', 'label' => 'Meta Title', 'required' => false],
             'meta_description' => ['type' => 'textarea', 'label' => 'Meta Description', 'required' => false],
             'keywords' => ['type' => 'text', 'label' => 'Keywords', 'required' => false],
-            'meta_script' => ['type' => 'text', 'label' => 'Meta Script', 'required' => false],
+            'meta_script' => ['type' => 'textarea', 'label' => 'Meta Script', 'required' => false],
         ]
     ];
 
