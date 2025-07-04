@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SitemapController;
 use App\Http\Middleware\TrackSeoVisits;
 
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage linked!';
+})->name('storage-link');
+
 Route::get('/run-optimize-clear', function () {
     Artisan::call('optimize:clear');
     return 'Optimized and cleared!';
