@@ -357,7 +357,7 @@ const ImageZoomSection = () => {
             >
                 <div
                     ref={imageWrapperRef}
-                    className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-contain bg-no-repeat mb-[80px]"
+                    className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover bg-no-repeat mb-[80px]"
                     style={{
                         transformOrigin: "center center",
                         backgroundImage: `url('/images/backhome.png')`,
