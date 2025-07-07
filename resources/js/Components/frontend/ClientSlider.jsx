@@ -34,16 +34,16 @@ function ClientSlider() {
                                     <img
                                         src={`${appUrl}/${client.image}`}
                                         alt={client.name || `Client ${index + 1}`}
-                                        className="hide-img max-h-full max-w-full object-contain transition duration-300"
+                                        className="max-h-full max-w-full object-contain transition duration-300"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                         }}
                                     />
-                                     <img
+                                     {/* <img
                                         src={`${appUrl}/${client.coloredimage}`}
                                         alt={client.name || `Client ${index + 1}`}
                                         className="show-img max-h-full max-w-full object-contain transition duration-300"
-                                    />
+                                    /> */}
                                 </div>
                             ))}
                         </Marquee>

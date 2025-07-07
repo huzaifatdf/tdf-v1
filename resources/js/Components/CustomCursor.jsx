@@ -76,7 +76,7 @@ export default function CustomCursor() {
       }}
     >
       {/* Custom Logo Cursor - Replace this SVG with your actual logo */}
-      <img src="/images/cursor.svg" width="24" height="24" alt="Logo cursor" />
+      <img src="/images/cursor.svg" width="18" height="18" alt="Logo cursor" />
     </div>
   );
 };
