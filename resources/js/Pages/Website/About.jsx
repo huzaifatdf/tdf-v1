@@ -5,11 +5,13 @@ import { ArrowRight } from 'lucide-react';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import CountUp from 'react-countup';
 import parse from 'html-react-parser';
+import { usePage } from '@inertiajs/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const introRef = useRef(null);
+  const {metaTitle , metaDescription} = usePage().props;
 
   useEffect(() => {
     const intro = introRef.current;
@@ -28,7 +30,7 @@ export default function About() {
   }, []);
 
   return (
-    <WebsiteLayout title="About | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
         <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
                 <div className="container-fluid relative mt-[150px]">

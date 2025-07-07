@@ -5,14 +5,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronDown } from 'lucide-react';
 import SmoothProductSection from "@/Components/frontend/SmoothProductSection";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
+import { usePage } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Productmain() {
   const introRef = useRef(null);
-
+    const { metaTitle, metaDescription } = usePage().props;
   useEffect(() => {
     const intro = introRef.current;
+
 
     gsap.from(intro, {
       y: 50,
@@ -28,7 +30,7 @@ export default function Productmain() {
   }, []);
 
   return (
-    <WebsiteLayout title="Product | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center bg-dark-950 relative overflow-hidden">
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">

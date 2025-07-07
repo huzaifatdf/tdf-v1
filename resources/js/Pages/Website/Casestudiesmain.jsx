@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import { ChevronDown } from 'lucide-react';
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import SmoothCaseStudiesSection from "@/Components/frontend/SmoothCaseStudiesSection";
 import TestimonialsSection from "@/Components/frontend/TestimonialsSection";
 import ClientSlider from "@/Components/frontend/ClientSlider";
@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Casestudiesmain(props) {
   const introRef = useRef(null);
-  const {casestudies} = props;
+  const { metaTitle, metaDescription } = usePage().props;
 
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Casestudiesmain(props) {
   }, []);
 
   return (
-    <WebsiteLayout title="Case Studies | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">

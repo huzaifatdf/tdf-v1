@@ -5,12 +5,13 @@ import { ArrowRight } from 'lucide-react';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import parse from 'html-react-parser';
 import DynamicForm from '@/Components/frontend/DynamicForm';
+import { usePage } from '@inertiajs/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const introRef = useRef(null);
-
+  const { metaTitle, metaDescription } = usePage().props;
   useEffect(() => {
     const intro = introRef.current;
 
@@ -28,7 +29,7 @@ export default function About() {
   }, []);
 
   return (
-    <WebsiteLayout title="Contact | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
         <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid ">

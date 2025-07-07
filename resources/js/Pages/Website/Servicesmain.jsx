@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import { ChevronDown } from 'lucide-react';
 import SmoothExperienceSection from "@/Components/frontend/SmoothExperienceSection";
+import { usePage } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Casestudiesmain() {
   const introRef = useRef(null);
-
+const { metaTitle, metaDescription } = usePage().props;
   useEffect(() => {
     const intro = introRef.current;
 
@@ -31,7 +32,7 @@ export default function Casestudiesmain() {
 
 
   return (
-    <WebsiteLayout title="Services | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-50" />
             <div className="container-fluid relative mt-[150px] mb-[30px]">

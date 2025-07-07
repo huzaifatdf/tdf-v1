@@ -4,11 +4,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from 'lucide-react';
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import IndustrySection from "@/Components/frontend/IndustrySection";
+import { usePage } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Productinner() {
   const introRef = useRef(null);
+  const { metaTitle, metaDescription } = usePage().props;
 
   useEffect(() => {
     const intro = introRef.current;
@@ -27,7 +29,7 @@ export default function Productinner() {
   }, []);
 
   return (
-    <WebsiteLayout title="Industries | TDF Agency" description="Explore our portfolio of successful digital transformations and client success stories.">
+    <WebsiteLayout title={metaTitle} description={metaDescription}>
         <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="container-fluid relative mt-[150px]">
                 <div className="">

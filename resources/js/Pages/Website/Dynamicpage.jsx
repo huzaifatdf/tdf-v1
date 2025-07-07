@@ -26,12 +26,10 @@ const componentMap = {
 
 
 export default function Home() {
-    const { page, appUrl } = usePage().props;
+    const { page, appUrl ,metaTitle, metaDescription } = usePage().props;
     const sections = page.published_sections;
 
     const introRef = useRef(null);
-
-    console.log(sections);
 
 
   useEffect(() => {
@@ -60,8 +58,8 @@ export default function Home() {
 
     return (
         <WebsiteLayout
-            title={`${page.title} | TDF Agency`}
-            description={`Welcome to TDF Agency - ${page.description || "Your trusted digital partner."}`}
+            title={metaTitle}
+            description={metaDescription}
         >
               <section ref={introRef} className="flex items-center relative overflow-hidden">
                  <div className="absolute inset-0 opacity-50" />
