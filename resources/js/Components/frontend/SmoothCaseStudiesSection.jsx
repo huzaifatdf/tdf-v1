@@ -50,7 +50,7 @@ function SmoothCaseStudiesSection() {
             subtitle: item.description.length > 10
               ? item.description.split(' ').slice(0, 10).join(' ') + '...'
               : item.description,
-            mainImage: item.thumbnail ? `${appUrl}/${item.thumbnail}` : '/images/case4.png',
+            mainImage: item.featuredimage ? `${appUrl}/${item.featuredimage}` : '/images/case4.png',
             features: services.length > 0 ? services.map(service => {
               if(service.key === 'title'){
                 return service.value
