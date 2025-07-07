@@ -21,6 +21,7 @@ class Ourclient extends Model
         'description',
         'status',
         'priority',
+        'coloredimage'
     ];
 
     protected $casts = [

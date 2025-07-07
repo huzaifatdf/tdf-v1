@@ -18,6 +18,7 @@ import MediaLibraryModel from "../Media/Model";
 
 export default function Add() {
   const [imagePreview, setImagePreview] = useState(null);
+    const [coloredimagePreview, setColoredimagePreview] = useState(null);
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -46,6 +47,9 @@ export default function Add() {
     // Handle file uploads
     if (values.image) {
       formData.append('image', values.image);
+    }
+    if (values.coloredimage) {
+      formData.append('coloredimage', values.coloredimage);
     }
     router.post(route("ourclient.store"), formData, {
       forceFormData: true,
@@ -81,6 +85,8 @@ export default function Add() {
   };
 
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
+
+  const [showColoredimageMediaLibrary, setColoredimageShowMediaLibrary] = useState(false);
 
   return (
     <AuthenticatedLayout>
@@ -199,6 +205,38 @@ export default function Add() {
                             size="sm"
                             className="absolute -top-2 -right-2"
                             onClick={() => removeImage(setFieldValue, "image", setImagePreview)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                   <div className="grid gap-2">
+                    <label htmlFor="image" className="text-sm font-medium">
+                      Coloured Image
+                    </label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                      <button type="button" onClick={() => setColoredimageShowMediaLibrary(true)}>Add Media</button>
+                      <MediaLibraryModel routename={route('ourclient.create')} showModal={showColoredimageMediaLibrary} setShowModal={setColoredimageShowMediaLibrary} setFieldValue={setFieldValue}
+                      fieldName="coloredimage"
+                      setImagePreview={setColoredimagePreview}
+                      />
+
+                       {coloredimagePreview && (
+                        <div className="relative">
+                          <img
+                            src={coloredimagePreview}
+                            alt="Thumbnail Preview"
+                            className="w-24 h-24 object-cover rounded-lg mx-auto"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute -top-2 -right-2"
+                            onClick={() => removeImage(setFieldValue, "coloredimage", setColoredimagePreview)}
                           >
                             <X className="h-4 w-4" />
                           </Button>

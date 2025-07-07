@@ -7,18 +7,14 @@ function ClientSlider() {
     const {appUrl} = usePage().props
 
     const [upperourclients , setUpperOurclients] = React.useState([]);
-    const [lowerourclients , setLowerOurclients] = React.useState([]);
 
     React.useEffect(() => {
         axios.get('/api/v1/ourclient')
             .then(response => {
                 //first get total ourclients then split them into 2 rows
                 const totalOurclients = response.data;
-                const middleIndex = Math.ceil(totalOurclients.length / 2);
-                const upperOurclients = totalOurclients.slice(0, middleIndex);
-                const lowerOurclients = totalOurclients.slice(middleIndex);
-                setUpperOurclients(upperOurclients);
-                setLowerOurclients(lowerOurclients);
+                setUpperOurclients(totalOurclients);
+
             })
             .catch(error => {
                 console.error(error);
@@ -45,9 +41,9 @@ function ClientSlider() {
                                         }}
                                     />
                                     {/* Colored Logo (shows on hover) */}
-                                    {client.colored_image && (
+                                    {client.coloredimage && (
                                         <img
-                                            src={`${appUrl}/${client.colored_image}`}
+                                            src={`${appUrl}/${client.coloredimage}`}
                                             alt={client.name || `Client ${index + 1}`}
                                             className="max-h-full max-w-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                             onError={(e) => {
