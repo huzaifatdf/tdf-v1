@@ -84,4 +84,19 @@
             }
         }
     }
+
+    // Client Logos //
+    &.client-logos {
+        .show-img {
+            display: none;
+        }
+        &:hover {
+            .hide-img {
+                display: none;
+            }
+            .show-img {
+                display: block;
+            }
+        }
+    }
 }

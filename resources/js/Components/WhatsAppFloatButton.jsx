@@ -24,7 +24,7 @@ const WhatsAppFloatButton = ({
   };
 
   return (
-    <div onClick={handleWhatsAppClick} className={`fixed ${positionClasses[position]} z-50`}>
+    <div onClick={handleWhatsAppClick} className={`fixed ${positionClasses[position]} z-50  cursor-pointer`}>
       {/* Chat Box */}
 
       {/* Float Button */}

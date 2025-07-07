@@ -30,11 +30,11 @@ function ClientSlider() {
                     <div className="overflow-hidden pb-5 mt-5">
                         <Marquee gradient={false} speed={100} direction="right" pauseOnHover={true}>
                             {upperourclients.map((client, index) => (
-                                <div key={index} className="mx-6 flex items-center justify-center h-20 w-32">
+                                <div key={index} className="box client-logos mx-6 flex items-center justify-center h-20 w-32">
                                     <img
                                         src={`${appUrl}/${client.image}`}
                                         alt={client.name || `Client ${index + 1}`}
-                                        className="max-h-full max-w-full object-contain transition duration-300 hover:hidden"
+                                        className="hide-img max-h-full max-w-full object-contain transition duration-300"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                         }}
@@ -42,7 +42,7 @@ function ClientSlider() {
                                      <img
                                         src={`${appUrl}/${client.coloredimage}`}
                                         alt={client.name || `Client ${index + 1}`}
-                                        className="max-h-full max-w-full object-contain transition duration-300  hidden hover:block"
+                                        className="show-img max-h-full max-w-full object-contain transition duration-300"
                                     />
                                 </div>
                             ))}

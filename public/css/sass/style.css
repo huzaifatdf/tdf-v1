@@ -9079,6 +9079,15 @@ header nav.pn ul li ul li ul {
   color: #ffffff;
   padding-left: 15px;
 }
+.box.client-logos .show-img {
+  display: none;
+}
+.box.client-logos:hover .hide-img {
+  display: none;
+}
+.box.client-logos:hover .show-img {
+  display: block;
+}
 
 /* Burger Menu */
 .side-menu {
