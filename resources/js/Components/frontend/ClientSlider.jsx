@@ -48,7 +48,7 @@ function ClientSlider() {
     <img
       src={`${appUrl}/${client.image}`}
       alt={client.name || `Client ${index + 1}`}
-      className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-0"
+      className="max-h-full max-w-full object-contain transition-opacity duration-300 "
       onError={(e) => {
         e.target.style.display = 'none';
       }}
