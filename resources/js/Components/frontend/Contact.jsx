@@ -2,6 +2,8 @@ import { router } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import * as Yup from 'yup';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 function Contact() {
      const [isExpanded, setIsExpanded] = React.useState(false);
@@ -120,9 +122,18 @@ const [validationSchema, setValidationSchema] = React.useState(null);
                     fieldSchema = Yup.string().url('Please enter a valid URL');
                     break;
                 case 'tel':
-                    fieldSchema = Yup.string().matches(
-                        /^[\+]?[1-9][\d]{0,15}$/,
-                        'Please enter a valid phone number'
+                    fieldSchema = Yup.string().test(
+                        'is-valid-phone',
+                        'Please enter a valid phone number',
+                        function(value) {
+                            // If no value and not required, it's valid
+                            if (!value && !field.required) return true;
+                            // If no value and required, it's invalid
+                            if (!value && field.required) return false;
+                            // Check if it's a valid phone number format (basic check)
+                            // react-phone-number-input handles most validation
+                            return value.length >= 10; // Basic length check
+                        }
                     );
                     break;
                 case 'number':
@@ -288,26 +299,28 @@ const [validationSchema, setValidationSchema] = React.useState(null);
             }));
         }
         // Validate field on change
-        validateField(fieldName, value);
+        validateField(fieldName, file);
     };
 
     const handleCheckboxChange = (fieldName, value, checked) => {
         setFormData(prev => {
             const currentValues = prev[fieldName] || [];
             if (checked) {
+                const newValues = [...currentValues, value];
+                validateField(fieldName, newValues);
                 return {
                     ...prev,
-                    [fieldName]: [...currentValues, value]
+                    [fieldName]: newValues
                 };
             } else {
+                const newValues = currentValues.filter(v => v !== value);
+                validateField(fieldName, newValues);
                 return {
                     ...prev,
-                    [fieldName]: currentValues.filter(v => v !== value)
+                    [fieldName]: newValues
                 };
             }
         });
-        // Validate field on change
-        validateField(fieldName, value);
     };
 
 
@@ -454,7 +467,6 @@ const [validationSchema, setValidationSchema] = React.useState(null);
             case 'text':
             case 'email':
             case 'url':
-            case 'tel':
                 return (
                     <div key={field.id} className={field.width === 'half' ? 'w-full md:w-[45%]' : 'w-full'}>
                         <input
@@ -467,6 +479,51 @@ const [validationSchema, setValidationSchema] = React.useState(null);
                             maxLength={field.max_length}
                             minLength={field.min_length}
                             className={`${baseInputClasses} ${errorClasses}`}
+                        />
+                        {fieldError && <p className="text-red-500 text-sm mt-1">{fieldError}</p>}
+                    </div>
+                );
+
+            case 'tel':
+                return (
+                    <div key={field.id} className={field.width === 'half' ? 'w-full md:w-[45%]' : 'w-full'}>
+                        <PhoneInput
+                            id={fieldId}
+                            international
+                            countryCallingCodeEditable={false}
+                            defaultCountry="PK"
+                            value={fieldValue}
+                            onChange={(value) => handleInputChange(field.name, value || '')}
+                            placeholder={field.placeholder || field.label}
+                            className={`phone-input ${errorClasses}`}
+                            style={{
+                                '--PhoneInput-color': '#ffffff',
+                                '--PhoneInputInternationalIconPhone-opacity': '0.8',
+                                '--PhoneInputInternationalIconGlobe-opacity': '0.65',
+                                '--PhoneInputCountrySelect-marginRight': '0.5rem',
+                                '--PhoneInputCountrySelectArrow-width': '0.3rem',
+                                '--PhoneInputCountrySelectArrow-marginLeft': '0.5rem',
+                                'border-bottom': '1px solid #91a7ba',
+                            }}
+                            numberInputProps={{
+                                className: `w-full bg-transparent text-white placeholder-gray-400 border-0 outline-none ${errorClasses}`,
+                                style: {
+                                    background: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                }
+                            }}
+                            countrySelectProps={{
+                                className: 'bg-transparent text-black',
+                                style: {
+                                    background: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'white',
+                                }
+                            }}
                         />
                         {fieldError && <p className="text-red-500 text-sm mt-1">{fieldError}</p>}
                     </div>
@@ -650,6 +707,7 @@ const [validationSchema, setValidationSchema] = React.useState(null);
                 );
         }
     };
+
 
   return (
    <>
