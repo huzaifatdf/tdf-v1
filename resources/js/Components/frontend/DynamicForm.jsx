@@ -24,8 +24,18 @@ function DynamicForm(props) {
                 let fieldSchema;
 
                 switch (field.type) {
+                    case 'text':
+                        fieldSchema = Yup.string();
+                        if (field.required) {
+                            fieldSchema = fieldSchema.required(`${field.label} is required`);
+                        }
+                        fieldSchema = fieldSchema.min(3, `${field.label} must be at least 3 characters`);
+                        fieldSchema = fieldSchema.max(255, `${field.label} must be no more than 255 characters`);
+                        //not allowed numbers in text fields
+                        fieldSchema = fieldSchema.matches(/^[^\d]*$/, `${field.label} cannot contain numbers`);
+                        break;
                     case 'email':
-                        fieldSchema = Yup.string().email('Please enter a valid email address');
+                        fieldSchema = Yup.string().max(255).email('Please enter a valid email address');
                         break;
                     case 'url':
                         return (
@@ -150,7 +160,11 @@ function DynamicForm(props) {
                         }
                         break;
                     case 'textarea':
-                    case 'text':
+                        fieldSchema = Yup.string().max(1000, `${field.label} must be no more than 1000 characters`);
+                        if (field.required) {
+                            fieldSchema = fieldSchema.required(`${field.label} is required`);
+                        }
+                        break;
                     default:
                         fieldSchema = Yup.string();
                         break;
