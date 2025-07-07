@@ -31,7 +31,7 @@ class FormSubmissionNotification extends Notification
     public function via($notifiable): array
     {
 
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**

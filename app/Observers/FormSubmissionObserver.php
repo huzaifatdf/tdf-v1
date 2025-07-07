@@ -19,13 +19,26 @@ class FormSubmissionObserver
         $formSubmission->load('form');
 
         // Get notification email from form settings or use default admin email
-        $notificationEmail = $formSubmission->form->notification_email;
 
         // if ($notificationEmail) {
         //     // Send notification to specific email
         //     Notification::route('mail', $notificationEmail)
         //         ->notify(new FormSubmissionNotification($formSubmission));
         // }
+        // Get notification email from form settings (e.g., 'notification_email' column in 'forms' table)
+        $notificationEmail = $formSubmission->form->notification_email;
+        $alternativeEmail = $formSubmission->form->alternative_email;
+
+        // ✅ 1. Send mail to the form-specific notification email if it exists
+        if ($notificationEmail) {
+            Notification::route('mail', $notificationEmail)
+                ->notify(new FormSubmissionNotification($formSubmission));
+        }
+        // ✅ 2. Send mail to the alternative email if it exists
+        if ($alternativeEmail) {
+            Notification::route('mail', $alternativeEmail)
+                ->notify(new FormSubmissionNotification($formSubmission));
+        }
 
         // Send notification to all admin users (users with admin role)
         $superadmin = User::role('superadmin')->first();

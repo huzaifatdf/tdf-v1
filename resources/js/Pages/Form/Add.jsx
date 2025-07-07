@@ -251,6 +251,7 @@ export default function CreateForm() {
               success_message: "Thank you for your submission!",
               redirect_url: "",
               notification_email: "",
+                alternative_email: "",
               email_subject: "",
               status: "active",
               require_captcha: false,
@@ -342,6 +343,16 @@ export default function CreateForm() {
                                   as={Input}
                                   id="notification_email"
                                   name="notification_email"
+                                  type="email"
+                                  placeholder="admin@example.com"
+                                />
+                              </div>
+                               <div>
+                                <Label htmlFor="alternative_email">Alternative Email</Label>
+                                <Field
+                                  as={Input}
+                                  id="alternative_email"
+                                  name="alternative_email"
                                   type="email"
                                   placeholder="admin@example.com"
                                 />

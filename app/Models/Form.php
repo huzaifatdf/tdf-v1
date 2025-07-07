@@ -19,6 +19,7 @@ class Form extends Model
         'success_message',
         'redirect_url',
         'notification_email',
+        'alternative_email',
         'email_subject',
         'status',
         'require_captcha',

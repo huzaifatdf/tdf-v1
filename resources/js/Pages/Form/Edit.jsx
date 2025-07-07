@@ -87,6 +87,7 @@ export default function EditForm() {
       success_message: form.success_message || "Thank you for your submission!",
       redirect_url: form.redirect_url || "",
       notification_email: form.notification_email || "",
+      alternative_email: form.alternative_email || "",
       email_subject: form.email_subject || "",
       status: form.status || "active",
       require_captcha: form.require_captcha || false,
@@ -366,6 +367,17 @@ export default function EditForm() {
                                   as={Input}
                                   id="notification_email"
                                   name="notification_email"
+                                  type="email"
+                                  placeholder="admin@example.com"
+                                />
+                              </div>
+
+                               <div>
+                                <Label htmlFor="alternative_email">Alternative Email</Label>
+                                <Field
+                                  as={Input}
+                                  id="alternative_email"
+                                  name="alternative_email"
                                   type="email"
                                   placeholder="admin@example.com"
                                 />
