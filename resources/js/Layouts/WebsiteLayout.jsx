@@ -10,6 +10,7 @@ import Contact from '@/Components/frontend/Contact';
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
 import ContactFormFloating from '@/Components/ContactFormFloating';
+import WhatsAppFloatButton from '@/Components/WhatsAppFloatButton';
 
 
 export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
@@ -223,6 +224,13 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                             {/* <ContactFormFloating /> */}
                         </div>
                     </main>
+
+                    <WhatsAppFloatButton
+                            phoneNumber="+923030808833" // with country code but no +
+                            message="Hello, I have a question"
+                            businessName="My Business"
+                            position="bottom-right"
+                            />
 
                     {/* Footer */}
                     <footer className="text-white pt-8">
