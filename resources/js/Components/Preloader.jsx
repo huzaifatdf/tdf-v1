@@ -25,7 +25,7 @@ const Preloader = ({ onFinish }) => {
       if (newPercent < 100) {
         animationFrame = requestAnimationFrame(animatePercent);
       } else {
-        // First fade out the spinner
+        // First fade out the logo
         gsap.to(loaderRef.current, {
           opacity: 0,
           duration: 0.3,
@@ -74,15 +74,14 @@ const Preloader = ({ onFinish }) => {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-[9999]"
+      className="fixed inset-0 z-[9999] w-full h-full"
     >
-      {/* Pulsing Dots Loader */}
+      {/* Static Centered Logo */}
       <div
         ref={loaderRef}
-        className="loader flex items-center justify-center space-x-2 relative top-1/2 left-1/2
-          w-[150px] h-[150px] -ml-[75px] -mt-[75px] z-[1001]"
+        className="fixed inset-0 flex items-center justify-center z-[1001]"
       >
-        <img src="/images/logo.svg" alt="" />
+        <img src="/images/logo.svg" alt="Loading logo" className="w-32 h-auto" />
       </div>
 
       {/* Left Curtain */}

@@ -345,7 +345,7 @@ function SmoothCaseStudiesSection() {
                 <img
                   src={section.mainImage}
                   alt={`${section.title} main image`}
-                  className="w-full h-[40vh] object-cover mb-6 mobile-height-img"
+                  className="w-full h-[40vh] object-cover mb-6"
                 />
 
                 {/* Title */}
