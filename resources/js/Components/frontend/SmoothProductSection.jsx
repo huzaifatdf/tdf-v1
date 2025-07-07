@@ -202,15 +202,15 @@ function SmoothExperienceSection() {
               <div
                 key={section.section_no}
                 ref={el => sectionsRefs.current[section.section_no] = el}
-                className="min-h-screen flex items-center py-20"
+                className="min-h-screen flex items-center border-bottom-case"
               >
-                <div className="">
+                <div className="sec-padding --small">
                   <div className="animate-fadeIn">
                     {/* Main Image */}
                     <img
                       src={`${appUrl}/${section.thumbnail}`}
                       alt={`${section.title} main image`}
-                      className="w-full h-[40vh] object-cover mb-6  mobile-height-img"
+                      className="w-full object-cover mb-6"
                     />
 
                     {/* Title */}
@@ -226,7 +226,7 @@ function SmoothExperienceSection() {
                        <Link href={route('web.product.show', { slug: section.slug })}  className="mt-6 group flex items-center gap-2 bg-transparent border-none fc-primary hover:text-[#9747FF] transition-colors duration-300 text-lg font-medium cursor-pointer">Click to Explore <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                     </Link>
                   </div>
-                    <hr className="border-white mb-8 mt-8"/>
+                    {/* <hr className="border-white mb-8 mt-8"/> */}
                 </div>
               </div>
             ))}
