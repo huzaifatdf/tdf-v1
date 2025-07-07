@@ -132,7 +132,9 @@ export default function List() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => router.get(route('service.edit', service.id))} className="cursor-pointer">Edit service</DropdownMenuItem>
+                            <DropdownMenuItem
+                            onClick={() => window.open(route('service.edit', service.id), '_blank')}
+                            className="cursor-pointer">Edit service</DropdownMenuItem>
                            <Dialog>
                             <DialogTrigger asChild>
                                 <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
