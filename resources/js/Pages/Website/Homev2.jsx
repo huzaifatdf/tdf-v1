@@ -268,7 +268,6 @@ function ThreeModelOverlay() {
 }
 
 
-
 const ImageZoomSection = () => {
     const imageWrapperRef = useRef(null);
     const textContentRef = useRef(null);
@@ -290,17 +289,7 @@ const ImageZoomSection = () => {
     useEffect(() => {
         const ctx = gsap.context(() => {
             if (visible) {
-                // Apply floating animation to the image wrapper
-                gsap.to(imageWrapperRef.current, {
-                    y: 20,
-                    duration: 2,
-                    ease: "power1.inOut",
-                    yoyo: true,
-                    repeat: -1,
-                    repeatDelay: 0.5,
-                });
-
-                // Apply scale/fade animation to image
+                // Apply scale/fade animation to image (removed floating animation)
                 gsap.fromTo(
                     imageWrapperRef.current,
                     {
@@ -316,7 +305,7 @@ const ImageZoomSection = () => {
                     }
                 );
 
-                // Apply fade-in animation to text content
+                // Apply fade-in animation to text content (reduced delay to 1 second)
                 gsap.fromTo(
                     textContentRef.current,
                     {
@@ -328,7 +317,7 @@ const ImageZoomSection = () => {
                         y: 0,
                         duration: 1.5,
                         ease: "power2.out",
-                        delay: 2, // Start after image animation is well underway
+                        delay: 1, // Reduced from 2 seconds to 1 second
                     }
                 );
             } else {

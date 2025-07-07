@@ -83,6 +83,7 @@ export default function Casestudiesinner(props) {
   );
 }
 
+
 const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
@@ -91,11 +92,23 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
     const section = sectionRef.current;
     const content = contentRef.current;
 
+    // Auto-detect if this is the only section (index 0 and isLast both true)
+    const isOnlySection = index === 0 && isLast;
+
+    if (isOnlySection) {
+      // If it's the only section, make it static (no ScrollTrigger)
+      gsap.set(content, { y: 0, opacity: 1 });
+      return; // Don't setup any ScrollTrigger
+    }
+
+    // Multiple sections - use ScrollTrigger animations as before
+    let tl;
+
     if (index === 0) {
       // First slide - show directly without animation, but still make it pinnable
-      gsap.set(content, { y: 0, opacity: 1 }); // Set initial state to visible
+      gsap.set(content, { y: 0, opacity: 1 });
 
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
@@ -109,7 +122,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
 
     } else if (isLast) {
       // For the last section, use different ScrollTrigger settings
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
@@ -130,7 +143,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
       });
     } else {
       // Regular sections (not first, not last)
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
@@ -148,15 +161,20 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      if (tl && tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
     };
   }, [isLast, index]);
+
+  // Auto-detect if this is the only section
+  const isOnlySection = index === 0 && isLast;
 
   return (
     <section
       ref={sectionRef}
       className="relative h-screen bg-dark-950 text-white flex items-center"
-      style={{ zIndex: 100 - index }}
+      style={{ zIndex: isOnlySection ? 'auto' : 100 - index }}
     >
       <div className="absolute inset-0 opacity-50" />
       <div className="container-fluid relative z-10">
@@ -185,8 +203,6 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
     </section>
   );
 };
-
-
 
 
 
