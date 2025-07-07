@@ -50,11 +50,15 @@ export default function Productinner() {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src={"/images/industries.png"}
-                        alt="HabibMetro Bank Project Overview"
+                    <video
                         className="w-full h-[50vh] object-cover mt-5 mb-5"
-                    />
+                        autoPlay
+                        muted
+                        loop
+                        >
+                        <source src="/images/industries.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     <hr class="border-white mb-8"></hr>
                 </div>
             </div>
