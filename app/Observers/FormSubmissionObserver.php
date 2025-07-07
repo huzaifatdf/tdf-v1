@@ -30,15 +30,15 @@ class FormSubmissionObserver
         $alternativeEmail = $formSubmission->form->alternative_email;
 
         // ✅ 1. Send mail to the form-specific notification email if it exists
-        // if ($notificationEmail) {
-        //     Notification::route('mail', $notificationEmail)
-        //         ->notify(new FormSubmissionNotification($formSubmission));
-        // }
-        // // ✅ 2. Send mail to the alternative email if it exists
-        // if ($alternativeEmail) {
-        //     Notification::route('mail', $alternativeEmail)
-        //         ->notify(new FormSubmissionNotification($formSubmission));
-        // }
+        if ($notificationEmail) {
+            Notification::route('mail', $notificationEmail)
+                ->notify(new FormSubmissionNotification($formSubmission));
+        }
+        // ✅ 2. Send mail to the alternative email if it exists
+        if ($alternativeEmail) {
+            Notification::route('mail', $alternativeEmail)
+                ->notify(new FormSubmissionNotification($formSubmission));
+        }
 
         // Send notification to all admin users (users with admin role)
         $superadmin = User::role('superadmin')->first();
