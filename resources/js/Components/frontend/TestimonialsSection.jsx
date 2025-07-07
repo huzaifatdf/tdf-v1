@@ -268,7 +268,7 @@ function TestimonialsSection() {
             {testimonials[0].name}
           </h3>
 
-          <h3 className={`text-[20px] text-green-400 font-bold transition-all duration-500 ${
+          <h3 className={`text-[20px] fc-secondary font-bold transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].designation}

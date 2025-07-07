@@ -68,7 +68,7 @@ export default function CustomCursor() {
 
   return (
     <div
-      className={`fixed top-0 left-0 pointer-events-none z-50 transition-opacity duration-200 ${
+      className={`asdads fixed top-0 left-0 pointer-events-none z-[111111] transition-opacity duration-200 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
