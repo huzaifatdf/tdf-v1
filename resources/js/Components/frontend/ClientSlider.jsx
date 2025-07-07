@@ -38,13 +38,13 @@ function ClientSlider() {
             <hr class="border-white mb-8"></hr>
            <div className="space-y-12">
             <div className="overflow-hidden  pb-5 mt-5">
-            <Marquee gradient={false} speed={100} direction="right" pauseOnHover={false}>
+            <Marquee gradient={false} speed={100} direction="right" pauseOnHover={true}>
                 {upperourclients.map((client, index) => (
                 <img
                     key={index}
                     src={`${appUrl}/${client.image}`}
                     alt={client}
-                    className="mx-6 h-20 object-contain transition duration-300"
+                    className="mx-6 object-contain transition duration-300"
                 />
                 ))}
             </Marquee>

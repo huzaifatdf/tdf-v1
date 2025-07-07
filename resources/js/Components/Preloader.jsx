@@ -4,6 +4,9 @@ import gsap from 'gsap';
 const Preloader = ({ onFinish }) => {
   const [percent, setPercent] = useState(0);
   const preloaderRef = useRef(null);
+  const loaderRef = useRef(null);
+  const leftCurtainRef = useRef(null);
+  const rightCurtainRef = useRef(null);
 
   useEffect(() => {
     // Disable scroll
@@ -22,19 +25,41 @@ const Preloader = ({ onFinish }) => {
       if (newPercent < 100) {
         animationFrame = requestAnimationFrame(animatePercent);
       } else {
-        // Fade out preloader
-        // Fade out and slide up
-        gsap.to(preloaderRef.current, {
-        y: -100,            // Slide upward by 100px
-        autoAlpha: 0,       // Fade out
-        duration: 0.8,
-        ease: 'power2.inOut',
-        onComplete: () => {
-            document.body.style.overflow = '';
-            if (onFinish) onFinish();
-        },
-        });
+        // First fade out the spinner
+        gsap.to(loaderRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.out',
+          onComplete: () => {
+            // Then slide away the curtains
+            gsap.to(leftCurtainRef.current, {
+              x: '-100%',
+              duration: 0.7,
+              delay: 0.3,
+              ease: 'cubic-bezier(0.645,0.045,0.355,1.000)',
+            });
 
+            gsap.to(rightCurtainRef.current, {
+              x: '100%',
+              duration: 0.7,
+              delay: 0.3,
+              ease: 'cubic-bezier(0.645,0.045,0.355,1.000)',
+              onComplete: () => {
+                // Finally hide the entire preloader
+                gsap.to(preloaderRef.current, {
+                  y: -100,
+                  autoAlpha: 0,
+                  duration: 0.3,
+                  ease: 'power2.inOut',
+                  onComplete: () => {
+                    document.body.style.overflow = '';
+                    if (onFinish) onFinish();
+                  },
+                });
+              },
+            });
+          },
+        });
       }
     };
 
@@ -48,14 +73,29 @@ const Preloader = ({ onFinish }) => {
 
   return (
     <div
-      ref={preloaderRef} className="fixed inset-0 bg-[#00141b] flex items-center justify-center z-[9999]">
+      ref={preloaderRef}
+      className="fixed inset-0 z-[9999]"
+    >
+      {/* Pulsing Dots Loader */}
+      <div
+        ref={loaderRef}
+        className="loader flex items-center justify-center space-x-2 relative top-1/2 left-1/2
+          w-[150px] h-[150px] -ml-[75px] -mt-[75px] z-[1001]"
+      >
+        <img src="/images/logo.svg" alt="" />
+      </div>
 
-        <div className="flex flex-col items-center">
-            <div>
-                <img className="w-[210px]" src="/images/logo.svg" alt="Logo" />
-            </div>
-            <div className="text-white text-[60px] font-bold">{percent}%</div>
-        </div>
+      {/* Left Curtain */}
+      <div
+        ref={leftCurtainRef}
+        className="fixed top-0 left-0 w-[51%] h-full bg-[#00141b] z-[1000]"
+      />
+
+      {/* Right Curtain */}
+      <div
+        ref={rightCurtainRef}
+        className="fixed top-0 right-0 w-[51%] h-full bg-[#00141b] z-[1000]"
+      />
     </div>
   );
 };

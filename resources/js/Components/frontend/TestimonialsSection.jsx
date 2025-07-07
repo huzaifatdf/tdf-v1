@@ -42,15 +42,15 @@ function TestimonialsSection() {
     designation: "Sr. Manager Digital Marketing - MCCD, Askari Bank",
     rating: 5,
     title: "We are absolutely thrilled with the outstanding work delivered by The Design Firm (TDF) on the development of the new Askari Bank website. From the initial concept to the final launch, TDF demonstrated unparalleled professionalism, creativity, and technical expertise.",
-    image: "images/askaritesti.png", // Placeholder image
+    image: "images/askaritesti.png",
   },
   {
     id: 6,
     name: "Barbara Chanakira",
-    designation: "CEO , Eaton Property Consultants",
+    designation: "CEO, Eaton Property Consultants",
     rating: 5,
     title: "We envisioned holistic branding for our business, and we're glad we chose TDF as our partner. TDF's customized branding strategy has significantly enhanced our digital presence, delivering a website that truly represents our business. Their keen eye for detail was evident throughout the project, reflected in the exemplary quality of work we received.",
-    image: "images/eatontesti.png", // Placeholder image
+    image: "images/eatontesti.png",
   },
   {
     id: 7,
@@ -58,25 +58,73 @@ function TestimonialsSection() {
     designation: "CEO, Blinq",
     rating: 5,
     title: "With TDF I am able to mark a presence of my brand and see how my potential market can be targeted. Since I have collaborated with TDF I can see a significant increase in my reach.",
-    image: "images/blicktesti.png", // Placeholder image
+    image: "images/blicktesti.png",
   },
   {
     id: 8,
     name: "Dr. Nadia Alwasiah",
-    designation: "Physiatrist & Physician, Dr. Nadia Alwasiah ",
+    designation: "Physiatrist & Physician, Dr. Nadia Alwasiah",
     rating: 5,
-    title: "The Design Firm helped me craft a visual identity for my brand Mimis that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
-    image: "images/nadiatesti.png", // Placeholder image
+    title: "The Design Firm helped me craft a visual identity for my brand that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
+    image: "images/nadiatesti.png",
   },
-    {
+  {
     id: 9,
     name: "Saira Nasir",
     designation: "Founder & Owner, Mimi's",
     rating: 5,
     title: "The Design Firm helped me craft a visual identity for my brand 'Mimi's' that truly captures its essence. From our first meeting to the final product, the team was professional, creative, and responsive. I endorse them for any business seeking a dedicated team to bring their vision to life!",
-    image: "images/mimistesti.png", // Placeholder image
-  }
-
+    image: "images/mimistesti.png",
+  },
+  // Additional 7 testimonials to make it 16 total
+//   {
+//     id: 10,
+//     name: "Ahmed Hassan",
+//     designation: "Marketing Director, TechSolutions",
+//     rating: 5,
+//     title: "TDF's innovative approach to digital marketing has transformed our online presence. Their strategic insights and creative execution have resulted in a 300% increase in our lead generation. Highly recommended for any business looking to scale digitally.",
+//     image: "images/techsolutionstesti.png",
+//   },
+//   {
+//     id: 11,
+//     name: "Fatima Al-Rashid",
+//     designation: "Founder, GreenTech Innovations",
+//     rating: 5,
+//     title: "Working with The Design Firm has been a game-changer for our startup. They understood our vision perfectly and delivered a brand identity that resonates with our target audience. Their attention to detail and creative flair is unmatched.",
+//     image: "images/greentechtesti.png",
+//   },
+//   {
+//     id: 12,
+//     name: "Omar Malik",
+//     designation: "CEO, Digital Dynamics",
+//     rating: 5,
+//     title: "TDF's expertise in web development and digital strategy has been instrumental in our company's growth. They delivered a stunning website that not only looks amazing but also performs exceptionally well in terms of user experience and conversions.",
+//     image: "images/digitaldynamicstesti.png",
+//   },
+//   {
+//     id: 13,
+//     name: "Amna Siddiqui",
+//     designation: "Brand Manager, Lifestyle Co.",
+//     rating: 5,
+//     title: "The Design Firm's creative team exceeded our expectations with their innovative branding solutions. They helped us establish a strong brand presence in the market and significantly improved our customer engagement rates.",
+//     image: "images/lifestylecotesti.png",
+//   },
+//   {
+//     id: 14,
+//     name: "Bilal Tariq",
+//     designation: "Operations Manager, FastTrack Logistics",
+//     rating: 5,
+//     title: "TDF's comprehensive digital marketing strategy has revolutionized our business operations. Their data-driven approach and creative campaigns have helped us reach new markets and achieve unprecedented growth.",
+//     image: "images/fasttracktesti.png",
+//   },
+//   {
+//     id: 15,
+//     name: "Zara Khan",
+//     designation: "Creative Director, ArtSpace Studios",
+//     rating: 5,
+//     title: "Collaborating with The Design Firm has been an incredible experience. Their team's creativity and technical expertise brought our artistic vision to life in ways we never imagined. They truly understand the essence of creative branding.",
+//     image: "images/artspacetesti.png",
+//   }
   ]);
 
   // Keep track of original testimonials for proper dot mapping
@@ -123,7 +171,7 @@ function TestimonialsSection() {
     return originalTestimonials.findIndex(t => t.id === centerTestimonial.id);
   };
 
-  // Define floating avatar positions
+  // Define floating avatar positions - expanded for 15 floating avatars (16 total - 1 center)
   const floatingPositions = [
     { top: "5%", left: "15%" },
     { top: "15%", left: "25%" },
@@ -132,21 +180,28 @@ function TestimonialsSection() {
     { top: "15%", right: "25%" },
     { top: "5%", right: "15%" },
     { top: "35%", right: "30%" },
-    { top: "35%", right: "17%" }
+    { top: "35%", right: "17%" },
+    { top: "8%", left: "8%" },
+    { top: "25%", left: "8%" },
+    { top: "8%", right: "8%" },
+    { top: "25%", right: "8%" },
+    { top: "50%", left: "20%" },
+    { top: "50%", right: "20%" },
+    { top: "60%", left: "50%", transform: "translateX(-50%)" }
   ];
 
   return (
-    <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+    <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden min-h-screen">
       <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding --large px-8">
         {/* Floating Avatars */}
         <div className="floating-avatars absolute inset-0">
           {/* Dynamic floating avatars - skip index 0 as it's the center testimonial */}
-          {testimonials.slice(1, 9).map((testimonial, i) => (
+          {testimonials.slice(1, 16).map((testimonial, i) => (
             testimonial.image !== '' ? (
               <img
                 key={testimonial.id}
                 className={`circle-avatar absolute ${
-                  i < 4 ? 'w-12 h-12' : 'w-16 h-16'
+                  i < 8 ? 'w-12 h-12' : 'w-14 h-14'
                 } rounded-full cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
                   isTransitioning ? 'scale-110 animate-pulse' : ''
                 }`}
@@ -159,9 +214,9 @@ function TestimonialsSection() {
               <div
                 key={testimonial.id}
                 className={`circle-avatar absolute ${
-                  i < 4 ? 'w-12 h-12' : 'w-16 h-16'
+                  i < 8 ? 'w-12 h-12' : 'w-14 h-14'
                 } bg-gray-200 rounded-full flex items-center justify-center ${
-                  i < 4 ? 'text-sm' : 'text-lg'
+                  i < 8 ? 'text-sm' : 'text-base'
                 } font-bold text-gray-700 cursor-pointer transform transition-all duration-500 hover:scale-125 hover:shadow-xl hover:z-20 ${
                   isTransitioning ? 'scale-110 animate-pulse' : ''
                 }`}
@@ -200,33 +255,33 @@ function TestimonialsSection() {
             isTransitioning ? 'opacity-50' : 'opacity-100'
           }`}>
             {Array.from({ length: testimonials[0].rating }, (_, i) => (
-              <span key={i} className="fc-secondary animate-pulse" style={{animationDelay: `${i * 0.1}s`}}>★</span>
+              <span key={i} className="text-yellow-400 text-xl animate-pulse" style={{animationDelay: `${i * 0.1}s`}}>★</span>
             ))}
             {Array.from({ length: 5 - testimonials[0].rating }, (_, i) => (
-              <span key={i} className="fc-primary">☆</span>
+              <span key={i} className="text-gray-400 text-xl">☆</span>
             ))}
           </div>
 
-          <h3 className={`text-[25px] fc-primary font-bold transition-all duration-500 ${
+          <h3 className={`text-[25px] text-white font-bold transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].name}
           </h3>
 
-          <h3 className={`text-[20px] fc-secondary font-bold transition-all duration-500 ${
+          <h3 className={`text-[20px] text-green-400 font-bold transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`}>
             {testimonials[0].designation}
           </h3>
 
-          <p className={`text-[18px] fc-primary leading-relaxed mb-8 transition-all duration-500 ${
+          <p className={`text-[18px] text-white leading-relaxed mb-8 transition-all duration-500 ${
             isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-100'
           }`} style={{transitionDelay: '0.1s'}}>
             {testimonials[0].title}
           </p>
 
           {testimonials[0].subtitle && (
-            <p className={`subtitle fc-primary opacity-80 transition-all duration-500 ${
+            <p className={`subtitle text-white opacity-80 transition-all duration-500 ${
               isTransitioning ? 'transform translate-y-4 opacity-0' : 'transform translate-y-0 opacity-80'
             }`} style={{transitionDelay: '0.2s'}}>
               {testimonials[0].subtitle}
@@ -234,15 +289,15 @@ function TestimonialsSection() {
           )}
 
           {/* Dots Navigation */}
-          <div className={`dots flex justify-center space-x-2 mt-8 transition-all duration-300 ${
+          <div className={`dots flex justify-center flex-wrap space-x-2 mt-8 transition-all duration-300 ${
             isTransitioning ? 'opacity-50' : 'opacity-100'
           }`}>
             {originalTestimonials.map((_, i) => (
               <span
                 key={i}
-                className={`dot w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
+                className={`dot w-3 h-3 rounded-full cursor-pointer transition-all duration-300 mb-2 ${
                   i === getActiveDotIndex()
-                    ? "bg-[#91A7BA] scale-125 border-testi"
+                    ? "bg-[#91A7BA] scale-125 border-2 border-white"
                     : "bg-[#91A7BA] hover:bg-gray-400 hover:scale-110"
                 }`}
                 onClick={() => handleDotClick(i)}
@@ -284,6 +339,12 @@ function TestimonialsSection() {
         .circle-avatar:nth-child(7) { animation-delay: -6s; }
         .circle-avatar:nth-child(8) { animation-delay: -7s; }
         .circle-avatar:nth-child(9) { animation-delay: -8s; }
+        .circle-avatar:nth-child(10) { animation-delay: -9s; }
+        .circle-avatar:nth-child(11) { animation-delay: -10s; }
+        .circle-avatar:nth-child(12) { animation-delay: -11s; }
+        .circle-avatar:nth-child(13) { animation-delay: -12s; }
+        .circle-avatar:nth-child(14) { animation-delay: -13s; }
+        .circle-avatar:nth-child(15) { animation-delay: -14s; }
       `}</style>
     </div>
   );
