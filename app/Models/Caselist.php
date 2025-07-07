@@ -21,6 +21,7 @@ class Caselist extends Model
         'thumbnail',
         'status',
         'priority',
+        'featuredimage',
     ];
     protected $casts = [
         'data' => 'array', // Cast JSON data to array

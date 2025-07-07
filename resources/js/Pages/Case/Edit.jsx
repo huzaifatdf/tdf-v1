@@ -22,6 +22,7 @@ export default function Edit() {
   const { caselist, additionalDataStructure, appUrl } = usePage().props;
   const [imagePreview, setImagePreview] = useState(appUrl + '/' + caselist.image || null);
   const [thumbnailPreview, setThumbnailPreview] = useState(appUrl + '/' + caselist.thumbnail || null);
+    const [featuredPreview, setFeaturedPreview] = useState(appUrl + '/' + caselist.featuredimage || null);
   const [expandedSections, setExpandedSections] = useState({
     Detail: false,
     'Our Work': false,
@@ -62,6 +63,7 @@ export default function Edit() {
     // Handle file uploads
     formData.append('image', values.image);
     formData.append('thumbnail', values.thumbnail);
+    formData.append('featuredimage', values.featured);
 
     // Handle additional data
     const additionalData = {};
@@ -180,6 +182,7 @@ export default function Edit() {
     return initialValues;
   }, [caselist, additionalDataStructure]);
 
+    const [showFeaturedMediaLibrary, setFeaturedShowMediaLibrary] = useState(false);
   const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
   const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
 
@@ -296,6 +299,49 @@ export default function Edit() {
                       component="div"
                       className="text-red-500 text-sm"
                     />
+                  </div>
+
+                   <div className="grid gap-2">
+                    <label htmlFor="image" className="text-sm font-medium">
+                      Feature Image
+                    </label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setFeaturedShowMediaLibrary(true)}
+                        className="w-full"
+                      >
+                        {featuredPreview ? 'Change Media' : 'Add Media'}
+                      </Button>
+                      <MediaLibraryModel
+                        routename={route('case.edit', caselist.id)}
+                        showModal={showFeaturedMediaLibrary}
+                        setShowModal={setFeaturedShowMediaLibrary}
+                        setFieldValue={setFieldValue}
+                        fieldName="featured"
+                        setImagePreview={setFeaturedPreview}
+                      />
+
+                      {featuredPreview && (
+                        <div className="relative mt-4 inline-block">
+                          <img
+                            src={typeof featuredPreview === 'string' ? featuredPreview : URL.createObjectURL(featuredPreview)}
+                            alt="caselist Preview"
+                            className="w-24 h-24 object-cover rounded-lg"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute -top-2 -right-2 h-6 w-6 p-0"
+                            onClick={() => removeImage(setFieldValue, "featured", setFeaturedPreview)}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid gap-2">

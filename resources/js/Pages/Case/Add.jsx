@@ -21,6 +21,7 @@ export default function Add() {
   const { additionalDataStructure } = usePage().props;
   const [imagePreview, setImagePreview] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [featuredPreview, setFeaturedPreview] = useState(null);
   const [expandedSections, setExpandedSections] = useState({
     specifications: true,
     pricing: true,
@@ -63,6 +64,10 @@ export default function Add() {
     }
     if (values.thumbnail) {
       formData.append('thumbnail', values.thumbnail);
+    }
+
+    if (values.featured) {
+      formData.append('featuredimage', values.featured);
     }
 
     // Handle additional data - structure it properly
@@ -185,8 +190,9 @@ export default function Add() {
     return initialValues;
   };
 
-  const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
-    const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
+ const [showFeaturedMediaLibrary, setFeaturedShowMediaLibrary] = useState(false);
+ const [showImageMediaLibrary, setImageShowMediaLibrary] = useState(false);
+ const [showThumbnailMediaLibrary, setThumbnailShowMediaLibrary] = useState(false);
 
   return (
     <AuthenticatedLayout>
@@ -298,6 +304,39 @@ export default function Add() {
                   </div>
 
                   <div className="grid gap-2">
+                    <label htmlFor="image" className="text-sm font-medium">
+                      Featured Image
+                    </label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                      <button type="button" onClick={() => setFeaturedShowMediaLibrary(true)}>Add Media</button>
+                      <MediaLibraryModel routename={route('case.create')} showModal={showFeaturedMediaLibrary} setShowModal={setFeaturedShowMediaLibrary} setFieldValue={setFieldValue}
+                      fieldName="featured"
+                      setImagePreview={setFeaturedPreview}
+                      />
+
+                       {featuredPreview && (
+                        <div className="relative">
+                          <img
+                            src={featuredPreview}
+                            alt="Featured Image Preview"
+                            className="w-24 h-24 object-cover rounded-lg mx-auto"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute -top-2 -right-2"
+                            onClick={() => removeImage(setFieldValue, "featured", setFeaturedPreview)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+
+                    <div className="grid gap-2">
                     <label htmlFor="image" className="text-sm font-medium">
                       Case Image
                     </label>

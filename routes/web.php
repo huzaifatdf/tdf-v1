@@ -22,6 +22,11 @@ Route::get('/run-optimize-clear', function () {
     return 'Optimized and cleared!';
 })->name('run-optimize-clear');
 
+Route::get('/run-migrate', function () {
+    Artisan::call('migrate');
+    return 'Migration completed!';
+})->name('run-migrate');
+
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 
 
