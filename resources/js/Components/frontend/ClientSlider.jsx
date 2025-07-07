@@ -32,16 +32,26 @@ function ClientSlider() {
                             {upperourclients.map((client, index) => (
                                 <div key={index} className="mx-6 flex items-center justify-center h-20 w-32 group relative">
                                     {/* White/Default Logo */}
-                                    <img
-                                        src={`${appUrl}/${client.image}`}
-                                        alt={client.name || `Client ${index + 1}`}
-                                        className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-0"
-                                        onError={(e) => {
-                                            e.target.style.display = 'none';
-                                        }}
-                                    />
+                                  <img
+    src={`${appUrl}/${client.image}`}
+    alt={client.name || `Client ${index + 1}`}
+    className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-0 absolute top-0 left-0"
+    onError={(e) => {
+      e.target.style.display = 'none';
+    }}
+  />
+
+  {/* Colored image (shown on hover) */}
+  <img
+    src={`${appUrl}/${client?.coloredimage || client.image}`}
+    alt={client.name || `Client ${index + 1} Colored`}
+    className="max-h-full max-w-full object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+    onError={(e) => {
+      e.target.style.display = 'none';
+    }}
+  />
                                     {/* Colored Logo (shows on hover) */}
-                                    {client.coloredimage && (
+                                    {/* {client.coloredimage && (
                                         <img
                                             src={`${appUrl}/${client.coloredimage}`}
                                             alt={client.name || `Client ${index + 1}`}
@@ -50,7 +60,7 @@ function ClientSlider() {
                                                 e.target.style.display = 'none';
                                             }}
                                         />
-                                    )}
+                                    )} */}
                                 </div>
                             ))}
                         </Marquee>
