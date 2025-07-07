@@ -191,7 +191,7 @@ function TestimonialsSection() {
   ];
 
   return (
-    <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden min-h-screen">
+    <div className="from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden min-h-screenssssss">
       <div className="testimonial-wrapper relative z-10 flex items-center justify-center sec-padding --large px-8">
         {/* Floating Avatars */}
         <div className="floating-avatars absolute inset-0">
