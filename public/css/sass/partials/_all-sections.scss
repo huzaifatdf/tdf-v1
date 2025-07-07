@@ -437,12 +437,16 @@ form {
     z-index: 9999 !important;
 }
 
-// Responsive Start Here //
-@media (min-width: 1024px) and (max-width: 1439px) {
-    .mobile-height-img {
-        height: 25vh;
-    }
+.border-bottom-case {
+    border-bottom: 1px solid #36454a;
 }
+
+// Responsive Start Here //
+// @media (min-width: 1024px) and (max-width: 1439px) {
+//     .mobile-height-img {
+//         height: 25vh;
+//     }
+// }
 
 
 @media(max-width: 600px) {

@@ -34,15 +34,27 @@ function ClientSlider() {
                     <div className="overflow-hidden pb-5 mt-5">
                         <Marquee gradient={false} speed={100} direction="right" pauseOnHover={true}>
                             {upperourclients.map((client, index) => (
-                                <div key={index} className="mx-6 flex items-center justify-center h-20 w-32">
+                                <div key={index} className="mx-6 flex items-center justify-center h-20 w-32 group relative">
+                                    {/* White/Default Logo */}
                                     <img
                                         src={`${appUrl}/${client.image}`}
                                         alt={client.name || `Client ${index + 1}`}
-                                        className="max-h-full max-w-full object-contain transition duration-300"
+                                        className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-0"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                         }}
                                     />
+                                    {/* Colored Logo (shows on hover) */}
+                                    {client.colored_image && (
+                                        <img
+                                            src={`${appUrl}/${client.colored_image}`}
+                                            alt={client.name || `Client ${index + 1}`}
+                                            className="max-h-full max-w-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             ))}
                         </Marquee>
@@ -50,15 +62,25 @@ function ClientSlider() {
                     {/* <div className="overflow-hidden pb-5 mt-2">
                         <Marquee gradient={false} speed={40} direction="left" pauseOnHover={false}>
                             {lowerourclients.map((client, index) => (
-                                <div key={index} className="mx-6 flex items-center justify-center h-20 w-32">
+                                <div key={index} className="mx-6 flex items-center justify-center h-20 w-32 group relative">
                                     <img
                                         src={`${appUrl}/${client.image}`}
                                         alt={client.name || `Client ${index + 1}`}
-                                        className="max-h-full max-w-full object-contain grayscale hover:grayscale-0 transition duration-300"
+                                        className="max-h-full max-w-full object-contain grayscale hover:grayscale-0 transition duration-300 group-hover:opacity-0"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                         }}
                                     />
+                                    {client.colored_image && (
+                                        <img
+                                            src={`${appUrl}/${client.colored_image}`}
+                                            alt={client.name || `Client ${index + 1}`}
+                                            className="max-h-full max-w-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             ))}
                         </Marquee>

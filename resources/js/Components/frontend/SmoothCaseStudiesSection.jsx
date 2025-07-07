@@ -339,13 +339,13 @@ function SmoothCaseStudiesSection() {
             <div
               key={section.id}
               ref={el => sectionsRefs.current[section.id] = el}
-              className="min-h-screen flex items-center"
+              className="min-h-screen flex items-center border-bottom-case"
             >
               <div className="animate-fadeIn">
                 <img
                   src={section.mainImage}
                   alt={`${section.title} main image`}
-                  className="w-full h-[40vh] object-cover mb-6"
+                  className="w-full object-cover mb-6"
                 />
 
                 {/* Title */}
@@ -385,7 +385,7 @@ function SmoothCaseStudiesSection() {
                 >
                 Read more <span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                 </a>
-                <hr className="border-white mb-8 mt-8"/>
+                {/* <hr className="border-white mb-8 mt-8"/> */}
               </div>
             </div>
           ))}
