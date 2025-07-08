@@ -181,6 +181,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
         <div ref={contentRef} className="grid md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-5 flex flex-col justify-center h-full">
                 <h2 className="text-[30px] text-lime-400 mb-6">{title}</h2>
+                {link &&
                 <a
                 href={`https://${link}`}
                 target="_blank"
@@ -189,6 +190,7 @@ const WebsiteShowcase = ({ title, description, link, image, index, isLast }) => 
                 >
                 {link}<span className="fc-purple group-hover:translate-x-1 transition-transform">→</span>
                 </a>
+                }
             </div>
             <div className="md:col-span-7 relative group">
                 <div className="absolute inset-0 transform transition-transform duration-500 " />
