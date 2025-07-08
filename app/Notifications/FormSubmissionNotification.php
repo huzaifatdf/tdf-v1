@@ -45,7 +45,7 @@ class FormSubmissionNotification extends Notification
                     ->line('You have received a new form submission.')
                     ->line('Form: ' . ($this->formSubmission->form->name ?? 'Unknown Form'))
                     ->line('Submitted at: ' . $this->formSubmission->created_at->format('M d, Y H:i:s'))
-                    ->action('View Submission', url('/admin/form-submissions/' . $this->formSubmission->id))
+                    ->action('View Submission', url('/dashboard/submission/' .$this->formSubmission->form->name . '/' . $this->formSubmission->id))
                     ->line('Thank you for using our application!');
     }
 
@@ -64,7 +64,7 @@ class FormSubmissionNotification extends Notification
             'form_slug' => $this->formSubmission->form->slug ?? 'Unknown slug',
             'submitter_ip' => $this->formSubmission->ip_address ?? null,
             'submitted_at' => $this->formSubmission->created_at->format('Y-m-d H:i:s'),
-            'url' => url('/admin/form-submissions/' . $this->formSubmission->id),
+            'url' => url('/dashboard/submission/' .$this->formSubmission->form->name . '/' . $this->formSubmission->id),
             // Only include data if it's not too large for database storage
             'has_data' => !empty($this->formSubmission->data),
         ];
