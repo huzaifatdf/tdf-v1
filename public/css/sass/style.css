@@ -9753,6 +9753,10 @@ form textarea {
   .mobile-height-img {
     height: 100px !important;
   }
+  .mobile-whatsapp {
+    right: 0.5rem !important;
+    bottom: 1.5rem !important;
+  }
 }
 @keyframes loader {
   0%, 10%, 100% {
