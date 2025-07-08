@@ -164,29 +164,29 @@ export function AppSidebar({
 
       ],
     },
-    {
-      title: "Leads",
-      url: route('form.submission.index'),
-      icon : ChartNoAxesCombined,
+    // {
+    //   title: "Leads",
+    //   url: route('form.submission.index'),
+    //   icon : ChartNoAxesCombined,
 
-    },
+    // },
      // Spread the mapped dynamic forms into the navMain array
-    // ...(dynamicFormsList.length > 0 ? dynamicFormsList.map((form) => ({
-    //   title: form.name,
-    //   url: "#",
-    //   icon: Frame,
-    //   // You might want to add items/submenu for forms too
-    //   items: [
-    //     {
-    //       title: "View Form",
-    //       url: route('form.submission.create', { slug: form.slug }),
-    //     },
-    //     {
-    //       title: "Submissions",
-    //       url: route('form.submission.index', { slug: form.slug }),
-    //     },
-    //   ],
-    // })) : []),
+    ...(dynamicFormsList.length > 0 ? dynamicFormsList.map((form) => ({
+      title: form.name,
+      url: "#",
+      icon: Frame,
+      // You might want to add items/submenu for forms too
+      items: [
+        {
+          title: "View Form",
+          url: route('form.submission.create', { slug: form.slug }),
+        },
+        {
+          title: "Submissions",
+          url: route('form.submission.index', { slug: form.slug }),
+        },
+      ],
+    })) : []),
 
   ],
 

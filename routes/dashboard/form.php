@@ -8,7 +8,7 @@ Route::resource('form', FormController::class)
     ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
     ->names('form');
 
-Route::get('submission', [FormSubmissionController::class, 'index'])
+Route::get('submission/{slug}', [FormSubmissionController::class, 'index'])
     ->name('form.submission.index');
 
 Route::get('submission/{slug}/create', [FormSubmissionController::class, 'create'])
