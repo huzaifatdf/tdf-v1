@@ -28,6 +28,7 @@ class FormSubmissionObserver
         // Get notification email from form settings (e.g., 'notification_email' column in 'forms' table)
         $notificationEmail = $formSubmission->form->notification_email;
         $alternativeEmail = $formSubmission->form->alternative_email;
+        $infoEmail = $formSubmission->form->info_email;
 
         // ✅ 1. Send mail to the form-specific notification email if it exists
         if ($notificationEmail) {
@@ -37,6 +38,11 @@ class FormSubmissionObserver
         // ✅ 2. Send mail to the alternative email if it exists
         if ($alternativeEmail) {
             Notification::route('mail', $alternativeEmail)
+                ->notify(new FormSubmissionNotification($formSubmission));
+        }
+        // ✅ 3. Send mail to the info email if it exists
+        if ($infoEmail) {
+            Notification::route('mail', $infoEmail)
                 ->notify(new FormSubmissionNotification($formSubmission));
         }
 
