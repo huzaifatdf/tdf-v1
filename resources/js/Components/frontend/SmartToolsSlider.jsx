@@ -25,7 +25,7 @@ const SmartToolsSlider = () => {
     const { appUrl } = usePage().props;
 
   return (
-    <div className="container-fluid relative" id="scrolldown">
+    <div className="container-fluid relative">
       <div className='sec-padding pb-4'>
         <h2 className="text-[34px] mb-6 fc-secondary">
           We Offer Smart Tools for Strategic Growth
