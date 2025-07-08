@@ -66,7 +66,7 @@ const WhatsAppFloatButton = ({
       className={`fixed ${positionClasses[position]} z-50 cursor-pointer animate-fadeIn transition-all duration-300 mobile-whatsapp`}
     >
       {/* Float Button */}
-      <div className="relative group border-2 border-[#9BE500] rounded-full w-14 h-14 flex items-center justify-center">
+      <div className="relative group bg-[#9BE500] rounded-full w-14 h-14 flex items-center justify-center">
         <button
           className=""
           aria-label="Open WhatsApp chat"
@@ -76,7 +76,7 @@ const WhatsAppFloatButton = ({
             height="30"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="fill-[#9BE500] group-hover:rotate-12 transition-transform duration-300"
+            className="fill-[#fff] group-hover:rotate-12 transition-transform duration-300"
             style={{
               animation: 'delayedZoom 10s ease-in-out infinite',
             }}

@@ -9373,7 +9373,7 @@ body {
 }
 
 .video-overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* was 0.3, now 0.5 for a darker overlay */
+  background-color: rgba(0, 0, 0, 0.28); /* was 0.3, now 0.5 for a darker overlay */
   z-index: 2;
   pointer-events: none;
 }
