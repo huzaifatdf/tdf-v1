@@ -43,7 +43,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 
 export default function DynamicFormList() {
-    const { submissions, form, formFields, dynamicColumns, filters: initialFilters, sort: initialSort, slug } = usePage().props;
+    const { submissions, formFields, dynamicColumns, filters: initialFilters, sort: initialSort, slug } = usePage().props;
 
     const [sorting, setSorting] = useState(initialSort || []);
     const [columnFilters, setColumnFilters] = useState(initialFilters || []);
@@ -95,28 +95,54 @@ export default function DynamicFormList() {
         ];
 
         // Add dynamic columns for form fields
-        const fieldColumns = formFields.map(field => ({
-            accessorKey: `flattened_data.${field.name}`,
-            header: ({ column }) => (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    {field.label}
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            ),
-            cell: ({ row }) => {
-                const value = row.original.flattened_data?.[field.name];
-                if (field.type === 'file' && value) {
-                    return <Button variant="link" size="sm">View File</Button>;
-                }
-                if (field.type === 'checkbox') {
-                    return value ? <Badge variant="secondary">Yes</Badge> : <Badge variant="outline">No</Badge>;
-                }
-                return <div className="max-w-[200px] truncate">{value || '-'}</div>;
+        const fieldColumns = [
+            {
+                accessorKey: "value",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Value
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                ),
+             cell: ({ row }) => {
+    let parsedData;
+    console.log(row["original"]["data"])
+    try {
+        parsedData = row["original"]["data"];
+    } catch (e) {
+        return <div className="text-red-500">Invalid JSON</div>;
+    }
+
+    if (!parsedData || typeof parsedData !== 'object') {
+        return <div className="text-gray-500">No Data</div>;
+    }
+
+    const formatted = Object.entries(parsedData)
+        .map(([key, val]) => ` ${val}`)
+        .join(`,\n`);
+
+    return <div className="font-medium">{formatted}</div>;
+},
+
             },
-        }));
+               {
+                accessorKey: "Form",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Form
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                ),
+           cell: ({ row }) => {return<div className="font-medium">{row["original"]["form"]["name"]}</div>},
+
+            }
+        ];
 
         const endColumns = [
             {
@@ -154,6 +180,8 @@ export default function DynamicFormList() {
                 enableHiding: false,
                 cell: ({ row }) => {
                     const submission = row.original;
+                    //slug from form
+                    const slug = submission.form.slug
                     return (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -276,14 +304,13 @@ export default function DynamicFormList() {
 
     return (
         <AuthenticatedLayout>
-            <Head title={`${form.name} - Submissions`} />
+            <Head title={`Submissions`} />
 
             <div className="flex flex-1 flex-col">
                 <div className="@container/main flex flex-1 flex-col gap-2 p-10">
                     <div className="w-full">
                         <div className="mb-4">
-                            <h1 className="text-2xl font-bold">{form.name} Submissions</h1>
-                            <p className="text-gray-600">{form.description}</p>
+                            <h1 className="text-2xl font-bold"> Submissions</h1>
                         </div>
 
                         <div className="flex items-center py-4 gap-4">
@@ -297,7 +324,7 @@ export default function DynamicFormList() {
                             />
 
                             {/* Add filter for the first form field as example */}
-                            {formFields.length > 0 && (
+                            {/* {formFields.length > 0 && (
                                 <Input
                                     placeholder={`Filter by ${formFields[0].label}...`}
                                     value={table.getColumn(`flattened_data.${formFields[0].name}`)?.getFilterValue() ?? ""}
@@ -306,7 +333,7 @@ export default function DynamicFormList() {
                                     }
                                     className="max-w-sm"
                                 />
-                            )}
+                            )} */}
 
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>

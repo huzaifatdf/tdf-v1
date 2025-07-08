@@ -19,9 +19,9 @@ class FormSubmissionController extends Controller
      * Display a listing of the resource.
      */
 
-public function index(Request $request, $slug )
+public function index(Request $request)
 {
-
+    $slug = $request->query('slug') ?? null;
     // Get sort, filters, and pagination from request
     $sort = $request->input('sort', []);
     $filters = $request->input('filters', []);
@@ -29,17 +29,20 @@ public function index(Request $request, $slug )
     $page = $request->input('page', 1);
 
     // Build base query
-    $query = FormSubmission::with(['form', 'user'])
-        ->whereHas('form', function ($q) use ($slug) {
+    $query = FormSubmission::with(['form', 'user']);
+
+    if($slug) {
+        $query->whereHas('form', function ($q) use ($slug) {
             $q->where('slug', $slug);
         });
+    }
 
     // Get the form for reference
-    $form = Form::where('slug', $slug)->with('fields')->first();
+    // $form = Form::where('slug', $slug)->with('fields')->first();
 
-    if (!$form) {
-        abort(404, 'Form not found');
-    }
+    // if (!$form) {
+    //     abort(404, 'Form not found');
+    // }
 
     // Dynamically apply filters based on submission data and direct fields
     foreach ($filters as $field => $value) {
@@ -84,24 +87,24 @@ public function index(Request $request, $slug )
     });
 
     // Prepare dynamic columns based on form fields
-    $formFields = $form->fields->sortBy('sort_order');
+    // $formFields = $form->fields->sortBy('sort_order');
     $dynamicColumns = [];
 
-    foreach ($formFields as $field) {
-        $dynamicColumns[] = [
-            'key' => $field->name,
-            'label' => $field->label,
-            'type' => $field->type,
-            'sortable' => true,
-            'filterable' => true
-        ];
-    }
+    // foreach ($formFields as $field) {
+    //     $dynamicColumns[] = [
+    //         'key' => $field->name,
+    //         'label' => $field->label,
+    //         'type' => $field->type,
+    //         'sortable' => true,
+    //         'filterable' => true
+    //     ];
+    // }
 
     // Render to Inertia
     return Inertia::render('Dynamicform/List', [
         'submissions' => $submissions,
-        'form' => $form,
-        'formFields' => $formFields,
+        // 'form' => $form,
+        // 'formFields' => $formFields,
         'dynamicColumns' => $dynamicColumns,
         'filters' => $filters,
         'sort' => $sort,
