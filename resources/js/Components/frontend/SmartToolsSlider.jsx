@@ -25,7 +25,7 @@ const SmartToolsSlider = () => {
     const { appUrl } = usePage().props;
 
   return (
-    <div className="container-fluid relative">
+    <div className="container-fluid relative" id="scrolldown">
       <div className='sec-padding pb-4'>
         <h2 className="text-[34px] mb-6 fc-secondary">
           We Offer Smart Tools for Strategic Growth
@@ -40,6 +40,7 @@ const SmartToolsSlider = () => {
             autoplay={{
               delay: 12000,
               disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
             speed={1000} // transition duration in ms
             spaceBetween={30}

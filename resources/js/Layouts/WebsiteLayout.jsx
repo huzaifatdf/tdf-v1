@@ -118,8 +118,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
                     {/* Global Components */}
                     <ParticlesBackground />
-                    <CustomCursor />
-                    <BacktoTop />
+                    {/* <CustomCursor /> */}
+                    {/* <BacktoTop /> */}
 
                     {/* Navbar */}
                     <nav className="sticky-menu navbar navbar-expand-lg bg-transparent position-absolute top-0 start-0 w-100 shadow-none" style={{ zIndex: 3 }}>
