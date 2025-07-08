@@ -88,6 +88,7 @@ export default function EditForm() {
       redirect_url: form.redirect_url || "",
       notification_email: form.notification_email || "",
       alternative_email: form.alternative_email || "",
+      info_email : form.info_email || "",
       email_subject: form.email_subject || "",
       status: form.status || "active",
       require_captcha: form.require_captcha || false,
@@ -380,6 +381,16 @@ export default function EditForm() {
                                   name="alternative_email"
                                   type="email"
                                   placeholder="admin@example.com"
+                                />
+                              </div>
+                              <div>
+                                <Label htmlFor="alternative_email">Info Email</Label>
+                                <Field
+                                  as={Input}
+                                  id="info_email"
+                                  name="info_email"
+                                  type="email"
+                                  placeholder="info@example.com"
                                 />
                               </div>
                             </div>

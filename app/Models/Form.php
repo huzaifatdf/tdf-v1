@@ -24,6 +24,7 @@ class Form extends Model
         'status',
         'require_captcha',
         'store_submissions',
+        'info_email',
     ];
 
     protected $casts = [
