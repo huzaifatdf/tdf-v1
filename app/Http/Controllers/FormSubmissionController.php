@@ -19,9 +19,9 @@ class FormSubmissionController extends Controller
      * Display a listing of the resource.
      */
 
-public function index(Request $request, $slug)
+public function index(Request $request)
 {
-
+    $slug = $request->query('slug') ?? null;
     // Get sort, filters, and pagination from request
     $sort = $request->input('sort', []);
     $filters = $request->input('filters', []);
