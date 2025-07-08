@@ -9753,49 +9753,6 @@ form textarea {
   .mobile-height-img {
     height: 100px !important;
   }
-  .circle-avatar:nth-child(1) {
-    top: 2% !important;
-    left: 25% !important;
-  }
-  .circle-avatar:nth-child(2) {
-    top: 11% !important;
-  }
-  .circle-avatar:nth-child(10) {
-    top: 18% !important;
-  }
-  .circle-avatar:nth-child(4) {
-    top: 25% !important;
-  }
-  .circle-avatar:nth-child(3) {
-    top: 32% !important;
-    left: 10% !important;
-  }
-  .circle-avatar:nth-child(13) {
-    top: 38% !important;
-    left: 20% !important;
-  }
-  .circle-avatar:nth-child(6) {
-    top: 2% !important;
-    right: 20% !important;
-  }
-  .circle-avatar:nth-child(5) {
-    top: 11% !important;
-  }
-  .circle-avatar:nth-child(12) {
-    top: 20% !important;
-  }
-  .circle-avatar:nth-child(7) {
-    top: 38% !important;
-  }
-  .circle-avatar:nth-child(14) {
-    top: 25% !important;
-  }
-  .circle-avatar:nth-child(8) {
-    top: 32% !important;
-  }
-  .circle-avatar:nth-child(7) {
-    right: 28% !important;
-  }
 }
 @keyframes loader {
   0%, 10%, 100% {
