@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WebsiteLayout from "@/Layouts/WebsiteLayout";
 import parse from 'html-react-parser';
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
