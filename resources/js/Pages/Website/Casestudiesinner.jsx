@@ -774,7 +774,7 @@ const FloatIcon = ({preSlug,nextSlug}) => {
     <>
     {nextSlug && (
     <div className="fixed top-0 bottom-0 right-[-25px] flex items-center">
-      <Link  href={route('web.product.show', { slug: nextSlug })} >
+      <Link  href={route('casestudy.show', { slug: nextSlug })} >
         <img
             src="/images/right.svg"
             alt="Float Icon"
@@ -786,7 +786,7 @@ const FloatIcon = ({preSlug,nextSlug}) => {
 
     {preSlug && (
     <div className="fixed top-0 bottom-0 left-[-25px] flex items-center">
-      <Link href={route('web.product.show', { slug: preSlug })}>
+      <Link href={route('casestudy.show', { slug: preSlug })}>
         <img
             src="/images/left.svg"
             alt="Float Icon"
