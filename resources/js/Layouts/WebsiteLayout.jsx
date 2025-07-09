@@ -29,6 +29,8 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
     const menuRef = useRef(null);
     const burgerRef = useRef(null);
 
+    console.log("SEO",metaSchema,metaKeywords,canonicalUrl,customStyles,customScripts);
+
     const { toast } = useToast()
 
 
@@ -322,9 +324,9 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     </footer>
 
                      {/* Custom Script */}
-                            {customScripts && (
+                            {/* {customScripts && (
                                 <script dangerouslySetInnerHTML={{ __html: customScripts }} />
-                            )}
+                            )} */}
                 </>
             )}
         </>
