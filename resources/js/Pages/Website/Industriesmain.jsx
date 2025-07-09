@@ -29,7 +29,14 @@ export default function Productinner() {
   }, []);
 
   return (
-    <WebsiteLayout title={metaTitle} description={metaDescription}>
+    <WebsiteLayout title={metaTitle} description={metaDescription}
+      metaSchema={page?.meta_schema}
+            customScripts={page?.customscripts}
+            socialMeta={page?.social_meta}
+            metaKeywords={page?.meta_keywords}
+            customStyles={page?.customstyles}
+            canonicalUrl={page?.canonical_url}
+    >
         <section ref={introRef} className="banner-inner-page flex relative overflow-hidden">
             <div className="container-fluid relative mt-[150px]">
                 <div className="">

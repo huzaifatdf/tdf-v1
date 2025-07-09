@@ -30,7 +30,14 @@ export default function Productmain() {
   }, []);
 
   return (
-    <WebsiteLayout title={metaTitle} description={metaDescription}>
+    <WebsiteLayout title={metaTitle} description={metaDescription}
+      metaSchema={page?.meta_schema}
+            customScripts={page?.customscripts}
+            socialMeta={page?.social_meta}
+            metaKeywords={page?.meta_keywords}
+            customStyles={page?.customstyles}
+            canonicalUrl={page?.canonical_url}
+    >
       <section ref={introRef} className="banner-inner-page min-h-[40vh] flex items-center bg-dark-950 relative overflow-hidden">
         <div className="container-fluid relative mt-[100px] mb-[30px]">
             <div className="">
