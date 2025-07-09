@@ -297,7 +297,7 @@ function TestimonialsSection() {
                 key={i}
                 className={`dot w-3 h-3 rounded-full cursor-pointer transition-all duration-300 mb-2 ${
                   i === getActiveDotIndex()
-                    ? "bg-[#91A7BA] scale-125 border-2 border-white"
+                    ? "bg-[#91A7BA] scale-110 border-[2px] border-[#9BE500]"
                     : "bg-[#91A7BA] hover:bg-gray-400 hover:scale-110"
                 }`}
                 onClick={() => handleDotClick(i)}
