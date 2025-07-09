@@ -570,6 +570,8 @@ function SmoothExperienceSection(props) {
           </div>
           <hr className="border-white mb-8"/>
         </div>
+
+        <FloatIcon preSlug={previousSlug} nextSlug={nextSlug} />
       </section>
       {/* Custom CSS for animations */}
       <style jsx>{`
@@ -763,3 +765,34 @@ function Components(props) {
 };
 
 
+// Float Icon //
+const FloatIcon = ({preSlug,nextSlug}) => {
+  return (
+    <>
+    {nextSlug && (
+    <div className="fixed top-0 bottom-0 right-[-25px] flex items-center">
+      <Link  href={route('web.product.show', { slug: nextSlug })} >
+        <img
+            src="/images/right.svg"
+            alt="Float Icon"
+            className="w-24 h-24"
+        />
+      </Link>
+    </div>
+    ) }
+
+    {preSlug && (
+    <div className="fixed top-0 bottom-0 left-[-25px] flex items-center">
+      <Link href={route('web.product.show', { slug: preSlug })}>
+        <img
+            src="/images/left.svg"
+            alt="Float Icon"
+            className="w-24 h-24"
+        />
+
+      </Link>
+    </div>
+    )}
+    </>
+  );
+};
