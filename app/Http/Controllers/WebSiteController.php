@@ -40,13 +40,13 @@ class WebSiteController extends Controller
 
     // Get ONLY the slug of previous casestudy
     $previousSlug = Caselist::where('priority', '<', $casestudy->priority)
-        ->published()
+        ->where('status', 'published')
         ->orderBy('priority', 'desc')
         ->value('slug');  // Retrieves only the slug value
 
     // Get ONLY the slug of next casestudy
     $nextSlug = Caselist::where('priority', '>', $casestudy->priority)
-        ->published()
+        ->where('status', 'published')
         ->orderBy('priority', 'asc')
         ->value('slug');  // Retrieves only the slug value
 
