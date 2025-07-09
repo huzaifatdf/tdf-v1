@@ -86,6 +86,11 @@ class WebSiteController extends Controller
                 'metaDescription' => $page->meta_description ?? 'Learn more about our ' . $page->title . ' at TDF Agency.',
             ]);
         }
+
+        if($page->redirect_url) {
+            return redirect($page->redirect_url);
+        }
+
         return Inertia::render('Website/Dynamicpage', [
             'page' => $page
         ]);

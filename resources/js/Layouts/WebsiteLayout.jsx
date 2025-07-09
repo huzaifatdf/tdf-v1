@@ -125,16 +125,16 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                            {/* Social Meta Tags */}
 
                             {/* Custom Styles */}
-                            {customStyles && (
+                            {/* {customStyles && (
                                 <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-                            )}
+                            )} */}
 
 
 
                             {/* Schema Markup */}
-                            {metaSchema && (
+                            {/* {metaSchema && (
                                 parse(metaSchema)
-                            )}
+                            )} */}
                             {metaKeywords && (
                                 <meta name="keywords" content={metaKeywords} />
                             )}
