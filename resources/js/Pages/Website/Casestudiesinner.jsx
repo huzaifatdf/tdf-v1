@@ -22,6 +22,7 @@ export default function Casestudiesinner(props) {
   const introRef = useRef(null);
   const {casestudy} = props;
   const {appUrl} = usePage().props;
+    const {previousSlug,nextSlug} = usePage().props;
 
   const jsonData = JSON.parse(casestudy.data);
 
@@ -79,6 +80,7 @@ export default function Casestudiesinner(props) {
       {jsonData["Detail"] &&   <Beginning data={casestudy} jsonData={jsonData} /> }
       {jsonData["Experience"] && <BoxExperienceSection data={casestudy} jsonData={jsonData}/> }
      <Components data={ jsonData?.Technology && parseTitles(jsonData?.Technology)}  conclusion={jsonData?.conclusion}/>
+        <FloatIcon preSlug={previousSlug} nextSlug={nextSlug} />
     </WebsiteLayout>
   );
 }
@@ -451,7 +453,8 @@ function SmoothExperienceSection(props) {
   };
 
   const currentSection = sections.find(s => s.id === activeSection);
-  const {previousSlug,nextSlug} = usePage().props;
+
+
   return data &&  (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen box designing-section mobile-screens">
@@ -571,7 +574,7 @@ function SmoothExperienceSection(props) {
           <hr className="border-white mb-8"/>
         </div>
 
-        <FloatIcon preSlug={previousSlug} nextSlug={nextSlug} />
+
       </section>
       {/* Custom CSS for animations */}
       <style jsx>{`

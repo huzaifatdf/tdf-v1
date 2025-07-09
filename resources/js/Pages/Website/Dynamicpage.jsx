@@ -60,6 +60,11 @@ export default function Home() {
         <WebsiteLayout
             title={metaTitle}
             description={metaDescription}
+            metaSchema={page?.meta_schema}
+            customScripts={page?.customscripts}
+            socialMeta={page?.social_meta}
+            metaKeywords={page?.meta_keywords}
+            customStyles={page?.customstyles}
         >
               <section ref={introRef} className="flex items-center relative overflow-hidden">
                  <div className="absolute inset-0 opacity-50" />
