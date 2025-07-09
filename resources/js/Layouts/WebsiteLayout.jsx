@@ -110,6 +110,39 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
         };
     }, []);
 
+
+        // Function to safely render HTML strings as JSX
+    const renderHTMLString = (htmlString) => {
+        if (!htmlString || typeof htmlString !== 'string') return null;
+
+        // Create a temporary div to parse the HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlString;
+
+        // Convert HTML elements to React elements
+        const elements = [];
+        Array.from(tempDiv.children).forEach((element, index) => {
+            const tagName = element.tagName.toLowerCase();
+            const props = {};
+
+            // Convert attributes to props
+            Array.from(element.attributes).forEach(attr => {
+                const propName = attr.name === 'content' ? 'content' :
+                               attr.name === 'property' ? 'property' :
+                               attr.name === 'name' ? 'name' :
+                               attr.name === 'href' ? 'href' :
+                               attr.name === 'rel' ? 'rel' : attr.name;
+                props[propName] = attr.value;
+            });
+
+            // Add key for React
+            props.key = index;
+
+            elements.push(React.createElement(tagName, props));
+        });
+
+        return elements;
+    };
     return (
         <>
          <Toaster />
@@ -125,25 +158,23 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
                         <link rel="stylesheet" href="/css/sass/style.css" />
                            {/* Social Meta Tags */}
+  {/* Keywords Meta Tag */}
+                        {metaKeywords && (
+                            <meta name="keywords" content={metaKeywords} />
+                        )}
 
-                            {/* Custom Styles */}
-                            {/* {customStyles && (
-                                <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-                            )} */}
+                        {/* Canonical URL */}
+                        {canonicalUrl && (
+                            <link rel="canonical" href={canonicalUrl} />
+                        )}
 
+                        {/* Schema Markup and Social Meta Tags */}
+                        {metaSchema && renderHTMLString(metaSchema)}
 
-
-                            {/* Schema Markup */}
-                            {/* {metaSchema && (
-                                parse(metaSchema)
-                            )} */}
-                            {metaKeywords && (
-                                <meta name="keywords" content={metaKeywords} />
-                            )}
-
-                            {canonicalUrl && (
-                                <link rel="canonical" href={canonicalUrl} />
-                            )}
+                        {/* Custom Styles */}
+                        {customStyles && (
+                            <style dangerouslySetInnerHTML={{ __html: customStyles }} />
+                        )}
 
                     </Head>
 
@@ -324,9 +355,9 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                     </footer>
 
                      {/* Custom Script */}
-                            {/* {customScripts && (
+                            {customScripts && (
                                 <script dangerouslySetInnerHTML={{ __html: customScripts }} />
-                            )} */}
+                            )}
                 </>
             )}
         </>
