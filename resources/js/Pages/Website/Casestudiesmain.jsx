@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Casestudiesmain(props) {
   const introRef = useRef(null);
-  const { metaTitle, metaDescription } = usePage().props;
+  const { metaTitle, metaDescription ,page} = usePage().props;
 
 
   useEffect(() => {

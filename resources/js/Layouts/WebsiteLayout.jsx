@@ -12,9 +12,17 @@ import { useToast } from "@/hooks/use-toast"
 import ContactFormFloating from '@/Components/ContactFormFloating';
 import WhatsAppFloatButton from '@/Components/WhatsAppFloatButton';
 import BacktoTop from '@/Components/BacktoTop';
+//parse
+import parse from 'html-react-parser';
 
 
-export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner' }) {
+export default function WebsiteLayout({ children, title = 'TDF Agency', description = 'Your trusted digital partner',
+        metaSchema,
+    customScripts,
+    metaKeywords,
+    customStyles,
+    canonicalUrl
+ }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [loaded, setLoaded] = useState(true); // set true to bypass Preloader for now
       const { auth, flash } = usePage().props;
@@ -114,6 +122,27 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                         <meta name="description" content={description} />
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
                         <link rel="stylesheet" href="/css/sass/style.css" />
+                           {/* Social Meta Tags */}
+
+                            {/* Custom Styles */}
+                            {customStyles && (
+                                <style dangerouslySetInnerHTML={{ __html: customStyles }} />
+                            )}
+
+
+
+                            {/* Schema Markup */}
+                            {metaSchema && (
+                                parse(metaSchema)
+                            )}
+                            {metaKeywords && (
+                                <meta name="keywords" content={metaKeywords} />
+                            )}
+
+                            {canonicalUrl && (
+                                <link rel="canonical" href={canonicalUrl} />
+                            )}
+
                     </Head>
 
                     {/* Global Components */}
@@ -291,6 +320,11 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
                             </div>
                         </div>
                     </footer>
+
+                     {/* Custom Script */}
+                            {customScripts && (
+                                <script dangerouslySetInnerHTML={{ __html: customScripts }} />
+                            )}
                 </>
             )}
         </>

@@ -771,6 +771,7 @@ export default function Edit() {
                 description: page.description || "",
                 meta_title: page.meta_title || "",
                 meta_description: page.meta_description || "",
+                meta_schema: page.meta_schema || "",
                 meta_keywords: page.meta_keywords || "",
                 canonical_url: page.canonical_url || "",
                 redirect_url: page.redirect_url || "",
@@ -1012,6 +1013,25 @@ export default function Edit() {
                                 />
                                 <ErrorMessage
                                   name="meta_description"
+                                  component="div"
+                                  className="text-red-500 text-sm"
+                                />
+                              </div>
+
+                              <div className="grid gap-2">
+                                <label htmlFor="meta_schema" className="text-sm font-medium text-gray-700">
+                                  Meta Schema
+                                </label>
+                                <Field
+                                  as={Textarea}
+                                  id="meta_schema"
+                                  name="meta_schema"
+                                  placeholder="SEO Schema"
+                                  rows={3}
+                                  className="focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <ErrorMessage
+                                  name="meta_schema"
                                   component="div"
                                   className="text-red-500 text-sm"
                                 />

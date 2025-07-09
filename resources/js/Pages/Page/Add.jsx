@@ -116,6 +116,7 @@ export default function List() {
                 meta_title: "",
                 meta_description: "",
                 meta_keywords: "",
+                meta_schema: "",
                 canonical_url: "",
                 redirect_url: "",
                 customscript: "",
@@ -353,6 +354,25 @@ export default function List() {
                             />
                             <ErrorMessage
                               name="meta_description"
+                              component="div"
+                              className="text-red-500 text-sm"
+                            />
+                          </div>
+
+                          <div className="grid gap-3">
+                            <label htmlFor="meta_schema" className="text-sm font-semibold text-gray-700">
+                              Meta Schema
+                            </label>
+                            <Field
+                              as={Textarea}
+                              id="meta_schema"
+                              name="meta_schema"
+                              placeholder="Write a compelling meta schema"
+                              rows={3}
+                              className="focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all resize-none"
+                            />
+                            <ErrorMessage
+                              name="meta_schema"
                               component="div"
                               className="text-red-500 text-sm"
                             />

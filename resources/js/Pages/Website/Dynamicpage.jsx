@@ -65,6 +65,7 @@ export default function Home() {
             socialMeta={page?.social_meta}
             metaKeywords={page?.meta_keywords}
             customStyles={page?.customstyles}
+            canonicalUrl={page?.canonical_url}
         >
               <section ref={introRef} className="flex items-center relative overflow-hidden">
                  <div className="absolute inset-0 opacity-50" />
