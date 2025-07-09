@@ -451,7 +451,7 @@ function SmoothExperienceSection(props) {
   };
 
   const currentSection = sections.find(s => s.id === activeSection);
-
+  const {previousSlug,nextSlug} = usePage().props;
   return data &&  (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen box designing-section mobile-screens">

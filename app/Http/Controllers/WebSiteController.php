@@ -38,7 +38,23 @@ class WebSiteController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
+    // Get ONLY the slug of previous casestudy
+    $previousSlug = Caselist::where('priority', '<', $casestudy->priority)
+        ->published()
+        ->orderBy('priority', 'desc')
+        ->value('slug');  // Retrieves only the slug value
+
+    // Get ONLY the slug of next casestudy
+    $nextSlug = Caselist::where('priority', '>', $casestudy->priority)
+        ->published()
+        ->orderBy('priority', 'asc')
+        ->value('slug');  // Retrieves only the slug value
+
+
+
         return Inertia::render('Website/Casestudiesinner', [
+            'previousSlug' => $previousSlug,
+            'nextSlug' => $nextSlug,
             'casestudy' => $casestudy,
             'metaTitle' => $casestudy->title . ' | TDF Agency',
             'metaDescription' => $casestudy->description ?? 'Learn more about our case study at TDF Agency.',
