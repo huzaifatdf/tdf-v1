@@ -29,7 +29,6 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
     const menuRef = useRef(null);
     const burgerRef = useRef(null);
 
-    console.log("SEO",metaSchema,metaKeywords,canonicalUrl,customStyles,customScripts);
 
     const { toast } = useToast()
 

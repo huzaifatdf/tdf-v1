@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { usePage } from '@inertiajs/react';
 //parse
 import parse from 'html-react-parser';
+import Iframe from 'react-iframe'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,6 +129,33 @@ export default function Home() {
                                 <iframe width={`${JSON.parse(section.properties).width}%`||"auto"} style={{height:`${JSON.parse(section.properties).height}vh`}} src={section.content} title="YouTube video player"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             );
                          }
+
+                      if (section.type === 'html' && section.content) {
+    const properties = JSON.parse(section.properties || '{}');
+    const width = properties.width || '100';
+    const height = properties.height || '200';
+
+    return (
+        <div
+        >
+            <Iframe
+                url={section.content}
+                width="100%"
+
+                id={`iframe-${index}`}
+                className="border-0"
+                display="block"
+                position="relative"
+                frameBorder="0"
+                scrolling="no"
+                styles={{
+                    overflow: 'hidden',
+                    border: 'none'
+                }}
+            />
+        </div>
+    );
+}
 
                           if (section.type === 'text' && section.content) {
                             return (
