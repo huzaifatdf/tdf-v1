@@ -8,6 +8,8 @@ import { usePage } from '@inertiajs/react';
 //parse
 import parse from 'html-react-parser';
 import Iframe from 'react-iframe'
+//axios
+import axios from 'axios';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +25,24 @@ const componentMap = {
     'SmoothExperienceSection': lazy(() => import('@/Components/frontend/SmoothExperienceSection.jsx')),
     'SmoothProductSection': lazy(() => import('@/Components/frontend/SmoothProductSection.jsx')),
     'TestimonialsSection': lazy(() => import('@/Components/frontend/TestimonialsSection.jsx')),
+};
+
+const HtmlRenderer = ({ section }) => {
+  const [html, setHtml] = useState('');
+
+  useEffect(() => {
+
+      axios.get(section.content)
+          .then(response => {
+              setHtml(response.data);
+          })
+          .catch(error => {
+              console.error('Error fetching HTML:', error);
+      })
+  }, [section]);
+
+
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
 
@@ -129,117 +149,9 @@ export default function Home() {
                                 <iframe width={`${JSON.parse(section.properties).width}%`||"auto"} style={{height:`${JSON.parse(section.properties).height}vh`}} src={section.content} title="YouTube video player"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             );
                          }
-
-    if (section.type === 'html' && section.content) {
-    const properties = JSON.parse(section.properties || '{}');
-    const width = properties.width || '100';
-
-    return (
-        <div>
-            <Iframe
-                url={section.content}
-                width="100%"
-                height="400px" // Set a reasonable default height
-                id={`iframe-${index}`}
-                className="border-0"
-                display="block"
-                position="relative"
-                frameBorder="0"
-                scrolling="auto" // Allow scrolling as fallback
-                styles={{
-                    overflow: 'hidden',
-                    border: 'none',
-                    minHeight: '400px' // Reasonable minimum height
-                }}
-                onLoad={(event) => {
-                    const iframe = event.target;
-
-                    // Check if this is a same-origin iframe
-                    const isSameOrigin = () => {
-                        try {
-                            // This will throw an error if cross-origin
-                            iframe.contentDocument;
-                            return true;
-                        } catch (e) {
-                            return false;
-                        }
-                    };
-
-                    // Only attempt dynamic resizing for same-origin iframes
-                    if (isSameOrigin()) {
-                        const resizeIframe = () => {
-                            try {
-                                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                                const height = Math.max(
-                                    iframeDoc.body.scrollHeight,
-                                    iframeDoc.documentElement.scrollHeight
-                                );
-                                iframe.style.height = height + 'px';
-                            } catch (e) {
-                                console.warn('Error resizing iframe:', e);
-                            }
-                        };
-
-                        // Initial resize
-                        setTimeout(resizeIframe, 100); // Small delay to ensure content is loaded
-
-                        // Add event listener for content changes (same-origin only)
-                        try {
-                            iframe.contentWindow.addEventListener('resize', resizeIframe);
-
-                            // MutationObserver for DOM changes
-                            const observer = new MutationObserver(resizeIframe);
-                            observer.observe(
-                                iframe.contentDocument.body,
-                                {
-                                    childList: true,
-                                    subtree: true,
-                                    attributes: true,
-                                    characterData: true
-                                }
-                            );
-
-                            // Store cleanup function
-                            iframe._cleanup = () => {
-                                iframe.contentWindow.removeEventListener('resize', resizeIframe);
-                                observer.disconnect();
-                            };
-                        } catch (e) {
-                            console.warn('Could not add iframe event listeners:', e);
-                        }
-                    } else {
-                        // Cross-origin iframe - use PostMessage API if available
-                        console.log('Cross-origin iframe detected, using fallback height');
-
-                        // Listen for postMessage from iframe content
-                        const handleMessage = (event) => {
-                            // Verify origin for security
-                            if (event.origin !== new URL(section.content).origin) {
-                                return;
-                            }
-
-                            if (event.data && event.data.type === 'resize') {
-                                iframe.style.height = event.data.height + 'px';
-                            }
-                        };
-
-                        window.addEventListener('message', handleMessage);
-
-                        // Store cleanup function
-                        iframe._cleanup = () => {
-                            window.removeEventListener('message', handleMessage);
-                        };
-                    }
-                }}
-                onError={(event) => {
-                    console.error('Iframe load error:', event);
-                    // Fallback: ensure iframe has reasonable height
-                    event.target.style.height = '400px';
-                }}
-            />
-        </div>
-    );
-}
+    if (section?.type === 'html' && section?.content) {
+          return (  <HtmlRenderer section={section} />);
+    }
 
                           if (section.type === 'text' && section.content) {
                             return (
