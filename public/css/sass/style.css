@@ -9354,7 +9354,6 @@ body {
   margin: 0 3px;
   display: inline-block;
   border-radius: 50%;
-  background-color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -9446,7 +9445,8 @@ form textarea {
   border: 2px solid #ffffff;
 }
 .swiper-pagination-custom .swiper-pagination-bullet-active {
-  border: 2px solid #9BE500;
+  border: 2px solid #9747FF;
+  background: #9747FF;
 }
 
 .service-main p ul {

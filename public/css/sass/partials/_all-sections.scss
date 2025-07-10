@@ -256,7 +256,7 @@ body {
   margin: 0 3px;
   display: inline-block;
   border-radius: 50%;
-  background-color: $theme-primary;
+//   background-color: #716d79;
   cursor: pointer;
   transition: background-color 0.3s ease;
 //   border: 2px solid $theme-primary;
@@ -344,7 +344,8 @@ form {
         border: 2px solid $theme-primary;
     }
     .swiper-pagination-bullet-active {
-        border: 2px solid $theme-secondary;
+        border: 2px solid $theme-purple;
+        background: $theme-purple;
     }
 }
 .service-main p ul {

@@ -130,32 +130,32 @@ export default function Home() {
                             );
                          }
 
-                      if (section.type === 'html' && section.content) {
-    const properties = JSON.parse(section.properties || '{}');
-    const width = properties.width || '100';
-    const height = properties.height || '200';
+                        if (section.type === 'html' && section.content) {
+                            const properties = JSON.parse(section.properties || '{}');
+                            const width = properties.width || '100';
+                            const height = properties.height || '200';
 
-    return (
-        <div
-        >
-            <Iframe
-                url={section.content}
-                width="100%"
+                            return (
+                                <div
+                                >
+                                    <Iframe
+                                        url={section.content}
+                                        width="100%"
 
-                id={`iframe-${index}`}
-                className="border-0"
-                display="block"
-                position="relative"
-                frameBorder="0"
-                scrolling="no"
-                styles={{
-                    overflow: 'hidden',
-                    border: 'none'
-                }}
-            />
-        </div>
-    );
-}
+                                        id={`iframe-${index}`}
+                                        className="border-0"
+                                        display="block"
+                                        position="relative"
+                                        frameBorder="0"
+                                        scrolling="no"
+                                        styles={{
+                                            overflow: 'hidden',
+                                            border: 'none'
+                                        }}
+                                    />
+                                </div>
+                            );
+                        }
 
                           if (section.type === 'text' && section.content) {
                             return (
