@@ -9197,6 +9197,10 @@ body {
   height: 100vh;
 }
 
+.overlayzindexing {
+  pointer-events: none;
+}
+
 .gradient {
   background: linear-gradient(#00141b 50%, #00141b);
 }

@@ -22,7 +22,6 @@ import { Space } from 'lucide-react';
 // Register GSAP plugins only once at the top level
 gsap.registerPlugin(ScrollTrigger);
 
-
 function ThreeModelOverlay() {
     const mountRef = useRef(null);
     const modelRef = useRef(null);
@@ -48,7 +47,7 @@ function ThreeModelOverlay() {
         window.addEventListener('mousemove', handleMouseMove);
         cleanupFunctions.push(() => window.removeEventListener('mousemove', handleMouseMove));
 
-        // Create ScrollTrigger with proper cleanup (assuming GSAP is available)
+        // Create ScrollTrigger with proper cleanup
         if (typeof ScrollTrigger !== 'undefined') {
             const scrollTrigger = ScrollTrigger.create({
                 trigger: "#scroll-zoom-section",
@@ -84,7 +83,6 @@ function ThreeModelOverlay() {
         const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
         scene.add(ambientLight);
 
-        // Main key light - brighter and better positioned
         const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
         directionalLight.position.set(5, 5, 5);
         directionalLight.castShadow = true;
@@ -92,17 +90,14 @@ function ThreeModelOverlay() {
         directionalLight.shadow.mapSize.height = 2048;
         scene.add(directionalLight);
 
-        // Fill light from opposite side
         const fillLight = new THREE.DirectionalLight(0xffffff, 1.2);
         fillLight.position.set(-5, 3, 2);
         scene.add(fillLight);
 
-        // Top light for additional illumination
         const topLight = new THREE.DirectionalLight(0xffffff, 1.0);
         topLight.position.set(0, 5, 0);
         scene.add(topLight);
 
-        // Spot light for focused illumination
         const spotLight = new THREE.SpotLight(0xffffff, 2.5);
         spotLight.position.set(0, 8, 5);
         spotLight.angle = Math.PI / 3;
@@ -112,7 +107,6 @@ function ThreeModelOverlay() {
         spotLight.castShadow = true;
         scene.add(spotLight);
 
-        // Additional point lights for metallic highlights
         const pointLight1 = new THREE.PointLight(0xffffff, 1.0, 20);
         pointLight1.position.set(4, 4, 4);
         scene.add(pointLight1);
@@ -125,49 +119,45 @@ function ThreeModelOverlay() {
         pointLight3.position.set(0, -4, 2);
         scene.add(pointLight3);
 
-        // Raycaster and mouse
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
         // Load GLB Model
         const loader = new GLTFLoader();
         loader.load('/images/stone.glb', gltf => {
-        const model = gltf.scene;
-        model.scale.set(1, 1, 1);
-        model.position.set(0, -0.5, 0);
-        model.name = 'BallModel';
+            const model = gltf.scene;
+            model.scale.set(1, 1, 1);
+            model.position.set(0, -0.5, 0);
+            model.name = 'BallModel';
 
-        // Apply blue metallic material to match first image
-        model.traverse((child) => {
-            if (child.isMesh) {
-                const blueMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xc0c0c0, // Blue color similar to first image
-                    roughness: 0.3,
-                    metalness: 0.7,
-                    transparent: false,
-                    opacity: 1.0,
-                    envMapIntensity: 1.2,
-                });
-                child.material = blueMaterial;
-                child.castShadow = true;
-                child.receiveShadow = true;
-            }
-        });
-
-        // Setup animation mixer
-        if (gltf.animations && gltf.animations.length > 0) {
-            mixer = new THREE.AnimationMixer(model);
-            gltf.animations.forEach((clip) => {
-                mixer.clipAction(clip).play();
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    const blueMaterial = new THREE.MeshStandardMaterial({
+                        color: 0xc0c0c0,
+                        roughness: 0.3,
+                        metalness: 0.7,
+                        transparent: false,
+                        opacity: 1.0,
+                        envMapIntensity: 1.2,
+                    });
+                    child.material = blueMaterial;
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
             });
-        }
 
-       rotatingGroup.add(model);
-        modelRef.current = model;
-    }, undefined, (error) => {
-        console.error('Error loading model:', error);
-    });
+            if (gltf.animations && gltf.animations.length > 0) {
+                mixer = new THREE.AnimationMixer(model);
+                gltf.animations.forEach((clip) => {
+                    mixer.clipAction(clip).play();
+                });
+            }
 
+            rotatingGroup.add(model);
+            modelRef.current = model;
+        }, undefined, (error) => {
+            console.error('Error loading model:', error);
+        });
 
         // Animation loop
         let animationId;
@@ -175,7 +165,7 @@ function ThreeModelOverlay() {
             animationId = requestAnimationFrame(animate);
             const delta = clock.getDelta();
             if (mixer) mixer.update(delta);
-            rotatingGroup.rotation.y += 0.005; // smooth 360° spin
+            rotatingGroup.rotation.y += 0.005;
             renderer.render(scene, camera);
         };
 
@@ -185,7 +175,7 @@ function ThreeModelOverlay() {
             if (animationId) cancelAnimationFrame(animationId);
         });
 
-        // GSAP ScrollTrigger animations (if GSAP is available)
+        // GSAP ScrollTrigger animations
         if (typeof gsap !== 'undefined') {
             const cameraAnimation = gsap.to(camera.position, {
                 z: 1,
@@ -252,28 +242,24 @@ function ThreeModelOverlay() {
     }, []);
 
     return (
-        <>
-
         <div
             ref={mountRef}
             className="fixed top-0 start-0 w-100"
             style={{
                 height: '100vh',
-                pointerEvents: 'auto',
+                pointerEvents: 'none',
                 cursor: 'pointer',
+                zIndex: 5, // Reduced from 10 to be below gradient overlay
             }}
         />
-        </>
     );
 }
-
 
 const ImageZoomSection = () => {
     const imageWrapperRef = useRef(null);
     const textContentRef = useRef(null);
     const [visible, setVisible] = useState(false);
 
-    // Track if the section is visible (using the same ID as Space component)
     useEffect(() => {
         const section = document.getElementById("space-section");
         const observer = new IntersectionObserver(
@@ -289,7 +275,6 @@ const ImageZoomSection = () => {
     useEffect(() => {
         const ctx = gsap.context(() => {
             if (visible) {
-                // Apply scale/fade animation to image (removed floating animation)
                 gsap.fromTo(
                     imageWrapperRef.current,
                     {
@@ -305,7 +290,6 @@ const ImageZoomSection = () => {
                     }
                 );
 
-                // Apply fade-in animation to text content (reduced delay to 1 second)
                 gsap.fromTo(
                     textContentRef.current,
                     {
@@ -317,13 +301,11 @@ const ImageZoomSection = () => {
                         y: 0,
                         duration: 1.5,
                         ease: "power2.out",
-                        delay: 1, // Reduced from 2 seconds to 1 second
+                        delay: 1,
                     }
                 );
             } else {
-                // Kill all animations when not visible
                 gsap.killTweensOf([imageWrapperRef.current, textContentRef.current]);
-                // Reset to hidden state
                 gsap.set(imageWrapperRef.current, {
                     scale: 1.9,
                     opacity: 0,
@@ -340,140 +322,137 @@ const ImageZoomSection = () => {
     }, [visible]);
 
     return (
-        <>
+        <div className="container-fluid relative w-full h-screen overflow-hidden">
             <div
-                className="container-fluid relative w-full h-screen overflow-hidden"
-            >
-                <div
-                    ref={imageWrapperRef}
-                    className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover bg-no-repeat mb-[80px]"
-                    style={{
-                        transformOrigin: "center center",
-                        backgroundImage: `url('/images/backhome.png')`,
-                        opacity: visible ? 1 : 0,
-                        transition: "opacity 0.5s ease",
-                    }}
-                />
+                ref={imageWrapperRef}
+                className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover bg-no-repeat mb-[80px]"
+                style={{
+                    transformOrigin: "center center",
+                    backgroundImage: `url('/images/backhome.png')`,
+                    opacity: visible ? 1 : 0,
+                    transition: "opacity 0.5s ease",
+                }}
+            />
 
-                <div
-                    ref={textContentRef}
-                    className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4"
-                    style={{
-                        opacity: 0, // Start hidden
-                    }}
-                >
-                    <p className="text-[30px] mb-0 fc-primary">
-                        We connect relevant ideas to shape complete experiences
-                    </p>
-                </div>
+            <div
+                ref={textContentRef}
+                className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4"
+                style={{
+                    opacity: 0,
+                }}
+            >
+                <p className="text-[30px] mb-0 fc-primary">
+                    We connect relevant ideas to shape complete experiences
+                </p>
             </div>
-        </>
+        </div>
     );
 };
 
-
 const layers = [
-  { text: "Strategy", className: "" },
-  { text: "Creativity", className: "" },
-  { text: "Technology", className: "" },
-  {
-    text: "Aligned in perfect sync always adjusting, always forward",
-    className: "mobile-font-size-last last-scroll text-[40px] font-medium text-center",
-  },
+    { text: "Strategy", className: "" },
+    { text: "Creativity", className: "" },
+    { text: "Technology", className: "" },
+    {
+        text: "Aligned in perfect sync always adjusting, always forward",
+        className: "mobile-font-size-last last-scroll text-[40px] font-medium text-center",
+    },
 ];
 
 const HorizontalScroll = () => {
-  const containerRef = useRef();
-  const sectionRef = useRef();
+    const containerRef = useRef();
+    const sectionRef = useRef();
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const panels = gsap.utils.toArray(".panel");
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const panels = gsap.utils.toArray(".panel");
 
-      gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: () => "+=" + containerRef.current.offsetWidth,
-          scrub: 1,
-          snap: 1 / (panels.length - 1),
-          pin: true,
-        },
-      });
-    }, containerRef);
+            gsap.to(panels, {
+                xPercent: -100 * (panels.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top top",
+                    end: () => "+=" + containerRef.current.offsetWidth,
+                    scrub: 1,
+                    snap: 1 / (panels.length - 1),
+                    pin: true,
+                },
+            });
+        }, containerRef);
 
-    return () => ctx.revert();
-  }, []);
+        return () => ctx.revert();
+    }, []);
 
-  return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden">
-      <div
-        ref={sectionRef}
-        className="flex w-[400vw] h-screen" // dynamically wide enough for all panels
-      >
-        {layers.map((layer, index) => (
-          <div
-            key={index}
-            className={`mobile-font-size panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[150px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
-          >
-            {layer.text}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <div ref={containerRef} className="relative h-screen overflow-hidden">
+            <div
+                ref={sectionRef}
+                className="flex w-[400vw] h-screen"
+            >
+                {layers.map((layer, index) => (
+                    <div
+                        key={index}
+                        className={`mobile-font-size panel w-screen h-screen flex items-center justify-center px-8 text-stroke text-[150px] font-extrabold uppercase text-transparent leading-tight ${layer.className}`}
+                    >
+                        {layer.text}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 };
-
-
-
 
 function Section() {
     return (
-        <>
-            <div id="scroll-zoom-section" className="relative h-[300vh] overflow-hidden">
-                {/* Section 1 */}
-                <div className="sticky top-0 h-screen flex justify-center items-center z-30">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]} className="mobile-hide-zoom">
+        <div id="scroll-zoom-section" className="relative h-[300vh] overflow-hidden">
+            {/* Section 1 */}
+            <div className="sticky top-0 h-screen flex justify-center items-center z-[25]">
+                <Parallax speed={10} scale={[0.8, 1.5]} opacity={[1, 0]} className="mobile-hide-zoom">
                     <div className="text-center">
                         <h1 className="text-[40px] mb-2 fc-primary">Look at this dot</h1>
                         <p className="text-[30px] mb-0 fc-primary">
-                        It’s like a planet in the vast universe
-                        <br />
-                        {/* <span className="font-weight-bold">But zoom in</span> */}
+                            It's like a planet in the vast universe
+                            <br />
                         </p>
                     </div>
-                    </Parallax>
-                </div>
-
-                {/* Section 2 */}
-                <div className="sticky top-0 h-screen flex justify-center items-center z-20">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
-                    <div className="text-center">
-                        <p className="text-[30px] mb-0 fc-primary">
-                        Full of life, movement, and possibilities
-                        </p>
-                    </div>
-                    </Parallax>
-                </div>
-
-                {/* Section 3 */}
-                <div className="sticky top-0 h-screen flex justify-center items-center z-10">
-                    <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
-                    <div className="text-center">
-                        <p className="text-[30px] mb-0 fc-primary">
-                        In the digital universe, each dot is a potential idea
-                        </p>
-                    </div>
-                    </Parallax>
-                </div>
+                </Parallax>
             </div>
-        </>
+
+            {/* Section 2 */}
+            <div className="sticky top-0 h-screen flex justify-center items-center z-[20]">
+                <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
+                    <div className="text-center">
+                        <p className="text-[30px] mb-0 fc-primary">
+                            Full of life, movement, and possibilities
+                        </p>
+                    </div>
+                </Parallax>
+            </div>
+
+            {/* Section 3 */}
+            <div className="sticky top-0 h-screen flex justify-center items-center z-[15]">
+                <Parallax speed={10} scale={[0.8, 1.5]} opacity={[0, 1]} className="mobile-hide-zoom">
+                    <div className="text-center">
+                        <p className="text-[30px] mb-0 fc-primary">
+                            In the digital universe, each dot is a potential idea
+                        </p>
+                    </div>
+                </Parallax>
+            </div>
+        </div>
     );
 }
 
+
+
+
 export default function Home() {
+    const productsRef = useRef(null);
+    const scrollToProducts = () => {
+        productsRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     const topsection = {
         translateY: [0, 30],
         scale: [1, 1.05, "easeOutCubic"],
@@ -499,27 +478,90 @@ export default function Home() {
                     <h1>Keeping You Ahead,</h1>
                     <h2>Keeping You Relevant</h2>
                 </div>
+
+                {/* Scroll to Bottom Button - Fixed z-index */}
+                <div
+                    className="scroll-button-container position-absolute bottom-0 start-50 translate-middle-x"
+                    style={{
+                        zIndex: 50, // Increased to ensure it's above everything
+                        pointerEvents: 'auto' // Ensure it's clickable
+                    }}
+                >
+                    <a
+                    onClick={scrollToProducts}
+                        className=""
+                        style={{
+                            animation: 'bounce 2s infinite',
+                            transition: 'all 0.3s ease',
+                            zIndex: 51,
+                            position: 'relative',
+                            pointerEvents: 'auto'
+                        }}
+                    >
+                        <div
+                            className="scroll-arrow"
+                            style={{
+                                zIndex: 52
+                            }}
+                        >
+                            <img
+                                src="images/dropicon.svg"
+                                alt="Scroll Down Arrow"
+                            />
+                        </div>
+                    </a>
+                </div>
+
+                {/* CSS Animation */}
+                <style jsx>{`
+                    @keyframes bounce {
+                        0%, 20%, 50%, 80%, 100% {
+                            transform: translateY(0);
+                        }
+                        40% {
+                            transform: translateY(-10px);
+                        }
+                        60% {
+                            transform: translateY(-5px);
+                        }
+                    }
+
+                    .scroll-btn:hover {
+                        opacity: 0.8;
+                        transform: translateY(-2px);
+                    }
+
+                    .scroll-btn:hover .scroll-arrow {
+                        transform: scale(1.1);
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+                `}</style>
             </div>
         )
     };
 
+    // Fixed gradient overlay z-index
     const gradientOverlay = {
         opacity: [0, 1, "easeOutCubic"],
         shouldAlwaysCompleteAnimation: true,
         expanded: false,
-        children: <div className="gradient inset" />
+        children: (
+            <div
+                className="gradient inset"
+                style={{
+                    zIndex: 1 // Set specific z-index for gradient overlay
+                }}
+            />
+        )
     };
-
 
     return (
         <ParallaxProvider>
             <WebsiteLayout title="Home | TDF Agency" description="Welcome to TDF Agency - Your trusted digital partner.">
-                <ParallaxBanner layers={[topsection, gradientOverlay]} className="full"/>
+                <ParallaxBanner layers={[topsection, gradientOverlay]} className="full overlayzindexing"/>
                 <ThreeModelOverlay />
                 <Section />
-                <div
-                    className="relative overflow-hidden min-h-screen w-full"
-                    >
+                <div className="relative overflow-hidden min-h-screen w-full">
                     <ParticleCanvas />
                     <div className="relative z-10">
                         {/* Fixed Background */}
@@ -532,7 +574,9 @@ export default function Home() {
                                     <ImageZoomSection />
                                 </div>
                                 <HorizontalScroll />
-                                <SmartToolsSlider />
+                                <div ref={productsRef} id="products">
+                                    <SmartToolsSlider />
+                                </div>
                                 <ClientSlider />
                                 <ServiceSlider />
                                 <TestimonialsSection />
