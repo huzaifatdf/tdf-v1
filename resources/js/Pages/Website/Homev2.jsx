@@ -491,6 +491,7 @@ export default function Home() {
                     onClick={scrollToProducts}
                         className=""
                         style={{
+                            cursor: 'pointer',
                             animation: 'bounce 2s infinite',
                             transition: 'all 0.3s ease',
                             zIndex: 51,
