@@ -9201,6 +9201,14 @@ body {
   pointer-events: none;
 }
 
+.top-to-bottom-btn:hover path {
+  fill: #9747FF;
+}
+
+.top-to-bottom-btn:hover .arrow {
+  fill: white;
+}
+
 .gradient {
   background: linear-gradient(#00141b 50%, #00141b);
 }
