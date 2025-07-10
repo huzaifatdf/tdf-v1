@@ -179,7 +179,7 @@ export default function WebsiteLayout({ children, title = 'TDF Agency', descript
 
                     {/* Global Components */}
                     <ParticlesBackground />
-                    {/* <CustomCursor /> */}
+                    <CustomCursor />
                     {/* <BacktoTop /> */}
 
                     {/* Navbar */}
