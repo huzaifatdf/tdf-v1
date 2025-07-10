@@ -130,32 +130,71 @@ export default function Home() {
                             );
                          }
 
-                        if (section.type === 'html' && section.content) {
-                            const properties = JSON.parse(section.properties || '{}');
-                            const width = properties.width || '100';
-                            const height = properties.height || '200';
+                            if (section.type === 'html' && section.content) {
+    const properties = JSON.parse(section.properties || '{}');
+    const width = properties.width || '100';
 
-                            return (
-                                <div
-                                >
-                                    <Iframe
-                                        url={section.content}
-                                        width="100%"
+    return (
+        <div>
+            <Iframe
+                url={section.content}
+                width="100%"
+                height="100px" // Initial height, will be adjusted
+                id={`iframe-${index}`}
+                className="border-0"
+                display="block"
+                position="relative"
+                frameBorder="0"
+                scrolling="no"
+                styles={{
+                    overflow: 'hidden',
+                    border: 'none',
+                    minHeight: '100px' // Minimum height
+                }}
+                onLoad={(event) => {
 
-                                        id={`iframe-${index}`}
-                                        className="border-0"
-                                        display="block"
-                                        position="relative"
-                                        frameBorder="0"
-                                        scrolling="no"
-                                        styles={{
-                                            overflow: 'hidden',
-                                            border: 'none'
-                                        }}
-                                    />
-                                </div>
-                            );
+                    // Function to resize iframe based on content
+                    const resizeIframe = () => {
+                        try {
+                            const iframe = event.target;
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            const height = iframeDoc.body.scrollHeight;
+                            iframe.style.height = height + 'px';
+
+                        } catch (e) {
+                            console.error('Error resizing iframe:', e);
                         }
+                    };
+
+                    // Initial resize
+                    resizeIframe();
+
+                    // Add event listener for content changes
+                    const iframe = event.target;
+                    iframe.contentWindow.addEventListener('resize', resizeIframe);
+                    console.log("resize",resizeIframe);
+                    // MutationObserver for DOM changes
+                    const observer = new MutationObserver(resizeIframe);
+                    observer.observe(
+                        iframe.contentDocument.body,
+                        {
+                            childList: true,
+                            subtree: true,
+                            attributes: true,
+                            characterData: true
+                        }
+                    );
+
+                    // Cleanup function
+                    return () => {
+                        iframe.contentWindow.removeEventListener('resize', resizeIframe);
+                        observer.disconnect();
+                    };
+                }}
+            />
+        </div>
+    );
+}
 
                           if (section.type === 'text' && section.content) {
                             return (
