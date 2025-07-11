@@ -156,9 +156,9 @@ function SmoothExperienceSection() {
   return (
     <>
       <section ref={sectionRef} className="container-fluid min-h-screen mobile-screens">
-        <div className="flex mobile-gap">
+        <div className="flex">
           {/* Left Side - Fixed Navigation */}
-          <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center mobile-width-40">
+          <div className="w-1/2 sticky top-0 h-screen flex flex-col justify-center">
             <div className="max-w-lg">
               <nav
                 ref={navRef}
@@ -209,7 +209,7 @@ function SmoothExperienceSection() {
           </div>
 
           {/* Right Side - Scrollable Content */}
-          <div className="w-1/2 mobile-width-60">
+          <div className="w-1/2">
             {sections.map((section, index) => {
                 const techstackRaw = section?.data && JSON.parse(section?.data);
                     let titles = [];
