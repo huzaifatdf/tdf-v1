@@ -127,18 +127,18 @@ function ThreeModelOverlay() {
         loader.load('/images/stone.glb', gltf => {
             const model = gltf.scene;
             model.scale.set(1, 1, 1);
-            model.position.set(0, -0.5, 0);
+            model.position.set(0, -0.1, 0);
             model.name = 'BallModel';
 
             model.traverse((child) => {
                 if (child.isMesh) {
                     const blueMaterial = new THREE.MeshStandardMaterial({
-                        color: 0xc0c0c0,
+                        color: 0xdddad7,
                         roughness: 0.3,
                         metalness: 0.7,
                         transparent: false,
                         opacity: 1.0,
-                        envMapIntensity: 1.2,
+                        envMapIntensity: 1.9,
                     });
                     child.material = blueMaterial;
                     child.castShadow = true;
