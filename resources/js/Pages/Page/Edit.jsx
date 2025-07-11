@@ -674,7 +674,7 @@ export default function Edit() {
       .min(2, "Title must be at least 2 characters"),
     slug: Yup.string()
       .required("Slug is required")
-      .matches(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
+      .matches(/^[a-z0-9\-\/]+$/, "Slug can only contain lowercase letters, numbers, hyphens, and slashes"),
     description: Yup.string(),
     meta_title: Yup.string(),
     meta_description: Yup.string(),
