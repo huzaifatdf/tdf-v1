@@ -126,7 +126,7 @@ function ThreeModelOverlay() {
         const loader = new GLTFLoader();
         loader.load('/images/stone.glb', gltf => {
             const model = gltf.scene;
-            model.scale.set(1, 1, 1);
+            model.scale.set(1.1, 1.1, 1.1);
             model.position.set(0, -0.1, 0);
             model.name = 'BallModel';
 
@@ -325,7 +325,7 @@ const ImageZoomSection = () => {
         <div className="container-fluid relative w-full h-screen overflow-hidden">
             <div
                 ref={imageWrapperRef}
-                className="absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover bg-no-repeat mb-[80px]"
+                className="mobile-contain absolute top-0 left-0 w-full h-full will-change-transform bg-center bg-cover bg-no-repeat mb-[80px]"
                 style={{
                     transformOrigin: "center center",
                     backgroundImage: `url('/images/backhome.png')`,
@@ -341,7 +341,7 @@ const ImageZoomSection = () => {
                     opacity: 0,
                 }}
             >
-                <p className="text-[30px] mb-0 fc-primary">
+                <p className="mobile-font-25 text-[30px] mb-0 fc-primary">
                     We connect relevant ideas to shape complete experiences
                 </p>
             </div>
